@@ -71,7 +71,7 @@ const Navbar = () => {
 
             <Button
               label="Book a Call"
-              colorClass="text-primary-30 border-primary-30"
+              colorClass="text-primary-20 border-primary-20"
             />
           </div>
         </div>

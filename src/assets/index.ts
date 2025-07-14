@@ -16,9 +16,15 @@ import chatChill from "./icons/chat-chill.svg"
 
 import heroBgImg from "./images/hero-bg-img.png"
 
+// Define the images and icons
+import aboutUsBg from "./images/about-us-bg.png"
+
+
 export const IMAGES = {
+
+  aboutUsBg,
   heroBgImg,
-};
+
 
 export const ICONS = {
   logo,
