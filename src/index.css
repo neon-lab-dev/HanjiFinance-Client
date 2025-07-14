@@ -1,1 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-Montserrat: "Montserrat", sans-serif;
+
+  /* Colors */
+
+  /* Primary */
+  --color-primary-10: #b91c1c;
+
+  /* secondary */
+  /* --color-secondary-10: #1a1f2c; */
+
+  /* neutral */
+  --color-neutral-10: #262626;
+
+  /* Shadows */
+  /* --shadow-custom-button: 0px -2px 2px 0px rgba(255, 255, 255, 0.05) inset, 0px 12px 45px 0px rgba(137, 81, 246, 0.35); */
+}
+
+/* Custom scrollbar for a specific section */
+.custom-scrollbar {
+  overflow-y: auto;
+  max-height: 400px;
+  /* Adjust height as needed */
+}
+
+/* Scrollbar Track (non-scrolled area) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  /* Scrollbar width */
+}
+
+/* Scrollbar Thumb (scrolled area) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #1d293d;
+  /* Dark blue scrollbar */
+  border-radius: 4px;
+}
+
+/* Scrollbar Track (background) */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #020618;
+  /* Dark background for non-scrolled area */
+}
+
+/* Only apply to divs with custom-scrollbar class */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px; /* for horizontal scrolling */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+/* Firefox support */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+
+/* Swiper Pagination Dots Custom Styles */
+.swiper-pagination-bullet {
+  background-color: #888888 !important;
+  opacity: 1 !important;
+  width: 8px;
+  height: 8px;
+  margin: 0 6px !important;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #06a0ed !important;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-2px);
+}
