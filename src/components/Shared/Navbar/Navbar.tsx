@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import Container from "../../Reusable/Container/Container";
 import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
+import Button from "../../Reusable/Button/Button";
 
 const Navbar = () => {
   const location = useLocation();
@@ -72,12 +73,10 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <button
-              className={`text-[15px] leading-[18px] -tracking-[0.16px] text-primary-30 px-4 py-[10px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 border-2 justify-center border-primary-30`}
-            >
-              Book a Call
-              
-            </button>
+            <Button
+  label="Book a Call"
+  colorClass="text-primary-30 border-primary-30"
+/>
           </div>
         </div>
       </Container>
