@@ -4,8 +4,12 @@ import arrowDown from "./icons/arrow-down.svg";
 import cartPlus from "./icons/cart-plus.svg";
 import user from "./icons/user-circle.svg"
 
+// Define the images and icons
+import aboutUsBg from "./images/about-us-bg.png"
+
+
 export const IMAGES = {
-  // kjhas
+  aboutUsBg
 };
 
 export const ICONS = {
