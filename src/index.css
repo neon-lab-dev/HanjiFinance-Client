@@ -9,28 +9,61 @@
 
   /* Primary */
   --color-primary-10: #b91c1c;
-  --color-primary-20: #DC2626;
-  --color-primary-30: #C0392B;
-  --color-primary-40: #92400E;
-  --color-primary-50: #9D6100;
-  --color-primary-60: #FB7185;
+  --color-primary-15: #dc2626;
+  --color-primary-20: #c0392b;
+  --color-primary-25: #fb7185;
 
+  /* Neutral */
+  --color-neutral-5: #000000;
+  --color-neutral-10: #262626;
+  --color-neutral-15: #111111;
+  --color-neutral-20: #171717;
+  --color-neutral-25: #1e293b;
+  --color-neutral-30: #27272a;
+  --color-neutral-35: #263238;
+  --color-neutral-40: #2c2c2c;
+  --color-neutral-50: #404040;
+  --color-neutral-60: #525252;
+  --color-neutral-65: #525252d9;
+  --color-neutral-70: #64748b;
+  --color-neutral-75: #6b7280;
+  --color-neutral-80: #71717a;
+  --color-neutral-85: #737373;
+  --color-neutral-90: #d4d4d4;
+  --color-neutral-95: #d4d4d8;
+  --color-neutral-97: #e4e4e7;
+  --color-neutral-98: #e2e8f0;
+  --color-neutral-99: #f1f5f9;
+  --color-neutral-100: #fafafa;
 
-  
+  /* Surface / Backgrounds */
+  --color-surface-10: #f0f0fa;
+  --color-surface-20: #f0f9ff;
+  --color-surface-30: #f8fafc;
+  --color-surface-40: #eff6ff;
+  --color-surface-50: #ecfdf5;
+  --color-surface-60: #fff7ed;
+  --color-surface-70: #cffafe;
 
+  /* accent */
+  --color-accent-5: #0f172a;
+  --color-accent-10: #111827;
 
+  /* Success */
+  --color-success-5: #ecfdf5;
+  --color-success-10: #cffafe;
+  --color-success-15: #059669;
+  --color-success-20: #16a34a;
 
-
+  /* Extra */
+  --color-glass-10: #6e78831f; 
 
   /* White */
   --color-white: #ffffff;
 
   /* secondary */
-  /* --color-secondary-10: #1a1f2c; */
-
-  /* neutral */
-  --color-neutral-10: #262626;
-  --color-neutral-15: #111;
+  --color-secondary-10: #9d6100;
+  --color-secondary-15: #92400e;
 
   /* Shadows */
   --shadow-navbar: 0px 0px 100px 0px rgba(0, 0, 0, 0.07);

@@ -58,25 +58,21 @@ const Navbar = () => {
               >
                 {item.label}
                 {/* {item.isDropDown && <img src={ICONS.arrowDown} alt="down-arrow" className="size-5" />} */}
-                {item.isDropDown && <IoChevronDownSharp className="text-[20px]" />}
-        
+                {item.isDropDown && (
+                  <IoChevronDownSharp className="text-[20px]" />
+                )}
               </Link>
             ))}
             {iconNavLinks?.map((item) => (
-              <Link
-                key={item.icons}
-                to={item?.path}
-                className={``}
-              >
+              <Link key={item.icons} to={item?.path} className={``}>
                 <img src={item.icons} alt="down-arrow" className="size-6" />
-                
               </Link>
             ))}
 
             <Button
-  label="Book a Call"
-  colorClass="text-primary-30 border-primary-30"
-/>
+              label="Book a Call"
+              colorClass="text-primary-30 border-primary-30"
+            />
           </div>
         </div>
       </Container>
