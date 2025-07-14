@@ -5,10 +5,31 @@ import { IoChevronDownSharp } from "react-icons/io5";
 
 const Navbar = () => {
   const location = useLocation();
-  const navlinks = [
+  const navLinks = [
     {
       label: "Home",
       path: "/",
+      isDropDown: false,
+    },
+    {
+      label: "Services",
+      path: "/services",
+      isDropDown: true,
+    },
+    {
+      label: "Contact Us",
+      path: "/contact-us",
+      isDropDown: false,
+    },
+  ];
+  const iconNavLinks = [
+    {
+      icons: ICONS.cartPlus,
+      path: "cart",
+    },
+    {
+      icons: ICONS.user,
+      path: "/profile",
     },
   ];
   return (
@@ -24,26 +45,38 @@ const Navbar = () => {
           </Link>
 
           <div className="flex items-center gap-6">
-            {navlinks?.map((item) => (
+            {navLinks?.map((item) => (
               <Link
                 key={item.label}
                 to={item?.path}
-                className={`text-[15px] leading-[18px] hover:text-primary-10 transition duration-300 ${
+                className={`text-[15px] leading-[18px] hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
                   location.pathname === item?.path
                     ? "text-primary-10 font-bold"
                     : "text-neutral-15 font-medium"
                 }`}
               >
-                Home
+                {item.label}
+                {/* {item.isDropDown && <img src={ICONS.arrowDown} alt="down-arrow" className="size-5" />} */}
+                {item.isDropDown && <IoChevronDownSharp className="text-[20px]" />}
+        
+              </Link>
+            ))}
+            {iconNavLinks?.map((item) => (
+              <Link
+                key={item.icons}
+                to={item?.path}
+                className={``}
+              >
+                <img src={item.icons} alt="down-arrow" className="size-6" />
+                
               </Link>
             ))}
 
             <button
-              className={`text-[15px] leading-[18px] text-neutral-15 hover:text-primary-10 transition duration-300 font-medium cursor-pointer flex items-center gap-1`}
+              className={`text-[15px] leading-[18px] -tracking-[0.16px] text-primary-30 px-4 py-[10px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 border-2 justify-center border-primary-30`}
             >
-              Services
-              <IoChevronDownSharp className="text-lg" />
-              {/* <img src={ICONS.arrowDown} alt="down-arrow" className="size-5" /> */}
+              Book a Call
+              
             </button>
           </div>
         </div>
