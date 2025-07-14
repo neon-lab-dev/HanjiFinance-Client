@@ -82,7 +82,7 @@ const Hero = () => {
 
                   <Link
                     to={service?.path}
-                    className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5"
+                    className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1"
                   >
                     Learn More <FaAngleRight />
                   </Link>

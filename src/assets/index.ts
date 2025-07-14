@@ -3,6 +3,9 @@ import logoWithName from "./icons/logo-with-name.svg";
 import arrowDown from "./icons/arrow-down.svg";
 import cartPlus from "./icons/cart-plus.svg";
 import user from "./icons/user-circle.svg"
+import emailGray from "./icons/email-gray.svg"
+import location from "./icons/location.svg"
+import phone from "./icons/phone.svg"
 import email from "./icons/email.svg"
 import whatsapp from "./icons/whatsapp.svg"
 import financialFashion from "./icons/financial-fashion.svg"
@@ -23,6 +26,9 @@ export const ICONS = {
   arrowDown,
   cartPlus,
   user,
+  emailGray,
+  location,
+  phone,
   email,
   whatsapp,
   financialFashion,
