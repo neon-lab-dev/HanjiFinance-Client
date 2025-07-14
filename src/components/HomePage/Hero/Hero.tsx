@@ -57,11 +57,11 @@ const Hero = () => {
             alt="Hanjifinance"
             className="size-full xl:w-[550px] xl:h-[236px] mx-auto"
           />
-          <h1 className="text-[64px] font-bold leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9">
+          <h1 className="text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9">
             Build Wealth, <br /> One Click at a Time
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-[101px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-11 lg:mt-[101px]">
             {services?.map((service) => (
               <div
                 key={service?.title}
