@@ -1,11 +1,20 @@
-import logo from "./icons/logo.svg";
+import logo from "./icons/logo.png";
 import logoWithName from "./icons/logo-with-name.svg";
 import arrowDown from "./icons/arrow-down.svg";
 import cartPlus from "./icons/cart-plus.svg";
 import user from "./icons/user-circle.svg"
+import email from "./icons/email.svg"
+import whatsapp from "./icons/whatsapp.svg"
+import financialFashion from "./icons/financial-fashion.svg"
+import brainGains from "./icons/brain-gains.svg"
+import fundManagement from "./icons/fund-management.svg"
+import chatChill from "./icons/chat-chill.svg"
+
+
+import heroBgImg from "./images/hero-bg-img.png"
 
 export const IMAGES = {
-  // kjhas
+  heroBgImg,
 };
 
 export const ICONS = {
@@ -13,5 +22,11 @@ export const ICONS = {
   logoWithName,
   arrowDown,
   cartPlus,
-  user
+  user,
+  email,
+  whatsapp,
+  financialFashion,
+  brainGains,
+  fundManagement,
+  chatChill
 };
