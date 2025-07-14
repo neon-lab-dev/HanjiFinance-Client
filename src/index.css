@@ -10,14 +10,18 @@
   /* Primary */
   --color-primary-10: #b91c1c;
 
+  /* White */
+  --color-white: #ffffff;
+
   /* secondary */
   /* --color-secondary-10: #1a1f2c; */
 
   /* neutral */
   --color-neutral-10: #262626;
+  --color-neutral-15: #111;
 
   /* Shadows */
-  /* --shadow-custom-button: 0px -2px 2px 0px rgba(255, 255, 255, 0.05) inset, 0px 12px 45px 0px rgba(137, 81, 246, 0.35); */
+  --shadow-navbar: 0px 0px 100px 0px rgba(0, 0, 0, 0.07);
 }
 
 /* Custom scrollbar for a specific section */
