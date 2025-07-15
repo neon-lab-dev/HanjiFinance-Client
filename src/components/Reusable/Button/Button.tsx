@@ -2,24 +2,29 @@ import { twMerge } from "tailwind-merge";
 
 interface ReusableButtonProps {
   label: string;
-  colorClass: string; 
+  variant?: "primary" | "secondary";
   onClick?: () => void;
-  className?: string; 
+  className?: string;
 }
 
 const Button: React.FC<ReusableButtonProps> = ({
   label,
-  colorClass,
+  variant = "secondary",
   onClick,
   className = "",
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] -tracking-[0.16px] px-4 py-[10px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 border-2 justify-center";
+    "text-[15px] leading-[18px] -tracking-[0.16px] px-4 py-[10px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 justify-center";
+
+  const variantClasses =
+    variant === "primary"
+      ? "bg-primary-20 text-white border-transparent"
+      : "border-2 border-primary-20 text-primary-20 bg-transparent";
 
   return (
     <button
       onClick={onClick}
-      className={twMerge(`${baseClasses} ${colorClass}`, className)}
+      className={twMerge(`${baseClasses} ${variantClasses}`, className)}
     >
       {label}
     </button>

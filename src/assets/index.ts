@@ -1,3 +1,4 @@
+// ICons
 import logo from "./icons/logo.png";
 import logoWithName from "./icons/logo-with-name.svg";
 import arrowDown from "./icons/arrow-down.svg";
@@ -12,18 +13,25 @@ import financialFashion from "./icons/financial-fashion.svg"
 import brainGains from "./icons/brain-gains.svg"
 import fundManagement from "./icons/fund-management.svg"
 import chatChill from "./icons/chat-chill.svg"
+import courseTitle from "./icons/course-title.svg"
+import clock from "./icons/clock.svg"
+import lesson from "./icons/lesson.svg"
+import author from "./icons/author.svg"
+import rating from "./icons/rating.svg"
 
 
+
+// Images
 import heroBgImg from "./images/hero-bg-img.png"
-
-// Define the images and icons
-import aboutUsBg from "./images/about-us-bg.png"
+import aboutUsBg from "./images/about-us-bg.png";
+import courseDummyImage from "./images/course-dummy-image.png";
 
 
 export const IMAGES = {
-
   aboutUsBg,
   heroBgImg,
+  courseDummyImage,
+};
 
 
 export const ICONS = {
@@ -40,5 +48,10 @@ export const ICONS = {
   financialFashion,
   brainGains,
   fundManagement,
-  chatChill
+  chatChill,
+  courseTitle,
+  clock,
+  lesson,
+  author,
+  rating
 };

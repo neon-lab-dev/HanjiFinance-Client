@@ -2,16 +2,16 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface SectionTitleProps {
-  children: React.ReactNode; 
-  subtext?: string;         
+  heading: string;
+  subHeading?: string;    
   color?: string;            
   subtextColor?: string;     
   className?: string;    
 }
 
 const SectionTitle: React.FC<SectionTitleProps> = ({
-  children,
-  subtext,
+  heading,
+  subHeading,
   color = "text-secondary-15",
   subtextColor = "text-gray-600",
   className = "",
@@ -29,8 +29,8 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
 
   return (
     <div className="pb-6 font-Montserrat">
-      <h1 className={headingClasses}>{children}</h1>
-      {subtext && <p className={subtextClasses}>{subtext}</p>}
+      <h1 className={headingClasses}>{heading}</h1>
+      {subHeading && <p className={subtextClasses}>{subHeading}</p>}
     </div>
   );
 };

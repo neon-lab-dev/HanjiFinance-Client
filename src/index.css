@@ -71,6 +71,7 @@
   /* Gradients */
   --bg-gradient-hero: linear-gradient(0deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%);
   --bg-gradient-footer: linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), var(--stone-900, #1C1917);
+  --bg-gradient-course: linear-gradient(180deg, rgba(254, 242, 242, 0.00) 0%, #FEF2F2 100%);
 }
 
 .bg-gradient-hero {
@@ -79,6 +80,10 @@
 
 .bg-gradient-footer {
   background: var(--bg-gradient-footer);
+}
+
+.bg-gradient-course {
+  background: var(--bg-gradient-course);
 }
 
 /* Custom scrollbar for a specific section */
