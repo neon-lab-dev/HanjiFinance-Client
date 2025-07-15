@@ -37,15 +37,16 @@ const Courses = () => {
     },
   ];
   return (
-    <div className="bg-gradient-course py-[60px]">
+    <div className="bg-gradient-course pt-[60px]">
       <Container>
         <SectionTitle heading="Courses That Grow Your Rupee" subHeading="Learn what matters, skip what doesn’t, made for real-world impact"/>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 gap-6">
           {courses.map((course, index) => (
             <CourseCard key={index} {...course} />
           ))}
         </div>
       </Container>
+      <img src={IMAGES.coursesSectionBlur} alt="About Us" className="w-full" />
     </div>
   );
 };

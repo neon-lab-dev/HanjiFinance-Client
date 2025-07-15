@@ -32,6 +32,7 @@ import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
 import dummyAvatar from "./images/dummy-avatar.png";
+import coursesSectionBlur from "./images/course-section-blur.png"
 
 
 export const IMAGES = {
@@ -40,6 +41,7 @@ export const IMAGES = {
   heroBg,
   courseDummyImage,
   dummyAvatar,
+  coursesSectionBlur,
 };
 
 
