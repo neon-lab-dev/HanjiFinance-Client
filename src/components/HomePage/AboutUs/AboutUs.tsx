@@ -28,7 +28,7 @@ const AboutUs = () => {
 
           <div className="flex flex-col items-center xl:flex-row gap-12 xl:gap-0 mt-10 xl:mt-[120px]">
             {/* Left side */}
-            <div className="flex flex-col md:flex-row gap-12 items-center w-full xl:w-[50%]">
+            <div className="flex flex-col xl:sticky xl:top-[120px] self-start md:flex-row gap-12 items-center w-full xl:w-[50%]">
               {/* Profile name and picture */}
               <div className="flex flex-col gap-6 items-center">
                 <div className="flex items-center gap-2">
