@@ -22,6 +22,7 @@ import blueTick from "./icons/blue-tick.svg"
 import volumeCross from "./icons/volume-cross.svg"
 import money from "./icons/money.svg"
 import peopleNearby from "./icons/people-nearby.svg"
+import hamburgerMenu from "./icons/hamburger-menu.svg"
 
 
 
@@ -31,6 +32,7 @@ import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
 import dummyAvatar from "./images/dummy-avatar.png";
+import coursesSectionBlur from "./images/course-section-blur.png"
 
 
 export const IMAGES = {
@@ -39,6 +41,7 @@ export const IMAGES = {
   heroBg,
   courseDummyImage,
   dummyAvatar,
+  coursesSectionBlur,
 };
 
 
@@ -66,4 +69,5 @@ export const ICONS = {
   volumeCross,
   money,
   peopleNearby,
+  hamburgerMenu,
 };
