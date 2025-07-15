@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
-import { contents } from "./content.refundAndCancellationPolicy";
+import { contents } from "./content.aboutUs";
 
-const RefundAndCancellationPolicy = () => {
+const AboutUs = () => {
   return (
     <div className="font-Montserrat">
-      <ReusableHero title="Refund & Cancellation Policy" />
+      <ReusableHero title="About Us" />
 
       <div className="bg-gradient-terms-and-conditions py-[30px]">
         <Container>
@@ -41,14 +41,13 @@ const RefundAndCancellationPolicy = () => {
                         </p>
                       )}
                       {detail?.pointers && (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col mt-4">
                           {detail?.pointers?.map(
                             (pointer: string, index: number) => (
                               <div
                                 key={index}
-                                className="text-neutral-20 text-sm leading-5 mt-1 flex items-center gap-3"
+                                className="text-neutral-20 text-sm leading-5"
                               >
-                                <div className="size-1 rounded-full bg-neutral-30"></div>{" "}
                                 {pointer}
                               </div>
                             )
@@ -58,11 +57,6 @@ const RefundAndCancellationPolicy = () => {
                     </div>
                   ))}
                 </div>
-                {item?.footerText && (
-                  <p className="text-neutral-20 text-sm leading-5 mt-1">
-                    {item?.footerText}
-                  </p>
-                )}
               </div>
             ))}
           </div>
@@ -72,4 +66,4 @@ const RefundAndCancellationPolicy = () => {
   );
 };
 
-export default RefundAndCancellationPolicy;
+export default AboutUs;
