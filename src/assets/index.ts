@@ -27,6 +27,7 @@ import peopleNearby from "./icons/people-nearby.svg"
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png"
+import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
 import dummyAvatar from "./images/dummy-avatar.png";
@@ -35,6 +36,7 @@ import dummyAvatar from "./images/dummy-avatar.png";
 export const IMAGES = {
   aboutUsBg,
   heroBgImg,
+  heroBg,
   courseDummyImage,
   dummyAvatar,
 };
