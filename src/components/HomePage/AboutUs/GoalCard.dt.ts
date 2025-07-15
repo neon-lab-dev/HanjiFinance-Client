@@ -1,16 +1,16 @@
 import { ICONS } from "../../../assets";
 
-export const goal = [
+export const goals = [
   {
-    icon: ICONS.logo,
-    title : "Cut the noise",
+    icon: ICONS.volumeCross,
+    title: "Cut the noise",
   },
   {
-     icon: ICONS.logo,
-    title : "Simplify money",
+    icon: ICONS.money,
+    title: "Simplify money",
   },
   {
-     icon: ICONS.logo,
-    title : "Help people think smarter about wealth",
+    icon: ICONS.peopleNearby,
+    title: "Help people think smarter about wealth",
   },
 ];

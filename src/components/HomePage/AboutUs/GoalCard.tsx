@@ -17,7 +17,7 @@ const GoalCard: React.FC<GoalCardProps> = ({ icon, title, className = "" }) => {
         src={typeof icon === "string" ? icon : undefined}
         className="size-8 m-2"
       />
-      <p className="pb-4 text-black ">{title}</p>
+      <p className="text-black ">{title}</p>
     </div>
   );
 };
