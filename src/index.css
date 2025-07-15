@@ -73,6 +73,7 @@
   --bg-gradient-footer: linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%), var(--stone-900, #1C1917);
   --bg-gradient-course: linear-gradient(180deg, rgba(254, 242, 242, 0.00) 0%, #FEF2F2 100%);
   --bg-gradient-profile-picture: radial-gradient(194.91% 131.04% at 84.5% 113.5%, #F50B5E 19.76%, #DF0897 52.03%, #962FBF 76.88%, #4F5BD5 93.34%);
+  --bg-gradient-terms-and-conditions: linear-gradient(180deg, #F6F8FA 0%, #F6F8FA 100%);
 }
 
 .bg-gradient-hero {
@@ -93,6 +94,10 @@
 
 .bg-profile-picture {
   background: var(--bg-profile-picture);
+}
+
+.bg-gradient-terms-and-conditions {
+  background: var(--bg-gradient-terms-and-conditions);
 }
 
 /* Custom scrollbar for a specific section */
