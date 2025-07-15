@@ -20,9 +20,9 @@ const AboutUs = () => {
     },
   ];
   return (
-    <div className="font-Montserrat">
+    <div className="font-Montserrat mt-[116px] xl:mt-[150px]">
       <img src={IMAGES.aboutUsBg} alt="About Us" className="w-full" />
-      <div className="py-[70px] xl:py-[144px]">
+      <div className="pb-[70px] pt-[70px] xl:pt-0 xl:pb-[144px]">
         <Container>
           <SectionTitle heading="Your Real Financial Wala Dost" />
 

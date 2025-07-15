@@ -83,6 +83,10 @@
   background: var(--bg-gradient-footer);
 }
 
+.bg-gradient-course {
+  background: var(--bg-gradient-course);
+}
+
 .bg-gradient-profile-picture {
   background: var(--bg-gradient-profile-picture);
 }
