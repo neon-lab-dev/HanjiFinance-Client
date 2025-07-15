@@ -26,9 +26,9 @@ const AboutUs = () => {
         <Container>
           <SectionTitle heading="Your Real Financial Wala Dost" />
 
-          <div className="flex flex-col items-center lg:flex-row gap-12 lg:gap-0 mt-10 lg:mt-[120px]">
+          <div className="flex flex-col items-center md:flex-row gap-12 md:gap-5 lg:gap-0 mt-10 lg:mt-[120px]">
             {/* Left side */}
-            <div className="flex flex-col lg:sticky lg:top-[120px] self-start xl:flex-row gap-12 items-center w-full lg:w-[50%]">
+            <div className="flex flex-col sm:flex-row md:flex-col xl:flex-row md:sticky md:top-[120px] self-start  gap-12 items-center w-full md:w-[45%] lg:w-[50%]">
               {/* Profile name and picture */}
               <div className="flex flex-col gap-6 items-center">
                 <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ const AboutUs = () => {
             </div>
 
             {/* Right side */}
-            <div className="flex flex-col gap-12 w-full lg:w-[50%] ">
+            <div className="flex flex-col gap-12 w-full md:w-[55%] lg:w-[50%] ">
               <div className="text-neutral-5 leading-5">
                 <p>
                   Hi, I’m <strong>Amandeep Singh Juneja</strong>, the person
@@ -136,7 +136,7 @@ const AboutUs = () => {
               <Button
                 variant="primary"
                 label="Book 1 on 1 call with me"
-                className="w-full md:w-fit"
+                className="w-full sm:w-fit"
               />
             </div>
           </div>
