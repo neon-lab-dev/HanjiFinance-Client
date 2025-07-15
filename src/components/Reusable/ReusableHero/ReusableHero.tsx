@@ -1,7 +1,7 @@
 import { IMAGES } from "../../../assets";
 import Container from "../Container/Container";
 
-const ReusableHero = ({title} : {title: string}) => {
+const ReusableHero = ({ title }: { title: string }) => {
   const details = [
     {
       label: "Owner",
@@ -26,28 +26,31 @@ const ReusableHero = ({title} : {title: string}) => {
 
       <Container>
         <div className="relative z-10 pt-20 md:pt-[148px] pb-20">
-        <h1 className="text-neutral-30 text-[32px] md:text-[64px] font-bold leading-9 md:leading-[70px] text-center">
-          {title}
-        </h1>
+          <h1 className="text-neutral-30 text-[32px] md:text-[64px] font-bold leading-9 md:leading-[70px] text-center">
+            {title}
+          </h1>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-3 mt-8 md:mt-6">
-          {details.map((item, index, arr) => (
-            <div key={item.label} className="flex flex-col md:flex-row items-center gap-2 md:gap-[2px]">
-              <div className="bg-surface-70 px-2 py-1 text-neutral-30 text-[15px] font-medium leading-[18px] rounded-[30px] w-fit">
-                {item.label}
+          <div className="flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-3 mt-8 xl:mt-6">
+            {details.map((item, index, arr) => (
+              <div
+                key={item.label}
+                className="flex flex-col xl:flex-row items-center gap-2 xl:gap-[2px]"
+              >
+                <div className="bg-surface-70 px-2 py-1 text-neutral-30 text-[15px] xl:text-[13px] 2xl:text-[15px] font-medium leading-[18px] rounded-[30px] w-fit">
+                  {item.label}
+                </div>
+                <p className="text-neutral-30 text-[15px] xl:text-[13px] 2xl:text-xl font-medium leading-6">
+                  {item.value}
+                </p>
+                {index !== arr.length - 1 && (
+                  <span className="text-neutral-90 text-[28px] font-medium leading-8 mx-2 hidden xl:block">
+                    |
+                  </span>
+                )}
               </div>
-              <p className="text-neutral-30 text-xl font-medium leading-6">
-                {item.value}
-              </p>
-              {index !== arr.length - 1 && (
-                <span className="text-neutral-90 text-[28px] font-medium leading-8 mx-2 hidden md:block">
-                  |
-                </span>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
       </Container>
     </div>
   );
