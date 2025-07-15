@@ -20,15 +20,15 @@ const AboutUs = () => {
     },
   ];
   return (
-    <div className="font-Montserrat mt-[116px] xl:mt-[150px]">
+    <div className="font-Montserrat mt-[116px] lg:mt-[150px]">
       <img src={IMAGES.aboutUsBg} alt="About Us" className="w-full" />
-      <div className="pb-[70px] pt-[70px] xl:pt-0 xl:pb-[144px]">
+      <div className="pb-[70px] pt-[70px] lg:pt-0 lg:pb-[144px]">
         <Container>
           <SectionTitle heading="Your Real Financial Wala Dost" />
 
-          <div className="flex flex-col items-center xl:flex-row gap-12 xl:gap-0 mt-10 xl:mt-[120px]">
+          <div className="flex flex-col items-center lg:flex-row gap-12 lg:gap-0 mt-10 lg:mt-[120px]">
             {/* Left side */}
-            <div className="flex flex-col xl:sticky xl:top-[120px] self-start md:flex-row gap-12 items-center w-full xl:w-[50%]">
+            <div className="flex flex-col lg:sticky lg:top-[120px] self-start xl:flex-row gap-12 items-center w-full lg:w-[50%]">
               {/* Profile name and picture */}
               <div className="flex flex-col gap-6 items-center">
                 <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ const AboutUs = () => {
             </div>
 
             {/* Right side */}
-            <div className="flex flex-col gap-12 w-full xl:w-[50%] ">
+            <div className="flex flex-col gap-12 w-full lg:w-[50%] ">
               <div className="text-neutral-5 leading-5">
                 <p>
                   Hi, I’m <strong>Amandeep Singh Juneja</strong>, the person
@@ -136,7 +136,7 @@ const AboutUs = () => {
               <Button
                 variant="primary"
                 label="Book 1 on 1 call with me"
-                className="w-fit"
+                className="w-full md:w-fit"
               />
             </div>
           </div>
