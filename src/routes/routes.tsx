@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout/MainLayout";
 import Home from "../pages/Home/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions";
+import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "/terms-and-conditions",
         element: <TermsAndConditions />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
       },
     ],
   },
