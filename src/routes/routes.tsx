@@ -6,6 +6,7 @@ import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 import RefundAndCancellationPolicy from "../pages/RefundAndCancellationPolicy/RefundAndCancellationPolicy";
 import AboutUs from "../pages/AboutUs/AboutUs";
+import ClientGrievance from "../pages/ClientGrievance/ClientGrievance";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/client-grievance-mechanism",
+        element: <ClientGrievance />,
       },
     ],
   },

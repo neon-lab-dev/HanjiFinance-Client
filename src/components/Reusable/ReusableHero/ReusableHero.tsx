@@ -26,7 +26,7 @@ const ReusableHero = ({ title }: { title: string }) => {
 
       <Container>
         <div className="relative z-10 pt-20 md:pt-[148px] pb-20">
-          <h1 className="text-neutral-30 text-[32px] md:text-[64px] font-bold leading-9 md:leading-[70px] text-center">
+          <h1 className="text-neutral-30 text-[32px] md:text-[64px] font-bold leading-9 md:leading-[70px] text-center max-w-[1000px] mx-auto">
             {title}
           </h1>
 
