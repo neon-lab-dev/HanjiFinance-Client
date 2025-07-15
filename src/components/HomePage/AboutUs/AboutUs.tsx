@@ -3,7 +3,6 @@ import Button from "../../Reusable/Button/Button";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import GoalCard from "./GoalCard";
-import { goals } from "./GoalCard.dt";
 
 const AboutUs = () => {
   const profileStats = [
@@ -23,12 +22,13 @@ const AboutUs = () => {
   return (
     <div className="font-Montserrat">
       <img src={IMAGES.aboutUsBg} alt="About Us" className="w-full" />
-      <Container>
-        <SectionTitle heading="Your Real Financial Wala Dost" />
+      <div className="py-[70px] xl:py-[144px]">
+        <Container>
+          <SectionTitle heading="Your Real Financial Wala Dost" />
 
-        <div className="flex flex-col items-center py-[144px] md:flex-row">
+          <div className="flex flex-col items-center xl:flex-row gap-12 xl:gap-0 mt-10 xl:mt-[120px]">
             {/* Left side */}
-            <div className="flex gap-12 items-center w-[50%]">
+            <div className="flex flex-col md:flex-row gap-12 items-center w-full xl:w-[50%]">
               {/* Profile name and picture */}
               <div className="flex flex-col gap-6 items-center">
                 <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ const AboutUs = () => {
             </div>
 
             {/* Right side */}
-            <div className="flex flex-col gap-12 w-[50%] ">
+            <div className="flex flex-col gap-12 w-full xl:w-[50%] ">
               <div className="text-neutral-5 leading-5">
                 <p>
                   Hi, I’m <strong>Amandeep Singh Juneja</strong>, the person
@@ -98,16 +98,32 @@ const AboutUs = () => {
                 </p>
               </div>
 
+              {/* My goal */}
               <div>
                 <h1 className="text-neutral-5 text-xl font-medium leading-6">
                   My Goal
                 </h1>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-[25px]">
-                  {goals?.map((item) => (
-                    <GoalCard key={item?.title} {...item} />
-                  ))}
+                <div className="flex flex-col gap-5 mt-[25px]">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 ">
+                    <GoalCard icon={ICONS.volumeCross} title="Cut the noise" />
+                    <GoalCard icon={ICONS.money} title="Simplify money" />
+                    <div className="hidden lg:block">
+                      {" "}
+                      <GoalCard
+                        icon={ICONS.peopleNearby}
+                        title="Help people think smarter about wealth"
+                      />
+                    </div>
+                  </div>
+                  <div className="block lg:hidden">
+                    <GoalCard
+                      icon={ICONS.peopleNearby}
+                      title="Help people think smarter about wealth"
+                    />
+                  </div>
                 </div>
               </div>
+
               <p className="text-neutral-5 leading-5">
                 This website is an extension of that mission — a hub for
                 everything I’m building: newsletters, private groups, courses,
@@ -117,10 +133,15 @@ const AboutUs = () => {
                 If you landed here from a reel, a story, or just stumbled across
                 it — welcome. You’re in the right place.
               </p>
-              <Button variant="primary" label="Book 1 on 1 call with me" className="w-fit" />
+              <Button
+                variant="primary"
+                label="Book 1 on 1 call with me"
+                className="w-fit"
+              />
             </div>
-        </div>
-      </Container>
+          </div>
+        </Container>
+      </div>
     </div>
   );
 };
