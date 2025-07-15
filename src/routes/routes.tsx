@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
+import RefundAndCancellationPolicy from "../pages/RefundAndCancellationPolicy/RefundAndCancellationPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "/refund-cancellation-policy",
+        element: <RefundAndCancellationPolicy />,
       },
     ],
   },
