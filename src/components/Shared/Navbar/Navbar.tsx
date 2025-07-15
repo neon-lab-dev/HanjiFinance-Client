@@ -43,7 +43,7 @@ const Navbar = () => {
             <img
               src={ICONS.logoWithName}
               alt="HanjiFinance"
-              className="w-[85px] h-[58px]"
+              className="w-[52px] ms:w-[85px] h-[52px] ms:h-[58px]"
             />
           </Link>
 
@@ -57,13 +57,36 @@ const Navbar = () => {
                     item.isDropDown && setActiveDropdown(item.label)
                   }
                 >
-                  <button
+                 {
+                  item?.label === "Services" ?
+                   <button
                     onClick={() =>
                       item.isDropDown &&
                       setActiveDropdown((prev) =>
                         prev === item.label ? null : item.label
                       )
                     }
+                    className={`text-[15px] leading-[18px] cursor-pointer ${
+                      activeDropdown === item.label ? "text-primary-10" : ""
+                    } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
+                      location.pathname === item.path
+                        ? "text-primary-10 font-bold"
+                        : "text-neutral-15 font-medium"
+                    }`}
+                  >
+                    {item.label}
+                    {item.isDropDown && (
+                      <IoChevronDownSharp
+                        className={`text-[20px] transition-all duration-300 ease-in-out ${
+                          activeDropdown === item.label
+                            ? "rotate-180"
+                            : "rotate-0"
+                        }`}
+                      />
+                    )}
+                  </button>:
+                   <Link
+                   to={item.path}
                     className={`text-[15px] leading-[18px] ${
                       activeDropdown === item.label ? "text-primary-10" : ""
                     } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
@@ -82,7 +105,8 @@ const Navbar = () => {
                         }`}
                       />
                     )}
-                  </button>
+                  </Link>
+                 }
 
                   {item.isDropDown && (
                     <MegaMenu
