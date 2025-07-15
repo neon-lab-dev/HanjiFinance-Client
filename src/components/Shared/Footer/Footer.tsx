@@ -4,6 +4,7 @@ import Container from "../../Reusable/Container/Container";
 import { Link } from "react-router-dom";
 import { RxInstagramLogo } from "react-icons/rx";
 import { CiLinkedin } from "react-icons/ci";
+import { useState } from "react";
 
 const Footer = () => {
   const socialMediaDetails = [
@@ -20,6 +21,7 @@ const Footer = () => {
       href: "https://www.instagram.com/hanjifinance/",
     },
   ];
+
   const quickLinks = [
     {
       label: "About Us",
@@ -79,6 +81,23 @@ const Footer = () => {
       href: "mailto:info@hanjifinance.com",
     },
   ];
+
+  const accordingData = [
+    {
+      title: "SEBI Disclaimer",
+      description:
+        "Registration granted by the Securities and Exchange Board of India (SEBI) does not imply approval or guarantee of performance. Investments in securities markets are subject to market risks. Read all scheme-related documents carefully.",
+    },
+    {
+      title: "Investment Risk Disclosure",
+      description:
+        "Past performance is not indicative of future results. All returns are illustrative and not assured. Users should evaluate their risk appetite before acting on any information provided by Hanjifinance.",
+    },
+  ];
+
+  const [isAccordingOpen, setIsAccordingOpen] = useState<boolean>(false);
+
+  const handleToggle = () => setIsAccordingOpen(!isAccordingOpen);
   return (
     <div className="bg-gradient-footer py-14 font-Montserrat">
       <Container>
@@ -94,6 +113,7 @@ const Footer = () => {
               provide expert guidance, education, and personalized strategies to
               help you achieve your financial goals.
             </p>
+            {/* Social links */}
             <div className="flex items-center gap-6 mt-9">
               {socialMediaDetails?.map((item, index) => (
                 <a
@@ -105,6 +125,37 @@ const Footer = () => {
                   {item?.icon}
                 </a>
               ))}
+            </div>
+
+            <div className="flex flex-col w-full max-w-[412px] mt-[76px]">
+              <article className="">
+                <div className="cursor-pointer" onClick={handleToggle}>
+                  <h2 className="text-primary-25 text-[15px] font-semibold leading-[18px]">
+                    SEBI Disclaimer / Legal Notice
+                  </h2>
+                </div>
+
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    isAccordingOpen
+                      ? "max-h-[1000px] opacity-100 mt-10"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="flex flex-col gap-4">
+                    {accordingData.map((item, idx) => (
+                      <div key={idx}>
+                        <h3 className="text-neutral-90 text-[15px] font-semibold leading-[18px]">
+                          {item.title}
+                        </h3>
+                        <p className="text-neutral-90 text-sm leading-5 mt-2">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
 
