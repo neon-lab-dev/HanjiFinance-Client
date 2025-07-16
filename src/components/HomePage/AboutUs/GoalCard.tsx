@@ -13,10 +13,12 @@ const GoalCard: React.FC<GoalCardProps> = ({ icon, title, className = "" }) => {
 
   return (
     <div className={twMerge(baseClasses, className)}>
-      <img
-        src={typeof icon === "string" ? icon : undefined}
-        className="size-8 m-2"
-      />
+      <div className="p-2 bg-white rounded-full">
+        <img
+          src={typeof icon === "string" ? icon : undefined}
+          className="size-8"
+        />
+      </div>
       <p className="text-black ">{title}</p>
     </div>
   );

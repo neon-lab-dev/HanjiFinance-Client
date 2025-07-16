@@ -17,10 +17,31 @@ const Navbar = () => {
       path: "/services",
       isDropDown: true,
       dropdownLinks: [
-        { label: "Web Development", path: "/services/web" },
-        { label: "Mobile Development", path: "/services/mobile" },
-        { label: "SEO Services", path: "/services/seo" },
-      ],
+    {
+      label: "Wall Street Weekly",
+      path: "/newsletter-subscription",
+    },
+    {
+      label: "Boardroom Banter",
+      path: "/boardroom-banter",
+    },
+    {
+      label: "Financial Fashion",
+      path: "/financial-fashion",
+    },
+    {
+      label: "Brain Gains",
+      path: "/courses",
+    },
+    {
+      label: "Fund Management",
+      path: "/fund-management",
+    },
+    {
+      label: "Chat & Chill",
+      path: "/book-call",
+    },
+  ],
     },
     {
       label: "Contact Us",
@@ -43,7 +64,7 @@ const Navbar = () => {
             <img
               src={ICONS.logoWithName}
               alt="HanjiFinance"
-              className="w-[52px] ms:w-[85px] h-[52px] ms:h-[58px]"
+              className="w-[52px] md:w-[85px] h-[36px] md:h-[58px]"
             />
           </Link>
 

@@ -48,7 +48,12 @@ const Hero = () => {
       <img
         src={IMAGES.heroBgImg}
         alt="hero-image"
-        className="absolute -top-30 md:-top-20 xl:-top-15 left-0 w-full h-full object-cover z-0"
+        className="hidden xl:block absolute -top-30 lg:-top-20 xl:-top-15 left-0 w-full h-full object-fit z-0"
+      />
+      <img
+        src={IMAGES.heroMobileBg}
+        alt="hero-image"
+        className="absolute xl:hidden left-0 w-full h-fit object-fill z-0"
       />
       <div className="relative z-10 py-[68px]">
         <Container>
@@ -99,7 +104,7 @@ const Hero = () => {
             ))}
           </div>
         </Container>
-      </div>
+      </div> 
     </div>
   );
 };
