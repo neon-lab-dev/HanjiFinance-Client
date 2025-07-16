@@ -17,10 +17,31 @@ const Navbar = () => {
       path: "/services",
       isDropDown: true,
       dropdownLinks: [
-        { label: "Web Development", path: "/services/web" },
-        { label: "Mobile Development", path: "/services/mobile" },
-        { label: "SEO Services", path: "/services/seo" },
-      ],
+    {
+      label: "Wall Street Weekly",
+      path: "/newsletter-subscription",
+    },
+    {
+      label: "Boardroom Banter",
+      path: "/boardroom-banter",
+    },
+    {
+      label: "Financial Fashion",
+      path: "/financial-fashion",
+    },
+    {
+      label: "Brain Gains",
+      path: "/courses",
+    },
+    {
+      label: "Fund Management",
+      path: "/fund-management",
+    },
+    {
+      label: "Chat & Chill",
+      path: "/book-call",
+    },
+  ],
     },
     {
       label: "Contact Us",

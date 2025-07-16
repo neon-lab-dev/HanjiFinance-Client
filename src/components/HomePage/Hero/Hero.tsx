@@ -105,7 +105,6 @@ const Hero = () => {
           </div>
         </Container>
       </div> 
-      <div>lskdfnvo;svnoijn</div>
     </div>
   );
 };
