@@ -53,7 +53,7 @@ const Hero = () => {
       <img
         src={IMAGES.heroMobileBg}
         alt="hero-image"
-        className="absolute xl:hidden left-0 w-full h-fit object-fill z-0"
+        className="absolute xl:hidden left-0 w-full h-fit object-fill -z-100"
       />
       <div className="relative z-10 py-[68px]">
         <Container>
@@ -104,7 +104,7 @@ const Hero = () => {
             ))}
           </div>
         </Container>
-      </div> 
+      </div>
     </div>
   );
 };
