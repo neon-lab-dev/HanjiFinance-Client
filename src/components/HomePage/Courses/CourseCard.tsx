@@ -19,7 +19,7 @@ const CourseCard: React.FC<TCourseCard> = ({
   rating,
 }) => {
   return (
-    <div className="bg-white rounded-xl">
+    <div className="bg-white rounded-xl shadow-lg border border-neutral-98  ">
       <img src={image} alt="" className="rounded-t-xl w-full" />
       <div className="p-[21px] flex flex-col gap-4">
         <div className="flex items-center gap-2">

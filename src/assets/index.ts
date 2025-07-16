@@ -28,6 +28,7 @@ import hamburgerMenu from "./icons/hamburger-menu.svg"
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png"
+import heroMobileBg from "./images/hero-img-mobile.png"
 import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
@@ -39,6 +40,7 @@ export const IMAGES = {
   aboutUsBg,
   heroBgImg,
   heroBg,
+  heroMobileBg,
   courseDummyImage,
   dummyAvatar,
   coursesSectionBlur,

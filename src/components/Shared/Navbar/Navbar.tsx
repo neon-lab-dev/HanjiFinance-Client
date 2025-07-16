@@ -43,7 +43,7 @@ const Navbar = () => {
             <img
               src={ICONS.logoWithName}
               alt="HanjiFinance"
-              className="w-[52px] ms:w-[85px] h-[52px] ms:h-[58px]"
+              className="w-[52px] md:w-[85px] h-[36px] md:h-[58px]"
             />
           </Link>
 
