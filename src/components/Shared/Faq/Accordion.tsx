@@ -1,34 +1,38 @@
 import { useState } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
 
+
 const accordingData = [
   {
-    title: "What is the purpose of wireframing in design?",
+    title: "Are you SEBI-registered?",
     description:
-      "Wireframing outlines the basic structure and layout of a design, serving as a visual guide before detailed development.",
+      "Yes. Amandeep Singh Juneja is a SEBI-Registered Investment Adviser (RIA). Registration number will appear on every invoice and email once issued.",
   },
   {
-    title: "Why is user-centered design important?",
+    title: "Do you give stock tips?",
     description:
-      "User-centered design ensures products meet the needs and preferences of the end-users, enhancing usability and satisfaction.",
+      "No. We teach frameworks and offer goal-based advice. No intraday or speculative calls in any paid or free channel.",
   },
   {
-    title: "What role does contrast play in graphic design?",
+    title: "How are you compensated?",
     description:
-      "Contrast in graphic design emphasizes differences, making elements stand out and improving visual hierarchy.",
+      "100% fee-only. We do not accept commissions, referral fees, or brokerage kick-backs.",
   },
-
   {
-    title: `Define the term "responsive design" in web development.`,
+    title: "Can I get a refund on a digital course?",
     description:
-      "Responsive design ensures web pages adapt to various screen sizes, providing an optimal user experience on different devices.",
+      "Digital products are non-refundable once access is granted (see Refund Policy).",
   },
-
   {
-    title: "What is the significance of color theory in design?",
+    title: "How is my data protected?",
     description:
-      "Color theory guides the selection and combination of colors to evoke specific emotions, enhance readability, and create visually appealing designs.",
+      "We follow industry-standard encryption, store data on secure servers, and never sell personal info. Full details in our Privacy Policy.",
   },
+  {
+    title: "Is NPS / PPF / ELSS right for me?",
+    description:
+      "It depends on your goals, horizon, and risk profile. Book a 1-on-1 session or complete our risk-profiling questionnaire for personalised advice.",
+  },
 ];
 const Accordion = () => {
   const [isAccordingOpen, setIsAccordingOpen] = useState<number | null>(0);
