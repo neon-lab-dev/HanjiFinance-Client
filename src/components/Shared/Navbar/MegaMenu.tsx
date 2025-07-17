@@ -68,7 +68,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, links }) => {
           variants={menuVariants}
         >
           <motion.div
-            className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-neutral-99/80 border border-neutral-99/80 rounded-[2px] shadow shadow-neutral-98"
+            className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-neutral-99 border border-neutral-99/80 rounded-[2px] shadow shadow-neutral-98"
             variants={{
               hidden: { opacity: 0 },
               visible: { opacity: 1 },
@@ -78,7 +78,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, links }) => {
           {/* Menu Box */}
           <motion.div
             ref={menuRef}
-            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-neutral-99/80 text-neutral-15 rounded-xl p-2 flex flex-col shadow-md shadow-neutral-98"
+            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-neutral-99 text-neutral-15 rounded-xl p-2 flex flex-col shadow-md shadow-neutral-98"
           >
             {links.map((link) => (
               <MotionLink
