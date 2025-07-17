@@ -1,4 +1,4 @@
-// ICons
+// Icons
 import logo from "./icons/logo.png";
 import logoWithName from "./icons/logo-with-name.svg";
 import arrowDown from "./icons/arrow-down.svg";
@@ -33,6 +33,7 @@ import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
 import dummyAvatar from "./images/dummy-avatar.png";
+import notFound from "./images/404.png";
 
 
 export const IMAGES = {
@@ -42,6 +43,7 @@ export const IMAGES = {
   heroMobileBg,
   courseDummyImage,
   dummyAvatar,
+  notFound,
 };
 
 
