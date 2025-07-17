@@ -7,6 +7,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 import RefundAndCancellationPolicy from "../pages/RefundAndCancellationPolicy/RefundAndCancellationPolicy";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ClientGrievance from "../pages/ClientGrievance/ClientGrievance";
+import BoardroomBanter from "../pages/BoardroomBanter/BoardroomBanter";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/client-grievance-mechanism",
         element: <ClientGrievance />,
+      },
+      {
+        path: "/services/boardroom-banter",
+        element: <BoardroomBanter />,
       },
     ],
   },

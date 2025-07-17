@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface TextInputProps {
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   type?: string;
@@ -35,7 +35,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           defaultValue={defaultValue}
           ref={ref}
           disabled={isDisabled}
-          className={`px-[16px] py-[14px] rounded-lg bg-transparent border-2  focus:outline-none focus:border-neutral-25 transition duration-300 ${error ? "border-red-500" : "border-neutral-95"
+          className={`px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none focus:border-neutral-25 transition duration-300 ${error ? "border-red-500" : "border-neutral-95"
             }`}
           {...rest}
         />
