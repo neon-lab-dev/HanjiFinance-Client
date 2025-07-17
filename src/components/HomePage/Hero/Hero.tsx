@@ -3,6 +3,7 @@ import { ICONS, IMAGES } from "../../../assets";
 import { FaAngleRight } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 const Hero = () => {
   const services = [
@@ -44,7 +45,25 @@ const Hero = () => {
     },
   ];
 
-  const cardVariants = {
+  const logoVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const titleVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut", delay: 0.2 },
+    },
+  };
+
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
@@ -53,7 +72,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <img
         src={IMAGES.heroBgImg}
         alt="hero-image"
@@ -66,14 +85,22 @@ const Hero = () => {
       />
       <div className="relative z-10 py-[68px]">
         <Container>
-          <img
+          <motion.img
             src={ICONS.logo}
             alt="Hanjifinance"
             className="size-full xl:w-[550px] xl:h-[236px] mx-auto"
+            initial="hidden"
+            animate="visible"
+            variants={logoVariants}
           />
-          <h1 className="text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9">
+          <motion.h1
+            className="text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9"
+            initial="hidden"
+            animate="visible"
+            variants={titleVariants}
+          >
             Build Wealth, <br /> One Click at a Time
-          </h1>
+          </motion.h1>
 
           {/* All 6 services */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-11 lg:mt-[101px]">
@@ -83,7 +110,7 @@ const Hero = () => {
               const animationProps = {
                 initial: "hidden",
                 variants: cardVariants,
-                transition: { duration: 0.5, delay: (index % 3) * 0.2 },
+                transition: { duration: 0.5, delay: (index % 3) * 0.2 + 0.4 },
                 ...(isFirstRow
                   ? { animate: "visible" }
                   : {
