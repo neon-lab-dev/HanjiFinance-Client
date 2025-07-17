@@ -37,7 +37,7 @@ const Courses = () => {
     },
   ];
   return (
-    <div className="bg-gradient-course pt-[60px]">
+    <div className="bg-gradient-course pt-[60px] ">
       <Container>
         <SectionTitle heading="Courses That Grow Your Rupee" subHeading="Learn what matters, skip what doesn’t, made for real-world impact"/>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 mb-4 gap-6">
@@ -46,7 +46,7 @@ const Courses = () => {
           ))}
         </div>
       </Container>
-      <img src={IMAGES.coursesSectionBlur} alt="About Us" className="w-full" />
+       <div className="bg-gradient-course-blur h-[113px] w-full mt-16"></div>
     </div>
   );
 };
