@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
+import ReadyToInvest from "../../components/Shared/ReadyToInvest/ReadyToInvest";
 import { contents } from "./content.aboutUs";
 
 const AboutUs = () => {
@@ -8,7 +9,7 @@ const AboutUs = () => {
     <div className="font-Montserrat">
       <ReusableHero title="About Us" />
 
-      <div className="bg-gradient-terms-and-conditions py-[30px]">
+      <div className="bg-gradient-terms-and-conditions pt-[30px]">
         <Container>
           <div className="flex flex-col gap-8">
             {contents?.map((item, index) => (
@@ -61,7 +62,9 @@ const AboutUs = () => {
             ))}
           </div>
         </Container>
+          <div className="bg-gradient-section-blur h-[113px] w-full"></div>
       </div>
+      <ReadyToInvest />
     </div>
   );
 };

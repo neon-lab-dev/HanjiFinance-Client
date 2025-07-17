@@ -5,6 +5,7 @@ interface ReusableButtonProps {
   variant?: "primary" | "secondary";
   onClick?: () => void;
   className?: string;
+  type?: "button" | "submit" | "reset"; // ✅ added type
 }
 
 const Button: React.FC<ReusableButtonProps> = ({
@@ -12,9 +13,10 @@ const Button: React.FC<ReusableButtonProps> = ({
   variant = "secondary",
   onClick,
   className = "",
+  type = "button", // ✅ default to "button"
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] -tracking-[0.16px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 justify-center";
+    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 justify-center";
 
   const variantClasses =
     variant === "primary"
@@ -23,6 +25,7 @@ const Button: React.FC<ReusableButtonProps> = ({
 
   return (
     <button
+      type={type} // ✅ applied here
       onClick={onClick}
       className={twMerge(`${baseClasses} ${variantClasses}`, className)}
     >

@@ -32,7 +32,7 @@ const accordingData = [
     title: "Is NPS / PPF / ELSS right for me?",
     description:
       "It depends on your goals, horizon, and risk profile. Book a 1-on-1 session or complete our risk-profiling questionnaire for personalised advice.",
-  },
+},
 ];
 const Accordion = () => {
   const [isAccordingOpen, setIsAccordingOpen] = useState<number | null>(0);

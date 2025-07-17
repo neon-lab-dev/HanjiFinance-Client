@@ -1,7 +1,6 @@
 import SectionTitle from "../../Reusable/Heading/Heading";
 import Container from "../../Reusable/Container/Container";
 import Accordion from "./Accordion";
-import { IMAGES } from "../../../assets";
 
 const Faq = () => {
   return (
@@ -10,7 +9,7 @@ const Faq = () => {
         <SectionTitle heading="Your questions matter!" />
         <Accordion />
       </Container>
-      <img src={IMAGES.coursesSectionBlur} alt="About Us" className="w-full" />
+       <div className="bg-gradient-faq-blur h-[168px] w-full"></div>
     </div>
   );
 };
