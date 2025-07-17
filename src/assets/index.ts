@@ -28,6 +28,7 @@ import hamburgerMenu from "./icons/hamburger-menu.svg"
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png"
+import boardroomHeroBgImg from "./images/boardroom-hero-bg.png"
 import heroMobileBg from "./images/hero-img-mobile.png"
 import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
@@ -38,6 +39,7 @@ import dummyAvatar from "./images/dummy-avatar.png";
 export const IMAGES = {
   aboutUsBg,
   heroBgImg,
+  boardroomHeroBgImg,
   heroBg,
   heroMobileBg,
   courseDummyImage,
