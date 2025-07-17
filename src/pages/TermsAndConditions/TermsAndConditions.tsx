@@ -1,55 +1,79 @@
+import { motion } from "framer-motion";
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
 import { contents } from "./contents.tc";
+import {
+  containerVariants,
+  itemVariants,
+} from "../../utils/aboutUsPageAnimation";
 
 const TermsAndConditions = () => {
   return (
     <div className="font-Montserrat">
       <ReusableHero title="Terms and Conditions" />
 
-      <div className="bg-gradient-terms-and-conditions py-[30px]">
+      <div className="bg-gradient-terms-and-conditions py-[30px] overflow-hidden">
         <Container>
           <div className="flex flex-col gap-8">
             {contents?.map((item, index) => (
-              <div key={index}>
-                <h1 className="text-secondary-15 text-xl font-bold leading-6">
+              <motion.div
+                key={index}
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                className="text-neutral-20 text-sm"
+              >
+                <motion.h1
+                  className="text-secondary-15 text-xl font-bold leading-6"
+                  variants={itemVariants}
+                >
                   {item?.title}
-                </h1>
+                </motion.h1>
+
                 {item?.description && (
-                  <p
-                    className="text-neutral-20 text-sm leading-5 mt-4"
+                  <motion.p
+                    className="leading-5 mt-4"
                     dangerouslySetInnerHTML={{ __html: item.description }}
+                    variants={itemVariants}
                   />
                 )}
+
                 {item?.pointersTitle && (
-                  <p className="text-neutral-20 text-sm font-medium leading-5 mt-2">
+                  <motion.p
+                    className="font-medium leading-5 mt-2"
+                    variants={itemVariants}
+                  >
                     {item?.pointersTitle}
-                  </p>
+                  </motion.p>
                 )}
+
                 {item?.pointersSubTitle && (
-                  <p className="text-neutral-20 text-sm leading-5 mt-1">
+                  <motion.p className="leading-5 mt-1" variants={itemVariants}>
                     {item?.pointersSubTitle}
-                  </p>
+                  </motion.p>
                 )}
+
                 {item?.pointers && (
-                  <div className="flex flex-col">
+                  <motion.div className="flex flex-col" variants={itemVariants}>
                     {item?.pointers?.map((pointer, index) => (
                       <div
                         key={index}
-                        className="text-neutral-20 text-sm leading-5 mt-1 flex items-center gap-3"
+                        className="leading-5 mt-1 flex items-center gap-3"
                       >
                         <div className="size-1 rounded-full bg-neutral-30"></div>{" "}
                         {pointer}
                       </div>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
+
                 {item?.footerText && (
-                  <p className="text-neutral-20 text-sm leading-5 mt-1">
+                  <motion.p className="leading-5 mt-1" variants={itemVariants}>
                     {item?.footerText}
-                  </p>
+                  </motion.p>
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         </Container>

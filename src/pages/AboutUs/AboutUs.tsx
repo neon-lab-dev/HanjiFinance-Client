@@ -1,34 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
 import ReadyToInvest from "../../components/Shared/ReadyToInvest/ReadyToInvest";
 import { contents } from "./content.aboutUs";
-
+import {
+  containerVariants,
+  itemVariants,
+} from "../../utils/aboutUsPageAnimation";
 const AboutUs = () => {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <div className="font-Montserrat">
       <ReusableHero title="About Us" />
