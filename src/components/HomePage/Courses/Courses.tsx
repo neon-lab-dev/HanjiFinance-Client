@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { IMAGES } from "../../../assets";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
@@ -36,17 +38,78 @@ const Courses = () => {
       rating: 4.5,
     },
   ];
+
+  const titleVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const cardContainerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const blurVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 1, ease: "easeOut", delay: 0.5 },
+    },
+  };
+
   return (
-    <div className="bg-gradient-course pt-[60px] ">
+    <div className="bg-gradient-course pt-[60px] overflow-hidden">
       <Container>
-        <SectionTitle heading="Courses That Grow Your Rupee" subHeading="Learn what matters, skip what doesn’t, made for real-world impact"/>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 mb-4 gap-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={titleVariants}
+        >
+          <SectionTitle
+            heading="Courses That Grow Your Rupee"
+            subHeading="Learn what matters, skip what doesn’t, made for real-world impact"
+          />
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 mb-4 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={cardContainerVariants}
+        >
           {courses.map((course, index) => (
-            <CourseCard key={index} {...course} />
+            <motion.div key={index} variants={cardVariants}>
+              <CourseCard {...course} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Container>
-       <div className="bg-gradient-course-blur h-[113px] w-full mt-16"></div>
+      <motion.div
+        className="bg-gradient-course-blur h-[113px] w-full mt-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.8 }}
+        variants={blurVariants}
+      ></motion.div>
     </div>
   );
 };
