@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import { FaAngleRight } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const services = [
@@ -43,6 +44,14 @@ const Hero = () => {
     },
   ];
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
+
   return (
     <div className="relative">
       <img
@@ -66,42 +75,60 @@ const Hero = () => {
             Build Wealth, <br /> One Click at a Time
           </h1>
 
+          {/* All 6 services */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-11 lg:mt-[101px]">
-            {services?.map((service) => (
-              <div
-                key={service?.title}
-                className="bg-white border border-neutral-98 rounded-lg flex justify-between"
-              >
-                <div className="flex flex-col gap-6 p-6">
-                  <div className="bg-neutral-100 p-3 rounded-lg flex items-center justify-center w-fit">
-                    <img src={service?.icon} alt="" className="size-9" />
-                  </div>
-                  <div>
-                    <h1 className="text-neutral-10 text-[17px] font-semibold leading-5">
-                      {service?.title}
-                    </h1>
-                    <p className="text-neutral-50 text-sm leading-5 mt-3">
-                      {service?.description}
-                    </p>
+            {/* Service card */}
+            {services?.map((service, index) => {
+              const isFirstRow = index < 3;
+              const animationProps = {
+                initial: "hidden",
+                variants: cardVariants,
+                transition: { duration: 0.5, delay: (index % 3) * 0.2 },
+                ...(isFirstRow
+                  ? { animate: "visible" }
+                  : {
+                      whileInView: "visible",
+                      viewport: { once: true, amount: 0.5 },
+                    }),
+              };
+
+              return (
+                <motion.div
+                  key={service?.title}
+                  className="bg-white border border-neutral-98 rounded-lg flex justify-between"
+                  {...animationProps}
+                >
+                  <div className="flex flex-col gap-6 p-6">
+                    <div className="bg-neutral-100 p-3 rounded-lg flex items-center justify-center w-fit">
+                      <img src={service?.icon} alt="" className="size-9" />
+                    </div>
+                    <div>
+                      <h1 className="text-neutral-10 text-[17px] font-semibold leading-5">
+                        {service?.title}
+                      </h1>
+                      <p className="text-neutral-50 text-sm leading-5 mt-3">
+                        {service?.description}
+                      </p>
+                    </div>
+
+                    <Link
+                      to={service?.path}
+                      className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1"
+                    >
+                      Learn More <FaAngleRight />
+                    </Link>
                   </div>
 
-                  <Link
-                    to={service?.path}
-                    className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1"
-                  >
-                    Learn More <FaAngleRight />
-                  </Link>
-                </div>
-
-                <div className="bg-neutral-99 px-[7px] flex items-center justify-center rounded-r-lg h-full">
-                  <img
-                    src={ICONS.logo}
-                    alt="Hanjifinance"
-                    className="w-[64px] h-[30px] mx-auto opacity-35"
-                  />
-                </div>
-              </div>
-            ))}
+                  <div className="bg-neutral-99 px-[7px] flex items-center justify-center rounded-r-lg h-full">
+                    <img
+                      src={ICONS.logo}
+                      alt="Hanjifinance"
+                      className="w-[64px] h-[30px] mx-auto opacity-35"
+                    />
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </Container>
       </div>

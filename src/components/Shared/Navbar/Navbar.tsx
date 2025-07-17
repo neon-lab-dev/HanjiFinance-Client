@@ -17,31 +17,31 @@ const Navbar = () => {
       path: "/services",
       isDropDown: true,
       dropdownLinks: [
-    {
-      label: "Wall Street Weekly",
-      path: "/newsletter-subscription",
-    },
-    {
-      label: "Boardroom Banter",
-      path: "/boardroom-banter",
-    },
-    {
-      label: "Financial Fashion",
-      path: "/financial-fashion",
-    },
-    {
-      label: "Brain Gains",
-      path: "/courses",
-    },
-    {
-      label: "Fund Management",
-      path: "/fund-management",
-    },
-    {
-      label: "Chat & Chill",
-      path: "/book-call",
-    },
-  ],
+        {
+          label: "Wall Street Weekly",
+          path: "/newsletter-subscription",
+        },
+        {
+          label: "Boardroom Banter",
+          path: "/boardroom-banter",
+        },
+        {
+          label: "Financial Fashion",
+          path: "/financial-fashion",
+        },
+        {
+          label: "Brain Gains",
+          path: "/courses",
+        },
+        {
+          label: "Fund Management",
+          path: "/fund-management",
+        },
+        {
+          label: "Chat & Chill",
+          path: "/book-call",
+        },
+      ],
     },
     {
       label: "Contact Us",
@@ -78,56 +78,56 @@ const Navbar = () => {
                     item.isDropDown && setActiveDropdown(item.label)
                   }
                 >
-                 {
-                  item?.label === "Services" ?
-                   <button
-                    onClick={() =>
-                      item.isDropDown &&
-                      setActiveDropdown((prev) =>
-                        prev === item.label ? null : item.label
-                      )
-                    }
-                    className={`text-[15px] leading-[18px] cursor-pointer ${
-                      activeDropdown === item.label ? "text-primary-10" : ""
-                    } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
-                      location.pathname === item.path
-                        ? "text-primary-10 font-bold"
-                        : "text-neutral-15 font-medium"
-                    }`}
-                  >
-                    {item.label}
-                    {item.isDropDown && (
-                      <IoChevronDownSharp
-                        className={`text-[20px] transition-all duration-300 ease-in-out ${
-                          activeDropdown === item.label
-                            ? "rotate-180"
-                            : "rotate-0"
-                        }`}
-                      />
-                    )}
-                  </button>:
-                   <Link
-                   to={item.path}
-                    className={`text-[15px] leading-[18px] ${
-                      activeDropdown === item.label ? "text-primary-10" : ""
-                    } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
-                      location.pathname === item.path
-                        ? "text-primary-10 font-bold"
-                        : "text-neutral-15 font-medium"
-                    }`}
-                  >
-                    {item.label}
-                    {item.isDropDown && (
-                      <IoChevronDownSharp
-                        className={`text-[20px] transition-all duration-300 ease-in-out ${
-                          activeDropdown === item.label
-                            ? "rotate-180"
-                            : "rotate-0"
-                        }`}
-                      />
-                    )}
-                  </Link>
-                 }
+                  {item?.label === "Services" ? (
+                    <button
+                      onClick={() =>
+                        item.isDropDown &&
+                        setActiveDropdown((prev) =>
+                          prev === item.label ? null : item.label
+                        )
+                      }
+                      className={`text-[15px] leading-[18px] cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 ${
+                        activeDropdown === item.label ? "text-primary-10" : ""
+                      } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
+                        location.pathname === item.path
+                          ? "text-primary-10 font-bold"
+                          : "text-neutral-15 font-medium"
+                      }`}
+                    >
+                      {item.label}
+                      {item.isDropDown && (
+                        <IoChevronDownSharp
+                          className={`text-[20px] transition-all duration-300 ease-in-out ${
+                            activeDropdown === item.label
+                              ? "rotate-180"
+                              : "rotate-0"
+                          }`}
+                        />
+                      )}
+                    </button>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={`text-[15px] leading-[18px] transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 ${
+                        activeDropdown === item.label ? "text-primary-10" : ""
+                      } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
+                        location.pathname === item.path
+                          ? "text-primary-10 font-bold"
+                          : "text-neutral-15 font-medium"
+                      }`}
+                    >
+                      {item.label}
+                      {item.isDropDown && (
+                        <IoChevronDownSharp
+                          className={`text-[20px] transition-all duration-300 ease-in-out ${
+                            activeDropdown === item.label
+                              ? "rotate-180"
+                              : "rotate-0"
+                          }`}
+                        />
+                      )}
+                    </Link>
+                  )}
 
                   {item.isDropDown && (
                     <MegaMenu
@@ -142,7 +142,11 @@ const Navbar = () => {
 
             {iconNavLinks.map((item) => (
               <Link key={item.path} to={item.path}>
-                <img src={item.icons} alt="icon" className="size-6" />
+                <img
+                  src={item.icons}
+                  alt="icon"
+                  className="size-6 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                />
               </Link>
             ))}
 

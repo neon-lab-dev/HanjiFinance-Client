@@ -16,12 +16,12 @@ const Button: React.FC<ReusableButtonProps> = ({
   type = "button", // ✅ default to "button"
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 justify-center";
+    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold cursor-pointer flex items-center gap-1 justify-center transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95";
 
   const variantClasses =
     variant === "primary"
       ? "bg-primary-20 text-white border-transparent p-4"
-      : "border-2 border-primary-20 text-primary-20 bg-transparent px-4 py-[10px]";
+      : "border-2 border-primary-20 text-primary-20 bg-transparent px-4 py-[10px] hover:bg-primary-20 hover:text-white";
 
   return (
     <button
