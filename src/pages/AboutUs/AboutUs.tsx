@@ -62,7 +62,7 @@ const AboutUs = () => {
             ))}
           </div>
         </Container>
-          <div className="bg-gradient-section-blur h-[113px] w-full"></div>
+        <div className="bg-gradient-section-blur h-[113px] w-full"></div>
       </div>
       <ReadyToInvest />
     </div>

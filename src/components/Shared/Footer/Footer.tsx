@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { RxInstagramLogo } from "react-icons/rx";
 import { CiLinkedin } from "react-icons/ci";
 import { useState } from "react";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 const Footer = () => {
   const socialMediaDetails = [
@@ -98,11 +99,37 @@ const Footer = () => {
   const [isAccordingOpen, setIsAccordingOpen] = useState<boolean>(false);
 
   const handleToggle = () => setIsAccordingOpen(!isAccordingOpen);
+
+  const footerContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const columnVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
   return (
-    <div className="bg-gradient-footer py-14 font-Montserrat">
+    <motion.div
+      className="bg-gradient-footer py-14 font-Montserrat"
+      variants={footerContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
       <Container>
         <div className="flex flex-col xl:flex-row gap-[76px] xl:gap-0 justify-between">
-          <div>
+          {/* Left Column */}
+          <motion.div variants={columnVariants}>
             <img
               src={ICONS.logoWithName}
               alt="Hanjifinance"
@@ -129,39 +156,47 @@ const Footer = () => {
 
             {/* Accordion */}
             <div className="flex flex-col w-full max-w-[412px] mt-[76px]">
-              <article className="">
+              <article>
                 <div className="cursor-pointer" onClick={handleToggle}>
                   <h2 className="text-primary-25 text-[15px] font-semibold leading-[18px]">
                     SEBI Disclaimer / Legal Notice
                   </h2>
                 </div>
-
-                <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    isAccordingOpen
-                      ? "max-h-[1000px] opacity-100 mt-10"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="flex flex-col gap-4">
-                    {accordingData.map((item, idx) => (
-                      <div key={idx}>
-                        <h3 className="text-neutral-90 text-[15px] font-semibold leading-[18px]">
-                          {item.title}
-                        </h3>
-                        <p className="text-neutral-90 text-sm leading-5 mt-2">
-                          {item.description}
-                        </p>
+                <AnimatePresence initial={false}>
+                  {isAccordingOpen && (
+                    <motion.div
+                      key="content"
+                      initial="collapsed"
+                      animate="open"
+                      exit="collapsed"
+                      variants={{
+                        open: { opacity: 1, height: "auto", marginTop: "40px" },
+                        collapsed: { opacity: 0, height: 0, marginTop: "0px" },
+                      }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-4">
+                        {accordingData.map((item, idx) => (
+                          <div key={idx}>
+                            <h3 className="text-neutral-90 text-[15px] font-semibold leading-[18px]">
+                              {item.title}
+                            </h3>
+                            <p className="text-neutral-90 text-sm leading-5 mt-2">
+                              {item.description}
+                            </p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </article>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Quick Links */}
-          <div>
+          {/* Quick Links Column */}
+          <motion.div variants={columnVariants}>
             <h1 className="text-neutral-90 text-[17px] font-semibold leading-5">
               Quick Links
             </h1>
@@ -176,10 +211,10 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Contact Info */}
-          <div>
+          {/* Contact Info Column */}
+          <motion.div variants={columnVariants}>
             <h1 className="text-neutral-90 text-[17px] font-semibold leading-5">
               Contact Us
             </h1>
@@ -209,10 +244,10 @@ const Footer = () => {
                 )
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
-    </div>
+    </motion.div>
   );
 };
 

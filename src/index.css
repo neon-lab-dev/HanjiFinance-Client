@@ -185,3 +185,18 @@
   height: 12px;
   transform: translateY(-2px);
 }
+
+
+/* src/index.css */
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

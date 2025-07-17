@@ -27,9 +27,9 @@ const GotNews = () => {
         />
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 flex flex-col items-center "
+          className="space-y-8 flex flex-col items-center w-full "
         >
-          <div className="flex justify-between gap-6 w-lg">
+          <div className="flex justify-between gap-6 w-lg ">
             <TextInput
               isRequired={false}
               placeholder="Enter your valid coupon Code"
@@ -40,9 +40,9 @@ const GotNews = () => {
             />
             <Button
               type="submit"
-              label="Proceed"
+              label="Proceed "
               variant="secondary"
-              className="py-4 px-8 leading-[18px]"
+              classNames="px-4 py-[14px]"
             />
           </div>
         </form>
