@@ -3,10 +3,10 @@ import { twMerge } from "tailwind-merge";
 
 interface SectionTitleProps {
   heading: string;
-  subHeading?: string;    
-  color?: string;            
-  subtextColor?: string;     
-  className?: string;    
+  subHeading?: string;
+  color?: string;
+  subtextColor?: string;
+  className?: string;
 }
 
 const SectionTitle: React.FC<SectionTitleProps> = ({
@@ -17,7 +17,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
   className = "",
 }) => {
   const headingClasses = twMerge(
-    "text-center -tracking-[0.16px] text-[32px] font-bold leading-[36px] mb-3",
+    "text-center -tracking-[0.16px] text-[32px] font-bold leading-[36px] mb-3 capitalize",
     color,
     className
   );
