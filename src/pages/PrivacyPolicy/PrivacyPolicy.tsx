@@ -39,12 +39,12 @@ const PrivacyPolicy = () => {
                   />
                 )}
 
-                <div>
+                <div className="text-neutral-20 text-sm">
                   {item?.details?.map((detail: any, index: number) => (
                     <div key={index}>
                       {detail?.pointersTitle && (
                         <motion.p
-                          className="text-neutral-20 text-sm font-medium leading-5 mt-2"
+                          className="font-medium leading-5 mt-2"
                           variants={itemVariants}
                         >
                           {detail?.pointersTitle}
@@ -52,7 +52,7 @@ const PrivacyPolicy = () => {
                       )}
                       {detail?.pointersSubTitle && (
                         <motion.p
-                          className="text-neutral-20 text-sm leading-5 mt-1"
+                          className="leading-5 mt-1"
                           variants={itemVariants}
                         >
                           {detail?.pointersSubTitle}
@@ -67,7 +67,7 @@ const PrivacyPolicy = () => {
                             (pointer: string, index: number) => (
                               <div
                                 key={index}
-                                className="text-neutral-20 text-sm leading-5 mt-1 flex items-center gap-3"
+                                className="leading-5 mt-1 flex items-center gap-3"
                               >
                                 <div className="size-1 rounded-full bg-neutral-30"></div>{" "}
                                 {pointer}
@@ -82,7 +82,7 @@ const PrivacyPolicy = () => {
 
                 {item?.footerText && (
                   <motion.p
-                    className="text-neutral-20 text-sm leading-5 mt-1"
+                    className="leading-5 mt-1"
                     variants={itemVariants}
                   >
                     {item?.footerText}
