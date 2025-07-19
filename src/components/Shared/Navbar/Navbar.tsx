@@ -23,7 +23,7 @@ const Navbar = () => {
         },
         {
           label: "Boardroom Banter",
-          path: "/boardroom-banter",
+          path: "services/boardroom-banter",
         },
         {
           label: "Financial Fashion",
