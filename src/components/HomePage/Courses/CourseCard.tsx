@@ -80,7 +80,7 @@ const CourseCard: React.FC<TCourseCard> = ({
             </div>
           </div>
         </div>
-        <Button label="Enroll Now" variant="primary" className="w-full" />
+        <Button label="Enroll Now" variant="primary" classNames="w-full" />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ICONS, IMAGES } from "../../../assets";
+import { ICONS } from "../../../assets";
 import { FaAngleRight } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
 

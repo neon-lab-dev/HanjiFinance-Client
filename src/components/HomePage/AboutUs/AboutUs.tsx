@@ -196,7 +196,7 @@ const AboutUs = () => {
                 <Button
                   variant="primary"
                   label="Book 1 on 1 call with me"
-                  className="w-full sm:w-fit"
+                  classNames="w-full sm:w-fit"
                 />
               </motion.div>
             </motion.div>
