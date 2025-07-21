@@ -155,7 +155,7 @@ const Footer = () => {
             </div>
 
             {/* Accordion */}
-            <div className="flex flex-col w-full w-fit max-w-[412px] mt-[76px]">
+            <div className="flex flex-col w-fit max-w-[412px] mt-[76px]">
               <article>
                 <div className="cursor-pointer" onClick={handleToggle}>
                   <h2 className="text-primary-25 text-[15px] font-semibold leading-[18px]">
