@@ -55,7 +55,7 @@ const ReadyToInvest = () => {
             type="submit"
             variant="primary"
             label="Subscribe For Free!"
-            classNames="px-32"
+            classNames="w-md px-32"
           />
         </form>
       </Container>

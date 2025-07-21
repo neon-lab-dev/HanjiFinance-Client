@@ -89,7 +89,7 @@ const AboutUs = () => {
                 <div className="bg-gradient-profile-picture size-[262px] rounded-full p-1">
                   <div className="bg-white rounded-full p-4">
                     <img
-                      src={IMAGES.dummyAvatar}
+                      src={IMAGES.avatar}
                       alt=""
                       className="rounded-full"
                     />

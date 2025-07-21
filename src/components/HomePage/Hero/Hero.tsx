@@ -12,13 +12,13 @@ const Hero = () => {
       icon: ICONS.email,
       title: "Wall Street Weekly",
       description: "Subscribe to our newsletter",
-      path: "/newsletter-subscription",
+      path: "/services/wall-street-weekly",
     },
     {
       icon: ICONS.whatsapp,
       title: "Boardroom Banter",
       description: "Join our WhatsApp group",
-      path: "/boardroom-banter",
+      path: "/services/boardroom-banter",
     },
     {
       icon: ICONS.financialFashion,

@@ -33,7 +33,7 @@ import heroMobileBg from "./images/hero-img-mobile.png"
 import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
-import dummyAvatar from "./images/dummy-avatar.png";
+import avatar from "./images/avatar.jpg";
 import notFound from "./images/404.png";
 
 
@@ -44,7 +44,7 @@ export const IMAGES = {
   heroBg,
   heroMobileBg,
   courseDummyImage,
-  dummyAvatar,
+  avatar,
   notFound,
 };
 

@@ -44,26 +44,26 @@ const Footer = () => {
       label: "Client Grievance Redressal Mechanism",
       path: "/client-grievance-mechanism",
     },
-    {
-      label: "Wall Street Weekly",
-      path: "/wall-street-weekly",
-    },
-    {
-      label: "Boardroom Banter",
-      path: "/boardroom-banter",
-    },
-    {
-      label: "Financial Fashion",
-      path: "/financial-fashion",
-    },
-    {
-      label: "Brain Gains",
-      path: "/brain-gains",
-    },
-    {
-      label: "Fund Management",
-      path: "/fund-management",
-    },
+    // {
+    //   label: "Wall Street Weekly",
+    //   path: "/wall-street-weekly",
+    // },
+    // {
+    //   label: "Boardroom Banter",
+    //   path: "/boardroom-banter",
+    // },
+    // {
+    //   label: "Financial Fashion",
+    //   path: "/financial-fashion",
+    // },
+    // {
+    //   label: "Brain Gains",
+    //   path: "/brain-gains",
+    // },
+    // {
+    //   label: "Fund Management",
+    //   path: "/fund-management",
+    // },
   ];
 
   const contactDetails = [
@@ -155,7 +155,7 @@ const Footer = () => {
             </div>
 
             {/* Accordion */}
-            <div className="flex flex-col w-full max-w-[412px] mt-[76px]">
+            <div className="flex flex-col w-fit max-w-[412px] mt-[76px]">
               <article>
                 <div className="cursor-pointer" onClick={handleToggle}>
                   <h2 className="text-primary-25 text-[15px] font-semibold leading-[18px]">
@@ -205,7 +205,7 @@ const Footer = () => {
                 <Link
                   key={item?.label}
                   to={item?.path}
-                  className="text-neutral-90 text-[15px] leading-6 hover:underline max-w-[230px]"
+                  className="text-neutral-90 text-[15px] leading-6 hover:underline w-fit max-w-[230px]"
                 >
                   {item?.label}
                 </Link>
@@ -224,7 +224,7 @@ const Footer = () => {
                   <a
                     key={index}
                     href={item?.href}
-                    className={`text-neutral-90 text-[15px] leading-[18px] max-w-[372px] hover:underline flex gap-4 ${
+                    className={`text-neutral-90 text-[15px] leading-[18px] w-fit max-w-[372px] hover:underline flex gap-4 ${
                       index === 0 ? "items-start" : "items-center"
                     }`}
                   >
