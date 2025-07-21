@@ -35,6 +35,7 @@ import seriousCult from "./icons/serious-cult.svg";
 import free from "./icons/free.svg";
 import mindset from "./icons/mindset.svg";
 import calender from "./icons/calender.svg";
+import gMeet from "./icons/g-meet.png";
 
 
 
@@ -48,6 +49,7 @@ import courseDummyImage from "./images/course-dummy-image.png";
 import avatar from "./images/avatar.jpg";
 import notFound from "./images/404.png";
 import wallStreetWeeklyHeroImg from "./images/wall-street-weekly-hero-img.png";
+import ChatAndChillHeroImg from "./images/chat-and-chil-hero-bgl.png";
 
 
 export const IMAGES = {
@@ -60,6 +62,7 @@ export const IMAGES = {
   avatar,
   notFound,
   wallStreetWeeklyHeroImg,
+  ChatAndChillHeroImg,
 };
 
 
@@ -100,4 +103,5 @@ export const ICONS = {
   free,
   mindset,
   calender,
+  gMeet,
 };

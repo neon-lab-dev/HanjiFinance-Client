@@ -6,7 +6,7 @@ const FormInstruction = ({
   instructions: { icon: string; text: string }[];
 }) => {
   return (
-    <div className="bg-surface-75 p-6 rounded-tl-[20px] w-[40%]">
+    <div className="bg-surface-75 p-6 rounded-l-[20px] w-[40%]">
       <h1 className="text-neutral-30 text-xl font-bold leading-6">{title}</h1>
       <div className="flex flex-col gap-4 mt-8 w-full">
         {instructions.map((item) => (

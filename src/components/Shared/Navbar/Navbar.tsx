@@ -19,7 +19,7 @@ const Navbar = () => {
       dropdownLinks: [
         {
           label: "Wall Street Weekly",
-          path: "/newsletter-subscription",
+          path: "/services/wall-street-weekly",
         },
         {
           label: "Boardroom Banter",
@@ -39,7 +39,7 @@ const Navbar = () => {
         },
         {
           label: "Chat & Chill",
-          path: "/book-call",
+          path: "/services/chat-and-chill",
         },
       ],
     },
