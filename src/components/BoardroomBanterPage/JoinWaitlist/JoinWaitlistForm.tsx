@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Textarea from "../../Reusable/TextArea/TextArea";
 import Button from "../../Reusable/Button/Button";
+import FormInstruction from "../../Reusable/FormInstruction/FormInstruction";
 
 type TFormValues = {
   name: string;
@@ -95,23 +96,10 @@ const JoinWaitlistForm = () => {
   return (
     <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex mt-9">
       {/* Left Section */}
-      <div className="bg-surface-75 p-6 rounded-tl-[20px] w-[40%]">
-        <h1 className="text-neutral-30 text-xl font-bold leading-6">
-          How the Waitlist Works
-        </h1>
-        <div className="flex flex-col gap-4 mt-8">
-          {instructions.map((item) => (
-            <div key={item.text} className="flex items-center gap-2">
-              <div className="bg-surface-30 size-10 p-2 rounded-full flex items-center justify-center">
-                <img src={item.icon} alt="" />
-              </div>
-              <p className="text-neutral-30 text-sm font-medium leading-[18px]">
-                {item.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <FormInstruction
+        title="How the Waitlist Works?"
+        instructions={instructions}
+      />
 
       {/* Right Section - Form */}
       <div className="p-6 rounded-tr-[20px] w-[60%]">
