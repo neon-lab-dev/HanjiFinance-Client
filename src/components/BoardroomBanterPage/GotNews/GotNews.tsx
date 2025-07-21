@@ -22,14 +22,14 @@ const GotNews = () => {
     <div className="bg-gradient-good-news pt-[60px] font-Montserrat">
       <Container>
         <SectionTitle
-          heading="You got the good news? "
+          heading="You got the good news?"
           subHeading="Put in your special code & proceed to join"
         />
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 flex flex-col items-center w-full "
+          className="space-y-8 flex flex-col items-center w-full"
         >
-          <div className="flex justify-between gap-6 w-lg ">
+          <div className="flex items-center justify-between gap-6 w-lg">
             <TextInput
               isRequired={false}
               placeholder="Enter your valid coupon Code"
@@ -42,7 +42,7 @@ const GotNews = () => {
               type="submit"
               label="Proceed "
               variant="secondary"
-              classNames="px-4 py-[14px]"
+              classNames="px-4 py-[14px] h-fit"
             />
           </div>
         </form>

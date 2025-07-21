@@ -1,68 +1,97 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { motion } from "framer-motion";
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
 import ReadyToInvest from "../../components/Shared/ReadyToInvest/ReadyToInvest";
 import { contents } from "./content.aboutUs";
-
+import {
+  containerVariants,
+  itemVariants,
+} from "../../utils/aboutUsPageAnimation";
 const AboutUs = () => {
   return (
     <div className="font-Montserrat">
       <ReusableHero title="About Us" />
 
-      <div className="bg-gradient-terms-and-conditions pt-[30px]">
+      <div className="bg-gradient-terms-and-conditions pt-[30px] overflow-hidden">
         <Container>
           <div className="flex flex-col gap-8">
             {contents?.map((item, index) => (
-              <div key={index}>
-                <h1 className="text-secondary-15 text-xl font-bold leading-6">
+              <motion.div
+                key={index}
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <motion.h1
+                  className="text-secondary-15 text-xl font-bold leading-6"
+                  variants={itemVariants}
+                >
                   {item?.title}
-                </h1>
+                </motion.h1>
                 {item?.description && (
-                  <p
+                  <motion.p
                     className="text-neutral-20 text-sm leading-5 mt-4"
                     dangerouslySetInnerHTML={{ __html: item.description }}
+                    variants={itemVariants}
                   />
                 )}
-                <div>
+                <div className="text-neutral-20 text-sm">
                   {item?.details?.map((detail: any, index: number) => (
                     <div key={index}>
                       {detail?.pointersMainHeading && (
-                        <p className="text-neutral-20 text-sm font-semibold leading-5 mt-2">
+                        <motion.p
+                          className="font-semibold leading-5 mt-2"
+                          variants={itemVariants}
+                        >
                           {detail?.pointersMainHeading}
-                        </p>
+                        </motion.p>
                       )}
                       {detail?.pointersTitle && (
-                        <p className="text-neutral-20 text-sm font-medium leading-5 mt-2">
+                        <motion.p
+                          className="font-medium leading-5 mt-2"
+                          variants={itemVariants}
+                        >
                           {detail?.pointersTitle}
-                        </p>
+                        </motion.p>
                       )}
                       {detail?.pointersSubTitle && (
-                        <p className="text-neutral-20 text-sm leading-5 mt-1">
+                        <motion.p
+                          className="leading-5 mt-1"
+                          variants={itemVariants}
+                        >
                           {detail?.pointersSubTitle}
-                        </p>
+                        </motion.p>
                       )}
                       {detail?.pointers && (
-                        <div className="flex flex-col mt-4">
+                        <motion.div
+                          className="flex flex-col mt-4"
+                          variants={itemVariants}
+                        >
                           {detail?.pointers?.map(
                             (pointer: string, index: number) => (
-                              <div
-                                key={index}
-                                className="text-neutral-20 text-sm leading-5"
-                              >
+                              <div key={index} className="leading-5">
                                 {pointer}
                               </div>
                             )
                           )}
-                        </div>
+                        </motion.div>
                       )}
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </Container>
-        <div className="bg-gradient-section-blur h-[113px] w-full"></div>
+        <motion.div
+          className="bg-gradient-section-blur h-[113px] w-full"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.5 }}
+        ></motion.div>
       </div>
       <ReadyToInvest />
     </div>

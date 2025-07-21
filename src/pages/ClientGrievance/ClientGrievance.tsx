@@ -1,60 +1,111 @@
+import { motion } from "framer-motion";
 import Container from "../../components/Reusable/Container/Container";
 import ReusableHero from "../../components/Reusable/ReusableHero/ReusableHero";
+import { containerVariants, itemVariants } from "../../utils/aboutUsPageAnimation";
 
 const ClientGrievance = () => {
+
   return (
     <div className="font-Montserrat">
       <ReusableHero title="Client Grievance Redressal Mechanism" />
 
-      <div className="bg-gradient-terms-and-conditions py-[30px]">
+      <div className="bg-gradient-terms-and-conditions py-[30px] overflow-hidden">
         <Container>
           <div className="flex flex-col gap-8">
-            <div>
-              <h1 className="text-secondary-15 text-xl font-bold leading-6">
+            {/* Step 1 */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.h1
+                className="text-secondary-15 text-xl font-bold leading-6"
+                variants={itemVariants}
+              >
                 Step 1
-              </h1>
-              <h2 className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4">
+              </motion.h1>
+              <motion.h2
+                className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4"
+                variants={itemVariants}
+              >
                 Internal Resolution
-              </h2>
-              <p className="text-neutral-20 text-sm leading-5 mt-2">
+              </motion.h2>
+              <motion.p
+                className="text-neutral-20 text-sm leading-5 mt-2"
+                variants={itemVariants}
+              >
                 Email your concern to hanjifinanceteam@gmail.com with subject
                 line “Grievance – [Your Name] – [Order/Client ID]”. We aim to
                 resolve all issues within 15 working days.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
-            <div>
-              <h1 className="text-secondary-15 text-xl font-bold leading-6">
+            {/* Step 2 */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.h1
+                className="text-secondary-15 text-xl font-bold leading-6"
+                variants={itemVariants}
+              >
                 Step 2
-              </h1>
-              <h2 className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4">
+              </motion.h1>
+              <motion.h2
+                className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4"
+                variants={itemVariants}
+              >
                 Escalation
-              </h2>
-              <p className="text-neutral-20 text-sm leading-5 mt-2">
+              </motion.h2>
+              <motion.p
+                className="text-neutral-20 text-sm leading-5 mt-2"
+                variants={itemVariants}
+              >
                 If you are not satisfied with our response, write to:
-              </p>
-              <p className="text-neutral-20 text-sm leading-5 mt-2">
+              </motion.p>
+              <motion.p
+                className="text-neutral-20 text-sm leading-5 mt-2"
+                variants={itemVariants}
+              >
                 Grievance Officer
                 <br />
                 Amandeep Singh Juneja
                 <br />
                 Email:hanjifinanceteam@gmail.com
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
-            <div>
-              <h1 className="text-secondary-15 text-xl font-bold leading-6">
+            {/* Step 3 */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.h1
+                className="text-secondary-15 text-xl font-bold leading-6"
+                variants={itemVariants}
+              >
                 Step 3
-              </h1>
-              <h2 className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4">
+              </motion.h1>
+              <motion.h2
+                className="text-neutral-20 text-[17px] font-semibold leading-5 mt-4"
+                variants={itemVariants}
+              >
                 SEBI SCORES Platform
-              </h2>
-              <p className="text-neutral-20 text-sm leading-5 mt-2">
+              </motion.h2>
+              <motion.p
+                className="text-neutral-20 text-sm leading-5 mt-2"
+                variants={itemVariants}
+              >
                 For advisory-related complaints that remain unresolved after 30
                 days, registered clients may escalate via SEBI SCORES
                 (https://scores.gov.in) quoting our RIA Registration Number.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </div>
         </Container>
       </div>

@@ -1,46 +1,30 @@
-import { Link } from "react-router-dom";
-import { ICONS, IMAGES } from "../../../assets";
-import { FaAngleRight } from "react-icons/fa";
+import { IMAGES } from "../../../assets";
+import { FaPhoneAlt, FaRegUser } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
 import HeroHeading from "../../Reusable/HeroHeading/HeroHeading";
+import ReusableHeroCards from "../../Reusable/ReusableHeroCards/ReusableHeroCards";
 
 const BoardroomHero = () => {
-  const services = [
+  const heroDetails = [
     {
-      icon: ICONS.email,
-      title: "Wall Street Weekly",
-      description: "Subscribe to our newsletter",
-      path: "/newsletter-subscription",
+      value: "Curated Conversations ",
+      icon: <FaRegUser />, // Example icon for owner
     },
     {
-      icon: ICONS.whatsapp,
-      title: "Boardroom Banter",
-      description: "Join our WhatsApp group",
-      path: "/boardroom-banter",
+      value: (
+        <>
+          <strong>₹ 500/month </strong> {"(Subscription)"}
+        </>
+      ),
+      icon: <FaRegUser className="text-xl" />,
     },
     {
-      icon: ICONS.financialFashion,
-      title: "Financial Fashion",
-      description: "Space for your Apparels",
-      path: "/financial-fashion",
+      value: "Only for 200 Members",
+      icon: <FaPhoneAlt />, // Example icon for contact
     },
     {
-      icon: ICONS.brainGains,
-      title: "Brain Gains",
-      description: "Browse our courses",
-      path: "/courses",
-    },
-    {
-      icon: ICONS.fundManagement,
-      title: "Fund Management",
-      description: "View our Advisor services",
-      path: "/fund-management",
-    },
-    {
-      icon: ICONS.chatChill,
-      title: "Chat & Chill",
-      description: "Book a 1 on 1 call with Aman",
-      path: "/book-call",
+      value: "Super Serious Cult",
+      icon: <FaPhoneAlt />, // Example icon for contact
     },
   ];
 
@@ -49,7 +33,7 @@ const BoardroomHero = () => {
       <img
         src={IMAGES.boardroomHeroBgImg}
         alt="BoardroomHero-image"
-        className="absolute -top-30 lg:-top-20 xl:-top-15 left-0 w-full h-full object-fit z-0"
+        className="absolute -top-30 lg:-top-20 xl:-top-15 left-0 w-full h-full object-cover z-0"
       />
       {/* <img
         src={IMAGES.BoardroomHeroMobileBg}
@@ -59,8 +43,8 @@ const BoardroomHero = () => {
       <div className="relative z-10 py-[68px]">
         <Container>
           <HeroHeading lines={["Boardroom Banter"]} />
-
-         
+          <ReusableHeroCards details={heroDetails} bg="bg-surface-10" />
+          <p className="flex flex-row justify-center items-center text-[32px] mt-24">A private finance circle by <span> Hanjifinance </span> <FaRegUser/></p>
         </Container>
       </div>
     </div>
