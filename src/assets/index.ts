@@ -23,6 +23,7 @@ import volumeCross from "./icons/volume-cross.svg"
 import money from "./icons/money.svg"
 import peopleNearby from "./icons/people-nearby.svg"
 import hamburgerMenu from "./icons/hamburger-menu.svg"
+import verified from "../assets/icons/verified.svg"
 
 
 
@@ -74,4 +75,5 @@ export const ICONS = {
   money,
   peopleNearby,
   hamburgerMenu,
+  verified
 };
