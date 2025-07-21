@@ -4,7 +4,7 @@ import SubscribeNewsletterForm from "./SubscribeNewsletterForm";
 
 const SubscribeNewsletter = () => {
   return (
-    <div>
+    <div className="bg-gradient-newsletter py-[60px]">
       <Container>
         <SectionTitle
           heading="Get the Next Issue"

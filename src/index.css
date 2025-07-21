@@ -82,6 +82,7 @@
   --bg-gradient-faq-blur: linear-gradient(4deg, #FFF 4.16%, rgba(254, 242, 242, 0.60) 97.06%);
   --bg-gradient-good-news: linear-gradient(180deg, rgba(239, 246, 255, 0.00) 0%, #EFF6FF 100%);
   --bg-gradient-good-news-blur: linear-gradient(4deg, #FFF 4.15%, #EFF6FF 115.15%);
+  --bg-gradient-newsletter: linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
   
 }
 
@@ -122,6 +123,9 @@
 }
 .bg-gradient-good-news-blur{
   background: var(--bg-gradient-good-news-blur);
+}
+.bg-gradient-newsletter{
+  background: var(--bg-gradient-newsletter);
 }
 
 /* Custom scrollbar for a specific section */
