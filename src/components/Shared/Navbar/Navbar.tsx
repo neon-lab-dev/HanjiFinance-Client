@@ -27,15 +27,15 @@ const Navbar = () => {
         },
         {
           label: "Financial Fashion",
-          path: "/financial-fashion",
+          path: "/",
         },
         {
           label: "Brain Gains",
-          path: "/courses",
+          path: "/",
         },
         {
           label: "Fund Management",
-          path: "/fund-management",
+          path: "/",
         },
         {
           label: "Chat & Chill",
@@ -45,15 +45,15 @@ const Navbar = () => {
     },
     {
       label: "Contact Us",
-      path: "/contact-us",
+      path: "/",
       isDropDown: false,
       dropdownLinks: [],
     },
   ];
 
   const iconNavLinks = [
-    { icons: ICONS.cartPlus, path: "cart" },
-    { icons: ICONS.user, path: "/profile" },
+    { icons: ICONS.cartPlus, path: "/" },
+    { icons: ICONS.user, path: "/" },
   ];
 
   return (

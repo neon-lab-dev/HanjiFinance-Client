@@ -24,25 +24,25 @@ const Hero = () => {
       icon: ICONS.financialFashion,
       title: "Financial Fashion",
       description: "Space for your Apparels",
-      path: "/financial-fashion",
+      path: "/",
     },
     {
       icon: ICONS.brainGains,
       title: "Brain Gains",
       description: "Browse our courses",
-      path: "/courses",
+      path: "/",
     },
     {
       icon: ICONS.fundManagement,
       title: "Fund Management",
       description: "View our Advisor services",
-      path: "/fund-management",
+      path: "/",
     },
     {
       icon: ICONS.chatChill,
       title: "Chat & Chill",
       description: "Book a 1 on 1 call with Aman",
-      path: "/book-call",
+      path: "/services/chat-and-chill",
     },
   ];
 
