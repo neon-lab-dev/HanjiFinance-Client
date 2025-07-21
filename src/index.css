@@ -35,6 +35,8 @@
   --color-neutral-98: #e2e8f0;
   --color-neutral-99: #f1f5f9;
   --color-neutral-100: #fafafa;
+  --color-neutral-105: #f3f4f6;
+  --color-neutral-110: #1F2937;
 
   /* Surface / Backgrounds */
   --color-surface-10: #f0f0fa;
@@ -44,6 +46,7 @@
   --color-surface-50: #ecfdf5;
   --color-surface-60: #fff7ed;
   --color-surface-70: #cffafe;
+  --color-surface-75: #E0F2FE;
 
   /* accent */
   --color-accent-5: #0f172a;

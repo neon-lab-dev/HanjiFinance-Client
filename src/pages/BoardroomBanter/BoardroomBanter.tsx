@@ -1,16 +1,17 @@
-import Faq from '../../components/Shared/Faq/Faq';
-import BoardroomHero from '../../components/BoardroomBanterPage/Hero/BoardRoomHero';
-import GotNews from '../../components/BoardroomBanterPage/GotNews/GotNews';
+import Faq from "../../components/Shared/Faq/Faq";
+import BoardroomHero from "../../components/BoardroomBanterPage/Hero/BoardRoomHero";
+import GotNews from "../../components/BoardroomBanterPage/GotNews/GotNews";
+import JoinWaitlist from "../../components/BoardroomBanterPage/JoinWaitlist/JoinWaitlist";
 
 const BoardroomBanter = () => {
- return (
+  return (
     <div>
       <BoardroomHero />
-      {/* <AboutUs /> */}
-      <GotNews/>
-      <Faq/>
+      <JoinWaitlist/>
+      <GotNews />
+      <Faq />
     </div>
   );
-}
+};
 
-export default BoardroomBanter
+export default BoardroomBanter;
