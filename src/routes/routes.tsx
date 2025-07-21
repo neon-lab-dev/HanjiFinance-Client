@@ -8,6 +8,7 @@ import RefundAndCancellationPolicy from "../pages/RefundAndCancellationPolicy/Re
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ClientGrievance from "../pages/ClientGrievance/ClientGrievance";
 import BoardroomBanter from "../pages/BoardroomBanter/BoardroomBanter";
+import WallStreetWeekly from "../pages/WallStreetWeekly/WallStreetWeekly";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/services/boardroom-banter",
         element: <BoardroomBanter />,
+      },
+      {
+        path: "/services/wall-street-weekly",
+        element: <WallStreetWeekly />,
       },
     ],
   },
