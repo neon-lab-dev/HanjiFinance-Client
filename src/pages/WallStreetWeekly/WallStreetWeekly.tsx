@@ -3,9 +3,11 @@ import WallStreetWeeklyHero from "../../components/WallStreetWeeklyPage/WallStre
 
 const WallStreetWeekly = () => {
     return (
-        <div>
+        <div >
             <WallStreetWeeklyHero />
             <SubscribeNewsletter/>
+            <div className="bg-white pb-10 h-10 w-full"> </div>
+
         </div>
     );
 };

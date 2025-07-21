@@ -34,7 +34,7 @@ const SubscribeNewsletterForm = () => {
     },
   ];
   return (
-    <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex mt-9">
+    <div className="rounded-[20px] bg-white border-2 border-neutral-98 font-Montserrat flex mt-9">
       {/* Left Section */}
       <FormInstruction
         title="Your newsletter has..."
@@ -75,7 +75,7 @@ const SubscribeNewsletterForm = () => {
           </div>
 
           <p className="text-neutral-5 text-sm font-medium leading-4 text-center">
-            Invites are sent based on availability and fit.
+           Unsubscribe anytime. But chances are… you won’t.
           </p>
         </form>
       </div>
