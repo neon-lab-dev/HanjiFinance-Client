@@ -31,7 +31,7 @@ const SubscribeNewsletterForm = () => {
     {
       icon: ICONS.getAccess,
       text: "Charts & Memes",
-    }
+    },
   ];
   return (
     <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex mt-9">
