@@ -9,6 +9,7 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import ClientGrievance from "../pages/ClientGrievance/ClientGrievance";
 import BoardroomBanter from "../pages/BoardroomBanter/BoardroomBanter";
 import WallStreetWeekly from "../pages/WallStreetWeekly/WallStreetWeekly";
+import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/services/wall-street-weekly",
         element: <WallStreetWeekly />,
+      },
+      {
+        path: "/services/chat-and-chill",
+        element: <ChatAndChill />,
       },
     ],
   },
