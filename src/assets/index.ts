@@ -24,6 +24,10 @@ import money from "./icons/money.svg"
 import peopleNearby from "./icons/people-nearby.svg"
 import hamburgerMenu from "./icons/hamburger-menu.svg"
 import verified from "../assets/icons/verified.svg"
+import getAccess from "./icons/get-access.svg"
+import fillForm from "./icons/fill-form.svg"
+import checkByTeam from "./icons/check-by-team.svg";
+import tickMark from "./icons/tick-mark.svg";
 
 
 
@@ -75,5 +79,9 @@ export const ICONS = {
   money,
   peopleNearby,
   hamburgerMenu,
-  verified
+  verified,
+  getAccess,
+  fillForm,
+  checkByTeam,
+  tickMark,
 };

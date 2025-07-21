@@ -2,39 +2,20 @@
 import { forwardRef } from "react";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
-interface TextInputProps {
-  label?: string;
-  name: string;
-  placeholder?: string;
-  type?: string;
+
+interface DropdownProps {
+  label: string;
+  options: string[];
   error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  defaultValue?: any;
-  isDisabled?: boolean;
   isRequired?: boolean;
+  selected?: boolean;
 }
 
-const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (
-    {
-      label,
-      name,
-      placeholder = "",
-      type = "text",
-      error,
-      defaultValue,
-      isDisabled = false,
-      isRequired = true,
-      ...rest
-    },
-    ref
-  ) => {
+const SelectDropdown = forwardRef<HTMLSelectElement, DropdownProps>(
+  ({ label, options, error, isRequired=true, selected, ...rest }, ref) => {
     return (
       <div className="flex flex-col gap-2 font-Montserrat w-full">
-        {label && (
-          <label
-            htmlFor={name}
+        <label
             className="flex flex-row items-center w-full justify-between text-neutral-65"
           >
             <span className="text-neutral-10 leading-[18px] text-[15px] font-medium tracking-[-0.16] ">
@@ -43,33 +24,34 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             <span>
                 <span className="text-neutral-85 leading-4 text-[13px] font-medium tracking-[-0.14]">
                   {" "}
-                  {isRequired ? "Required" : "Optional"}
+                 {isRequired ? "Required" : "Optional"}
                 </span>
             </span>
           </label>
-        )}
-        <input
-          // required={isRequired}
-          id={name}
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
+        <select
           ref={ref}
-          disabled={isDisabled}
+          defaultChecked={selected}
+          required={isRequired}
           className={`w-full px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none focus:border-neutral-25 transition duration-300 ${
             error ? "border-red-500" : "border-neutral-95"
           }`}
           {...rest}
-        />
-        {error?.message && (
-          <span className="text-red-500 text-sm">{String(error.message)}</span>
-        )}
+        >
+          <option value="" disabled selected>
+            Select {label}
+          </option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        {error && typeof error.message === 'string' && <p className="text-xs text-red-500 mt-1">{error.message}</p>}
       </div>
     );
   }
 );
 
-TextInput.displayName = "TextInput";
+SelectDropdown.displayName = "SelectDropdown";
 
-export default TextInput;
+export default SelectDropdown;

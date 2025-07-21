@@ -35,6 +35,8 @@
   --color-neutral-98: #e2e8f0;
   --color-neutral-99: #f1f5f9;
   --color-neutral-100: #fafafa;
+  --color-neutral-105: #f3f4f6;
+  --color-neutral-110: #1F2937;
 
   /* Surface / Backgrounds */
   --color-surface-10: #f0f0fa;
@@ -44,6 +46,7 @@
   --color-surface-50: #ecfdf5;
   --color-surface-60: #fff7ed;
   --color-surface-70: #cffafe;
+  --color-surface-75: #E0F2FE;
 
   /* accent */
   --color-accent-5: #0f172a;
@@ -79,6 +82,7 @@
   --bg-gradient-faq-blur: linear-gradient(4deg, #FFF 4.16%, rgba(254, 242, 242, 0.60) 97.06%);
   --bg-gradient-good-news: linear-gradient(180deg, rgba(239, 246, 255, 0.00) 0%, #EFF6FF 100%);
   --bg-gradient-good-news-blur: linear-gradient(4deg, #FFF 4.15%, #EFF6FF 115.15%);
+  --bg-gradient-newsletter: linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
   
 }
 
@@ -119,6 +123,9 @@
 }
 .bg-gradient-good-news-blur{
   background: var(--bg-gradient-good-news-blur);
+}
+.bg-gradient-newsletter{
+  background: var(--bg-gradient-newsletter);
 }
 
 /* Custom scrollbar for a specific section */
