@@ -23,6 +23,7 @@ import volumeCross from "./icons/volume-cross.svg"
 import money from "./icons/money.svg"
 import peopleNearby from "./icons/people-nearby.svg"
 import hamburgerMenu from "./icons/hamburger-menu.svg"
+import verified from "../assets/icons/verified.svg"
 import getAccess from "./icons/get-access.svg"
 import fillForm from "./icons/fill-form.svg"
 import checkByTeam from "./icons/check-by-team.svg";
@@ -32,6 +33,7 @@ import tickMark from "./icons/tick-mark.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png"
+import boardroomHeroBgImg from "./images/boardroom-hero-bg.png"
 import heroMobileBg from "./images/hero-img-mobile.png"
 import heroBg from "./images/hero-bg.png"
 import aboutUsBg from "./images/about-us-bg.png";
@@ -43,6 +45,7 @@ import notFound from "./images/404.png";
 export const IMAGES = {
   aboutUsBg,
   heroBgImg,
+  boardroomHeroBgImg,
   heroBg,
   heroMobileBg,
   courseDummyImage,
@@ -76,6 +79,7 @@ export const ICONS = {
   money,
   peopleNearby,
   hamburgerMenu,
+  verified,
   getAccess,
   fillForm,
   checkByTeam,

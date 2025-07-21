@@ -4,6 +4,7 @@ import { FaAngleRight } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
+import HeroHeading from "../../Reusable/HeroHeading/HeroHeading";
 
 const Hero = () => {
   const services = [
@@ -54,15 +55,6 @@ const Hero = () => {
     },
   };
 
-  const titleVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut", delay: 0.2 },
-    },
-  };
-
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -93,15 +85,7 @@ const Hero = () => {
             animate="visible"
             variants={logoVariants}
           />
-          <motion.h1
-            className="text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9"
-            initial="hidden"
-            animate="visible"
-            variants={titleVariants}
-          >
-            Build Wealth, <br /> One Click at a Time
-          </motion.h1>
-
+          <HeroHeading lines={["Build Wealth,", "One Click at a Time"]} />
           {/* All 6 services */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-11 lg:mt-[101px]">
             {/* Service card */}
