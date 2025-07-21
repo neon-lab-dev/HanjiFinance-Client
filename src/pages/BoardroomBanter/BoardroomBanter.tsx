@@ -1,12 +1,12 @@
 import Faq from "../../components/Shared/Faq/Faq";
-import BoardroomHero from "../../components/BoardroomBanterPage/Hero/BoardRoomHero";
 import GotNews from "../../components/BoardroomBanterPage/GotNews/GotNews";
 import JoinWaitlist from "../../components/BoardroomBanterPage/JoinWaitlist/JoinWaitlist";
+import BoardRoomHero from "../../components/BoardroomBanterPage/Hero/BoardRoomHero";
 
 const BoardroomBanter = () => {
   return (
     <div>
-      <BoardroomHero />
+      <BoardRoomHero />
       <JoinWaitlist/>
       <GotNews />
       <Faq />
