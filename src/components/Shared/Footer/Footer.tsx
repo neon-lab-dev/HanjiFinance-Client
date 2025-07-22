@@ -1,7 +1,6 @@
 import { RiTwitterXLine } from "react-icons/ri";
 import { ICONS } from "../../../assets";
 import Container from "../../Reusable/Container/Container";
-import { Link } from "react-router-dom";
 import { RxInstagramLogo } from "react-icons/rx";
 import { CiLinkedin } from "react-icons/ci";
 import { useState } from "react";
@@ -202,13 +201,13 @@ const Footer = () => {
             </h1>
             <div className="mt-8 flex flex-col gap-4">
               {quickLinks?.map((item) => (
-                <Link
+                <a
                   key={item?.label}
-                  to={item?.path}
+                  href={item?.path}
                   className="text-neutral-90 text-[15px] leading-6 hover:underline w-fit max-w-[230px]"
                 >
                   {item?.label}
-                </Link>
+                </a>
               ))}
             </div>
           </motion.div>

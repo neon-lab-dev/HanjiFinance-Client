@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
 
@@ -14,7 +13,7 @@ interface MegaMenuProps {
   links: MenuLink[];
 }
 
-const MotionLink = motion(Link);
+const MotionAnchor = motion.a;
 
 const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, links }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -67,6 +66,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, links }) => {
           exit="hidden"
           variants={menuVariants}
         >
+          {/* Triangle Pointer */}
           <motion.div
             className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-neutral-99 border border-neutral-99/80 rounded-[2px] shadow shadow-neutral-98"
             variants={{
@@ -81,15 +81,15 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, links }) => {
             className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] bg-neutral-99 text-neutral-15 rounded-xl p-2 flex flex-col shadow-md shadow-neutral-98"
           >
             {links.map((link) => (
-              <MotionLink
+              <MotionAnchor
                 key={link.path}
-                to={link.path}
+                href={link.path}
                 onClick={onClose}
                 className="text-base hover:text-primary-10 px-3 py-3 rounded-md hover:bg-primary-20/5"
                 variants={linkVariants}
               >
                 {link.label}
-              </MotionLink>
+              </MotionAnchor>
             ))}
           </motion.div>
         </motion.div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Container from "../../Reusable/Container/Container";
 import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
@@ -23,19 +23,19 @@ const Navbar = () => {
         },
         {
           label: "Boardroom Banter",
-          path: "services/boardroom-banter",
+          path: "/services/boardroom-banter",
         },
         {
           label: "Financial Fashion",
-          path: "/financial-fashion",
+          path: "/",
         },
         {
           label: "Brain Gains",
-          path: "/courses",
+          path: "/",
         },
         {
           label: "Fund Management",
-          path: "/fund-management",
+          path: "/",
         },
         {
           label: "Chat & Chill",
@@ -45,28 +45,28 @@ const Navbar = () => {
     },
     {
       label: "Contact Us",
-      path: "/contact-us",
+      path: "/",
       isDropDown: false,
       dropdownLinks: [],
     },
   ];
 
   const iconNavLinks = [
-    { icons: ICONS.cartPlus, path: "cart" },
-    { icons: ICONS.user, path: "/profile" },
+    { icons: ICONS.cartPlus, path: "/" },
+    { icons: ICONS.user, path: "/" },
   ];
 
   return (
     <div className="sticky top-0 py-4 bg-white shadow-navbar font-Montserrat w-full z-50">
       <Container>
         <div className="flex items-center justify-between">
-          <Link to={"/"}>
+          <a href={"/"}>
             <img
               src={ICONS.logoWithName}
               alt="HanjiFinance"
               className="w-[52px] md:w-[85px] h-[36px] md:h-[58px]"
             />
-          </Link>
+          </a>
 
           <div className="flex items-center gap-6">
             <div className="hidden md:flex items-center gap-6 relative">
@@ -106,8 +106,8 @@ const Navbar = () => {
                       )}
                     </button>
                   ) : (
-                    <Link
-                      to={item.path}
+                    <a
+                      href={item.path}
                       className={`text-[15px] leading-[18px] transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 ${
                         activeDropdown === item.label ? "text-primary-10" : ""
                       } hover:text-primary-10 transition duration-300 flex items-center gap-1 ${
@@ -126,7 +126,7 @@ const Navbar = () => {
                           }`}
                         />
                       )}
-                    </Link>
+                    </a>
                   )}
 
                   {item.isDropDown && (
@@ -141,13 +141,13 @@ const Navbar = () => {
             </div>
 
             {iconNavLinks.map((item) => (
-              <Link key={item.path} to={item.path}>
+              <a key={item.path} href={item.path}>
                 <img
                   src={item.icons}
                   alt="icon"
                   className="size-6 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 />
-              </Link>
+              </a>
             ))}
 
             <div className="hidden md:block">
