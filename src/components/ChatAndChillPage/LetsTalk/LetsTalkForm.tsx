@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
-import { ICONS } from "../../../assets";
 import TextInput from "../../Reusable/TextInput/TextInput";
 import { useEffect} from "react";
 import Textarea from "../../Reusable/TextArea/TextArea";
 import Button from "../../Reusable/Button/Button";
-import FormInstruction from "../../Reusable/FormInstruction/FormInstruction";
 import Calender from "../../Reusable/Calender/Calender";
 
 type TFormValues = {
@@ -22,25 +20,6 @@ const LetsTalkForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<TFormValues>();
-
-  const instructions = [
-    {
-      icon: ICONS.fillForm,
-      text: "Fill the form, hit Join",
-    },
-    {
-      icon: ICONS.checkByTeam,
-      text: "The Application is thoroughly checked by the team",
-    },
-    {
-      icon: ICONS.getAccess,
-      text: "Once Pass, team helps you with the further process and you get the premium access",
-    },
-    {
-      icon: ICONS.getAccess,
-      text: "Cherish a private space where ambition meets action",
-    },
-  ];
 
 
   useEffect(() => {
