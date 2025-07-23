@@ -35,14 +35,14 @@ const ReusableHeroCards = ({ details }: ReusableHeroProps) => {
   };
 
   return (
-    <div className=" relative font-Montserrat overflow-hidden">
+    <div className="relative font-Montserrat overflow-hidden">
       {/* Background image */}
 
       <Container>
-        <div className="relative z-10 mt-6 pb-20">
+        <div className="relative z-10 mt-6 pb-0 lg:pb-20 flex items-center justify-center">
           {/* Details Section */}
           <motion.div
-            className="flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-3 mt-8 xl:mt-6"
+            className="flex flex-col xl:flex-row items-start lg:items-center justify-center gap-5 lg:gap-8 xl:gap-3 mt-8 xl:mt-6"
             initial="hidden"
             animate="visible"
             variants={detailsContainerVariants}
@@ -50,16 +50,16 @@ const ReusableHeroCards = ({ details }: ReusableHeroProps) => {
             {details.map((item, index, arr) => (
               <motion.div
                 key={index}
-                className="flex flex-col xl:flex-row gap-1 items-center"
+                className="flex flex-row gap-1 items-center"
                 variants={detailItemVariants}
               >
                 {/* Icon */}
-                <div className="bg-surface-10 size-8 rounded-full flex justify-center items-center">
+                <div className="bg-surface-10 size-5 lg:size-8 rounded-full flex justify-center items-center">
                   <img src={item.icon} alt={""} />
                 </div>
 
                 {/* Value */}
-                <p className="text-neutral-30 text-xl xl:text-[13px] 2xl:text-xl font-medium leading-6">
+                <p className="text-neutral-30 text-base lg:text-[13px] 2xl:text-xl font-medium leading-6">
                   {item.value}
                 </p>
 

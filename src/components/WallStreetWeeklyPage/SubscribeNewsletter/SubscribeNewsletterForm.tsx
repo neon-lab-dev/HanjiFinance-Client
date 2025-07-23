@@ -34,7 +34,7 @@ const SubscribeNewsletterForm = () => {
     },
   ];
   return (
-    <div className="rounded-[20px] bg-white border-2 border-neutral-98 font-Montserrat flex mt-9">
+    <div className="rounded-[20px] bg-white border-2 border-neutral-98 font-Montserrat flex flex-col lg:flex-row mt-9">
       {/* Left Section */}
       <FormInstruction
         title="Your newsletter has..."
@@ -42,7 +42,7 @@ const SubscribeNewsletterForm = () => {
       />
 
       {/* Right Section - Form */}
-      <div className="p-6 rounded-tr-[20px] w-[60%]">
+      <div className="p-6 rounded-tr-[20px] w-full lg:w-[60%]">
         <form
           onSubmit={handleSubmit(handleSubscribeNewsletter)}
           className="flex flex-col gap-8 mt-6 w-full"
@@ -75,7 +75,7 @@ const SubscribeNewsletterForm = () => {
           </div>
 
           <p className="text-neutral-5 text-sm font-medium leading-4 text-center">
-           Unsubscribe anytime. But chances are… you won’t.
+            Unsubscribe anytime. But chances are… you won’t.
           </p>
         </form>
       </div>

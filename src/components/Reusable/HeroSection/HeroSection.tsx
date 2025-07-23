@@ -39,8 +39,8 @@ const ReusableHeroSection: React.FC<ReusableHeroSectionProps> = ({
         <Container>
           <HeroHeading lines={headingLines} />
           <ReusableHeroCards details={heroDetails} bg="bg-surface-10" />
-          <div className="mt-24 mb-28 flex flex-col gap-8 justify-center items-center">
-            <p className="text-center text-[32px] tracking-[-0.6] font-medium text-neutral-30">
+          <div className="mt-24 mb-16 lg:mb-28 flex flex-col gap-12 lg:gap-8 justify-center items-center">
+            <p className="text-center text-base lg:text-[32px] tracking-[-0.6] font-medium text-neutral-30 max-w-[328px] mx-auto lg:max-w-full">
               {description}
             </p>
             <Button
@@ -51,7 +51,9 @@ const ReusableHeroSection: React.FC<ReusableHeroSectionProps> = ({
             />
           </div>
         </Container>
-        {gradientBottom && <div className={`${gradientBottom} h-[100px] w-full`}></div>}
+        {gradientBottom && (
+          <div className={`${gradientBottom} h-[100px] w-full`}></div>
+        )}
       </div>
     </div>
   );

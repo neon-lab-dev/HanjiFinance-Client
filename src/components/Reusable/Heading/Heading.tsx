@@ -23,7 +23,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
   );
 
   const subtextClasses = twMerge(
-    "text-center text-[16px] leading-[24px] font-normal",
+    "text-center text-[16px] leading-[24px] font-medium text-neutral-5",
     subtextColor
   );
 
