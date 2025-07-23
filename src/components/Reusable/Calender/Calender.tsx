@@ -257,6 +257,11 @@ export default function Calender() {
         </section> */}
 
       </div>
+      <div className="text-center text-neutral-60 mt-6 text-[13px] font-medium leading-[16px] tracking-[-0.14px] space-y-2">
+        <p>1.Only 6 slots/week are available</p>
+        <p>2.30min / slot can be booked</p>
+
+      </div>
     </div>
   );
 }
