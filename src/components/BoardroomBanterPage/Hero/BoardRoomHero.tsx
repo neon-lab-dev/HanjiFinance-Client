@@ -1,4 +1,5 @@
 import { ICONS, IMAGES } from "../../../assets";
+import { scrollToSection } from "../../../utils/scrollToSection";
 import ReusableHeroSection from "../../Reusable/HeroSection/HeroSection";
 
 const BoardRoomHero = () => {
@@ -41,6 +42,7 @@ const BoardRoomHero = () => {
       description={description}
       buttonLabel="Join the Waitlist"
       gradientBottom="bg-gradient-hero"
+      onButtonClick={() => scrollToSection("join-waitlist")}
     />
   );
 };

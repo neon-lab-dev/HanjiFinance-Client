@@ -1,7 +1,7 @@
 import SectionTitle from "../../Reusable/Heading/Heading";
 import Container from "../../Reusable/Container/Container";
 import Accordion from "./Accordion";
-import { motion, type Variants } from 'framer-motion';
+import { motion, type Variants } from "framer-motion";
 
 const Faq = () => {
   const titleVariants: Variants = {
@@ -13,19 +13,19 @@ const Faq = () => {
     },
   };
   return (
-    <div className="bg-gradient-course pt-[60px] font-Montserrat">
+    <div className="bg-gradient-course font-Montserrat">
       <Container>
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={titleVariants}>
-
-        <SectionTitle heading="Your questions matter!" />
+          variants={titleVariants}
+        >
+          <SectionTitle heading="Your questions matter!" />
         </motion.div>
         <Accordion />
       </Container>
-       <div className="bg-gradient-faq-blur h-[168px] w-full"></div>
+      <div className="bg-gradient-faq-blur h-[168px] w-full"></div>
     </div>
   );
 };
