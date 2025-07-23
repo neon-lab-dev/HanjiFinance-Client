@@ -108,9 +108,9 @@ export default function Calender() {
     }
   };
 
-  const selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  );
+  // const selectedDayMeetings = meetings.filter((meeting) =>
+  //   isSameDay(parseISO(meeting.startDatetime), selectedDay)
+  // );
 
   return (
     <div className="bg-surface-75 font-Montserrat p-6 rounded-l-[20px] w-[40%] ">

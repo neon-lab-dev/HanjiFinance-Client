@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const TimePicker = ({ disabled = true }) => {
   const [hour, setHour] = useState(7);
