@@ -94,7 +94,7 @@ const JoinWaitlistForm = () => {
   }, []);
 
   return (
-    <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex mt-9">
+    <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex flex-col md:flex-row mt-9">
       {/* Left Section */}
       <FormInstruction
         title="How the Waitlist Works?"
@@ -102,7 +102,7 @@ const JoinWaitlistForm = () => {
       />
 
       {/* Right Section - Form */}
-      <div className="p-6 rounded-tr-[20px] w-[60%]">
+      <div className="p-6 rounded-tr-[20px] w-full md:w-[60%] ">
         <h1 className="text-neutral-30 text-xl text-center font-bold leading-6">
           Apply for Access
         </h1>

@@ -29,7 +29,7 @@ const GotNews = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-8 flex flex-col items-center w-full"
         >
-          <div className="flex items-center justify-between gap-6 w-lg">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 w-[80%] md:w-lg">
             <TextInput
               isRequired={false}
               placeholder="Enter your valid coupon Code"
