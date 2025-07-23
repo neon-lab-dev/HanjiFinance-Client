@@ -92,8 +92,9 @@ export default function Calender() {
   );
 
   return (
-    <div className="bg-surface-75 font-Montserrat p-6 rounded-l-[20px] w-[40%] ">
-      <div className="max-w-md p-5 mx-auto md:max-w-4xl bg-white border border-neutral-120 rounded-xl  shadow-2xl">
+    <div className="bg-surface-75 font-Montserrat p-6 rounded-tl-[20px] rounded-tr-[20px] rounded-t-[20px] lg:rounded-tr-none lg:rounded-t-none lg:rounded-l-[20px] w-full lg:w-[40%]">
+      <h1 className="text-xl font-bold text-neutral-30 text-center">Select a Slot</h1>
+      <div className="max-w-md p-5 mx-auto md:max-w-4xl bg-white border border-neutral-120 rounded-xl shadow-2xl mt-6">
         <div className="flex w-full justify-between items-center">
           <button
             type="button"

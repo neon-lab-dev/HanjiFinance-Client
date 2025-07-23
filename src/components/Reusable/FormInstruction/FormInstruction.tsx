@@ -6,7 +6,7 @@ const FormInstruction = ({
   instructions: { icon: string; text: string }[];
 }) => {
   return (
-    <div className="bg-surface-75 p-6 rounded-tl-[20px] rounded-t-[20px] lg:rounded-t-none lg:rounded-l-[20px] w-full lg:w-[40%] flex flex-col items-center lg:items-start">
+    <div className="bg-surface-75 p-6 rounded-tl-[20px] rounded-tr-[20px] rounded-t-[20px] lg:rounded-tr-none lg:rounded-t-none lg:rounded-l-[20px] w-full lg:w-[40%] flex flex-col items-center lg:items-start">
       <h1 className="text-neutral-30 text-xl font-bold leading-6 text-center lg:text-start">{title}</h1>
       <div className="flex justify-center lg:justify-start">
         <div className="flex flex-col justify-center items-center gap-4 mt-8 w-full mx-auto">
