@@ -1,5 +1,5 @@
-import { ICONS, IMAGES } from "../../assets";
-import ReusableHeroSection from "../Reusable/HeroSection/HeroSection";
+import { ICONS, IMAGES } from "../../../assets";
+import ReusableHeroSection from "../../Reusable/HeroSection/HeroSection";
 
 const ChatAndChillHero = () => {
   const heroDetails = [
