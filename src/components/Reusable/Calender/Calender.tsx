@@ -18,6 +18,8 @@ import {
 } from "date-fns";
 import { startOfWeek } from "date-fns/fp";
 import { useState } from "react";
+import TimePicker from "./TimePicker";
+
 
 const meetings = [
   {
@@ -71,6 +73,13 @@ export default function Calender() {
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const [hoverInfo, setHoverInfo] = useState<{
+    date: Date | null;
+    status: string | null;
+  }>({
+    date: null,
+    status: null,
+  });
 
   const days = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentMonth),
@@ -86,10 +95,23 @@ export default function Calender() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
+  const hoverDateDetail = (day: Date) => {
+    if (
+      isSunday(day) ||
+      (isPast(day) && !isToday(day)) ||
+      meetings.some((meeting) =>
+        isSameDay(parseISO(meeting.startDatetime), day)
+      )  && isSameMonth(day,firstDayCurrentMonth)
+    ) {
+      setHoverInfo({ date: day, status: "slot not Available" });
+    } else {
+      setHoverInfo({ date: day, status: "slot Available" });
+    }
+  };
 
-  const selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  );
+  // const selectedDayMeetings = meetings.filter((meeting) =>
+  //   isSameDay(parseISO(meeting.startDatetime), selectedDay)
+  // );
 
   return (
     <div className="bg-surface-75 font-Montserrat p-6 rounded-tl-[20px] rounded-tr-[20px] rounded-t-[20px] lg:rounded-tr-none lg:rounded-t-none lg:rounded-l-[20px] w-full lg:w-[40%]">
@@ -137,6 +159,10 @@ export default function Calender() {
               )}
             >
               <button
+                onMouseEnter={() => {
+                  hoverDateDetail(day);
+                }}
+                onMouseLeave={() => setHoverInfo({ date: null, status: null })}
                 type="button"
                 onClick={() => setSelectedDay(day)}
                 className={classNames(
@@ -159,7 +185,7 @@ export default function Calender() {
                     isPast(day)) ||
                     (isSunday(day) &&
                       isSameMonth(day, firstDayCurrentMonth))) &&
-                    "text-neutral-125",
+                    "text-neutral-125 hover:border border-neutral-125 transition duration-300 ease-in",
                   !isEqual(day, selectedDay) &&
                     !isToday(day) &&
                     !isSameMonth(day, firstDayCurrentMonth) &&
@@ -168,21 +194,14 @@ export default function Calender() {
                   isEqual(day, selectedDay) &&
                     (isToday(day) || !isToday(day)) &&
                     "bg-secondary-10",
-                  ((!isEqual(day, selectedDay) &&
-                    isSameMonth(day, firstDayCurrentMonth) &&
-                    !meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
-                    ) &&
-                    !isPast(day)) ||
-                    (isToday(day) && isSameMonth(day, firstDayCurrentMonth))) &&
-                    "hover:bg-gray-200",
+
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
                     meetings.some((meeting) =>
                       isSameDay(parseISO(meeting.startDatetime), day)
                     ) &&
-                    "text-primary-15",
+                    "text-primary-15 hover:border border-primary-15 transition duration-300 ease-in",
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
@@ -191,47 +210,52 @@ export default function Calender() {
                     ) &&
                     !isSunday(day) &&
                     !isPast(day) &&
-                    "text-success-20",
+                    "text-success-20 hover:border border-success-20 transition duration-300 ease-in",
                   (isEqual(day, selectedDay) || isToday(day)) &&
                     "font-semibold",
-                  "mx-auto flex text-sm font-medium h-8 w-8 items-center justify-center rounded-full"
+                  "mx-auto relative flex text-sm font-medium h-8 w-8 items-center justify-center rounded-full"
                 )}
               >
                 <time dateTime={format(day, "yyyy-MM-dd")}>
                   {format(day, "d")}
                 </time>
+                {hoverInfo.date && isSameDay(hoverInfo.date, day) && (
+                  <p className="opacity-100 z-[100] translate-y-0 absolute top-[-50px] transform translate-x-[-50%] font-medium left-[50%] w-max py-[7px] px-[20px] rounded-sm bg-neutral-110 text-[13px] dark:text-[#abc2d3] text-neutral-135  transition-all duration-200">
+                    {hoverInfo.status}
+                    {/* arrow */}
+                    <span className="w-[8px] h-[8px] bg-gray-800 rotate-[45deg] absolute left-[50%] transform translate-x-[-50%] bottom-[-10%]"></span>
+                  </p>
+                )}
               </button>
             </div>
           ))}
         </div>
 
-        <div>
-          <h2 className="mt-12 text-gray-900">Choose slot time (only 30min)</h2>
-
+        <div
+          className={`${
+            (isPast(selectedDay) && !isToday(selectedDay)) ||
+            meetings.some((meeting) =>
+              isSameDay(parseISO(meeting.startDatetime), selectedDay)
+            ) || !isSameMonth(selectedDay, firstDayCurrentMonth) || isSunday(selectedDay)
+              ? "hidden"
+              : "block"
+          } `}
+        >
+          <h2 className="mt-12 text-gray-900 mb-5">
+            Choose slot time (only 30min)
+          </h2>
+          <TimePicker />
           <div></div>
         </div>
-        <section className="mt-12 md:mt-0 md:pl-14">
+        {/* <section className="mt-12 md:mt-0 md:pl-14">
           <h2 className="font-semibold text-gray-900">
             Schedule for{" "}
             <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
               {format(selectedDay, "MMM dd, yyy")}
             </time>
           </h2>
-          <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-            {selectedDayMeetings.length > 0 ? (
-              selectedDayMeetings.map(() => (
-                <p>
-                  no slot available for{" "}
-                  <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-                    {format(selectedDay, "MMM dd, yyy")}
-                  </time>{" "}
-                </p>
-              ))
-            ) : (
-              <p>No meetings for today.</p>
-            )}
-          </ol>
-        </section>
+        </section> */}
+
       </div>
     </div>
   );
