@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import { FaAngleRight } from "react-icons/fa";
 import Container from "../../Reusable/Container/Container";
@@ -122,12 +121,12 @@ const Hero = () => {
                       </p>
                     </div>
 
-                    <Link
-                      to={service?.path}
+                    <a
+                      href={service?.path}
                       className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1"
                     >
                       Learn More <FaAngleRight />
-                    </Link>
+                    </a>
                   </div>
 
                   <div className="bg-neutral-99 px-[7px] flex items-center justify-center rounded-r-lg h-full">

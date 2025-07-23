@@ -1,4 +1,5 @@
 import { ICONS, IMAGES } from "../../../assets";
+import { scrollToSection } from "../../../utils/scrollToSection";
 import ReusableHeroSection from "../../Reusable/HeroSection/HeroSection";
 
 const WallStreetWeeklyHero = () => {
@@ -10,6 +11,8 @@ const WallStreetWeeklyHero = () => {
     { value: "Free", icon: ICONS.free },
   ];
 
+  
+
   return (
     <ReusableHeroSection
       headingLines={["@hanjifinance Weekly Newsletter"]}
@@ -20,6 +23,7 @@ const WallStreetWeeklyHero = () => {
       }
       buttonLabel="Subscribe now for Free !"
       gradientBottom="bg-gradient-hero"
+      onButtonClick={() => scrollToSection("subscribe-newsletter")}
     />
   );
 };

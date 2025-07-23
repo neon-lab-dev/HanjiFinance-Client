@@ -1,4 +1,5 @@
 import { ICONS, IMAGES } from "../../../assets";
+import { scrollToSection } from "../../../utils/scrollToSection";
 import ReusableHeroSection from "../../Reusable/HeroSection/HeroSection";
 
 const ChatAndChillHero = () => {
@@ -33,6 +34,7 @@ const ChatAndChillHero = () => {
       description={description}
       buttonLabel="Book Now"
       gradientBottom="bg-gradient-hero"
+      onButtonClick={() => scrollToSection("chat-chill-booking")}
     />
   );
 };
