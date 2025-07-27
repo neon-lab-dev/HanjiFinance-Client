@@ -5,8 +5,14 @@ import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
 import Button from "../../Reusable/Button/Button";
 import MegaMenu from "./MegaMenu";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store";
+import { setIsModalOpen, setModalType } from "../../../redux/Features/Auth/authModalSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+   const { isModalOpen, modalType } = useSelector((state: RootState) => state.authModal);
+   console.log(isModalOpen);
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
@@ -53,7 +59,7 @@ const Navbar = () => {
 
   const iconNavLinks = [
     { icons: ICONS.cartPlus, path: "/" },
-    { icons: ICONS.user, path: "/" },
+    { icons: ICONS.user, path: "/", onClick: () => { dispatch(setIsModalOpen(true)); dispatch(setModalType("signup")); } },
   ];
 
   return (
@@ -70,9 +76,9 @@ const Navbar = () => {
 
           <div className="flex items-center gap-6">
             <div className="hidden md:flex items-center gap-6 relative">
-              {navLinks.map((item) => (
+              {navLinks.map((item, index) => (
                 <div
-                  key={item.label}
+                  key={index}
                   className="relative"
                   onMouseEnter={() =>
                     item.isDropDown && setActiveDropdown(item.label)
@@ -140,14 +146,14 @@ const Navbar = () => {
               ))}
             </div>
 
-            {iconNavLinks.map((item) => (
-              <a key={item.path} href={item.path}>
+            {iconNavLinks.map((item, index) => (
+              <button key={index} onClick={item.onClick}>
                 <img
                   src={item.icons}
                   alt="icon"
                   className="size-6 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 />
-              </a>
+              </button>
             ))}
 
             <div className="hidden md:block">
