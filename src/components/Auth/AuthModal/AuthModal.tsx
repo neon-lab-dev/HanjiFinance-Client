@@ -3,10 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
 import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
 import Signup from "../Signup/Signup";
+import Login from "../Login/Login";
+import VerifyOtp from "../VerifyOtp/VerifyOtp";
+import ForgotPassword from "../ForgotPassword/ForgotPassword";
+import ResetPassword from "../ResetPassword/ResetPassword";
 
 const AuthModal = () => {
   const dispatch = useDispatch();
-  const { isModalOpen } = useSelector((state: RootState) => state.authModal);
+  const { isModalOpen, modalType } = useSelector(
+    (state: RootState) => state.authModal
+  );
 
   return (
     <div
@@ -16,8 +22,8 @@ const AuthModal = () => {
     >
       <div
         className={`${
-          isModalOpen ? " scale-[1] opacity-100" : " scale-[0] opacity-0"
-        } w-[668px] sm:w-[80%] md:w-[30%] dark:bg-slate-800 bg-[#fff] rounded-2xl p-6 transition-all duration-300 z-[999]`}
+          isModalOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
+        } w-[668px] sm:w-[80%] md:w-[30%] dark:bg-slate-800 bg-white rounded-2xl p-6 transition-all duration-300 z-[999] h-fit max-h-[600px] overflow-y-auto`}
       >
         <div className="w-full">
           <RxCrossCircled
@@ -25,10 +31,35 @@ const AuthModal = () => {
             className="text-end justify-self-end text-2xl text-neutral-125 cursor-pointer"
           />
           <h1 className="text-neutral-20 text-xl md:text-2xl font-medium leading-7 text-center mb-8">
-            <span className="bg-primary-20 px-2 text-white">Sign Up</span> to
-            HanjiFinance
+            <span className="bg-primary-20 px-2 text-white">
+              {modalType === "signup"
+                ? "Sign Up"
+                : modalType === "login"
+                ? "Log In"
+                : modalType === "verifyOtp"
+                ? "Verify"
+                : modalType === "forgotPassword"
+                ? "Forgot"
+                : modalType === "resetPassword"
+                ? "Change"
+                : ""}
+            </span>{" "}
+            to HanjiFinance
           </h1>
-          <Signup/>
+          
+          {
+            modalType === "signup" ? <Signup/>
+            :
+            modalType === "login" ? <Login/>
+            :
+            modalType === "verifyOtp" ? <VerifyOtp/>
+            :
+            modalType === "forgotPassword" ? <ForgotPassword/>
+            :
+            modalType === "resetPassword" ? <ResetPassword/>
+            :
+            ""
+          }
         </div>
       </div>
     </div>
