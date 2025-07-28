@@ -14,7 +14,7 @@ type TFormData = {
 
 const VerifyOtp = () => {
   const dispatch = useDispatch();
-  const [secondsLeft, setSecondsLeft] = useState(10);
+  const [secondsLeft, setSecondsLeft] = useState(60);
   const [canResend, setCanResend] = useState(false);
 
   const {
