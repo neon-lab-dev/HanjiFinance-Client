@@ -1,7 +1,7 @@
 // src/redux/features/authModal/authModalSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-type ModalType = "signup" | "verifyOtp" | "login" | "resetPassword" | "forgotPassword" | null;
+type ModalType = "signup" | "verifyOtp" | "login" | "resetPassword" | "forgotPassword" | "forgotPasswordSuccess" | null;
 
 interface AuthModalState {
   modalType: ModalType;
@@ -9,7 +9,7 @@ interface AuthModalState {
 }
 
 const initialState: AuthModalState = {
-  modalType: "verifyOtp",
+  modalType: "login",
   isModalOpen: false,
 };
 
