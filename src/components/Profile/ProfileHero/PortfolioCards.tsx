@@ -1,8 +1,8 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import { FaAngleRight } from 'react-icons/fa';
 
-const PortfolioCards = ({ item }) => {
+const PortfolioCards = ({ item } : any) => {
   return (
     <div className="w-full p-6 border border-indigos-10 rounded-lg bg-white space-y-6 self-start font-Montserrat">
       <img src={item.icon} alt="" className="p-3 size-9" />
