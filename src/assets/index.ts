@@ -3,29 +3,29 @@ import logo from "./icons/logo.png";
 import logoWithName from "./icons/logo-with-name.svg";
 import arrowDown from "./icons/arrow-down.svg";
 import cartPlus from "./icons/cart-plus.svg";
-import user from "./icons/user-circle.svg"
-import emailGray from "./icons/email-gray.svg"
-import location from "./icons/location.svg"
-import phone from "./icons/phone.svg"
-import email from "./icons/email.svg"
-import whatsapp from "./icons/whatsapp.svg"
-import financialFashion from "./icons/financial-fashion.svg"
-import brainGains from "./icons/brain-gains.svg"
-import fundManagement from "./icons/fund-management.svg"
-import chatChill from "./icons/chat-chill.svg"
-import courseTitle from "./icons/course-title.svg"
-import clock from "./icons/clock.svg"
-import lesson from "./icons/lesson.svg"
-import author from "./icons/author.svg"
-import rating from "./icons/rating.svg"
-import blueTick from "./icons/blue-tick.svg"
-import volumeCross from "./icons/volume-cross.svg"
-import money from "./icons/money.svg"
-import peopleNearby from "./icons/people-nearby.svg"
-import hamburgerMenu from "./icons/hamburger-menu.svg"
-import verified from "../assets/icons/verified.svg"
-import getAccess from "./icons/get-access.svg"
-import fillForm from "./icons/fill-form.svg"
+import user from "./icons/user-circle.svg";
+import emailGray from "./icons/email-gray.svg";
+import location from "./icons/location.svg";
+import phone from "./icons/phone.svg";
+import email from "./icons/email.svg";
+import whatsapp from "./icons/whatsapp.svg";
+import financialFashion from "./icons/financial-fashion.svg";
+import brainGains from "./icons/brain-gains.svg";
+import fundManagement from "./icons/fund-management.svg";
+import chatChill from "./icons/chat-chill.svg";
+import courseTitle from "./icons/course-title.svg";
+import clock from "./icons/clock.svg";
+import lesson from "./icons/lesson.svg";
+import author from "./icons/author.svg";
+import rating from "./icons/rating.svg";
+import blueTick from "./icons/blue-tick.svg";
+import volumeCross from "./icons/volume-cross.svg";
+import money from "./icons/money.svg";
+import peopleNearby from "./icons/people-nearby.svg";
+import hamburgerMenu from "./icons/hamburger-menu.svg";
+import verified from "../assets/icons/verified.svg";
+import getAccess from "./icons/get-access.svg";
+import fillForm from "./icons/fill-form.svg";
 import checkByTeam from "./icons/check-by-team.svg";
 import tickMark from "./icons/tick-mark.svg";
 import curatedConversations from "./icons/curated-conversations.svg";
@@ -37,14 +37,15 @@ import mindset from "./icons/mindset.svg";
 import calender from "./icons/calender.svg";
 import gMeet from "./icons/g-meet.png";
 import error from "./icons/error.svg";
-
-
+import darkBlueTick from "./icons/dark-blue-tick.svg";
+import noCap from "./icons/no-cap.svg";
+import verifired2 from "./icons/verified-2.svg";
 
 // Images
-import heroBgImg from "./images/hero-bg-img.png"
-import boardroomHeroBgImg from "./images/boardroom-hero-bg.png"
-import heroMobileBg from "./images/hero-img-mobile.png"
-import heroBg from "./images/hero-bg.png"
+import heroBgImg from "./images/hero-bg-img.png";
+import boardroomHeroBgImg from "./images/boardroom-hero-bg.png";
+import heroMobileBg from "./images/hero-img-mobile.png";
+import heroBg from "./images/hero-bg.png";
 import aboutUsBg from "./images/about-us-bg.png";
 import courseDummyImage from "./images/course-dummy-image.png";
 import avatar from "./images/avatar.jpg";
@@ -54,7 +55,7 @@ import ChatAndChillHeroImg from "./images/chat-and-chil-hero-bgl.png";
 import secure1 from "./images/secure-2.png";
 import secure2 from "./images/secure1.png";
 import razerPay from "./images/razer-pay.png";
-
+import portfolioBg from "./images/portfolio-bg.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -70,8 +71,8 @@ export const IMAGES = {
   secure1,
   secure2,
   razerPay,
+  portfolioBg,
 };
-
 
 export const ICONS = {
   logo,
@@ -111,5 +112,8 @@ export const ICONS = {
   mindset,
   calender,
   gMeet,
-  error
+  error,
+  darkBlueTick,
+  noCap,
+  verifired2,
 };

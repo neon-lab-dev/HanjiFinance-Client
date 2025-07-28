@@ -54,7 +54,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
             </div>
 
             <div className="w-full md:w-[45%] lg:w-[40%]">
-              <div className="border space-y-6 border-glass-10 pt-5 rounded-2xl w-full">
+              <div className="border space-y-6 border-glass-10 pt-5 bg-white rounded-2xl w-full">
                 <div className="space-y-3 pb-6 px-5 border-b border-b-glass-10">
                   <div className="flex justify-between text-neutral-25 leading-5 text-sm">
                     <span className="">Item Total</span>

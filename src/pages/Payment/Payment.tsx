@@ -16,15 +16,16 @@ const Payment = () => {
   ];
 
   return (
-    <div className="">
-      <PaymentPage
-        items={exampleItems}
-        showAutopayOption={true}
-        isAutopayAvailable={true}
-        onProceed={() => console.log("Proceed to Pay")}
-        onCancel={() => console.log("Cancelled")}
-      />
-      \{" "}
+    <div className="bg-surface-30">
+      <Container>
+        <PaymentPage
+          items={exampleItems}
+          showAutopayOption={true}
+          isAutopayAvailable={true}
+          onProceed={() => console.log("Proceed to Pay")}
+          onCancel={() => console.log("Cancelled")}
+        />
+      </Container>
     </div>
   );
 };

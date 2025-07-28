@@ -14,7 +14,7 @@ interface ReusableHeroSectionProps {
   bgImage: string;
   heroDetails: HeroDetail[];
   description: React.ReactNode;
-  buttonLabel: string;
+  buttonLabel?: string;
   onButtonClick?: () => void;
   gradientBottom?: string;
 }
@@ -43,14 +43,14 @@ const ReusableHeroSection: React.FC<ReusableHeroSectionProps> = ({
             <p className="text-center text-base lg:text-[32px] tracking-[-0.6] font-medium text-neutral-30 max-w-[328px] mx-auto lg:max-w-full">
               {description}
             </p>
-            <Button
+           {buttonLabel &&<Button
               variant="primary"
               label={buttonLabel}
               onClick={onButtonClick}
               classNames="w-full sm:w-fit px-8 py-4"
-            />
+            />}
           </div>
-        </Container>
+        </Container>  
         {gradientBottom && (
           <div className={`${gradientBottom} h-[100px] w-full`}></div>
         )}
