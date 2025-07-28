@@ -87,7 +87,7 @@
 
 
   /* Shadows */
-  --shadow-navbar: 0px 0px 100px 0px rgba(0, 0, 0, 0.07);
+  --shadow-navbar: 0 0 100px 0 rgba(0, 0, 0, 0.07);
 
   /* Gradients */
   --bg-gradient-hero: linear-gradient(0deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%);

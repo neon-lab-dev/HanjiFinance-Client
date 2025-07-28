@@ -11,8 +11,8 @@ import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-   const { isModalOpen } = useSelector((state: RootState) => state.authModal);
-   console.log(isModalOpen);
+  const { isModalOpen } = useSelector((state: RootState) => state.authModal);
+  console.log(isModalOpen);
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
@@ -59,7 +59,13 @@ const Navbar = () => {
 
   const iconNavLinks = [
     { icons: ICONS.cartPlus, path: "/" },
-    { icons: ICONS.user, path: "/", onClick: () => { dispatch(setIsModalOpen(true)); } },
+    {
+      icons: ICONS.user,
+      path: "/",
+      onClick: () => {
+        dispatch(setIsModalOpen(true));
+      },
+    },
   ];
 
   return (
@@ -74,7 +80,7 @@ const Navbar = () => {
             />
           </a>
 
-          <div className="flex items-center gap-6">
+          <div className={`items-center gap-6 ${location.pathname === "/payment" || location.pathname === "/payment-success" || location.pathname === "/payment-cancelled" ? "hidden" : "flex"}`}>
             <div className="hidden md:flex items-center gap-6 relative">
               {navLinks.map((item, index) => (
                 <div
@@ -147,7 +153,11 @@ const Navbar = () => {
             </div>
 
             {iconNavLinks.map((item, index) => (
-              <button key={index} onClick={item.onClick} className="cursor-pointer">
+              <button
+                key={index}
+                onClick={item.onClick}
+                className="cursor-pointer"
+              >
                 <img
                   src={item.icons}
                   alt="icon"

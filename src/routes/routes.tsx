@@ -13,6 +13,7 @@ import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 import Payment from "../pages/Payment/Payment";
 import Profile from "../pages/Profile/Profile";
 import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
+import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: "/payment-success",
         element: <PaymentSuccess />,
+      },
+      {
+        path: "/payment-cancelled",
+        element: <PaymentCancelled />,
       },
     ],
   },

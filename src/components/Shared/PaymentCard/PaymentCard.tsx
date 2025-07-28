@@ -38,7 +38,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
             Payment Page
           </h2>
           <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31">
-            <div className="w-full md:w-[55%] lg:w-[60%]">
+            <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-5">
               {items.map((item, index) => (
                 <div key={index} className="mb-4 flex justify-between">
                     <div className="space-y-1">

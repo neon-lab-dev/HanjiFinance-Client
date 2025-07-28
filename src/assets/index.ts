@@ -28,6 +28,7 @@ import getAccess from "./icons/get-access.svg";
 import fillForm from "./icons/fill-form.svg";
 import checkByTeam from "./icons/check-by-team.svg";
 import tickMark from "./icons/tick-mark.svg";
+import cross from "./icons/cross.svg";
 import curatedConversations from "./icons/curated-conversations.svg";
 import subscriptionFee from "./icons/subscrption-fee.svg";
 import members from "./icons/members.svg";
@@ -104,6 +105,7 @@ export const ICONS = {
   fillForm,
   checkByTeam,
   tickMark,
+  cross,
   curatedConversations,
   subscriptionFee,
   members,

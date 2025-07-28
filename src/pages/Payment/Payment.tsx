@@ -8,11 +8,6 @@ const Payment = () => {
       subtitle: "Premium Service (subscription)",
       price: 500,
     },
-    {
-      name: "Financial Checkup 1 (Portfolio Review by Aman)",
-      subtitle: "Premium Service",
-      price: 1858.82,
-    },
   ];
 
   return (
