@@ -12,6 +12,7 @@ import WallStreetWeekly from "../pages/WallStreetWeekly/WallStreetWeekly";
 import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 import Payment from "../pages/Payment/Payment";
 import Profile from "../pages/Profile/Profile";
+import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess />,
       },
     ],
   },
