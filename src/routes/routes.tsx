@@ -10,6 +10,8 @@ import ClientGrievance from "../pages/ClientGrievance/ClientGrievance";
 import BoardroomBanter from "../pages/BoardroomBanter/BoardroomBanter";
 import WallStreetWeekly from "../pages/WallStreetWeekly/WallStreetWeekly";
 import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
+import Payment from "../pages/Payment/Payment";
+import Profile from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ export const router = createBrowserRouter([
       {
         path: "/services/chat-and-chill",
         element: <ChatAndChill />,
+      },
+      {
+        path: "/profile",
+        element: <Profile/>,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
       },
     ],
   },
