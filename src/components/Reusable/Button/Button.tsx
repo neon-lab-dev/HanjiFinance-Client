@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 
 interface ReusableButtonProps {
   label: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary" | "disabled" ;
   onClick?: () => void;
   classNames?: string;
   type?: "button" | "submit" | "reset"; // ✅ added type
@@ -21,7 +21,9 @@ const Button: React.FC<ReusableButtonProps> = ({
   const variantClasses =
     variant === "primary"
       ? "bg-primary-20 text-white border-transparent px-4 py-4"
-      : "border-2 border-primary-20 text-primary-20 bg-transparent px-4 py-[10px] hover:bg-primary-20 hover:text-white";
+      : variant === "secondary"
+      ? "border-2 border-primary-20 text-primary-20 bg-transparent px-4 py-[10px] hover:bg-primary-20 hover:text-white":variant === "tertiary"
+      ? "text-primary-15 bg-transparent py-4 px-8 hover:border hover:border-primary-15 ": variant === "disabled"  ?"":"";
 
   return (
     <button

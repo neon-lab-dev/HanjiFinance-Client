@@ -36,6 +36,7 @@ import free from "./icons/free.svg";
 import mindset from "./icons/mindset.svg";
 import calender from "./icons/calender.svg";
 import gMeet from "./icons/g-meet.png";
+import error from "./icons/error.svg";
 
 
 
@@ -50,6 +51,9 @@ import avatar from "./images/avatar.jpg";
 import notFound from "./images/404.png";
 import wallStreetWeeklyHeroImg from "./images/wall-street-weekly-hero-img.png";
 import ChatAndChillHeroImg from "./images/chat-and-chil-hero-bgl.png";
+import secure1 from "./images/secure-2.png";
+import secure2 from "./images/secure1.png";
+import razerPay from "./images/razer-pay.png";
 
 
 export const IMAGES = {
@@ -63,6 +67,9 @@ export const IMAGES = {
   notFound,
   wallStreetWeeklyHeroImg,
   ChatAndChillHeroImg,
+  secure1,
+  secure2,
+  razerPay,
 };
 
 
@@ -104,4 +111,5 @@ export const ICONS = {
   mindset,
   calender,
   gMeet,
+  error
 };
