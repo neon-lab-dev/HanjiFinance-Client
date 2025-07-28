@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import HeroHeading from "../../Reusable/HeroHeading/HeroHeading";
 import AuthModal from "../../Auth/AuthModal/AuthModal";
-import { useDispatch } from "react-redux";
-import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
 
 const Hero = () => {
   const services = [
@@ -65,8 +63,6 @@ const Hero = () => {
     },
   };
 
-  const dispatch = useDispatch();  
-
   return (
     <div className="relative overflow-hidden">
       <img
@@ -92,7 +88,6 @@ const Hero = () => {
             animate="visible"
             variants={logoVariants}
           />
-          <button onClick={() => dispatch(setIsModalOpen(true))}>Click</button>
           <HeroHeading lines={["Build Wealth,", "One Click at a Time"]} />
           {/* All 6 services */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[21px] mt-11 lg:mt-[101px]">

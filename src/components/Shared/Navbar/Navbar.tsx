@@ -7,11 +7,11 @@ import Button from "../../Reusable/Button/Button";
 import MegaMenu from "./MegaMenu";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
-import { setIsModalOpen, setModalType } from "../../../redux/Features/Auth/authModalSlice";
+import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-   const { isModalOpen, modalType } = useSelector((state: RootState) => state.authModal);
+   const { isModalOpen } = useSelector((state: RootState) => state.authModal);
    console.log(isModalOpen);
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -59,7 +59,7 @@ const Navbar = () => {
 
   const iconNavLinks = [
     { icons: ICONS.cartPlus, path: "/" },
-    { icons: ICONS.user, path: "/", onClick: () => { dispatch(setIsModalOpen(true)); dispatch(setModalType("signup")); } },
+    { icons: ICONS.user, path: "/", onClick: () => { dispatch(setIsModalOpen(true)); } },
   ];
 
   return (
@@ -147,7 +147,7 @@ const Navbar = () => {
             </div>
 
             {iconNavLinks.map((item, index) => (
-              <button key={index} onClick={item.onClick}>
+              <button key={index} onClick={item.onClick} className="cursor-pointer">
                 <img
                   src={item.icons}
                   alt="icon"

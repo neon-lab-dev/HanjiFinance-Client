@@ -9,7 +9,7 @@ interface AuthModalState {
 }
 
 const initialState: AuthModalState = {
-  modalType: "login",
+  modalType: "resetPassword",
   isModalOpen: false,
 };
 

@@ -41,25 +41,33 @@ const AuthModal = () => {
                 : modalType === "forgotPassword"
                 ? "Forgot"
                 : modalType === "resetPassword"
-                ? "Change"
+                ? "Reset"
                 : ""}
             </span>{" "}
-            to HanjiFinance
+            {modalType === "signup" || modalType === "login"
+              ? "to HanjiFinance"
+              : modalType === "verifyOtp"
+              ? "Your Email"
+              : modalType === "forgotPassword"
+              ? "Password"
+              : modalType === "resetPassword"
+              ? "Password"
+              : ""}
           </h1>
-          
-          {
-            modalType === "signup" ? <Signup/>
-            :
-            modalType === "login" ? <Login/>
-            :
-            modalType === "verifyOtp" ? <VerifyOtp/>
-            :
-            modalType === "forgotPassword" ? <ForgotPassword/>
-            :
-            modalType === "resetPassword" ? <ResetPassword/>
-            :
+
+          {modalType === "signup" ? (
+            <Signup />
+          ) : modalType === "login" ? (
+            <Login />
+          ) : modalType === "verifyOtp" ? (
+            <VerifyOtp />
+          ) : modalType === "forgotPassword" ? (
+            <ForgotPassword />
+          ) : modalType === "resetPassword" ? (
+            <ResetPassword />
+          ) : (
             ""
-          }
+          )}
         </div>
       </div>
     </div>

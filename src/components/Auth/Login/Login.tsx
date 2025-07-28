@@ -58,7 +58,10 @@ const Login = () => {
         />
 
         <div className="flex justify-end">
-          <button className="text-primary-20 font-semibold hover:underline cursor-pointer">
+          <button onClick={() => {
+            dispatch(setModalType("forgotPassword"));
+            dispatch(setIsModalOpen(true));
+          }} className="text-primary-20 font-semibold hover:underline cursor-pointer">
             Forgot Password?
           </button>
         </div>
