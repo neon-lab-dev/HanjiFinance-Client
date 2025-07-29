@@ -27,14 +27,14 @@ const WhatYouGet = () => {
   return (
     <div
       id="subscribe-newsletter"
-      className="bg-gradient-newsletter pt-[60px] mt-[420px]"
+      className="bg-gradient-newsletter pt-[60px] mt-80 xl:mt-[420px]"
     >
       <Container>
         <SectionTitle
           heading="What You Get?"
           subHeading="Turn chaos into clarity with SEBI-compliant portfolio advice tailored to you"
         />
-        <div className="grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {whatYouGetData.map((item, index) => (
             <WhatYouGetCard key={index} item={item} />
           ))}

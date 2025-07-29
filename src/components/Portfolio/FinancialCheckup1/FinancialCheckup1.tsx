@@ -12,16 +12,8 @@ const FinancialCheckup1 = () => {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
-
-  const blurVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 1, ease: "easeOut", delay: 0.5 },
-    },
-  };
   return (
-    <div className="bg-gradient-course pt-[60px] overflow-hidden">
+    <div className="bg-gradient-course py-[60px] mb-52">
       <Container>
         <motion.div
           initial="hidden"
@@ -37,13 +29,6 @@ const FinancialCheckup1 = () => {
 
         <FinancialCheakupForm/>
       </Container>
-      <motion.div
-        className="bg-gradient-course-blur h-[113px] w-full mt-16"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.8 }}
-        variants={blurVariants}
-      ></motion.div>
     </div>
   );
 };

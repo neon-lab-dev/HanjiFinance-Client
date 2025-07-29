@@ -68,7 +68,7 @@ const PortfolioHero = () => {
 
       <div className="absolute -bottom-60 left-0 right-0 z-10">
         <Container>
-        <div className="grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {portfolio.map((item, index) => (
             <PortfolioCards key={index} item={item} />
           ))}
