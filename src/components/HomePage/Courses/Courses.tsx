@@ -6,43 +6,6 @@ import SectionTitle from "../../Reusable/Heading/Heading";
 import CourseCard from "./CourseCard";
 
 const Courses = () => {
-  // const accordionData = [
-  // {
-  //   title: "What will I learn?",
-  //   description: "You will learn full-stack development with React & Node.js.",
-  // },
-// ];
-  // const courses = [
-  //   {
-  //       title="Full Stack Development",
-  //       subTitle="Beginner to Advanced",
-  //       tag="Best Seller",
-  //       accordion={accordionData},]
-  //     image: IMAGES.courseDummyImage,
-     
-  //   },
-  //   {
-  //     title: "Title for course 2",
-  //     description:
-  //       "Enhance your JavaScript applications with static typing and advanced features",
-  //     image: IMAGES.courseDummyImage,
-  //     duration: "6 weeks",
-  //     lessons: "18 lessons",
-  //     author: "Aman",
-  //     rating: 4.5,
-  //   },
-  //   {
-  //     title: "Title for course 3",
-  //     description:
-  //       "Enhance your JavaScript applications with static typing and advanced features",
-  //     image: IMAGES.courseDummyImage,
-  //     duration: "6 weeks",
-  //     lessons: "18 lessons",
-  //     author: "Aman",
-  //     rating: 4.5,
-  //   },
-  // ];
-
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -101,30 +64,30 @@ const Courses = () => {
           variants={cardContainerVariants}
         >
           {/* {courses.map((course, index) => ( */}
-            <motion.div 
+          <motion.div
             // key={index}
-             variants={cardVariants}>
-              {/* <CourseCard {...course} /> */}
-              
-      <CourseCard
-  title="Full Stack Development"
-  subTitle="Beginner to Advanced"
-  tag="Best Seller"
-  description="Learn full-stack development from scratch."
-  image={IMAGES.courseDummyImage}
-  accordion={{
-    title: "What will you learn?",
-    description: [
-      "React.js fundamentals & advanced concepts",
-      "Node.js & Express backend development",
-      "Database integration (MongoDB)",
-      "Deployment & scaling techniques"
-    ]
-  }}
-  price="9,500"
-/>
+            variants={cardVariants}
+          >
+            {/* <CourseCard {...course} /> */}
 
-            </motion.div>
+            <CourseCard
+              title="Full Stack Development"
+              subTitle="Beginner to Advanced"
+              tag="Best Seller"
+              description="Learn full-stack development from scratch."
+              image={IMAGES.courseDummyImage}
+              accordion={{
+                title: "What will you learn?",
+                description: [
+                  "React.js fundamentals & advanced concepts",
+                  "Node.js & Express backend development",
+                  "Database integration (MongoDB)",
+                  "Deployment & scaling techniques",
+                ],
+              }}
+              price="9,500"
+            />
+          </motion.div>
           {/* ))} */}
         </motion.div>
       </Container>
