@@ -22,6 +22,8 @@ const PortfolioHero = () => {
       description: "Get the basic advice or your portfolio reviewed over a 30-min 1 on 1 call",
       price: "₹999",
       path: "/",
+      buttonLabel : "Learn More"
+      
     },
     {
       icon: ICONS.financialCheakup,
@@ -29,6 +31,7 @@ const PortfolioHero = () => {
       description: "Get in depth review of finances and creating a financial plan to achieve your long term goals.",
       price: "₹1,999",
       path: "/",
+      buttonLabel : "Get My Portfolio Reviewed"
     },
     {
       icon: ICONS.financialCheakup,
@@ -36,6 +39,7 @@ const PortfolioHero = () => {
       description: "Full access on financial checkup 1, plus 2 expert calls for next 2 months to review the asset allocations and how sustainable it is",
       price: "₹9,999",
       path: "/",
+      buttonLabel : "Get My Portfolio Reviewed"
     },
     {
       icon: ICONS.portfolioManagement,
@@ -43,6 +47,7 @@ const PortfolioHero = () => {
       description: "Get your complete portfolio managed by exclusively by Aman",
       price: "₹1,999",
       path: "/",
+      buttonLabel : "Learn More"
     },
   ];
 
