@@ -30,13 +30,15 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
   const gstAmount = +(itemTotal * (gstRate / 100)).toFixed(2);
   const totalToPay = +(itemTotal + gstAmount).toFixed(2);
 
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState<boolean>(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    useState<boolean>(false);
+  const [visibleTooltip, setVisibleTooltip] = useState("");
 
   const navigate = useNavigate();
 
   const cancelPayment = () => {
-    navigate("/payment-cancelled")
-  }
+    navigate("/payment-cancelled");
+  };
 
   return (
     <div className="font-Montserrat py-8 md:py-16">
@@ -82,13 +84,30 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
 
                   {showAutopayOption && (
                     <div className="flex justify-between items-center  text-neutral-25 leading-5 text-sm font-medium">
-                      <div className="flex justify-start items-center gap-1">
-                        <p className="">Setup Autopay </p>
-                        <img
-                          src={ICONS.error}
-                          alt="Secure Payment"
-                          className="size-5"
-                        />
+                      <div className="relative">
+                        <div className="flex justify-start items-center gap-1">
+                          <p className="">Setup Autopay </p>
+                          <img
+                            src={ICONS.error}
+                            alt="Secure Payment"
+                            className="size-5 cursor-pointer"
+                            onMouseEnter={() => setVisibleTooltip("bottom")}
+                            onMouseLeave={() => setVisibleTooltip("")}
+                          />
+                        </div>
+                        {/* tooltip */}
+                        <p
+                          className={`${
+                            visibleTooltip == "bottom"
+                              ? "opacity-100 z-[100] translate-y-0"
+                              : "opacity-0 z-[-1] translate-y-[-20px]"
+                          } absolute left-[170px] transform translate-x-[-50%] bottom-[-60px] w-max py-[7px] px-[20px] rounded-md bg-gray-800 text-xs text-white transition-all duration-200 max-w-[340px] text-center mx-auto`}
+                        >
+                          This will help your payments get automatically
+                          deducted from your bank account
+                          {/* arrow */}
+                          <span className="w-[8px] h-[8px] bg-gray-800 rotate-[45deg] absolute left-[35%] transform translate-x-[-50%] top-[-8%]"></span>
+                        </p>
                       </div>
 
                       <div className="flex gap-6">
@@ -193,13 +212,13 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
             <Button
               type="submit"
               label="Yes, Cancel"
-               variant="tertiary"
+              variant="tertiary"
               classNames="w-full"
-              onClick={cancelPayment }
+              onClick={cancelPayment}
             />
             <Button
               type="submit"
-              label="No, Don’t cancel"  
+              label="No, Don’t cancel"
               variant="primary"
               classNames="w-full"
             />
