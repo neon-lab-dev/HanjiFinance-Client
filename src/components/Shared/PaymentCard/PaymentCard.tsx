@@ -101,12 +101,12 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
                             visibleTooltip == "bottom"
                               ? "opacity-100 z-[100] translate-y-0"
                               : "opacity-0 z-[-1] translate-y-[-20px]"
-                          } absolute left-[170px] transform translate-x-[-50%] bottom-[-60px] w-max py-[7px] px-[20px] rounded-md bg-gray-800 text-xs text-white transition-all duration-200 max-w-[340px] text-center mx-auto`}
+                          } absolute left-36 md:left-[170px] transform translate-x-[-50%] -bottom-20 md:bottom-[-60px] w-max py-[7px] px-[20px] rounded-md bg-gray-800 text-xs text-white transition-all duration-200 max-w-[280px] md:max-w-[340px] text-center mx-auto`}
                         >
                           This will help your payments get automatically
                           deducted from your bank account
                           {/* arrow */}
-                          <span className="w-[8px] h-[8px] bg-gray-800 rotate-[45deg] absolute left-[35%] transform translate-x-[-50%] top-[-8%]"></span>
+                          <span className="w-[8px] h-[8px] bg-gray-800 rotate-[45deg] absolute left-[41%] md:left-[35%] transform translate-x-[-50%] -top-1 md:top-[-8%]"></span>
                         </p>
                       </div>
 
