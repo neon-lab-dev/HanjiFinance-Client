@@ -4,9 +4,6 @@ import Container from "../../Reusable/Container/Container";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import HeroHeading from "../../Reusable/HeroHeading/HeroHeading";
-import { useState } from "react";
-import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-import Button from "../../Reusable/Button/Button";
 
 const Hero = () => {
   const services = [
@@ -65,8 +62,7 @@ const Hero = () => {
     },
   };
 
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
-    useState<boolean>(false);
+ 
 
   return (
     <div className="relative overflow-hidden">
@@ -81,7 +77,6 @@ const Hero = () => {
         className="absolute xl:hidden left-0 w-full h-fit object-fill -z-100"
       />
       <div className="relative z-10 py-[68px]">
-        <button onClick={() => setIsConfirmationModalOpen(true)}>Click</button>
         <Container>
           <motion.img
             src={ICONS.logo}
@@ -149,36 +144,7 @@ const Hero = () => {
           </div>
         </Container>
       </div>
-
-
-      {/* Please remove it after using */}
-      <ConfirmationModal
-        isConfirmationModalOpen={isConfirmationModalOpen}
-        setIsConfirmationModalOpen={setIsConfirmationModalOpen}
-        isCrossVisible={false}
-      >
-        <div>
-          <p className="text-neutral-25 font-medium leading-5 text-center p-6">
-            Are you sure you want to cancel your payment?
-          </p>
-          <hr className="border border-neutral-99 h-[1px] w-full" />
-          <div className="p-6 flex items-center justify-center gap-4">
-            <Button
-              type="submit"
-              label="Yes, Cancel"
-              variant="primary"
-              classNames="w-full"
-              onClick={() => setIsConfirmationModalOpen(false)}
-            />
-            <Button
-              type="submit"
-              label="No, Don’t cancel"
-              variant="primary"
-              classNames="w-full"
-            />
-          </div>
-        </div>
-      </ConfirmationModal>
+      
     </div>
   );
 };

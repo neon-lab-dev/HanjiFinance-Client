@@ -18,7 +18,6 @@ const Payment = () => {
           showAutopayOption={true}
           isAutopayAvailable={true}
           onProceed={() => console.log("Proceed to Pay")}
-          onCancel={() => console.log("Cancelled")}
         />
       </Container>
     </div>

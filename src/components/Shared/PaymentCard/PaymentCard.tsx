@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../../Reusable/Container/Container";
 import { ICONS, IMAGES } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
+import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import { useNavigate } from "react-router-dom";
 
 type ProductItem = {
   name: string;
@@ -15,7 +17,6 @@ type PaymentPageProps = {
   showAutopayOption?: boolean;
   isAutopayAvailable?: boolean;
   onProceed: () => void;
-  onCancel: () => void;
 };
 
 const PaymentPage: React.FC<PaymentPageProps> = ({
@@ -24,11 +25,18 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
   showAutopayOption = false,
   isAutopayAvailable = false,
   onProceed,
-  onCancel,
 }) => {
   const itemTotal = items.reduce((sum, item) => sum + item.price, 0);
   const gstAmount = +(itemTotal * (gstRate / 100)).toFixed(2);
   const totalToPay = +(itemTotal + gstAmount).toFixed(2);
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const cancelPayment = () => {
+    navigate("/payment-cancelled")
+  }
 
   return (
     <div className="font-Montserrat py-8 md:py-16">
@@ -41,14 +49,20 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
             <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-5">
               {items.map((item, index) => (
                 <div key={index} className="mb-4 flex justify-between">
-                    <div className="space-y-1">
-                         <h3 className="font-medium text-neutral-25 leading-[22px]">{item.name}</h3>
-                  {item.subtitle && (
-                    <p className="text-[13px] leading-4 text-neutral-70 tracking-[-0.14px]">{item.subtitle}</p>
-                  )}
-                    </div>
-                 
-                  <p className="text-[17px] font-semibold leading-5 text-neutral-20">₹{item.price}</p>
+                  <div className="space-y-1">
+                    <h3 className="font-medium text-neutral-25 leading-[22px]">
+                      {item.name}
+                    </h3>
+                    {item.subtitle && (
+                      <p className="text-[13px] leading-4 text-neutral-70 tracking-[-0.14px]">
+                        {item.subtitle}
+                      </p>
+                    )}
+                  </div>
+
+                  <p className="text-[17px] font-semibold leading-5 text-neutral-20">
+                    ₹{item.price}
+                  </p>
                 </div>
               ))}
             </div>
@@ -122,7 +136,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
                       label="Cancel"
                       variant="tertiary"
                       classNames="w-full"
-                      onClick={onCancel}
+                      onClick={() => setIsConfirmationModalOpen(true)}
                     />
                   </div>
                   <div className="w-[60%]">
@@ -131,7 +145,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
                       label="Proceed to Pay"
                       variant="primary"
                       classNames="w-full"
-                      onClick={ onProceed}
+                      onClick={onProceed}
                     />
                   </div>
                 </div>
@@ -164,6 +178,34 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
           }
         </div>
       </Container>
+
+      <ConfirmationModal
+        isConfirmationModalOpen={isConfirmationModalOpen}
+        setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+        isCrossVisible={false}
+      >
+        <div>
+          <p className="text-neutral-25 font-medium leading-5 text-center p-6">
+            Are you sure you want to cancel your payment?
+          </p>
+          <hr className="border border-neutral-99 h-[1px] w-full" />
+          <div className="p-6 flex items-center justify-center gap-4">
+            <Button
+              type="submit"
+              label="Yes, Cancel"
+               variant="tertiary"
+              classNames="w-full"
+              onClick={cancelPayment }
+            />
+            <Button
+              type="submit"
+              label="No, Don’t cancel"  
+              variant="primary"
+              classNames="w-full"
+            />
+          </div>
+        </div>
+      </ConfirmationModal>
     </div>
   );
 };
