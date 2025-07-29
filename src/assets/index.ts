@@ -44,6 +44,8 @@ import verifired2 from "./icons/verified-2.svg";
 import financialCheakup from "./icons/financial-cheakup.svg";
 import portfolioManagement from "./icons/portfolio-management.svg";
 import message from "./icons/message.svg";
+import assetBreakdown from "./icons/asset-breakdown.svg";
+import riskMapping from "./icons/risk-mapping.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -124,4 +126,6 @@ export const ICONS = {
   financialCheakup,
   portfolioManagement,
   message,
+  assetBreakdown,
+  riskMapping,
 };

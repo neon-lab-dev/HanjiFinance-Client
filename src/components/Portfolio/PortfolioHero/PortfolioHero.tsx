@@ -57,7 +57,7 @@ const PortfolioHero = () => {
     </span>
   );
   return (
-    <div>
+    <div className="relative ">
       <ReusableHeroSection
         headingLines={["Your Portfolio, Our Perspective."]}
         bgImage={IMAGES.portfolioBg}
@@ -66,13 +66,15 @@ const PortfolioHero = () => {
         gradientBottom="bg-gradient-hero"
       />
 
-      <Container>
+      <div className="absolute -bottom-60 left-0 right-0 z-10">
+        <Container>
         <div className="grid gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {portfolio.map((item, index) => (
             <PortfolioCards key={index} item={item} />
           ))}
         </div>
       </Container>
+      </div>
     </div>
   );
 };
