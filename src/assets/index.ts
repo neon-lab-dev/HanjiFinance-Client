@@ -41,6 +41,9 @@ import error from "./icons/error.svg";
 import darkBlueTick from "./icons/dark-blue-tick.svg";
 import noCap from "./icons/no-cap.svg";
 import verifired2 from "./icons/verified-2.svg";
+import financialCheakup from "./icons/financial-cheakup.svg";
+import portfolioManagement from "./icons/portfolio-management.svg";
+import message from "./icons/message.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -118,4 +121,7 @@ export const ICONS = {
   darkBlueTick,
   noCap,
   verifired2,
+  financialCheakup,
+  portfolioManagement,
+  message,
 };

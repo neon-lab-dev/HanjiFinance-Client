@@ -11,9 +11,9 @@ import BoardroomBanter from "../pages/BoardroomBanter/BoardroomBanter";
 import WallStreetWeekly from "../pages/WallStreetWeekly/WallStreetWeekly";
 import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 import Payment from "../pages/Payment/Payment";
-import Profile from "../pages/Profile/Profile";
 import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
+import Portfolio from './../pages/Portfolio/Portfolio';
 
 export const router = createBrowserRouter([
   {
@@ -58,8 +58,8 @@ export const router = createBrowserRouter([
         element: <ChatAndChill />,
       },
       {
-        path: "/profile",
-        element: <Profile/>,
+        path: "/portfolio",
+        element: <Portfolio/>,
       },
       {
         path: "/payment",
