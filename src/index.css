@@ -99,6 +99,8 @@
   --bg-gradient-good-news-blur: linear-gradient(4deg, #FFF 4.15%, #EFF6FF 115.15%);
   --bg-gradient-newsletter: linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
   --bg-gradient-weekly-form-blur: linear-gradient(9deg, #FFF 7.77%, #FEFDEC 94.52%);
+  --bg-gradient-course-card-blur: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 119.57%);
+
   
   
 }
@@ -146,6 +148,9 @@
 }
 .bg-gradient-weekly-form-blur{
   background: var(--bg-gradient-weekly-form-blur);
+}
+.bg-gradient-course-card-blur{
+  background: var(--bg-gradient-course-card-blur);
 }
 
 /* Custom scrollbar for a specific section */
