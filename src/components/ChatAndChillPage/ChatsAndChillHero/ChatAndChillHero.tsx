@@ -14,9 +14,9 @@ const ChatAndChillHero = () => {
           <strong>₹ 999/session </strong>
         </>
       ),
-      icon: ICONS.gMeet,
+      icon: ICONS.subscriptionFee,
     },
-    { value: "1 to 1 exclusive Google meet", icon: ICONS.mindset },
+    { value: "1 to 1 exclusive Google meet", icon: ICONS.gMeet },
   ];
   const description = (
     <span className="flex items-center justify-center flex-wrap gap-2">

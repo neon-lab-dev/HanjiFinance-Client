@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { forwardRef } from "react";
-import { IoCheckmark, IoCheckmarkCircle } from "react-icons/io5";
+import { IoCheckmark} from "react-icons/io5";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface TextInputProps {
