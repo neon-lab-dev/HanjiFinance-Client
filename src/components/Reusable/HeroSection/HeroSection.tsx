@@ -52,7 +52,7 @@ const ReusableHeroSection: React.FC<ReusableHeroSectionProps> = ({
           </div>
         </Container>  
         {gradientBottom && (
-          <div className={`${gradientBottom} h-[100px] w-full`}></div>
+          <div className={`${gradientBottom} h-[130px] w-full`}></div>
         )}
       </div>
     </div>

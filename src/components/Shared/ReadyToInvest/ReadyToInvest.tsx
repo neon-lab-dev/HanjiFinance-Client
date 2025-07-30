@@ -26,7 +26,7 @@ const ReadyToInvest = () => {
           subHeading="Start with our free newsletter or explore the course library today."
         />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 flex flex-col items-center ">
-          <div className="flex justify-between gap-13 w-full">
+          <div className="flex flex-col md:flex-row justify-between gap-13 w-full">
             <TextInput
               label="Name"
               placeholder="For e.g., Mohit Naroune"
@@ -55,7 +55,7 @@ const ReadyToInvest = () => {
             type="submit"
             variant="primary"
             label="Subscribe For Free!"
-            classNames="w-md px-32"
+            classNames=" w-full md:w-md px-32"
           />
         </form>
       </Container>

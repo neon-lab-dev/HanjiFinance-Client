@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { forwardRef } from "react";
+import { IoCheckmark} from "react-icons/io5";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface TextInputProps {
@@ -13,6 +14,7 @@ interface TextInputProps {
   defaultValue?: any;
   isDisabled?: boolean;
   isRequired?: boolean;
+  isValidField?: boolean; // ✅ success state
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -26,12 +28,13 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       defaultValue,
       isDisabled = false,
       isRequired = true,
+      isValidField = false,
       ...rest
     },
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-2 font-Montserrat w-full">
+      <div className="flex flex-col gap-2 font-Montserrat w-full relative">
         {label && (
           <label
             htmlFor={name}
@@ -40,16 +43,13 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             <span className="text-neutral-10 leading-[18px] text-[15px] font-medium tracking-[-0.16] ">
               {label}
             </span>
-            <span>
-                <span className="text-neutral-85 leading-4 text-[13px] font-medium tracking-[-0.14]">
-                  {" "}
-                  {isRequired ? "Required" : "Optional"}
-                </span>
+            <span className="text-neutral-85 leading-4 text-[13px] font-medium tracking-[-0.14]">
+              {isRequired ? "Required" : "Optional"}
             </span>
           </label>
         )}
+
         <input
-          // required={isRequired}
           id={name}
           name={name}
           type={type}
@@ -57,12 +57,24 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           defaultValue={defaultValue}
           ref={ref}
           disabled={isDisabled}
-          className={`w-full px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none focus:border-neutral-25 transition duration-300 ${
-            error ? "border-red-500" : "border-neutral-95"
-          }`}
+          className={`w-full px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none transition duration-300 
+            ${
+              error
+                ? "border-red-500"
+                : isValidField
+                ? "border-green-500"
+                : "border-neutral-95 focus:border-neutral-25"
+            }`}
           {...rest}
         />
-        {error?.message && (
+
+        {/* ✅ Show tick when valid */}
+        {isValidField && !error && (
+          <IoCheckmark className="absolute top-[36%] right-3 text-success-20 text-base" />
+        )}
+
+        {/* ✅ Show error only if not valid */}
+        {!isValidField && error?.message && (
           <span className="text-red-500 text-sm">{String(error.message)}</span>
         )}
       </div>

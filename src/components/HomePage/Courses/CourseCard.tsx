@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Button from "../../Reusable/Button/Button";
 
 type TAccordionItem = {
@@ -29,13 +29,24 @@ const CourseCard: React.FC<TCourseCard> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => setIsOpen((prev) => !prev);
-
+  const blurVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 1, ease: "easeOut", delay: 0.5 },
+    },
+  };
   return (
-    <div className="bg-white rounded-xl shadow-lg font-Montserrat">
+    <div
+      className={`bg-white rounded-xl shadow-lg font-Montserrat ${
+        isOpen ? "h-full " : ""
+      } `}
+    >
+      <div> <img src={image} alt={title} className="rounded-t-xl w-full" /></div>
       {/* Course Image */}
-      <img src={image} alt={title} className="rounded-t-xl w-full" />
+     
 
-      <div className="flex flex-col gap-4 pb-4">
+      <div className="flex flex-col gap-4  pb-4 ">
         {/* Course Details */}
         <div className="bg-secondary-20 w-full p-4 space-y-3">
           <div>
@@ -44,7 +55,9 @@ const CourseCard: React.FC<TCourseCard> = ({
             </h1>
             <p className="text-neutral-60 text-sm leading-5">{subTitle}</p>
           </div>
-          <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">{tag}</span>
+          <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
+            {tag}
+          </span>
         </div>
 
         {/* Accordion */}
@@ -82,13 +95,40 @@ const CourseCard: React.FC<TCourseCard> = ({
                 </motion.section>
               )}
             </AnimatePresence>
+            <AnimatePresence initial={false}>
+              {!isOpen && (
+                <motion.section
+                  key="content"
+                  initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                  animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+                  exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                  transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                >
+                  <ul className=" relative list-disc pl-5 space-y-2 text-neutral-20 mb-2 text-sx leading-4 h-10 overflow-hidden">
+                    {accordion.description.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                    <motion.div
+                      className="absolute top-0 right-0 left-0 bg-gradient-course-card-blur h-[46px] w-full "
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.8 }}
+                      variants={blurVariants}
+                    ></motion.div>
+                  </ul>
+                </motion.section>
+              )}
+            </AnimatePresence>
           </article>
         </div>
-
-        <div className="px-4 space-y-5">
+        <div className="px-4  pt-2 space-y-5  z-100 mt-auto ">
           <div className="space-y-1">
-            <p className="text-neutral-130 text-[17px] leading-5 font-bold tracking-[-0.18px]">₹ {price}</p>
-            <p className="text-neutral-60 text-sx leading-[14px] tracking-[-0.12]">Lifetime Access</p>
+            <p className="text-neutral-130 text-[17px] leading-5 font-bold tracking-[-0.18px]">
+              ₹ {price}
+            </p>
+            <p className="text-neutral-60 text-sx leading-[14px] tracking-[-0.12]">
+              Lifetime Access
+            </p>
           </div>
 
           <Button label="Enroll Now" variant="primary" classNames="w-full" />
