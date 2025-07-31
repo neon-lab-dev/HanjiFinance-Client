@@ -221,6 +221,7 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
               label="No, Don’t cancel"
               variant="primary"
               classNames="w-full"
+              onClick={()=>{setIsConfirmationModalOpen(false)}}
             />
           </div>
         </div>
