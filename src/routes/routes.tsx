@@ -14,6 +14,7 @@ import Payment from "../pages/Payment/Payment";
 import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
 import Portfolio from './../pages/Portfolio/Portfolio';
+import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,18 @@ export const router = createBrowserRouter([
         path: "/payment-cancelled",
         element: <PaymentCancelled />,
       },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      
     ],
   },
 ]);

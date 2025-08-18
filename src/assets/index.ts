@@ -46,6 +46,8 @@ import portfolioManagement from "./icons/portfolio-management.svg";
 import message from "./icons/message.svg";
 import assetBreakdown from "./icons/asset-breakdown.svg";
 import riskMapping from "./icons/risk-mapping.svg";
+import arrowLogout from "./icons/arrows-logout.svg";
+import bell from "./icons/bell.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -128,4 +130,6 @@ export const ICONS = {
   message,
   assetBreakdown,
   riskMapping,
+  arrowLogout,
+  bell,
 };
