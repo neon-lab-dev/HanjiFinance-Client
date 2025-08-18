@@ -10,14 +10,14 @@ interface DashboardContainerProps {
 
 const DashboardContainer = ({ children, headerText, btn, btnLink }: DashboardContainerProps) => {
   return (
-    <div className="bg-white rounded-2xl py-4 px-4">
+    <div className="bg-white rounded-2xl py-4 px-4 font-Montserrat">
       {(headerText || btn) && (
         <div className="flex justify-between items-center mb-4">
-          {headerText && <h2 className="text-lg font-semibold mt-2">{headerText}</h2>}
+          {headerText && <h2 className="text-xl leading-[22px] font-semibold font-semibold mt-2 accent-5">{headerText}</h2>}
           {btn && btnLink && (
             <Link
               to={btnLink}
-              className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition"
+              className="text-primary-20 font-semibold leading-[22px]"
             >
               {btn}
             </Link>

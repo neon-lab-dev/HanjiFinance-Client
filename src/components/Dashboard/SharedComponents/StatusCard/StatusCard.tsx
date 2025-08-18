@@ -22,7 +22,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
   return (
     <div className="bg-white rounded-lg p-4 space-y-6 font-Montserrat  w-[280px]">
       <div className="flex justify-between items-center">
-        <div className="size-[30px] p-[6px] bg-surface-40 flex justify-center items-center">
+        <div className="size-[30px] p-[6px] bg-surface-40 flex justify-center items-center rounded-sm">
           <img src={icon} className="size-6" />
         </div>
         <div
