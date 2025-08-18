@@ -25,7 +25,7 @@ const HeaderDashboard = () => {
   const currentTitle = pageTitles[location.pathname] || "";
 
   return (
-    <div className="bg-white p-6 h-24 text-3xl flex justify-between items-center pr-4 sticky top-0 z-20 font-Montserrat">
+    <div className="bg-white p-6 h-[97.5px] border-b border-b-neutral-98 text-3xl flex justify-between items-center pr-4 sticky top-0 z-20 font-Montserrat">
       <div className="text-neutral-20 space-y-1 flex flex-col">
         <h2 className="font-medium text-2xl">{currentTitle}</h2>
         <span className="text-[13px]">Friday, August 1, 2025</span>

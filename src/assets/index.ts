@@ -64,6 +64,7 @@ import secure1 from "./images/secure-2.png";
 import secure2 from "./images/secure1.png";
 import razerPay from "./images/razer-pay.png";
 import portfolioBg from "./images/portfolio-bg.png";
+import dashboardLines from "./images/dashboard-image.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -80,6 +81,7 @@ export const IMAGES = {
   secure2,
   razerPay,
   portfolioBg,
+  dashboardLines
 };
 
 export const ICONS = {

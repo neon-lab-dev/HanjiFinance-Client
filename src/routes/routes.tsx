@@ -15,6 +15,7 @@ import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
 import Portfolio from './../pages/Portfolio/Portfolio';
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -83,7 +84,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <Dashboard />,
       },
       
     ],
