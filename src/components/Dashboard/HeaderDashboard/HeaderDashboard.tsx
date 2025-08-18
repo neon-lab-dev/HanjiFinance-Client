@@ -17,6 +17,7 @@ const HeaderDashboard = () => {
     "/dashboard/my-profile": "Private Group Access",
     "/dashboard/certificates": "My Profile",
     "/dashboard/fashion": "Fashion & Apparel",
+    "/dashboard/recent-activities": "Dashboard",
   };
   useEffect(() => {
     setIsAdmin(location.pathname.startsWith("/admin"));

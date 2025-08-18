@@ -16,6 +16,7 @@ import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
 import Portfolio from './../pages/Portfolio/Portfolio';
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <Dashboard />,
+      },
+      {
+        path: "recent-activities",
+        element: <RecentActivities/>,
       },
       
     ],

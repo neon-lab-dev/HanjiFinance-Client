@@ -1,8 +1,7 @@
-import React from "react";
 import WelcomeSection from "../../components/Dashboard/DashboardPage/WelcomeSectoin/WelcomeSection";
 import StatusSectoin from "../../components/Dashboard/SharedComponents/StatusSectoin/StatusSectoin";
-import DashboardContainer from "../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import QuickAction from "../../components/Dashboard/DashboardPage/QuickAction/QuickActionList";
+import RecentActivitiesList from "../../components/Dashboard/DashboardPage/RecentActivities/RecentActivitiesList";
 
 const Dashboard = () => {
   return (
@@ -11,23 +10,12 @@ const Dashboard = () => {
       <StatusSectoin />
       <div className="flex justify-center w-full flex-row gap-[18px]">
         <div className="w-[40%]">
-          
-        <QuickAction/>
+          <QuickAction />
         </div>
         <div className="w-[60%]">
-          <DashboardContainer
-        headerText="User Dashboard"
-        btn="Add New"
-        btnLink="/add-new"
-      >
-        <p>This is inside the dashboard container.</p>
-        <div className="mt-4">
-          <p>More content here...</p>
-        </div>
-      </DashboardContainer>
+          <RecentActivitiesList/>
         </div>
       </div>
-      
     </div>
   );
 };

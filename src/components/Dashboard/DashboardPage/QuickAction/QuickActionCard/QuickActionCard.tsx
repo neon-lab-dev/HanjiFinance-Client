@@ -5,14 +5,12 @@ type QuickActionCardProps = {
   icon: string;
   title: string;
   description: string;
-  arrowIcon?: string;
 };
 
 const QuickActionCard: React.FC<QuickActionCardProps> = ({
   icon,
   title,
   description,
-  arrowIcon = ICONS.arrowDown,
 }) => {
   return (
     <div className="border-[1px] border-neutral-98 w-full rounded-lg bg-neutral-100 p-6 flex items-center justify-center">
@@ -25,7 +23,7 @@ const QuickActionCard: React.FC<QuickActionCardProps> = ({
           <p className="text-[13px] leading-[16px]">{description}</p>
         </div>
       </div>
-      <img src={arrowIcon} className="size-6 rotate-270" />
+      <img src={ICONS.arrowDown} className="size-6 rotate-270" />
     </div>
   );
 };

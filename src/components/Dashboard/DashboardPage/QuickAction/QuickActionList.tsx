@@ -22,19 +22,17 @@ const quickActions = [
 
 const QuickActionsList = () => {
   return (
-    <DashboardContainer
-            headerText="User Dashboard"
-          >
-    <div className="space-y-4">
-      {quickActions.map((action, index) => (
-        <QuickActionCard
-          key={index}
-          icon={action.icon}
-          title={action.title}
-          description={action.description}
-        />
-      ))}
-    </div>
+    <DashboardContainer headerText="User Dashboard">
+      <div className="space-y-4">
+        {quickActions.map((action, index) => (
+          <QuickActionCard
+            key={index}
+            icon={action.icon}
+            title={action.title}
+            description={action.description}
+          />
+        ))}
+      </div>
     </DashboardContainer>
   );
 };
