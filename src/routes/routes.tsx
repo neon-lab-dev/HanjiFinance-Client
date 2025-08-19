@@ -18,6 +18,7 @@ import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
 import Consultations from "../pages/Dashboard/Consultations/Consultations";
+import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultation";
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
       {
         path: "consultations",
         element: <Consultations/>,
+      },
+      {
+        path: "book-new-session",
+        element: <BookConsultation/>,
       },
       
     ],

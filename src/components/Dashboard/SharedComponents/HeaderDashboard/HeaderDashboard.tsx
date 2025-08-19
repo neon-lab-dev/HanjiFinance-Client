@@ -18,6 +18,7 @@ const HeaderDashboard = () => {
     "/dashboard/certificates": "My Profile",
     "/dashboard/fashion": "Fashion & Apparel",
     "/dashboard/recent-activities": "Dashboard",
+    "/dashboard/book-new-session": "Consultations",
   };
   useEffect(() => {
     setIsAdmin(location.pathname.startsWith("/admin"));
