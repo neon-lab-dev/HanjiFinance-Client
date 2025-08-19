@@ -17,6 +17,7 @@ import Portfolio from './../pages/Portfolio/Portfolio';
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
+import Consultations from "../pages/Dashboard/Consultations/Consultations";
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: "recent-activities",
         element: <RecentActivities/>,
+      },
+      {
+        path: "consultations",
+        element: <Consultations/>,
       },
       
     ],

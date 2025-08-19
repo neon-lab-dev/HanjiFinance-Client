@@ -13,7 +13,7 @@ const DashboardContainer = ({ children, headerText, btn, btnLink }: DashboardCon
     <div className="bg-white rounded-2xl py-4 px-4 font-Montserrat">
       {(headerText || btn) && (
         <div className="flex justify-between items-center mb-4">
-          {headerText && <h2 className="text-xl leading-[22px] font-semibold font-semibold mt-2 accent-5">{headerText}</h2>}
+          {headerText && <h2 className="text-xl leading-[22px] font-semibold mt-2 accent-5">{headerText}</h2>}
           {btn && btnLink && (
             <Link
               to={btnLink}

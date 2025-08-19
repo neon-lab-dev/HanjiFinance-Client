@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import { ICONS } from "../../../assets";
 import { useState, useEffect } from "react";
+import { ICONS } from "../../../../assets";
 const HeaderDashboard = () => {
   const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
@@ -13,7 +13,7 @@ const HeaderDashboard = () => {
     "/dashboard": "Dashboard",
     "/dashboard/my-courses": "My Courses",
     "/dashboard/my-orders": "My Orders",
-    "/dashboard/referral": "Consultations",
+    "/dashboard/consultations": "Consultations",
     "/dashboard/my-profile": "Private Group Access",
     "/dashboard/certificates": "My Profile",
     "/dashboard/fashion": "Fashion & Apparel",

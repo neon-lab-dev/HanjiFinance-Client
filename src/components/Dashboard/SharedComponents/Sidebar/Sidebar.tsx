@@ -1,6 +1,6 @@
 
 import { Link, useLocation, } from "react-router-dom";
-import { ICONS}  from "../../../assets";
+import { ICONS } from "../../../../assets";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();

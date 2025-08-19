@@ -27,7 +27,7 @@ const activitiesData = [
 const RecentActivitiesList: React.FC = () => {
   return (
     <DashboardContainer
-      headerText="User Dashboard"
+      headerText="Recent Activities"
       btn="View All"
       btnLink="recent-activities"
     >
