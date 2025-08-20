@@ -11,16 +11,14 @@ type TProgressSection = {
 const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progress }) => {
   return (
     <div className="space-y-4 font-Montserrat">
-  {/* Progress Text */}
   <div className="flex justify-between font-medium text-neutral-10 pb-8 ">
     <span>
       Progress<span className="text-neutral-125"> |</span> <span className="text-neutral-50 text-sm font-medium">{completed}/{total} lessons</span> 
     </span>
   </div>
 
-  {/* Progress Bar */}
   <div className="relative w-full h-2 bg-neutral-200 rounded-full">
-    {/* Filled part */}
+  
     <motion.div
       className="h-2 bg-blue-600 rounded-full"
       initial={{ width: 0 }}
@@ -28,10 +26,10 @@ const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progres
       transition={{ duration: 0.6, ease: "easeOut" }}
     />
 
-    {/* Floating progress label */}
+
     <span
       className=" font-Montserrat absolute -top-8 text-sm leading-5 font-medium text-surface-100 bg-surface-40 border border-surface-95 px-1.5 py-0.5 rounded-md"
-      style={{ left: `calc(${progress}% - 20px)` }} // offset so it doesn't overflow
+      style={{ left: `calc(${progress}% - 20px)` }} 
     >
       {progress}%
     </span>
@@ -41,7 +39,7 @@ const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progres
   );
 };
 
-// Course Card Component
+
 type TCourseCard = {
   title: string;
   subTitle: string;
