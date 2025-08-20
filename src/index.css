@@ -47,6 +47,7 @@
   --color-neutral-145: #52525B;
   --color-neutral-150: #F1F5F9 ;
   --color-neutral-155: #E7E5E4 ;
+  --color-neutral-160: #4B5563 ;
 
   
 
@@ -63,6 +64,8 @@
   --color-surface-80: #3B82F6;
   --color-surface-85: #4F46E5;
   --color-surface-90: #CBD5E1;
+  --color-surface-95: #93C5FD;
+  --color-surface-100: #2563EB;
 
 
   /* accent */

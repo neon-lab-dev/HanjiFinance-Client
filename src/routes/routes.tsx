@@ -20,6 +20,7 @@ import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActiviti
 import Consultations from "../pages/Dashboard/Consultations/Consultations";
 import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultation";
 import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
+import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
 
 export const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ export const router = createBrowserRouter([
       {
         path: "my-orders",
         element: <MyOrders/>,
+      },
+      {
+        path: "my-courses",
+        element: <MyCourses/>,
       },
       
     ],
