@@ -52,6 +52,10 @@ import greenTick from "./icons/green-tick.svg";
 import clockSquare from "./icons/clock-square.svg";
 import calendarMinimalistic from "./icons/calendar-minimalistic.svg";
 import duration from "./icons/duration.svg";
+import sortArrow from "./icons/sort-vertical.svg";
+import filter from "./icons/filter.svg"
+import eye from "./icons/eye.svg"
+import download from "./icons/download.svg"
 
 
 // Images
@@ -142,6 +146,9 @@ export const ICONS = {
   greenTick,
   duration,
   calendarMinimalistic,
-  clockSquare
-
+  clockSquare,
+  sortArrow,
+  filter,
+  eye,
+  download
 };

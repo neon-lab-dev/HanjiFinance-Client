@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "My Orders",
-      link: "/dashboard/my-courses",
+      link: "/dashboard/my-orders",
     },
     {
       name: "Consultations",
@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Fashion & Apparel",
-      link: "/dashboard/my-orders",
+      link: "/dashboard/fashion",
     },
   ];
 

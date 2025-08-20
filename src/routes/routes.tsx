@@ -19,6 +19,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
 import Consultations from "../pages/Dashboard/Consultations/Consultations";
 import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultation";
+import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ export const router = createBrowserRouter([
       {
         path: "book-new-session",
         element: <BookConsultation/>,
+      },
+      {
+        path: "my-orders",
+        element: <MyOrders/>,
       },
       
     ],
