@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Consultations",
-      link: "/dashboard/referral",
+      link: "/dashboard/consultations",
     },
     {
       name: "Private Group Access",

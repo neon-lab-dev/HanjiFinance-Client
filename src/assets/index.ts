@@ -48,6 +48,11 @@ import assetBreakdown from "./icons/asset-breakdown.svg";
 import riskMapping from "./icons/risk-mapping.svg";
 import arrowLogout from "./icons/arrows-logout.svg";
 import bell from "./icons/bell.svg";
+import greenTick from "./icons/green-tick.svg";
+import clockSquare from "./icons/clock-square.svg";
+import calendarMinimalistic from "./icons/calendar-minimalistic.svg";
+import duration from "./icons/duration.svg";
+
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -134,4 +139,9 @@ export const ICONS = {
   riskMapping,
   arrowLogout,
   bell,
+  greenTick,
+  duration,
+  calendarMinimalistic,
+  clockSquare
+
 };
