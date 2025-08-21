@@ -20,11 +20,16 @@ const HeaderDashboard = () => {
     "/dashboard/recent-activities": "Dashboard",
     "/dashboard/book-new-session": "Consultations",
   };
+  
   useEffect(() => {
     setIsAdmin(location.pathname.startsWith("/admin"));
   }, [location.pathname]);
 
-  const currentTitle = pageTitles[location.pathname] || "";
+  let currentTitle = pageTitles[location.pathname] || "";
+    if (location.pathname.startsWith("/dashboard/my-courses/")) {
+    currentTitle = "My Courses";
+  }
+
 
   return (
     <div className="bg-white p-6 h-[97.5px] border-b border-b-neutral-98 text-3xl flex justify-between items-center pr-4 sticky top-0 z-20 font-Montserrat">

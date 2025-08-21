@@ -3,9 +3,9 @@ import Button from "../../../Reusable/Button/Button";
 
 // Progress Section Component
 type TProgressSection = {
-  completed: number;   // e.g. 3
-  total: number;       // e.g. 14
-  progress: number;    // e.g. 30
+  completed: number;  
+  total: number;       
+  progress: number;  
 };
 
 const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progress }) => {
