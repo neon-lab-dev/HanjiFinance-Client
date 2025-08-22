@@ -21,6 +21,8 @@ const HeaderDashboard = () => {
     "/dashboard/book-new-session": "Consultations",
     "/dashboard/my-subscriptions": "My Subscriptions",
     "/dashboard/pause-subscription": "My Subscriptions",
+    "/dashboard/reactivate-subscription": "My Subscriptions",
+    "/dashboard/cancel-subscription": "My Subscriptions",
   };
   
   useEffect(() => {

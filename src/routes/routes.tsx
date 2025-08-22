@@ -24,6 +24,8 @@ import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
 import CoursesDetails from "../pages/Dashboard/MyCourses/MyCourses/[id]/Page";
 import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MySubscription";
 import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrciption/PauseSubsrciption";
+import ReactivateSubscription from "../pages/Dashboard/MySubscription/ReactivateSubscription/ReactivateSubscription";
+import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrciption/CancelSubsrciption";
 
 export const router = createBrowserRouter([
   {
@@ -125,6 +127,14 @@ export const router = createBrowserRouter([
       {
         path: "pause-subscription",
         element: <PauseSubsrciption/>,
+      },
+      {
+        path: "reactivate-subscription",
+        element: <ReactivateSubscription/>,
+      },
+      {
+        path: "cancel-subscription",
+        element: <CancelSubscription/>,
       },
     ],
   },

@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import Button from "../../../../components/Reusable/Button/Button";
 import { useForm } from "react-hook-form";
-import TextInput from "../../../../components/Reusable/TextInput/TextInput";
 import Textarea from "../../../../components/Reusable/TextArea/TextArea";
-import { ICONS } from "../../../../assets";
 
 interface PauseFormData {
-  dateRange: string;
   message?: string;
 }
 
-const PauseSubscription = () => {
+const CancelSubscription = () => {
   const {
     register,
     handleSubmit,
@@ -36,24 +33,15 @@ const PauseSubscription = () => {
   return (
     <div className="font-Montserrat">
       <SubscriptionStatus>
+        <p className="font-bold text-neutral-10">It’s sad to see you go,</p>
         <form
           onSubmit={handleSubmit(handlePause)}
           className="flex flex-col gap-8 mt-6 w-full"
-        >
-          {/* Date Range */}
-          <TextInput
-            label="Date Range"
-            placeholder="Choose a date range until which subscription has to be paused"
-            error={errors.dateRange}
-            {...register("dateRange", {
-              required: "Date range is required",
-            })}
-            icon={ICONS.calendarMinimalistic}
-          />
+        >   
 
           {/* Message */}
              <Textarea
-            label="Please tell us the reason for your subscription pause "
+            label="Please tell us the reason for your subscription cancellation"
             placeholder="Your answer goes here....."
             rows={6}
             error={errors.message}
@@ -65,13 +53,13 @@ const PauseSubscription = () => {
           <div className="flex gap-8 w-full items-center justify-center">
             <Button
               variant="custom"
-              label="Don’t Pause"
+              label="Don’t Cancel"
               classNames="px-8 border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
               type="button"
             />
             <Button
               variant="primary"
-              label="Pause Subscription"
+              label="Cancel Subscription"
               type="submit"
             />
           </div>
@@ -82,4 +70,4 @@ const PauseSubscription = () => {
   );
 };
 
-export default PauseSubscription;
+export default CancelSubscription;
