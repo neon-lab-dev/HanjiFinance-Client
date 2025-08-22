@@ -23,6 +23,7 @@ import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
 import CoursesDetails from "../pages/Dashboard/MyCourses/MyCourses/[id]/Page";
 import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MySubscription";
+import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrciption/PauseSubsrciption";
 
 export const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
       {
         path: "my-subscriptions",
         element: <MySubscription />,
+      },
+      {
+        path: "pause-subscription",
+        element: <PauseSubsrciption/>,
       },
     ],
   },

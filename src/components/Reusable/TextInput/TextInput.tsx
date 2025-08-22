@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { forwardRef } from "react";
-import { IoCheckmark} from "react-icons/io5";
+import { IoCheckmark } from "react-icons/io5";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
+import { ICONS } from "../../../assets";
 
 interface TextInputProps {
   label?: string;
@@ -14,7 +15,8 @@ interface TextInputProps {
   defaultValue?: any;
   isDisabled?: boolean;
   isRequired?: boolean;
-  isValidField?: boolean; // ✅ success state
+  isValidField?: boolean;
+  icon?:string // ✅ success state
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -29,6 +31,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       isDisabled = false,
       isRequired = true,
       isValidField = false,
+      icon,
       ...rest
     },
     ref
@@ -48,7 +51,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             </span>
           </label>
         )}
-
         <input
           id={name}
           name={name}
@@ -57,22 +59,24 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           defaultValue={defaultValue}
           ref={ref}
           disabled={isDisabled}
-          className={`w-full px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none transition duration-300 
+          className={`w-full ${icon?"pl-[58px]":""} px-4 py-[14px] rounded-lg bg-white border-2 leading-[18px] focus:outline-none transition duration-300 
             ${
               error
                 ? "border-red-500"
                 : isValidField
                 ? "border-green-500"
-                : "border-neutral-95 focus:border-neutral-25"
+                : "border-neutral-95 focus:border-neutral-25 relative"
             }`}
           {...rest}
-        />
-
+        />{" "}
+        {icon &&<div className="absolute top-[28px] left-0 size-[46px] flex items-center pl-3 border-r border-r-neutral-95 ">
+          <img src={icon} className="size-6" />
+        </div>}
+        
         {/* ✅ Show tick when valid */}
         {isValidField && !error && (
           <IoCheckmark className="absolute top-[36%] right-3 text-success-20 text-base" />
         )}
-
         {/* ✅ Show error only if not valid */}
         {!isValidField && error?.message && (
           <span className="text-red-500 text-sm">{String(error.message)}</span>

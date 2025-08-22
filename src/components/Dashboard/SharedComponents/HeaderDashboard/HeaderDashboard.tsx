@@ -20,6 +20,7 @@ const HeaderDashboard = () => {
     "/dashboard/recent-activities": "Dashboard",
     "/dashboard/book-new-session": "Consultations",
     "/dashboard/my-subscriptions": "My Subscriptions",
+    "/dashboard/pause-subscription": "My Subscriptions",
   };
   
   useEffect(() => {
