@@ -26,6 +26,7 @@ import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MyS
 import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrciption/PauseSubsrciption";
 import ReactivateSubscription from "../pages/Dashboard/MySubscription/ReactivateSubscription/ReactivateSubscription";
 import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrciption/CancelSubsrciption";
+import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscription/UpdateSubscription";
 
 export const router = createBrowserRouter([
   {
@@ -135,6 +136,10 @@ export const router = createBrowserRouter([
       {
         path: "cancel-subscription",
         element: <CancelSubscription/>,
+      },
+      {
+        path: "update-subscription",
+        element: <UpdateSubscription/>,
       },
     ],
   },

@@ -23,6 +23,7 @@ const HeaderDashboard = () => {
     "/dashboard/pause-subscription": "My Subscriptions",
     "/dashboard/reactivate-subscription": "My Subscriptions",
     "/dashboard/cancel-subscription": "My Subscriptions",
+    "/dashboard/update-subscription": "My Subscriptions",
   };
   
   useEffect(() => {

@@ -3,6 +3,7 @@ import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionSta
 import Button from "../../../../components/Reusable/Button/Button";
 import { useForm } from "react-hook-form";
 import Textarea from "../../../../components/Reusable/TextArea/TextArea";
+import ConfermationCard from "../../../../components/Dashboard/SharedComponents/ConfermationCard/ConfermationCard";
 
 interface PauseFormData {
   message?: string;
