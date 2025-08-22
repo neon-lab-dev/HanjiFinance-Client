@@ -1,5 +1,6 @@
 import  { useState } from 'react'
 import { IMAGES } from '../../../../assets'
+import Button from '../../../Reusable/Button/Button'
 
 const SubscriptionHero = () => {
   const [subscriptionStatus, setSubscriptionStatus]=useState<"Active Subscription"|"Subscription Paused "|"Subscription Inactive">("Active Subscription")
@@ -19,6 +20,7 @@ const SubscriptionHero = () => {
           </div>
          
            <p className="leading-[22px] tet-sm text-neutral-100">Continue enjoying your premium subscription for private Whatsapp group with selected elite like minded people!  </p>
+          <Button variant="custom" label="Reactivate Subscription" classNames="px-8 border-[1px] w-fit border-surface-90 text-neutral-20 bg-surface-30 text-[15px] font-medium"/>
          </div>
           <div className={`${subscriptionStatus=="Active Subscription"? " border-success-25 bg-surface-5 text-success-20":" border-primary-35 bg-primary-30 text-primary-15"} border-[1px] rounded-sm p-1 text-[13px] leading-4 font-medium w-fit text-nowrap h-fit`}>
         {subscriptionStatus}

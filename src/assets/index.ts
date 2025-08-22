@@ -56,6 +56,7 @@ import sortArrow from "./icons/sort-vertical.svg";
 import filter from "./icons/filter.svg"
 import eye from "./icons/eye.svg"
 import download from "./icons/download.svg"
+import medal from "./icons/medal-ribbons-star.svg"
 
 
 // Images
@@ -150,5 +151,6 @@ export const ICONS = {
   sortArrow,
   filter,
   eye,
-  download
+  download,
+  medal
 };
