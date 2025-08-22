@@ -19,6 +19,7 @@ const HeaderDashboard = () => {
     "/dashboard/fashion": "Fashion & Apparel",
     "/dashboard/recent-activities": "Dashboard",
     "/dashboard/book-new-session": "Consultations",
+    "/dashboard/my-subscriptions": "My Subscriptions",
   };
   
   useEffect(() => {

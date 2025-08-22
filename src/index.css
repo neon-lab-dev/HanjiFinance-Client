@@ -13,6 +13,7 @@
   --color-primary-20: #c0392b;
   --color-primary-25: #fb7185;
   --color-primary-30: #FEF2F2;
+  --color-primary-35: #FCA5A5;
 
   /* Neutral */
   --color-neutral-5: #000000;
@@ -48,6 +49,7 @@
   --color-neutral-150: #F1F5F9 ;
   --color-neutral-155: #E7E5E4 ;
   --color-neutral-160: #4B5563 ;
+  --color-neutral-165: #E5E5E5 ;
 
   
 
@@ -114,6 +116,7 @@
   --bg-gradient-newsletter: linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
   --bg-gradient-weekly-form-blur: linear-gradient(9deg, #FFF 7.77%, #FEFDEC 94.52%);
   --bg-gradient-course-card-blur: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 119.57%);
+  --bg-gradient-dashboard-card: linear-gradient(90deg, #C41A1F 0%, #1F2937 103.17%);
 
   
   
@@ -165,6 +168,9 @@
 }
 .bg-gradient-course-card-blur{
   background: var(--bg-gradient-course-card-blur);
+}
+.bg-gradient-dashboard-card{
+  background: var(--bg-gradient-dashboard-card);
 }
 
 /* Custom scrollbar for a specific section */

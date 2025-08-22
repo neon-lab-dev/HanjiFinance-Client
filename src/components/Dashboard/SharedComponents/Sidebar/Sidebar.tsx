@@ -28,6 +28,10 @@ const Sidebar: React.FC = () => {
       link: "/dashboard/my-profile",
     },
     {
+      name: "My Subscriptions",
+      link: "/dashboard/my-subscriptions",
+    },
+    {
       name: "My Profile",
       link: "/dashboard/certificates",
     },

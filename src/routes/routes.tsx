@@ -13,7 +13,7 @@ import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 import Payment from "../pages/Payment/Payment";
 import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
-import Portfolio from './../pages/Portfolio/Portfolio';
+import Portfolio from "./../pages/Portfolio/Portfolio";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
@@ -22,6 +22,7 @@ import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultati
 import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
 import CoursesDetails from "../pages/Dashboard/MyCourses/MyCourses/[id]/Page";
+import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MySubscription";
 
 export const router = createBrowserRouter([
   {
@@ -67,7 +68,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/portfolio",
-        element: <Portfolio/>,
+        element: <Portfolio />,
       },
       {
         path: "/payment",
@@ -94,28 +95,32 @@ export const router = createBrowserRouter([
       },
       {
         path: "recent-activities",
-        element: <RecentActivities/>,
+        element: <RecentActivities />,
       },
       {
         path: "consultations",
-        element: <Consultations/>,
+        element: <Consultations />,
       },
       {
         path: "book-new-session",
-        element: <BookConsultation/>,
+        element: <BookConsultation />,
       },
       {
         path: "my-orders",
-        element: <MyOrders/>,
+        element: <MyOrders />,
       },
       {
         path: "my-courses",
-        element: <MyCourses/>,
+        element: <MyCourses />,
       },
-     {
-  path: "my-courses/:id",
-  element: <CoursesDetails />}, 
-      
+      {
+        path: "my-courses/:id",
+        element: <CoursesDetails />,
+      },
+      {
+        path: "my-subscriptions",
+        element: <MySubscription />,
+      },
     ],
   },
 ]);
