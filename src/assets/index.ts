@@ -57,6 +57,10 @@ import filter from "./icons/filter.svg"
 import eye from "./icons/eye.svg"
 import download from "./icons/download.svg"
 import medal from "./icons/medal-ribbons-star.svg"
+import grayCross from "./icons/gray-cross.svg"
+import pauseCircle from "./icons/pause-circle.svg"
+import card from "./icons/card.svg"
+import rightArrow from "./icons/alt-arrow-right.svg"
 
 
 // Images
@@ -152,5 +156,9 @@ export const ICONS = {
   filter,
   eye,
   download,
-  medal
+  medal,
+  grayCross,
+  pauseCircle,
+  card,
+  rightArrow,
 };
