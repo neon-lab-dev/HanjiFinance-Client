@@ -9,19 +9,22 @@ const SubscriptionQuickList = () => {
       icon: ICONS.pauseCircle,
       title: "Pause Subscription",
       subTitle: "Temporarily pause your subscription",
-      description:"A request will be raised to the team to hold your whatsapp group access until a selected date"
+      description:"A request will be raised to the team to hold your whatsapp group access until a selected date",
+      path:"/dashboard/pause-subscription"
     },
     {
       icon: ICONS.grayCross,
       title: "Cancel Subscription",
       subTitle: "End your subscription permanently",
-      description:"A request will be raised to the team to terminate  your whatsapp group permanently"
+      description:"A request will be raised to the team to terminate  your whatsapp group permanently",
+      path:"/dashboard/cancel-subscription"
     },
     {
       icon: ICONS.card,
       title: "Update Payment",
       subTitle: "Change your payment method",
-      description:"A request will be raised to change the bank account details to manage the subscription payments"
+      description:"A request will be raised to change the bank account details to manage the subscription payments",
+       path:"/dashboard/update-subscription"
     },
   ]
 
@@ -37,6 +40,7 @@ const SubscriptionQuickList = () => {
           title={action.title}
           subTitle={action.subTitle}
           description={action.description}
+          path={action.path}
         />
       ))}
     </div>

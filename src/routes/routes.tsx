@@ -27,6 +27,7 @@ import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrcipti
 import ReactivateSubscription from "../pages/Dashboard/MySubscription/ReactivateSubscription/ReactivateSubscription";
 import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrciption/CancelSubsrciption";
 import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscription/UpdateSubscription";
+import Courses from "../pages/Courses/Courses";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: "/payment-cancelled",
         element: <PaymentCancelled />,
+      },
+      {
+        path: "/courses",
+        element: <Courses />,
       },
     ],
   },

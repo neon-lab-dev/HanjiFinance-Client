@@ -53,15 +53,14 @@ import clockSquare from "./icons/clock-square.svg";
 import calendarMinimalistic from "./icons/calendar-minimalistic.svg";
 import duration from "./icons/duration.svg";
 import sortArrow from "./icons/sort-vertical.svg";
-import filter from "./icons/filter.svg"
-import eye from "./icons/eye.svg"
-import download from "./icons/download.svg"
-import medal from "./icons/medal-ribbons-star.svg"
-import grayCross from "./icons/gray-cross.svg"
-import pauseCircle from "./icons/pause-circle.svg"
-import card from "./icons/card.svg"
-import rightArrow from "./icons/alt-arrow-right.svg"
-
+import filter from "./icons/filter.svg";
+import eye from "./icons/eye.svg";
+import download from "./icons/download.svg";
+import medal from "./icons/medal-ribbons-star.svg";
+import grayCross from "./icons/gray-cross.svg";
+import pauseCircle from "./icons/pause-circle.svg";
+import card from "./icons/card.svg";
+import rightArrow from "./icons/alt-arrow-right.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -79,6 +78,7 @@ import secure2 from "./images/secure1.png";
 import razerPay from "./images/razer-pay.png";
 import portfolioBg from "./images/portfolio-bg.png";
 import dashboardLines from "./images/dashboard-image.png";
+import courseHeroBg from "./images/Courses-hero.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -95,7 +95,8 @@ export const IMAGES = {
   secure2,
   razerPay,
   portfolioBg,
-  dashboardLines
+  dashboardLines,
+  courseHeroBg,
 };
 
 export const ICONS = {
