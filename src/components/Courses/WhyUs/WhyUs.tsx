@@ -1,3 +1,6 @@
+// 1. Add 'use client'
+"use client";
+
 import Container from "../../Reusable/Container/Container";
 import { motion, type Variants } from "framer-motion";
 import SectionTitle from "../../Reusable/Heading/Heading";
@@ -22,7 +25,18 @@ const WhyUs = () => {
     },
   ];
 
-  const titleVariants: Variants = {
+  // 2. Define reusable animation variants
+  const containerVariants: Variants = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2, // Time between title and the card grid
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -30,40 +44,51 @@ const WhyUs = () => {
       transition: { duration: 0.5, ease: "easeOut" },
     },
   };
+  
   return (
-    <div className="bg-white py-[120px]">
+    <div className="bg-white py-[120px] overflow-hidden">
       <div className="relative bg-gradient-why-us pt-10 font-Montserrat">
         <Container>
+          {/* 3. Main animation container */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.5 }}
-            variants={titleVariants}>
-            <SectionTitle
-              heading="Why Choose Us?"
-              subHeading="Start with our free newsletter or explore the course library today."
-            />
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <SectionTitle
+                heading="Why Choose Us?"
+                subHeading="Start with our free newsletter or explore the course library today."
+              />
+            </motion.div>
+            
+            {/* 4. Animate the card container and stagger its children */}
+            <motion.div
+              className="flex gap-4 mt-12"
+              variants={containerVariants} // Re-using for staggering cards
+            >
+              {whyUs.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="p-6 flex flex-col justify-center items-start gap-6 border border-neutral-98 rounded-lg"
+                  variants={itemVariants} // Animate each card
+                >
+                  <div className="size-12 bg-neutral-100 p-3 flex items-center justify-center">
+                    <img
+                      src={ICONS.tickBox}
+                      alt={item.title}
+                      className="size-9"
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <h5 className="text-lg font-semibold">{item.title}</h5>
+                    <p className="text-neutral-30">{item.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
-          <div className="flex gap-4 mt-12">
-            {whyUs.map((item, index) => (
-              <div
-                key={index}
-                className="p-6 flex flex-col justify-center items-start gap-6 border border-neutral-98 rounded-lg"
-              >
-                <div className="size-12 bg-neutral-100 p-3 flex items-center justify-center">
-                  <img
-                    src={ICONS.tickBox}
-                    alt={item.title}
-                    className="size-9"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <h5 className="text-lg font-semibold">{item.title}</h5>
-                  <p className="text-neutral-30">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </Container>
         <div className="bg-gradient-why-us-section w-full h-[160px]"></div>
       </div>
