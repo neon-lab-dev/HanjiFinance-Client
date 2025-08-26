@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { IMAGES } from "../../../assets";
-import SectionTitle from "../../../components/Reusable/Heading/Heading";
-import Container from "../../../components/Reusable/Container/Container";
-import CourseCard from "../../../components/HomePage/Courses/CourseCard";
+import SectionTitle from "../../Reusable/Heading/Heading";
+import Container from "../../Reusable/Container/Container";
+import CourseCard from "../../HomePage/Courses/CourseCard";
 const CousesSection = () => {
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -96,7 +96,7 @@ const CousesSection = () => {
   ];
 
   return (
-    <div className="relative bg-gradient-courses-section-bg pt-[60px]  overflow-hidden">
+    <div className="relative bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden">
       <Container>
         <motion.div
           initial="hidden"

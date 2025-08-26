@@ -31,8 +31,8 @@ const WhyUs = () => {
     },
   };
   return (
-    <div>
-      <div className="relative bg-gradient-why-us pt-10 ">
+    <div className="bg-white py-[120px]">
+      <div className="relative bg-gradient-why-us pt-10 font-Montserrat">
         <Container>
           <motion.div
             initial="hidden"

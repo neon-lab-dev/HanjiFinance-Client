@@ -62,6 +62,11 @@ import pauseCircle from "./icons/pause-circle.svg";
 import card from "./icons/card.svg";
 import rightArrow from "./icons/alt-arrow-right.svg";
 import tickBox from "./icons/tick-box.svg";
+import crownStar from "./icons/crown-star.svg";
+import verifiedCertificate from "./icons/diploma-verified.svg";
+import userCheck from "./icons/user-check.svg";
+import star from "./icons/star.svg";
+import unlock from "./icons/lock-keyhole-unlocked.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -80,6 +85,7 @@ import razerPay from "./images/razer-pay.png";
 import portfolioBg from "./images/portfolio-bg.png";
 import dashboardLines from "./images/dashboard-image.png";
 import courseHeroBg from "./images/Courses-hero.png";
+import courseBundle from "./images/course-bundle.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -98,6 +104,7 @@ export const IMAGES = {
   portfolioBg,
   dashboardLines,
   courseHeroBg,
+  courseBundle
 };
 
 export const ICONS = {
@@ -163,5 +170,10 @@ export const ICONS = {
   pauseCircle,
   card,
   rightArrow,
-  tickBox
+  tickBox,
+  userCheck,
+  verifiedCertificate,
+  crownStar,
+  star,
+  unlock
 };

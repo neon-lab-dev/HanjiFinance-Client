@@ -19,18 +19,6 @@
   /* Neutral */
   --color-neutral-5: #000000;
   --color-neutral-10: #262626;
-  --color-neutral-15: #111111;
-  --color-neutral-20: #171717;
-  --color-neutral-25: #1e293b;
-  --color-neutral-30: #27272a;
-  --color-neutral-35: #263238;
-  --color-neutral-40: #2c2c2c;
-  --color-neutral-50: #404040;
-  --color-neutral-60: #525252;
-  --color-neutral-65: #525252d9;
-  --color-neutral-70: #64748b;
-  --color-neutral-75: #6b7280;
-  --color-neutral-80: #71717a;
   --color-neutral-85: #737373;
   --color-neutral-90: #d4d4d4;
   --color-neutral-95: #d4d4d8;
@@ -51,6 +39,10 @@
   --color-neutral-155: #E7E5E4 ;
   --color-neutral-160: #4B5563 ;
   --color-neutral-165: #E5E5E5 ;
+  --color-neutral-170: #ebedee ;
+  --color-neutral-175: #525252 ;
+  --color-neutral-180: #404040 ;
+
 
   
 
@@ -122,7 +114,10 @@
   --bg-gradient-courses-section-bg:linear-gradient(180deg, rgba(254, 242, 242, 0.00) 0%, rgba(254, 242, 242, 0.40) 100%);
   --bg-gradient-courses-bundle: linear-gradient(9deg, #FFF 7.77%, #EFF6FF 94.52%);
   --bg-gradient-why-us:linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
-  --bg-gradient-why-us-section: linear-gradient(4deg, #FFF 4.15%, #FEFCE8 115.15%)
+  --bg-gradient-why-us-section: linear-gradient(4deg, #FFF 4.15%, #FEFCE8 115.15%);
+  --bg-gradient-brown: linear-gradient(90deg, rgba(192, 57, 43, 0.60) 3.47%, rgba(157, 97, 0, 0.60) 110.42%);
+  --bg-gradient-brown-text: linear-gradient(90deg, #C0392B 3.47%, #9D6100 110.42%); 
+  --bg-gradient-brown-bg: linear-gradient(90deg, #C41A1F 0%, #1F2937 103.17%);
 
   
   
@@ -192,6 +187,15 @@
 }
 .bg-gradient-why-us-section{
   background: var(--bg-gradient-why-us-section);
+}
+.bg-gradient-brown{
+  background: var(--bg-gradient-brown);
+}
+.bg-gradient-brown-text{
+  background: var(--bg-gradient-brown-text);
+}
+.bg-gradient-brown-bg{
+  background: var(--bg-gradient-brown-bg);
 }
 
 /* Custom scrollbar for a specific section */
