@@ -96,7 +96,7 @@ const CousesSection = () => {
   ];
 
   return (
-    <div className="relative .bg-gradient-courses-section-bg pt-[60px]  overflow-hidden">
+    <div className="relative bg-gradient-courses-section-bg pt-[60px]  overflow-hidden">
       <Container>
         <motion.div
           initial="hidden"

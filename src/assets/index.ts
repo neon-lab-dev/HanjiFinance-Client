@@ -61,6 +61,7 @@ import grayCross from "./icons/gray-cross.svg";
 import pauseCircle from "./icons/pause-circle.svg";
 import card from "./icons/card.svg";
 import rightArrow from "./icons/alt-arrow-right.svg";
+import tickBox from "./icons/tick-box.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -162,4 +163,5 @@ export const ICONS = {
   pauseCircle,
   card,
   rightArrow,
+  tickBox
 };

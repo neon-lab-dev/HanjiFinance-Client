@@ -120,6 +120,9 @@
   --bg-gradient-dashboard-card: linear-gradient(90deg, #C41A1F 0%, #1F2937 103.17%);
   --bg-gradient-courses-section:linear-gradient(9deg, #FFF 7.77%, #FFFAFA 94.52%);
   --bg-gradient-courses-section-bg:linear-gradient(180deg, rgba(254, 242, 242, 0.00) 0%, rgba(254, 242, 242, 0.40) 100%);
+  --bg-gradient-courses-bundle: linear-gradient(9deg, #FFF 7.77%, #EFF6FF 94.52%);
+  --bg-gradient-why-us:linear-gradient(180deg, rgba(254, 252, 232, 0.00) 0%, #FEFCE8 100%);
+  --bg-gradient-why-us-section: linear-gradient(4deg, #FFF 4.15%, #FEFCE8 115.15%)
 
   
   
@@ -180,6 +183,15 @@
 }
 .bg-gradient-courses-section-bg{
   background: var(--bg-gradient-courses-section-bg);
+}
+.bg-gradient-courses-bundle{
+  background: var(--bg-gradient-courses-bundle);
+}
+.bg-gradient-why-us{
+  background: var(--bg-gradient-why-us);
+}
+.bg-gradient-why-us-section{
+  background: var(--bg-gradient-why-us-section);
 }
 
 /* Custom scrollbar for a specific section */
