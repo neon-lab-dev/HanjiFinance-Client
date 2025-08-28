@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+
 import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import Button from "../../../../components/Reusable/Button/Button";
 import { useForm } from "react-hook-form";
 import TextInput from "../../../../components/Reusable/TextInput/TextInput";
 import Textarea from "../../../../components/Reusable/TextArea/TextArea";
 import { ICONS } from "../../../../assets";
+import TwoMonthsCalender from "../../../../components/Reusable/Calender/TwoMonthsCalender";
+import { useState } from "react";
 
 interface PauseFormData {
   dateRange: string;
@@ -16,22 +18,14 @@ const PauseSubscription = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue, // 🔑 from react-hook-form
   } = useForm<PauseFormData>();
 
   const handlePause = (data: PauseFormData) => {
     console.log("Form Data:", data);
   };
 
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      console.log("Clicked:", event.target);
-    };
-
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
+  const [showCalender, setShowCalender] = useState(false);
 
   return (
     <div className="font-Montserrat">
@@ -41,19 +35,38 @@ const PauseSubscription = () => {
           className="flex flex-col gap-8 mt-6 w-full"
         >
           {/* Date Range */}
-          <TextInput
-            label="Date Range"
-            placeholder="Choose a date range until which subscription has to be paused"
-            error={errors.dateRange}
-            {...register("dateRange", {
-              required: "Date range is required",
-            })}
-            icon={ICONS.calendarMinimalistic}
-          />
+          <div className="relative w-full">
+            <TextInput
+              label="Date Range"
+              placeholder="Choose a date range until which subscription has to be paused"
+              error={errors.dateRange}
+              {...register("dateRange", {
+                required: "Date range is required",
+              })}
+              icon={ICONS.calendarMinimalistic}
+              onClickIcon={() => setShowCalender(!showCalender)}
+              
+            />
+            {showCalender && (
+              <div className="absolute z-10 mt-2">
+                <TwoMonthsCalender
+                  onChange={(range) => {
+                    if (range.start && range.end) {
+                      // format dd/MM/yyyy - dd/MM/yyyy
+                      const formatted = `${range.start.toLocaleDateString()} - ${range.end.toLocaleDateString()}`;
+                      setValue("dateRange", formatted, { shouldValidate: true });
+                     
+                    }
+                  }}
+                  onClickApply={()=> setShowCalender(false)}
+                />
+              </div>
+            )}
+          </div>
 
           {/* Message */}
-             <Textarea
-            label="Please tell us the reason for your subscription pause "
+          <Textarea
+            label="Please tell us the reason for your subscription pause"
             placeholder="Your answer goes here....."
             rows={6}
             error={errors.message}
@@ -69,14 +82,13 @@ const PauseSubscription = () => {
               classNames="px-8 border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
               type="button"
             />
-            <Button
-              variant="primary"
-              label="Pause Subscription"
-              type="submit"
-            />
+            <Button variant="primary" label="Pause Subscription" type="submit" />
           </div>
         </form>
-        <p className="text-neutral-60 text-center mt-8 font-medium text-[13px] mb-2">Hope to see you back super soon!</p>
+
+        <p className="text-neutral-60 text-center mt-8 font-medium text-[13px] mb-2">
+          Hope to see you back super soon!
+        </p>
       </SubscriptionStatus>
     </div>
   );

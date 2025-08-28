@@ -16,9 +16,9 @@ interface TextInputProps {
   isDisabled?: boolean;
   isRequired?: boolean;
   isValidField?: boolean;
-  icon?:string // ✅ success state
+  icon?:string ;
+  onClickIcon?:()=>void;
 }
-
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
@@ -32,6 +32,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       isRequired = true,
       isValidField = false,
       icon,
+      onClickIcon,
       ...rest
     },
     ref
@@ -69,7 +70,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             }`}
           {...rest}
         />{" "}
-        {icon &&<div className="absolute top-[28px] left-0 size-[46px] flex items-center pl-3 border-r border-r-neutral-95 ">
+        {icon &&<div onClick={onClickIcon} className="absolute top-[28px] left-0 size-[46px] flex items-center pl-3 border-r border-r-neutral-95 ">
           <img src={icon} className="size-6" />
         </div>}
         

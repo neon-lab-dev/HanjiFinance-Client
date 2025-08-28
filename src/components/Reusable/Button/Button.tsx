@@ -18,7 +18,7 @@ const Button: React.FC<ReusableButtonProps> = ({
   disabled = false, // ✅ default false
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap";
+    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap";
 
   const variantClasses =
     variant === "primary"
@@ -30,7 +30,7 @@ const Button: React.FC<ReusableButtonProps> = ({
       : variant === "disabled"
       ? "bg-neutral-150 text-neutral-90 cursor-not-allowed border-2 border-neutral-98 hover:none"
       : variant === "custom"
-      ? "bg-neutral-150 text-neutral-90 cursor-not-allowed border-2 border-neutral-98 hover:none":"";
+      ? "bg-neutral-150 text-neutral-90  border-2 border-neutral-98":"";
 
   return (
     <button
