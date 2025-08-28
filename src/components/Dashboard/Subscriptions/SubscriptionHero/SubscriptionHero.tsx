@@ -4,6 +4,7 @@ import Button from '../../../Reusable/Button/Button'
 
 const SubscriptionHero = () => {
   const [subscriptionStatus, setSubscriptionStatus]=useState<"Active Subscription"|"Subscription Paused "|"Subscription Inactive">("Active Subscription")
+  console.log(setSubscriptionStatus)
  
   return (
    <div className="relative w-full h-fit flex rounded-2xl bg-gradient-dashboard-card p-6 overflow-hidden font-Montserrat">

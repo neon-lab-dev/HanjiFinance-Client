@@ -2,7 +2,7 @@
 import { forwardRef } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import type { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
-import { ICONS } from "../../../assets";
+
 
 interface TextInputProps {
   label?: string;

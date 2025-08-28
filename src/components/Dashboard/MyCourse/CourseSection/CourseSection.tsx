@@ -1,4 +1,3 @@
-import React from "react";
 import CourseCard from "../CourseCard/CourseCard";
 import { IMAGES } from "../../../../assets";
 import { Link } from "react-router-dom";
