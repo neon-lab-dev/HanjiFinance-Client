@@ -46,6 +46,27 @@ import portfolioManagement from "./icons/portfolio-management.svg";
 import message from "./icons/message.svg";
 import assetBreakdown from "./icons/asset-breakdown.svg";
 import riskMapping from "./icons/risk-mapping.svg";
+import arrowLogout from "./icons/arrows-logout.svg";
+import bell from "./icons/bell.svg";
+import greenTick from "./icons/green-tick.svg";
+import clockSquare from "./icons/clock-square.svg";
+import calendarMinimalistic from "./icons/calendar-minimalistic.svg";
+import duration from "./icons/duration.svg";
+import sortArrow from "./icons/sort-vertical.svg";
+import filter from "./icons/filter.svg";
+import eye from "./icons/eye.svg";
+import download from "./icons/download.svg";
+import medal from "./icons/medal-ribbons-star.svg";
+import grayCross from "./icons/gray-cross.svg";
+import pauseCircle from "./icons/pause-circle.svg";
+import card from "./icons/card.svg";
+import rightArrow from "./icons/alt-arrow-right.svg";
+import tickBox from "./icons/tick-box.svg";
+import crownStar from "./icons/crown-star.svg";
+import verifiedCertificate from "./icons/diploma-verified.svg";
+import userCheck from "./icons/user-check.svg";
+import star from "./icons/star.svg";
+import unlock from "./icons/lock-keyhole-unlocked.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -62,6 +83,9 @@ import secure1 from "./images/secure-2.png";
 import secure2 from "./images/secure1.png";
 import razerPay from "./images/razer-pay.png";
 import portfolioBg from "./images/portfolio-bg.png";
+import dashboardLines from "./images/dashboard-image.png";
+import courseHeroBg from "./images/Courses-hero.png";
+import courseBundle from "./images/course-bundle.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -78,6 +102,9 @@ export const IMAGES = {
   secure2,
   razerPay,
   portfolioBg,
+  dashboardLines,
+  courseHeroBg,
+  courseBundle
 };
 
 export const ICONS = {
@@ -128,4 +155,25 @@ export const ICONS = {
   message,
   assetBreakdown,
   riskMapping,
+  arrowLogout,
+  bell,
+  greenTick,
+  duration,
+  calendarMinimalistic,
+  clockSquare,
+  sortArrow,
+  filter,
+  eye,
+  download,
+  medal,
+  grayCross,
+  pauseCircle,
+  card,
+  rightArrow,
+  tickBox,
+  userCheck,
+  verifiedCertificate,
+  crownStar,
+  star,
+  unlock
 };

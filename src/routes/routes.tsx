@@ -13,7 +13,21 @@ import ChatAndChill from "../pages/ChatAndChill/ChatAndChill";
 import Payment from "../pages/Payment/Payment";
 import PaymentSuccess from "../pages/PaymentSuccess/PaymentSuccess";
 import PaymentCancelled from "../pages/PaymentCancelled/PaymentCancelled";
-import Portfolio from './../pages/Portfolio/Portfolio';
+import Portfolio from "./../pages/Portfolio/Portfolio";
+import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import RecentActivities from "../pages/Dashboard/RecentActivities/RecentActivities";
+import Consultations from "../pages/Dashboard/Consultations/Consultations";
+import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultation";
+import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
+import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
+import CoursesDetails from "../pages/Dashboard/MyCourses/MyCourses/[id]/Page";
+import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MySubscription";
+import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrciption/PauseSubsrciption";
+import ReactivateSubscription from "../pages/Dashboard/MySubscription/ReactivateSubscription/ReactivateSubscription";
+import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrciption/CancelSubsrciption";
+import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscription/UpdateSubscription";
+import Courses from "../pages/Courses/Courses";
 
 export const router = createBrowserRouter([
   {
@@ -59,7 +73,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/portfolio",
-        element: <Portfolio/>,
+        element: <Portfolio />,
       },
       {
         path: "/payment",
@@ -72,6 +86,65 @@ export const router = createBrowserRouter([
       {
         path: "/payment-cancelled",
         element: <PaymentCancelled />,
+      },
+      {
+        path: "/courses",
+        element: <Courses />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+      {
+        path: "recent-activities",
+        element: <RecentActivities />,
+      },
+      {
+        path: "consultations",
+        element: <Consultations />,
+      },
+      {
+        path: "book-new-session",
+        element: <BookConsultation />,
+      },
+      {
+        path: "my-orders",
+        element: <MyOrders />,
+      },
+      {
+        path: "my-courses",
+        element: <MyCourses />,
+      },
+      {
+        path: "my-courses/:id",
+        element: <CoursesDetails />,
+      },
+      {
+        path: "my-subscriptions",
+        element: <MySubscription />,
+      },
+      {
+        path: "pause-subscription",
+        element: <PauseSubsrciption/>,
+      },
+      {
+        path: "reactivate-subscription",
+        element: <ReactivateSubscription/>,
+      },
+      {
+        path: "cancel-subscription",
+        element: <CancelSubscription/>,
+      },
+      {
+        path: "update-subscription",
+        element: <UpdateSubscription/>,
       },
     ],
   },
