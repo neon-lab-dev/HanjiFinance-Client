@@ -28,6 +28,7 @@ import ReactivateSubscription from "../pages/Dashboard/MySubscription/Reactivate
 import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrciption/CancelSubsrciption";
 import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscription/UpdateSubscription";
 import Courses from "../pages/Courses/Courses";
+import ECommerce from "../pages/ECommerce/ECommerce";
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: "/courses",
         element: <Courses />,
+      },
+      {
+        path: "/e-commerce",
+        element: <ECommerce />,
       },
     ],
   },

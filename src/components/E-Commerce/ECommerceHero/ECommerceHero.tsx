@@ -1,15 +1,16 @@
+import React from 'react'
 import ReusableHeroSection from '../../Reusable/HeroSection/HeroSection';
 import { ICONS, IMAGES } from '../../../assets';
 import { scrollToSection } from '../../../utils/scrollToSection';
 
-const CoursesHero = () => {
- const heroDetails = [
+const ECommerceHero = () => {
+  const heroDetails = [
     {
-      value: "Expert-Led Courses",
+      value: "Trendy Outfit",
       icon: ICONS.getAccess,
     },
     {
-      value: "Only for 200 Members",
+      value: "Attract Vibe",
       icon: ICONS.checkByTeam,
     },
     {
@@ -20,22 +21,20 @@ const CoursesHero = () => {
 
   const description = (
     <span className="flex items-center justify-center flex-wrap gap-2">
-      Buy courses individually or as a premium bundle for the complete edge
-      
-    </span>
+Equity volatile hai, but iss fabric ka comfort stable hai.    </span>
   );
 
   return (
     <ReusableHeroSection
-      headingLines={["Master Finance.","Secure Your Future."]}
-      bgImage={IMAGES.courseHeroBg}
+      headingLines={["@hanjifinance Official"," Merchandise Store"]}
+      bgImage={IMAGES.ecommerceHero}
       heroDetails={heroDetails}
       description={description}
-      buttonLabel="Explore Courses"
+      buttonLabel="Explore Products"
       gradientBottom="bg-gradient-hero"
-      onButtonClick={() => scrollToSection("explore-courses")}
+      onButtonClick={() => scrollToSection("explore-products")}
     />
   );
 };
 
-export default CoursesHero
+export default ECommerceHero

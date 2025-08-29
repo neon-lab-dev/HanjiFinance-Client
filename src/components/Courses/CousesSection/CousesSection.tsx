@@ -96,7 +96,7 @@ const CousesSection = () => {
   ];
 
   return (
-    <div className="relative bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden">
+    <div id="explore-courses" className="relative  bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden">
       <Container>
         <motion.div
           initial="hidden"
