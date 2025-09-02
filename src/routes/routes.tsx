@@ -29,6 +29,7 @@ import CancelSubscription from "../pages/Dashboard/MySubscription/CancelSubsrcip
 import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscription/UpdateSubscription";
 import Courses from "../pages/Courses/Courses";
 import ECommerce from "../pages/ECommerce/ECommerce";
+import ProductDetails from "../pages/ProductsDetails/ProductsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
       {
         path: "/e-commerce",
         element: <ECommerce />,
+      },
+      {
+        path: "/product-details/:id",
+        element: <ProductDetails />,
       },
     ],
   },
