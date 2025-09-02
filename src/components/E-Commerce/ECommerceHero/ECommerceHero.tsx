@@ -1,4 +1,3 @@
-import React from 'react'
 import ReusableHeroSection from '../../Reusable/HeroSection/HeroSection';
 import { ICONS, IMAGES } from '../../../assets';
 import { scrollToSection } from '../../../utils/scrollToSection';
