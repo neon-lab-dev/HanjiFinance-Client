@@ -15,7 +15,7 @@ const HeroHeading = ({
   return (
     <h1
       className={twMerge(
-        "text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[600px] mx-auto mt-9",
+        "text-[32px] lg:text-[64px] font-bold leading-9 lg:leading-[70px] text-neutral-10 text-center max-w-[750px] mx-auto mt-9",
         className
       )}
     >

@@ -86,6 +86,8 @@ import portfolioBg from "./images/portfolio-bg.png";
 import dashboardLines from "./images/dashboard-image.png";
 import courseHeroBg from "./images/Courses-hero.png";
 import courseBundle from "./images/course-bundle.png";
+import ecommerceHero from "./images/ecommerce-hero.png";
+import product from "./images/product.png";
 
 export const IMAGES = {
   aboutUsBg,
@@ -104,7 +106,9 @@ export const IMAGES = {
   portfolioBg,
   dashboardLines,
   courseHeroBg,
-  courseBundle
+  courseBundle,
+  ecommerceHero,
+  product
 };
 
 export const ICONS = {
