@@ -5,7 +5,7 @@ const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (a
   const rawBaseQuery = fetchBaseQuery({
     // baseUrl: 'http://localhost:5000/api/v1',
     // baseUrl: 'https://pmgurkulbackend.vercel.app/api/v1',
-    baseUrl: 'https://api.pmgurukkul.com/api/v1',
+    baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
     credentials: 'include',
   });
 
@@ -30,6 +30,6 @@ const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (a
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery,
-  tagTypes: ['user', 'course', 'earning', 'payout'],
+  tagTypes: ['user', 'course', 'product', 'earning', 'payout'],
   endpoints: () => ({}),
 });

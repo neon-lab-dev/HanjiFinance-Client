@@ -5,14 +5,12 @@ import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
 import Button from "../../Reusable/Button/Button";
 import MegaMenu from "./MegaMenu";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../redux/store";
-import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
+import { useDispatch } from "react-redux";
+import { setIsModalOpen, setModalType } from "../../../redux/Features/Auth/authModalSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { isModalOpen } = useSelector((state: RootState) => state.authModal);
-  console.log(isModalOpen);
+ 
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
@@ -64,6 +62,7 @@ const Navbar = () => {
       path: "/",
       onClick: () => {
         dispatch(setIsModalOpen(true));
+        dispatch(setModalType("login"));
       },
     },
   ];
