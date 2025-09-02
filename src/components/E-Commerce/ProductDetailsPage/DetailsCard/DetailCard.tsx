@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-type TDetailCard = [
+type TDetailCard =
   {
     icon: any;
     title: string;
