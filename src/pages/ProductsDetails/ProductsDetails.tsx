@@ -1,8 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/E-Commerce/ProductDetailsPage/Breadcrumbs/Breadcrumbs";
 import ImageCarousel from "../../components/E-Commerce/ProductDetailsPage/ProductCarousel/ImageCarousel";
 import Container from "../../components/Reusable/Container/Container";
 import { useGetSingleProductByIdQuery } from "../../redux/Features/Product/productApi";
+import ProductImages from "../../components/E-Commerce/ProductDetailsPage/productImages/ProductImages";
+import { ICONS, IMAGES } from "../../assets";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
+import ExpandableDescription from "../../components/E-Commerce/ProductDetailsPage/ExpandableDescription/ExpandableDescription";
+import DeliveryOptions from "../../components/E-Commerce/ProductDetailsPage/DeliveryOptions/DeliveryOptions";
+import DeliveryDetails from "../../components/E-Commerce/ProductDetailsPage/DeliveryDetails/DeliveryDetails";
+import DetailCard from '../../components/E-Commerce/ProductDetailsPage/DetailsCard/DetailCard';
+import ProductInfo from "../../components/E-Commerce/ProductDetailsPage/ProductInfo/ProductInfo";
 
 const ProductsDetails = () => {
 const {id} = useParams();
@@ -15,16 +26,218 @@ const {id} = useParams();
     { label: "Test" },
   ];
 
+  const { _id, name, description, imageUrls:images, sizes=[]} = data?.data || {};
+
+   // State to track selected size and price
+  const [selectedSize, setSelectedSize] = useState<any>([]);
+
+
+  // State to track selected products with sizes
+  const [selectedProducts, setSelectedProducts] = useState({});
+
+  //  Setting the first size product in state automatically befor clicking
+  useEffect(() => {
+  if (sizes && sizes.length > 0) {
+    const firstSize = sizes[0];
+    console.log(firstSize);
+    setSelectedSize(firstSize);
+    setSelectedProducts({
+      productId: _id,
+      name,
+      selectedSize: firstSize.size,
+      basePrice : firstSize.basePrice,
+      discountedPrice : firstSize.discountedPrice,
+      image: images?.[0] || ICONS.imageIcon,
+    });
+  }
+}, [sizes, _id, name, images]);
+
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+
+    setSelectedProducts({
+      productId: _id,
+      name: name,
+      selectedSize: size.size,
+      basePrice : size.basePrice,
+      discountedPrice : size.discountedPrice,
+      image: images[0] || ICONS.imageIcon,
+    });
+  };
+
+  const user = useSelector(useCurrentUser);
+
+
+  if (isLoading) return <div>Loading...</div>;
+if (!data?.data) return <div>No product found</div>;
+
 
   return (
     <Container>
-      <div className="font-Montserrat">
+      {
+        isLoading ?
+        <p>Loading....</p>
+        :
+        <div className="font-Montserrat">
         {/* Breadcrumbs */}
         <Breadcrumbs items={breadcrumbItems} />
 
         {/* Product images for smaller device */}
       <ImageCarousel images={data?.data?.imageUrls}/>
+
+      <div className="flex flex-col lg:flex-row gap-9 mt-5 md:mt-8">
+        {/* Product images for bigger screens */}
+        <ProductImages images={data?.data?.imageUrls} />
+
+         {/* Product Details */}
+        <div className="w-full lg:w-[40%]">
+          {/* Product name */}
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl md:text-[32px] font-bold leading-normal md:leading-[44px] text-[#333] capitalize">
+              {data?.data?.name}
+            </h1>
+
+            <img
+              // onClick={handleAddToWishList}
+              // src={isInCart ? ICONS.redHeart : IMAGES.heart}
+              src={IMAGES.heart}
+              className="cursor-pointer size-5"
+              alt="Heart Icon"
+            />
+          </div>
+
+          {/* MRP tagline */}
+          <p className="text-sm md:text-lg font-medium leading-normal md:leading-[32px] text-[#888] mt-[14px] md:mt-5">
+            MRP Inclusive of all taxes
+          </p>
+
+          {/* Price & Rating */}
+          <div className="flex items-center gap-4 mt-[6px]">
+            {/* Price */}
+            <h1 className="text-[32px] md:text-[40px] font-semibold md:font-medium text-[#454545] leading-normal">
+              Rs.{" "}
+              {selectedProducts?.basePrice} <span className="line-through text-sm lg:text-base text-primary-10">Rs. {selectedProducts?.discountedPrice}</span>
+            </h1>
+          </div>
+
+          {/* Product description */}
+
+          <div className="mt-5 md:mt-6">
+            <ExpandableDescription description={description} />
+          </div>
+
+          {/* Sizes */}
+          <div className="mt-11 border-b md:border-none border-[#D1D1D1] border-dashed pb-6">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-semibold text-[#333] leading-normal">
+                Sizes
+              </h1>
+              <div className="px-3 py-2 bg-[#F6F6F6] rounded-xl flex items-center gap-3">
+                <img src={ICONS.size} alt="size-icon" className="size-6" />
+                <h1 className="text-sm md:text-base font-semibold leading-6 text-[#454545]">
+                  Size Guide
+                </h1>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 mt-6">
+              {/* Sizes card */}
+              {sizes?.map((size:any, index:number) => (
+                <button
+                  key={index}
+                  onClick={() => handleSizeClick(size)}
+                  className={`${
+                    selectedSize.size === size.size
+                      ? "bg-[#FFF1F3] border-[#FF6D8B] text-[#FF6D8B]"
+                      : "border-[#E7E7E7] text-[#454545]"
+                  } flex h-[56px] px-3 py-2 justify-center items-center gap-3 rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px]`}
+                >
+                  {size?.size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* buttons */}
+          <div className="hidden md:flex items-center gap-[10px] mt-6 border-b border-[#D1D1D1] border-dashed pb-6">
+            <button
+              // onClick={() => {
+              //   handleAddToCart();
+              //   setModalType(dispatch(setModalType("cart")));
+              //   setOpenModal(dispatch(setOpenModal(true)));
+              // }}
+              className="border border-[#333] rounded-xl px-6 py-[10px] flex items-center justify-between h-14 w-full md:w-[320px] text-sm font-semibold leading-6 text-[#333]"
+            >
+              Add to Bag
+              <img src={ICONS.cart} alt="cart-icon" className="size-5" />
+            </button>
+
+            <button className="text-white px-6 py-[10px] bg-[#F82456] rounded-xl text-sm h-14 w-full md:w-[202px]">
+              Buy Now
+            </button>
+          </div>
+
+          {/* Unlock Freebies */}
+          {/* <UnlockFreebies /> */}
+
+          <div className="border-b border-[#D1D1D1] border-dashed pb-6"></div>
+
+          {/* Delivery Options */}
+          <DeliveryOptions />
+
+          {/* Delivery details */}
+          <DeliveryDetails />
+
+          {/* Details cards */}
+          <div className="flex flex-col gap-6 mt-6 border-b border-[#D1D1D1] border-dashed pb-6">
+            <DetailCard
+              variant="clothDetails"
+              icon={ICONS.clothDetails}
+              title={"Cloth Details"}
+              description={
+                "Morem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu"
+              }
+            >
+              <div className="space-y-4">
+                <p className="text-[#454545] text-lg font-medium leading-8">
+                  Made with{" "}
+                  <span className="font-bold">
+                    80% cotton, 10% polyester, 5% nylon and 5% raynon
+                  </span>
+                </p>
+
+                <p className="text-[#454545] text-lg font-medium leading-8">
+                  Clean easily without hassle with cold machine wash.
+                </p>
+              </div>
+            </DetailCard>
+
+            <DetailCard
+              variant="productStory"
+              icon={ICONS.tshirt}
+              title={"Product Story"}
+              description={
+                "Horem ipsum dolor sit amet, consectetur  elit. Nunc vulputate libero et velit , ac aliquet odio mattis. Class aptent taciti sociosqu."
+              }
+            ></DetailCard>
+
+            <DetailCard
+              variant="shippingDetails"
+              icon={ICONS.deliveryVan}
+              title={"Shipping Details"}
+              description={
+                "Processed on the same day as the order and shipped within 1-2 days from the date of order. The order should reach your doorstep in 3-4 business days."
+              }
+            ></DetailCard>
+          </div>
+
+          {/* Product info (Product Code, Collection, Made In) */}
+          <ProductInfo productCode={_id} />
+        </div>
       </div>
+      </div>
+      }
     </Container>
   );
 };
