@@ -7,6 +7,7 @@ interface ReusableButtonProps {
   classNames?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean; // ✅ added disabled prop
+  icon?: string;
 }
 
 const Button: React.FC<ReusableButtonProps> = ({
@@ -16,9 +17,10 @@ const Button: React.FC<ReusableButtonProps> = ({
   classNames = "",
   type = "button",
   disabled = false, // ✅ default false
+  icon
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap";
+    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap flex items-center justify-center gap-3";
 
   const variantClasses =
     variant === "primary"
@@ -38,7 +40,7 @@ const Button: React.FC<ReusableButtonProps> = ({
       onClick={onClick}
       disabled={disabled && variant === "disabled"} // ✅ disables button
       className={twMerge(`${baseClasses} ${variantClasses}`, classNames)}
-    >
+    > {icon && <img src={icon} alt="icon" className="size-6" />}
       {label}
     </button>
   );
