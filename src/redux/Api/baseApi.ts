@@ -3,8 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   const rawBaseQuery = fetchBaseQuery({
-    // baseUrl: 'http://localhost:5000/api/v1',
-    // baseUrl: 'https://pmgurkulbackend.vercel.app/api/v1',
     baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
     credentials: 'include',
   });

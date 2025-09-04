@@ -30,6 +30,9 @@ import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscrip
 import Courses from "../pages/Courses/Courses";
 import ECommerce from "../pages/ECommerce/ECommerce";
 import ProductDetails from "../pages/ProductsDetails/ProductsDetails";
+import Login from "../pages/AdminLogin/AdminLogin";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboard";
+import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
 
 export const router = createBrowserRouter([
   {
@@ -158,4 +161,24 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "dashboard/admin",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "products",
+        element: <AdminProducts/>,
+      },
+      
+    ],
+  },
+   {
+        path: "admin",
+        element: <Login/>,
+      },
 ]);

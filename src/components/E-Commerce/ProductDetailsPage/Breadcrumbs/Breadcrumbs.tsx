@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-const Breadcrumbs = ({ items }) => {
+interface BreadcrumbItem {
+  label: string;
+  link?: string;
+}
+
+const Breadcrumbs = ({ items }: { items: BreadcrumbItem[] }) => {
   return (
     <div className="mt-8 font-Montserrat">
       <ol className="flex flex-wrap gap-2 text-[#888] text-base font-medium leading-6">

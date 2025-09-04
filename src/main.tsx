@@ -6,8 +6,7 @@ import { router } from './routes/routes'
 import SmoothScroll from './components/SmoothScroll'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
-import { Toaster } from './../node_modules/react-hot-toast/src/components/toaster';
-
+import { Toaster } from 'react-hot-toast';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <SmoothScroll>

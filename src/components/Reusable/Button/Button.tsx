@@ -2,12 +2,13 @@ import { twMerge } from "tailwind-merge";
 
 interface ReusableButtonProps {
   label: string;
-  variant?: "primary" | "secondary" | "tertiary" | "disabled"|"custom";
+  variant?: "primary" | "secondary" | "tertiary" | "disabled" | "custom";
   onClick?: () => void;
   classNames?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean; // ✅ added disabled prop
   icon?: string;
+  isLoading?: boolean; // ✅ added isLoading prop
 }
 
 const Button: React.FC<ReusableButtonProps> = ({
@@ -17,7 +18,8 @@ const Button: React.FC<ReusableButtonProps> = ({
   classNames = "",
   type = "button",
   disabled = false, // ✅ default false
-  icon
+  icon,
+  isLoading = false, // ✅ default false
 }) => {
   const baseClasses =
     "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap flex items-center justify-center gap-3";
@@ -32,7 +34,8 @@ const Button: React.FC<ReusableButtonProps> = ({
       : variant === "disabled"
       ? "bg-neutral-150 text-neutral-90 cursor-not-allowed border-2 border-neutral-98 hover:none"
       : variant === "custom"
-      ? "bg-neutral-150 text-neutral-90  border-2 border-neutral-98":"";
+      ? "bg-neutral-150 text-neutral-90  border-2 border-neutral-98"
+      : "";
 
   return (
     <button
@@ -40,8 +43,16 @@ const Button: React.FC<ReusableButtonProps> = ({
       onClick={onClick}
       disabled={disabled && variant === "disabled"} // ✅ disables button
       className={twMerge(`${baseClasses} ${variantClasses}`, classNames)}
-    > {icon && <img src={icon} alt="icon" className="size-6" />}
-      {label}
+    >
+     {isLoading ? (
+        "Loading..."
+      ) : (
+        <>
+          {icon && <img src={icon} alt="icon" className="size-6" />}
+          {label}
+        </>
+      )}
+     
     </button>
   );
 };
