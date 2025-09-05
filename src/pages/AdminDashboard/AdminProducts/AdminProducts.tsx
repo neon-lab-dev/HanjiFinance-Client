@@ -1,8 +1,12 @@
-import React from 'react'
+import ProductsStatusCard from '../../../components/AdminDashboard/ProductsPage/ProductsStatusCard'
+import ProductTable from '../../../components/AdminDashboard/ProductsPage/ProductsTable'
 
 const AdminProducts = () => {
   return (
-    <div>AdminProducts</div>
+    <div className='w-full'>
+        <ProductsStatusCard/>
+        <ProductTable/>
+    </div>
   )
 }
 

@@ -33,6 +33,8 @@ import ProductDetails from "../pages/ProductsDetails/ProductsDetails";
 import Login from "../pages/AdminLogin/AdminLogin";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboard";
 import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
+import AddProduct from "../pages/AdminDashboard/AddProducts/AddProducts";
+import NewsLetterDashboard from "../pages/AdminDashboard/NewsLetter/NewsLetterDashboard/NewsLetterDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -173,6 +175,14 @@ export const router = createBrowserRouter([
       {
         path: "products",
         element: <AdminProducts/>,
+      },
+      {
+        path: "add-products",
+        element: <AddProduct/>,
+      },
+      {
+        path: "newsletter",
+        element: <NewsLetterDashboard/>,
       },
       
     ],

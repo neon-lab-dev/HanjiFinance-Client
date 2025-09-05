@@ -41,7 +41,7 @@ const Button: React.FC<ReusableButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled && variant === "disabled"} // ✅ disables button
+      disabled={disabled} // ✅ disables button
       className={twMerge(`${baseClasses} ${variantClasses}`, classNames)}
     >
      {isLoading ? (

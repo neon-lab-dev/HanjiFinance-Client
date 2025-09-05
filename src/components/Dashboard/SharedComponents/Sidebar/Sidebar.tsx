@@ -45,6 +45,14 @@ const Sidebar: React.FC = () => {
   const adminMenus = [
     { name: "Dashboard", link: "/dashboard/admin" },
     {
+      name: "Products",
+      link: "/dashboard/admin/products",
+    },
+    {
+      name: "Newsletters",
+      link: "/dashboard/admin/newsletter",
+    },
+    {
       name: "All Courses",
       link: "/dashboard/admin/all-courses",
     },
@@ -58,14 +66,6 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Subscriptions",
-      link: "/dashboard/admin/my-subscriptions",
-    },
-    {
-      name: "Products",
-      link: "/dashboard/admin/products",
-    },
-    {
-      name: "Newsletters",
       link: "/dashboard/admin/my-subscriptions",
     },
     {
