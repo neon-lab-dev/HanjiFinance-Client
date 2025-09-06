@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
         element: <Courses />,
       },
       {
-        path: "/e-commerce",
+        path: "/fashion-and-apparels",
         element: <ECommerce />,
       },
       {

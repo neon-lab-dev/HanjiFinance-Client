@@ -52,7 +52,7 @@ const Footer = () => {
     //   path: "/boardroom-banter",
     // },
     // {
-    //   label: "Financial Fashion",
+    //   label: "Financial Fashion", 
     //   path: "/financial-fashion",
     // },
     // {

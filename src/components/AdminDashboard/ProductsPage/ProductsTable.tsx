@@ -10,10 +10,14 @@ import { useNavigate } from "react-router-dom";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import Dropdown from "../../Reusable/Dropdown/Dropdown";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
+import type { TProduct } from "./ProductPreview";
+import ProductPreview from "./ProductPreview";
+import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 
 const Products = () => {
   const [searchValue, setSearchValue] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
   const navigate = useNavigate();
   const [page, setPage] = useState(2);
 
@@ -116,6 +120,23 @@ const Products = () => {
       status: "available",
     },
   ];
+  const sampleProduct: TProduct = {
+    productId: "p1",
+    imageUrls: ["https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image"],
+    name: "Classic Cotton T-Shirt",
+    description: "A comfortable cotton T-shirt with a relaxed fit.",
+    clothDetails: "100% Organic Cotton",
+    productStory: "Inspired by minimalistic fashion trends.",
+    category: "Clothing",
+    madeIn: "India",
+    sizes: [
+      { size: "S", quantity: 10, basePrice: 20, discountedPrice: 15 },
+      { size: "M", quantity: 5, basePrice: 20, discountedPrice: 18 },
+      { size: "L", quantity: 0, basePrice: 20, discountedPrice: 20 },
+    ],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
   // Filter + search logic on dummy data
   const filteredProducts = dummyProducts.filter((p) => {
@@ -167,7 +188,10 @@ const Products = () => {
     {
       icon: <FiEye />,
       label: "View",
-      onClick: (row: any) => toast(`Editing ${row?.name}`),
+      onClick: (row: any) => {
+        toast(`Viewing ${row?.name}`);
+        setIsProductPreviewOpen(true);
+      },
     },
     {
       icon: <FiEdit />,
@@ -264,6 +288,13 @@ const Products = () => {
           />
         </div>
       </DashboardContainer>
+      <ConfirmationModal
+        isConfirmationModalOpen={isProductPreviewOpen}
+        setIsConfirmationModalOpen={setIsProductPreviewOpen}
+        isCrossVisible={true}
+      >
+        <ProductPreview product={sampleProduct} />
+      </ConfirmationModal>
     </div>
   );
 };

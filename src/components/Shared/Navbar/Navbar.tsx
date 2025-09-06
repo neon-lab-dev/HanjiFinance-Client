@@ -30,8 +30,8 @@ const Navbar = () => {
           path: "/services/boardroom-banter",
         },
         {
-          label: "Financial Fashion",
-          path: "/",
+          label: "Financial Fashion", 
+          path: "/fashion-and-apparels",
         },
         {
           label: "Brain Gains",

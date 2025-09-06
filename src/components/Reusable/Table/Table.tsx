@@ -66,7 +66,7 @@ function Table<T extends Record<string, any>>({
   return (
     <div className="bg-white rounded-lg shadow-sm border border-neutral-98 divide-neutral-98 max-w-full overflow-x-auto relative">
       <table className="min-w-full divide-y divide-neutral-98">
-        <thead className="bg-primary-30">
+        <thead className="bg-neutral-105">
           <tr>
             {columns.map((col) => (
               <th
@@ -163,7 +163,7 @@ function Table<T extends Record<string, any>>({
       )}
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between py-3 border-t border-neutral-98 text-sm text-neutral-70">
+        <div className="flex items-center justify-end pr-4 py-3 border-t border-neutral-98 text-sm text-neutral-70">
           <div>
             {/* Pagination Controls */}
             {totalPages > 1 && (

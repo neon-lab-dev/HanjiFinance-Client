@@ -31,7 +31,7 @@ Equity volatile hai, but iss fabric ka comfort stable hai.    </span>
       description={description}
       buttonLabel="Explore Products"
       gradientBottom="bg-gradient-hero"
-      onButtonClick={() => scrollToSection("explore-products")}
+      onButtonClick={() => scrollToSection("products")}
     />
   );
 };
