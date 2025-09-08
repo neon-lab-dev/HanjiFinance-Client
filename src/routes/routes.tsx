@@ -35,6 +35,7 @@ import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboar
 import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
 import AddProduct from "../pages/AdminDashboard/AddProducts/AddProducts";
 import NewsLetterDashboard from "../pages/AdminDashboard/NewsLetter/NewsLetterDashboard/NewsLetterDashboard";
+import AdminOrders from "../pages/AdminDashboard/AdminOrders/AdminOrders";
 
 export const router = createBrowserRouter([
   {
@@ -183,6 +184,10 @@ export const router = createBrowserRouter([
       {
         path: "newsletter",
         element: <NewsLetterDashboard/>,
+      },
+      {
+        path: "orders",
+        element: <AdminOrders/>,
       },
       
     ],

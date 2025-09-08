@@ -29,7 +29,7 @@ const ProductPreview: React.FC<ProductPreviewProps> = ({ product }) => {
   );
 
   return (
-    <div className="p-4border rounded-lg shadow-md w-full p-5 mt-5">
+    <div className="p-4border rounded-lg shadow-md w-full p-5 mt-5 font-Montserrat">
       {/* Main Image */}
       <div className="w-full h-full  flex gap-4 items-center justify-center overflow-hidden rounded-md">
         {selectedImage ? (
@@ -82,15 +82,16 @@ const ProductPreview: React.FC<ProductPreviewProps> = ({ product }) => {
             {product.sizes.map((size) => (
               <div
                 key={size.size}
-                className="border px-2 py-1 rounded text-sm flex flex-col items-center"
+                className="border px-2 py-1 gap-4 rounded flex items-center"
               >
                 <span className="font-medium">{size.size}</span>
-                <span className="line-through text-gray-400 text-xs">
+                <div className=""> <div className="line-through text-neutral-65 text-xs">
                   ${size.basePrice}
-                </span>
-                <span className="text-green-600 font-semibold">
+                </div>
+                <span className="text-success-15 font-semibold">
                   ${size.discountedPrice}
-                </span>
+                </span></div>
+               
               </div>
             ))}
           </div>
