@@ -2,13 +2,12 @@ import { baseApi } from "../../Api/baseApi";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    
     signup: builder.mutation({
       query: (loginData) => ({
         url: "/auth/signup",
         method: "POST",
         body: loginData,
-        credentials: 'include',
+        credentials: "include",
       }),
       invalidatesTags: ["user"],
     }),
@@ -22,18 +21,16 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    
+
     login: builder.mutation({
       query: (loginData) => ({
         url: "/auth/login",
         method: "POST",
         body: loginData,
-        credentials: 'include',
+        credentials: "include",
       }),
       invalidatesTags: ["user"],
     }),
-    
-    
 
     setupProfile: builder.mutation({
       query: (userInfo) => ({
@@ -65,7 +62,7 @@ const authApi = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation({
-      query: ({resetPasswordData, token}) => ({
+      query: ({ resetPasswordData, token }) => ({
         url: `/password/reset/${token}`,
         method: "PUT",
         body: resetPasswordData,
@@ -73,17 +70,15 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-
-
   }),
 });
 
 export const {
   useSignupMutation,
-  useLoginMutation,
   useVerifyOtpMutation,
+  useLoginMutation,
   useSetupProfileMutation,
   useLogoutUserQuery,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
 } = authApi;

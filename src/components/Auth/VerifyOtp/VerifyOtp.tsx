@@ -47,6 +47,7 @@ const VerifyOtp = () => {
         toast.success(response?.message);
         dispatch(setModalType("login"));
         dispatch(setIsModalOpen(true));
+        localStorage.removeItem("email");
       }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");

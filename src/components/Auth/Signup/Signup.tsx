@@ -44,13 +44,13 @@ const Signup = () => {
       formData.append("phoneNumber", data.phoneNumber);
       formData.append("password", data.password);
       const response = await signup(formData).unwrap();
-      if(response?.success){
+      if (response?.success) {
         localStorage.setItem("email", data.email);
         toast.success(response?.message);
         dispatch(setModalType("verifyOtp"));
         dispatch(setIsModalOpen(true));
       }
-    } catch (err:any) {
+    } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");
     }
   };
