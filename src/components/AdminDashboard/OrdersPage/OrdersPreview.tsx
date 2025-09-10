@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
+import Dropdown from "../../Reusable/Dropdown/Dropdown";
+import Button from "../../Reusable/Button/Button";
 
 export type TProduct = {
   productId: string;
@@ -24,7 +26,6 @@ export type IOrder = {
   totalAmount: number;
 };
 
-
 type OrdersPreviewProps = {
   order: IOrder;
 };
@@ -38,7 +39,7 @@ const OrdersPreview: React.FC<OrdersPreviewProps> = ({ order }) => {
   };
 
   return (
-    <div className="p-5 border rounded-lg shadow-md w-full mt-5 font-Montserrat">
+    <div className="py-5 px-10  shadow-md w-full  font-Montserrat">
       {/* Order Details */}
       <div className="mb-4">
         <h2 className="text-lg font-semibold">Order #{order.orderId}</h2>
@@ -53,19 +54,24 @@ const OrdersPreview: React.FC<OrdersPreviewProps> = ({ order }) => {
         </p>
 
         {/* Status Dropdown */}
-        <div className="mt-2">
+        <div className="mt-2 flex items-center">
           <label className="mr-2 font-medium">Status:</label>
-          <select
+          <Dropdown
+            className="py-1 px-3"
             value={status}
-            onChange={handleStatusChange}
-            className="border rounded px-2 py-1"
-          >
-            <option>Pending</option>
-            <option>Processing</option>
-            <option>Shipped</option>
-            <option>Delivered</option>
-            <option>Cancelled</option>
-          </select>
+            onChange={(value: string) =>
+              handleStatusChange({
+                target: { value },
+              } as React.ChangeEvent<HTMLSelectElement>)
+            }
+            options={[
+              { value: "Pending", label: "Pending" },
+              { value: "Processing", label: "Processing" },
+              { value: "Shipped", label: "Shipped" },
+              { value: "Delivered", label: "Delivered" },
+              { value: "Cancelled", label: "Cancelled" },
+            ]}
+          />
         </div>
       </div>
 
@@ -73,10 +79,10 @@ const OrdersPreview: React.FC<OrdersPreviewProps> = ({ order }) => {
       <div>
         <h3 className="font-semibold mb-2">Products</h3>
         <div className="flex flex-col gap-3">
-          {order.products.map((product:TProduct) => (
+          {order.products.map((product: TProduct) => (
             <div
               key={product.productId}
-              className="flex items-center gap-4 border p-2 rounded"
+              className="flex items-center gap-4 border border-neutral-70 p-2 rounded"
             >
               <img
                 src={product.imageUrls[0]}
@@ -85,9 +91,12 @@ const OrdersPreview: React.FC<OrdersPreviewProps> = ({ order }) => {
               />
               <div className="flex-1">
                 <h4 className="font-medium">{product.name}</h4>
-                <p className="text-sm text-gray-500">{product.category}</p>
-                <p className="text-sm">Size: {product.size}</p>
-                <p className="text-sm">Qty: {product.quantity}</p>
+                <div className="flex justify-between gap-[6px] items-center w-fit">
+                  {" "}
+                  <p className="text-sm text-gray-500">{product.category}</p>|
+                  <p className="text-sm">Size: {product.size}</p>|
+                  <p className="text-sm">Qty: {product.quantity}</p>
+                </div>
               </div>
               <div className="text-right">
                 <p className="line-through text-xs text-gray-400">
@@ -103,7 +112,14 @@ const OrdersPreview: React.FC<OrdersPreviewProps> = ({ order }) => {
       </div>
 
       {/* Order Total */}
-      <div className="mt-4 border-t pt-3 text-right font-semibold">
+
+      <div className="mt-4 border-t flex items-center justify-between pt-3 text-right font-semibold">
+        <Button
+          variant="primary"
+          onClick={() => {}}
+          label="Update Status"
+          classNames="w-fit self-end py-2 px-4 "
+        />
         Total: ${order.totalAmount}
       </div>
     </div>

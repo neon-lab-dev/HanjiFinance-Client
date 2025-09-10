@@ -53,12 +53,12 @@ const Sidebar: React.FC = () => {
       link: "/dashboard/admin/newsletter",
     },
     {
-      name: "All Orders",
-      link: "/dashboard/admin/all-orders",
+      name: "Orders",
+      link: "/dashboard/admin/orders",
     },
     {
-      name: "All Courses",
-      link: "/dashboard/admin/all-courses",
+      name: "Courses",
+      link: "/dashboard/admin/courses",
     },
     {
       name: "Consultations",

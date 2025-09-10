@@ -28,6 +28,7 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<TOrder | null>(null);
   const [page, setPage] = useState(1);
   const pageSize = 5;
+  console.log(selectedOrder);
 
   // ✅ Example usage with dummy data
 
@@ -66,8 +67,6 @@ const dummyOrder: IOrder = {
   };
 
 
-
-  // Dummy orders (⚠️ fixed unique IDs)
   const dummyOrders: TOrder[] = [
     {
       _id: "ORD001",
