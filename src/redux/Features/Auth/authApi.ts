@@ -3,6 +3,26 @@ import { baseApi } from "../../Api/baseApi";
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     
+    signup: builder.mutation({
+      query: (loginData) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: loginData,
+        credentials: 'include',
+      }),
+      invalidatesTags: ["user"],
+    }),
+
+    verifyOtp: builder.mutation({
+      query: (userInfo) => ({
+        url: "/auth/verify-otp",
+        method: "POST",
+        body: userInfo,
+        credentials: "include",
+      }),
+      invalidatesTags: ["user"],
+    }),
+    
     login: builder.mutation({
       query: (loginData) => ({
         url: "/auth/login",
@@ -13,31 +33,13 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["user"],
     }),
     
-    sendOtp: builder.mutation({
-      query: (userInfo) => ({
-        url: "/send-otp",
-        method: "POST",
-        body: userInfo,
-        credentials: "include",
-      }),
-      invalidatesTags: ["user"],
-    }),
+    
 
     setupProfile: builder.mutation({
       query: (userInfo) => ({
         url: "/register",
         method: "POST",
         body: userInfo,
-        credentials: "include",
-      }),
-      invalidatesTags: ["user"],
-    }),
-
-    verifyOtp: builder.mutation({
-      query: (verifyOtpData) => ({
-        url: "/verify-otp",
-        method: "POST",
-        body: verifyOtpData,
         credentials: "include",
       }),
       invalidatesTags: ["user"],
@@ -77,10 +79,10 @@ const authApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useSignupMutation,
   useLoginMutation,
-  useSendOtpMutation,
-  useSetupProfileMutation,
   useVerifyOtpMutation,
+  useSetupProfileMutation,
   useLogoutUserQuery,
   useForgotPasswordMutation,
   useResetPasswordMutation

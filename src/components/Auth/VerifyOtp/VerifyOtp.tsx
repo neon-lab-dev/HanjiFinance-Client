@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -7,15 +8,27 @@ import {
   setIsModalOpen,
   setModalType,
 } from "../../../redux/Features/Auth/authModalSlice";
+import { useVerifyOtpMutation } from "../../../redux/Features/Auth/authApi";
+import toast from "react-hot-toast";
 
 type TFormData = {
   otp: string | number;
 };
 
 const VerifyOtp = () => {
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const dispatch = useDispatch();
-  const [secondsLeft, setSecondsLeft] = useState(60);
+
+  const [secondsLeft, setSecondsLeft] = useState(120); // 2 minutes
   const [canResend, setCanResend] = useState(false);
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      setEmail(email);
+    }
+  }, []);
 
   const {
     register,
@@ -23,8 +36,21 @@ const VerifyOtp = () => {
     formState: { errors },
   } = useForm<TFormData>();
 
-  const handleVerifyOtp = (data: TFormData) => {
-    console.log(data);
+  const handleVerifyOtp = async (data: TFormData) => {
+    try {
+      const payload = {
+        email,
+        otp: data.otp,
+      };
+      const response = await verifyOtp(payload).unwrap();
+      if (response?.success) {
+        toast.success(response?.message);
+        dispatch(setModalType("login"));
+        dispatch(setIsModalOpen(true));
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
 
   useEffect(() => {
@@ -40,6 +66,12 @@ const VerifyOtp = () => {
     return () => clearTimeout(timer);
   }, [secondsLeft]);
 
+  const formatTime = (totalSeconds: number) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
   return (
     <form
       onSubmit={handleSubmit(handleVerifyOtp)}
@@ -47,13 +79,13 @@ const VerifyOtp = () => {
     >
       <div className="flex flex-col gap-6 lg:gap-5">
         <p className="text-neutral-140 leading-5">
-          OTP Has been sent to{" "}
+          OTP has been sent to{" "}
           <span className="text-neutral-20 font-semibold hover:underline cursor-pointer">
-            rahul@gmail.com
+            {email}
           </span>
         </p>
         <TextInput
-          label="Email"
+          label="OTP"
           type="number"
           placeholder="Enter the 6-digit OTP to verify"
           error={errors.otp}
@@ -68,6 +100,7 @@ const VerifyOtp = () => {
         label="Verify OTP"
         variant="primary"
         classNames="w-full"
+        isLoading={isLoading}
       />
 
       {canResend ? (
@@ -75,6 +108,8 @@ const VerifyOtp = () => {
           onClick={() => {
             dispatch(setModalType("signup"));
             dispatch(setIsModalOpen(true));
+            setSecondsLeft(120);
+            setCanResend(false);
           }}
           type="button"
           className="text-primary-20 font-semibold hover:underline cursor-pointer"
@@ -84,7 +119,7 @@ const VerifyOtp = () => {
       ) : (
         <p className="text-primary-20 leading-5 text-center font-semibold">
           Resend OTP{" "}
-          <span className="font-normal">(in {secondsLeft} seconds)</span>
+          <span className="font-normal">(in {formatTime(secondsLeft)})</span>
         </p>
       )}
     </form>

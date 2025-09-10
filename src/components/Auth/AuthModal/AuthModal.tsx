@@ -2,11 +2,11 @@ import { RxCrossCircled } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
 import { setIsModalOpen } from "../../../redux/Features/Auth/authModalSlice";
-import Signup from "../Signup/Signup";
 import Login from "../Login/Login";
 import VerifyOtp from "../VerifyOtp/VerifyOtp";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
 import ResetPassword from "../ResetPassword/ResetPassword";
+import Signup from "../Signup/Signup";
 
 const AuthModal = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import TextInput from "../../Reusable/TextInput/TextInput";
 import { useState } from "react";
 import PasswordInput from "../../Reusable/PasswordInput/PasswordInput";
-import { Link } from "react-router-dom";
 import Button from "../../Reusable/Button/Button";
-import { setIsModalOpen, setModalType } from "../../../redux/Features/Auth/authModalSlice";
+import {
+  setIsModalOpen,
+  setModalType,
+} from "../../../redux/Features/Auth/authModalSlice";
 import { useDispatch } from "react-redux";
+import { useSignupMutation } from "../../../redux/Features/Auth/authApi";
+import toast from "react-hot-toast";
 
 type TFormData = {
   name: string;
@@ -16,6 +21,7 @@ type TFormData = {
 };
 
 const Signup = () => {
+  const [signup, { isLoading }] = useSignupMutation();
   const dispatch = useDispatch();
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
@@ -30,8 +36,23 @@ const Signup = () => {
 
   const password = watch("password");
 
-  const handleSignup = (data: TFormData) => {
-    console.log(data);
+  const handleSignup = async (data: TFormData) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("phoneNumber", data.phoneNumber);
+      formData.append("password", data.password);
+      const response = await signup(formData).unwrap();
+      if(response?.success){
+        localStorage.setItem("email", data.email);
+        toast.success(response?.message);
+        dispatch(setModalType("verifyOtp"));
+        dispatch(setIsModalOpen(true));
+      }
+    } catch (err:any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
 
   return (
@@ -109,12 +130,12 @@ const Signup = () => {
 
       <p className="text-neutral-140 leading-5">
         By signing up, you agree to our{" "}
-        <Link
-          to="/terms-and-conditions"
+        <a
+          href="/terms-and-conditions"
           className="text-primary-20 font-semibold hover:underline"
         >
           Terms and Conditions.
-        </Link>
+        </a>
       </p>
 
       <Button
@@ -122,6 +143,7 @@ const Signup = () => {
         label="Sign Up"
         variant="primary"
         classNames="w-full"
+        isLoading={isLoading}
       />
       <p className="text-neutral-140 leading-5 mt-2 text-center">
         Already Registered?{" "}

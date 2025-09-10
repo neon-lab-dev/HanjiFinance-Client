@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <RouterProvider router={router} />
       <Toaster />
-      <AuthModal /> {/* 👈 always mounted here */}
+      <AuthModal />
     </Provider>
     </SmoothScroll>
   </React.StrictMode>
