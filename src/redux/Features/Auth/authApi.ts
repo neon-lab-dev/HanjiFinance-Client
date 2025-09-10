@@ -53,7 +53,7 @@ const authApi = baseApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (forgotPasswordData) => ({
-        url: "/password/forgot",
+        url: "/auth/forgot-password",
         method: "POST",
         body: forgotPasswordData,
         credentials: "include",
@@ -62,9 +62,9 @@ const authApi = baseApi.injectEndpoints({
     }),
 
     resetPassword: builder.mutation({
-      query: ({ resetPasswordData, token }) => ({
-        url: `/password/reset/${token}`,
-        method: "PUT",
+      query: ({resetPasswordData, token}) => ({
+        url: `/auth/reset-password/${token}`,
+        method: "POST",
         body: resetPasswordData,
         credentials: "include",
       }),

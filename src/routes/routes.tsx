@@ -39,6 +39,7 @@ import AdminOrders from "../pages/AdminDashboard/AdminOrders/AdminOrders";
 import AddCourse from "../pages/AdminDashboard/AddCourse/AddCourse";
 import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashboard";
 import UpdateLectures from "../components/AdminDashboard/Courses/UpdateLectures";
+import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -209,5 +210,9 @@ export const router = createBrowserRouter([
   {
     path: "admin",
     element: <Login />,
+  },
+  {
+    path: "reset-password",
+    element: <ResetPassword />,
   },
 ]);

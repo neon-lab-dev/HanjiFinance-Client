@@ -1,33 +1,50 @@
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createApi, fetchBaseQuery, type BaseQueryFn } from '@reduxjs/toolkit/query/react'
+import type { RootState } from '../store';
+import { setUser } from '../Features/Auth/authSlice';
 
-const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
-  const rawBaseQuery = fetchBaseQuery({
-    baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
-    credentials: 'include',
-  });
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'http://localhost:5000/api/v1',
+  // baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
+  credentials : 'include',
+  prepareHeaders : (headers, {getState}) => {
+    const token = (getState() as RootState).auth.token;
 
-  const result = await rawBaseQuery(args, api, extraOptions);
+    if(token){
+      headers.set('authorization', `${token}`);
+    }
+    return headers; 
+  }
+});
 
-  // Check if there's an error and handle it
-  if (result.error) {
-    return {
-      error: {
-        status: result.error.status,
-        data: result.error.data || 'Something went wrong!',
-      } as FetchBaseQueryError,
-    };
+const baseQueryWithRefreshToken: BaseQueryFn<any> = async (args, api, extraOptions) : Promise<any> => {
+  const result = await baseQuery(args, api, extraOptions);
+  console.log(result);
+
+  if(result.error?.status === 401){
+    const res = await fetch('https://hanjifinance-api.vercel.app/api/v1/auth/refresh-token', {
+      credentials : 'include'
+    });
+
+    const data = await res.json();
+    console.log(data);
+    const user = (api.getState() as RootState).auth.user
+    api.dispatch(
+      setUser({
+        user,
+        token : data?.data?.accessToken
+      })
+    )
   }
 
-  // Return result as expected by BaseQueryFn
-  return {
-    data: result.data,
-  };
-};
+  return result;
+}
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  baseQuery,
-  tagTypes: ['user', 'course', 'product', 'earning', 'payout'],
+  baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["user"],
   endpoints: () => ({}),
 });
+
+// export const { } = baseApi;
