@@ -4,6 +4,8 @@ import { ICONS, IMAGES } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import TextInput from "../../Reusable/TextInput/TextInput";
 
 type ProductItem = {
   name: string;
@@ -19,6 +21,16 @@ type PaymentPageProps = {
   onProceed: () => void;
 };
 
+type TFormData = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  zipCode: string;
+};
+
 const PaymentPage: React.FC<PaymentPageProps> = ({
   items,
   gstRate = 18,
@@ -29,6 +41,13 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
   const itemTotal = items.reduce((sum, item) => sum + item.price, 0);
   const gstAmount = +(itemTotal * (gstRate / 100)).toFixed(2);
   const totalToPay = +(itemTotal + gstAmount).toFixed(2);
+  const [isLocationModalOpen, setLocationModalOpen] = useState<boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormData>();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
@@ -39,14 +58,30 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
   const cancelPayment = () => {
     navigate("/payment-cancelled");
   };
+  const handleFormSubmit = (data: TFormData) => {
+    console.log(data);
+    setLocationModalOpen(false);
+  }
 
   return (
     <div className="font-Montserrat py-8 md:py-16">
       <Container>
         <div className="space-y-8">
-          <h2 className="text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px] pb-8 border-b border-b-neutral-97">
-            Payment Page
-          </h2>
+          <div className="flex justify-between items-center  pb-8 border-b border-b-neutral-97">
+            <h2 className="text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
+              Payment Page
+            </h2>
+            <Button
+              onClick={() => {
+                setLocationModalOpen(true);
+              }}
+              variant="custom"
+              label="Add Delivery Address"
+              classNames="bg-white shadow-none p-0 text-neutral-20 border-surface-90 bg-surface-30 px-4 py-2"
+              icon={ICONS.addLocation}
+            />
+          </div>
+
           <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31">
             <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-5">
               {items.map((item, index) => (
@@ -221,8 +256,85 @@ const PaymentPage: React.FC<PaymentPageProps> = ({
               label="No, Don’t cancel"
               variant="primary"
               classNames="w-full"
-              onClick={()=>{setIsConfirmationModalOpen(false)}}
+              onClick={() => {
+                setIsConfirmationModalOpen(false);
+              }}
             />
+          </div>
+        </div>
+      </ConfirmationModal>
+      <ConfirmationModal
+        isConfirmationModalOpen={isLocationModalOpen}
+        setIsConfirmationModalOpen={setLocationModalOpen}
+        isCrossVisible={true}
+      >
+        <div className="px-12 py-6 space-y-9">
+          <h3 className=" text-center text-neutral-20 text-2xl leading-7 font-medium">
+            <span className="bg-primary-10 px-2 text-white mr-2">
+              Delivery Address
+            </span>
+            Form{" "}
+          </h3>
+          <div>
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+              <TextInput
+                label="Name"
+                placeholder="For e.g., Mohit Naroune"
+                error={errors.name}
+                {...register("name", {
+                  required: "Your name is required",
+                })}
+              />
+              <TextInput
+                label="Email"
+                placeholder="you@email.com"
+                error={errors.email}
+                {...register("email", {
+                  required: "Your email is required",
+                })}
+              />
+              <TextInput
+                label="Phone"
+                placeholder="for e.g.,96000  16417"
+                error={errors.phoneNumber}
+                {...register("phoneNumber", {
+                  required: "Your Phone Number is required",
+                })}
+                icon={ICONS.phone}
+              />
+              <TextInput
+                label="Address Line 1"
+                placeholder="House No., Street"
+
+                error={errors.addressLine1}
+                {...register("addressLine1", {
+                  required: "Address Line 1 is required",
+                })}
+              />
+              <TextInput 
+                label="Address Line 2"
+                placeholder="Apartment, Landmark"
+                error={errors.addressLine2}
+                {...register("addressLine2", {
+                  required: "Address Line 2 is required", 
+                })}
+              />
+              <TextInput
+                label="PinCode"
+                placeholder="For e.g., 110056"
+                error={errors.zipCode}
+                {...register("zipCode", {
+                  required: "Zip Code is required",
+                })}/>
+                <TextInput
+                  label="City"
+                  placeholder="For e.g., Delhi" 
+                  error={errors.city}
+                  {...register("city", {
+                    required: "City is required",
+                  })}
+                />
+            </form>
           </div>
         </div>
       </ConfirmationModal>

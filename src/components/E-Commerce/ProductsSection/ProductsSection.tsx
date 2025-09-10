@@ -150,7 +150,7 @@ const product: Product[] = [
 
   return (
     
-      <div className="bg-gradient-courses-section-bg pt-[60px] w-full">
+      <div id="products" className="bg-gradient-courses-section-bg pt-[60px] w-full">
         <Container>
         <SectionTitle
         heading="Providing the best"

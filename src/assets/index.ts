@@ -67,6 +67,13 @@ import verifiedCertificate from "./icons/diploma-verified.svg";
 import userCheck from "./icons/user-check.svg";
 import star from "./icons/star.svg";
 import unlock from "./icons/lock-keyhole-unlocked.svg";
+import cash from "./icons/cash.svg";
+import deliveryVan from "./icons/delivery-van.svg";
+import fabric from "./icons/fabric.svg";
+import returnsPackage from "./icons/returns-package.svg";
+import tshirt from "./icons/tshirt.svg";
+import ruler from "./icons/ruler.svg";
+import addLocation from "./icons/MapPointAdd.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -179,5 +186,13 @@ export const ICONS = {
   verifiedCertificate,
   crownStar,
   star,
-  unlock
+  unlock,
+  cash,
+  deliveryVan,
+  fabric,
+  returnsPackage,
+  tshirt,
+  ruler,
+  addLocation
+  
 };

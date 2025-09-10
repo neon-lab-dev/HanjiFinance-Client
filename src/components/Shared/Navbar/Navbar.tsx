@@ -6,7 +6,7 @@ import { IoChevronDownSharp } from "react-icons/io5";
 import Button from "../../Reusable/Button/Button";
 import MegaMenu from "./MegaMenu";
 import { useDispatch } from "react-redux";
-import { setIsModalOpen, setModalType } from "../../../redux/Features/Auth/authModalSlice";
+import { openModal, } from "../../../redux/Features/Auth/authModalSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ const Navbar = () => {
           path: "/services/boardroom-banter",
         },
         {
-          label: "Financial Fashion",
-          path: "/",
+          label: "Financial Fashion", 
+          path: "/fashion-and-apparels",
         },
         {
           label: "Brain Gains",
@@ -61,8 +61,7 @@ const Navbar = () => {
       icons: ICONS.user,
       path: "/",
       onClick: () => {
-        dispatch(setIsModalOpen(true));
-        dispatch(setModalType("login"));
+        dispatch(openModal("login"));
       },
     },
   ];

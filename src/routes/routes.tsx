@@ -30,6 +30,15 @@ import UpdateSubscription from "../pages/Dashboard/MySubscription/UpdateSubscrip
 import Courses from "../pages/Courses/Courses";
 import ECommerce from "../pages/ECommerce/ECommerce";
 import ProductDetails from "../pages/ProductsDetails/ProductsDetails";
+import Login from "../pages/AdminLogin/AdminLogin";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboard";
+import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
+import AddProduct from "../pages/AdminDashboard/AddProducts/AddProducts";
+import NewsLetterDashboard from "../pages/AdminDashboard/NewsLetter/NewsLetterDashboard/NewsLetterDashboard";
+import AdminOrders from "../pages/AdminDashboard/AdminOrders/AdminOrders";
+import AddCourse from "../pages/AdminDashboard/AddCourse/AddCourse";
+import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashboard";
+import UpdateLectures from "../components/AdminDashboard/Courses/UpdateLectures";
 
 export const router = createBrowserRouter([
   {
@@ -94,7 +103,7 @@ export const router = createBrowserRouter([
         element: <Courses />,
       },
       {
-        path: "/e-commerce",
+        path: "/fashion-and-apparels",
         element: <ECommerce />,
       },
       {
@@ -142,20 +151,63 @@ export const router = createBrowserRouter([
       },
       {
         path: "pause-subscription",
-        element: <PauseSubsrciption/>,
+        element: <PauseSubsrciption />,
       },
       {
         path: "reactivate-subscription",
-        element: <ReactivateSubscription/>,
+        element: <ReactivateSubscription />,
       },
       {
         path: "cancel-subscription",
-        element: <CancelSubscription/>,
+        element: <CancelSubscription />,
       },
       {
         path: "update-subscription",
-        element: <UpdateSubscription/>,
+        element: <UpdateSubscription />,
       },
     ],
+  },
+  {
+    path: "dashboard/admin",
+    element: <DashboardLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "products",
+        element: <AdminProducts />,
+      },
+      {
+        path: "add-products",
+        element: <AddProduct />,
+      },
+      {
+        path: "newsletter",
+        element: <NewsLetterDashboard />,
+      },
+      {
+        path: "orders",
+        element: <AdminOrders />,
+      },
+      {
+        path: "add-course",
+        element: <AddCourse />,
+      },
+      {
+        path: "courses",
+        element: <CourseDashboard />,
+      },
+      {
+        path: "update-lecture",
+        element: <UpdateLectures />,
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: <Login />,
   },
 ]);

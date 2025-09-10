@@ -4,7 +4,9 @@ import { ICONS } from "../../../../assets";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  // const user= useSelector(useCurrentUser)
 
+  const user={role:'admin'}
   // Helper function to check if the link is active
   const isActive = (path: string): boolean => location.pathname === path;
 
@@ -40,6 +42,43 @@ const Sidebar: React.FC = () => {
       link: "/dashboard/fashion",
     },
   ];
+  const adminMenus = [
+    { name: "Dashboard", link: "/dashboard/admin" },
+    {
+      name: "Products",
+      link: "/dashboard/admin/products",
+    },
+    {
+      name: "Newsletters",
+      link: "/dashboard/admin/newsletter",
+    },
+    {
+      name: "Orders",
+      link: "/dashboard/admin/orders",
+    },
+    {
+      name: "Courses",
+      link: "/dashboard/admin/courses",
+    },
+    {
+      name: "Consultations",
+      link: "/dashboard/admin/consultations",
+    },
+    {
+      name: "Subscriptions",
+      link: "/dashboard/admin/my-subscriptions",
+    },
+    {
+      name: "My Profile",
+      link: "/dashboard/certificates",
+    },
+    {
+      name: "Fashion & Apparel",
+      link: "/dashboard/fashion",
+    },
+  ];
+
+  const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;
 
 
 
@@ -54,7 +93,7 @@ const Sidebar: React.FC = () => {
         </Link>
         <div className="px-4">
           <ul className="flex flex-col gap-2">
-            { userMenus.map((menu) => (
+            { sidebarLinks.map((menu) => (
               <li
                 key={menu.link}
                 className={`px-3 py-2 ${

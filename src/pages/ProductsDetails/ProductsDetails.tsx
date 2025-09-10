@@ -5,10 +5,8 @@ import ImageCarousel from "../../components/E-Commerce/ProductDetailsPage/Produc
 import Container from "../../components/Reusable/Container/Container";
 import { useGetSingleProductByIdQuery } from "../../redux/Features/Product/productApi";
 import ProductImages from "../../components/E-Commerce/ProductDetailsPage/productImages/ProductImages";
-import { ICONS, IMAGES } from "../../assets";
+import { ICONS, IMAGES} from "../../assets";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
 import ExpandableDescription from "../../components/E-Commerce/ProductDetailsPage/ExpandableDescription/ExpandableDescription";
 import DeliveryOptions from "../../components/E-Commerce/ProductDetailsPage/DeliveryOptions/DeliveryOptions";
 import DeliveryDetails from "../../components/E-Commerce/ProductDetailsPage/DeliveryDetails/DeliveryDetails";
@@ -33,7 +31,7 @@ const {id} = useParams();
 
 
   // State to track selected products with sizes
-  const [selectedProducts, setSelectedProducts] = useState({});
+  const [selectedProducts, setSelectedProducts] = useState<Partial<SelectedProduct>>({});
 
   //  Setting the first size product in state automatically befor clicking
   useEffect(() => {
@@ -47,26 +45,41 @@ const {id} = useParams();
       selectedSize: firstSize.size,
       basePrice : firstSize.basePrice,
       discountedPrice : firstSize.discountedPrice,
-      image: images?.[0] || ICONS.imageIcon,
+      image: images?.[0] || ICONS.logo, // Replace 'ICONS.logo' with an appropriate existing property from ICONS
     });
   }
 }, [sizes, _id, name, images]);
 
 
-  const handleSizeClick = (size) => {
+  interface Size {
+    size: string;
+    basePrice: number;
+    discountedPrice: number;
+  }
+
+  interface SelectedProduct {
+    productId: string | undefined;
+    name: string | undefined;
+    selectedSize: string;
+    basePrice: number;
+    discountedPrice: number;
+    image: string;
+  }
+
+  const handleSizeClick = (size: Size) => {
     setSelectedSize(size);
 
     setSelectedProducts({
       productId: _id,
       name: name,
       selectedSize: size.size,
-      basePrice : size.basePrice,
-      discountedPrice : size.discountedPrice,
-      image: images[0] || ICONS.imageIcon,
-    });
+      basePrice: size.basePrice,
+      discountedPrice: size.discountedPrice,
+      image: images?.[0] || IMAGES.product,
+    } as SelectedProduct);
   };
 
-  const user = useSelector(useCurrentUser);
+  // const user = useSelector(useCurrentUser);
 
 
   if (isLoading) return <div>Loading...</div>;
@@ -101,7 +114,7 @@ if (!data?.data) return <div>No product found</div>;
             <img
               // onClick={handleAddToWishList}
               // src={isInCart ? ICONS.redHeart : IMAGES.heart}
-              src={IMAGES.heart}
+              src={ICONS.cartPlus}
               className="cursor-pointer size-5"
               alt="Heart Icon"
             />
@@ -134,7 +147,7 @@ if (!data?.data) return <div>No product found</div>;
                 Sizes
               </h1>
               <div className="px-3 py-2 bg-[#F6F6F6] rounded-xl flex items-center gap-3">
-                <img src={ICONS.size} alt="size-icon" className="size-6" />
+                <img src={ICONS.ruler} alt="size-icon" className="size-6" />
                 <h1 className="text-sm md:text-base font-semibold leading-6 text-[#454545]">
                   Size Guide
                 </h1>
@@ -170,7 +183,7 @@ if (!data?.data) return <div>No product found</div>;
               className="border border-[#333] rounded-xl px-6 py-[10px] flex items-center justify-between h-14 w-full md:w-[320px] text-sm font-semibold leading-6 text-[#333]"
             >
               Add to Bag
-              <img src={ICONS.cart} alt="cart-icon" className="size-5" />
+              <img src={ICONS.cartPlus} alt="cart-icon" className="size-5" />
             </button>
 
             <button className="text-white px-6 py-[10px] bg-[#F82456] rounded-xl text-sm h-14 w-full md:w-[202px]">
@@ -193,7 +206,7 @@ if (!data?.data) return <div>No product found</div>;
           <div className="flex flex-col gap-6 mt-6 border-b border-[#D1D1D1] border-dashed pb-6">
             <DetailCard
               variant="clothDetails"
-              icon={ICONS.clothDetails}
+              icon={ICONS.fabric}
               title={"Cloth Details"}
               description={
                 "Morem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu"

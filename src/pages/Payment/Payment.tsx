@@ -20,6 +20,7 @@ const Payment = () => {
           onProceed={() => console.log("Proceed to Pay")}
         />
       </Container>
+      
     </div>
   );
 };

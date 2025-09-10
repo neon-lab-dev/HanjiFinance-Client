@@ -21,9 +21,9 @@ const Hero = () => {
     },
     {
       icon: ICONS.financialFashion,
-      title: "Financial Fashion",
+      title: "Financial Fashion", 
       description: "Space for your Apparels",
-      path: "/",
+      path: "/fashion-and-apparels",
     },
     {
       icon: ICONS.brainGains,

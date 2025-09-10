@@ -18,7 +18,7 @@ const AuthModal = () => {
     <div
       className={`${
         isModalOpen ? " visible" : " invisible"
-      } w-full h-screen fixed top-0 left-0 z-[200000000] dark:bg-black/40 bg-[#0000002a] flex items-center justify-center transition-all duration-300 p-4`}
+      } w-full h-screen fixed top-0 left-0 z-[20000000000] dark:bg-black/40 bg-[#0000002a] flex items-center justify-center transition-all duration-300 p-4`}
     >
       <div
         className={`${

@@ -24,6 +24,10 @@ const HeaderDashboard = () => {
     "/dashboard/reactivate-subscription": "My Subscriptions",
     "/dashboard/cancel-subscription": "My Subscriptions",
     "/dashboard/update-subscription": "My Subscriptions",
+    "/dashboard/admin": "Dashboard",
+    "/dashboard/admin/products": "Products",
+    "/dashboard/admin/add-products": "Add Products",
+    "/dashboard/admin/newsletter": "Newsletters",
   };
   
   useEffect(() => {

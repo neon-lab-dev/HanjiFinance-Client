@@ -4,6 +4,7 @@ import TextInput from "../../Reusable/TextInput/TextInput";
 import PasswordInput from "../../Reusable/PasswordInput/PasswordInput";
 import Button from "../../Reusable/Button/Button";
 import {
+  openModal,
   setIsModalOpen,
   setModalType,
 } from "../../../redux/Features/Auth/authModalSlice";
@@ -76,10 +77,7 @@ const Login = () => {
       <p className="text-neutral-140 leading-5 mt-2 text-center">
         New to HanjiFinance?{" "}
         <button
-          onClick={() => {
-            dispatch(setModalType("signup"));
-            dispatch(setIsModalOpen(true));
-          }}
+        onClick={() => dispatch(openModal("signup"))}
           type="button"
           className="text-primary-20 font-semibold hover:underline cursor-pointer"
         >
