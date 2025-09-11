@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import {
   add,
@@ -19,60 +20,25 @@ import {
 import { startOfWeek } from "date-fns/fp";
 import { useState } from "react";
 import TimePicker from "./TimePicker";
+import { useGetAvailabilityQuery } from "../../../redux/Features/ChatAndChill/ChatAndChillApi";
 
 
-const meetings = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2025-09-09T13:00",
-    endDatetime: "2025-09-30T14:30",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2025-09-24T09:00",
-    endDatetime: "2025-09-24T11:30",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2025-09-26T17:00",
-    endDatetime: "2025-09-26T18:30",
-  },
-  {
-    id: 4,
-    name: "Leslie Alexander",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2025-09-29T13:00",
-    endDatetime: "2025-09-29T14:30",
-  },
-  {
-    id: 5,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-09-13T14:00",
-    endDatetime: "2022-09-13T14:30",
-  },
-];
-
+type CalenderProps = {
+  onBookingChange: (value: string) => void;
+};
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Calender() {
+export default function Calender({ onBookingChange }: CalenderProps) {
+  const { data } = useGetAvailabilityQuery({});
+const availabilities = data?.data?.availabilities || [];
+
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const [bookingDate, setBookingDate] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<{
     date: Date | null;
     status: string | null;
@@ -95,13 +61,37 @@ export default function Calender() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
+  const handleTimeChange = (value: string) => {
+  // Check if the selected day is valid
+  const isUnavailable =
+    (isPast(selectedDay) && !isToday(selectedDay)) ||
+    availabilities.some((availability:any) =>
+      isSameDay(parseISO(availability.date), selectedDay)
+    ) ||
+    !isSameMonth(selectedDay, firstDayCurrentMonth) ||
+    isSunday(selectedDay);
+
+  if (isUnavailable) {
+    // ❌ send empty if not available
+    setBookingDate(null);
+    onBookingChange("");
+  } else {
+    // ✅ send the actual booking slot
+    setBookingDate(value);
+    onBookingChange(value);
+    console.log(bookingDate)
+  }
+};
+
+
   const hoverDateDetail = (day: Date) => {
     if (
       isSunday(day) ||
       (isPast(day) && !isToday(day)) ||
-      meetings.some((meeting) =>
-        isSameDay(parseISO(meeting.startDatetime), day)
-      )  && isSameMonth(day,firstDayCurrentMonth)
+      (availabilities.some((availabilities:any) =>
+        isSameDay(parseISO(availabilities.date), day)
+      ) &&
+        isSameMonth(day, firstDayCurrentMonth))
     ) {
       setHoverInfo({ date: day, status: "slot not Available" });
     } else {
@@ -110,7 +100,7 @@ export default function Calender() {
   };
 
   // const selectedDayMeetings = meetings.filter((meeting) =>
-  //   isSameDay(parseISO(meeting.startDatetime), selectedDay)
+  //   isSameDay(parseISO(meeting.date), selectedDay)
   // );
 
   return (
@@ -169,14 +159,14 @@ export default function Calender() {
                   isEqual(day, selectedDay) && "text-white",
                   !isEqual(day, selectedDay) &&
                     isToday(day) &&
-                    meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
+                    availabilities.some((availabilities:any) =>
+                      isSameDay(parseISO(availabilities.date), day)
                     ) &&
                     "text-primary-15",
                   !isEqual(day, selectedDay) &&
                     isToday(day) &&
-                    !meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
+                    !availabilities.some((availabilities:any) =>
+                      isSameDay(parseISO(availabilities.date), day)
                     ) &&
                     "text-success-20",
                   ((!isEqual(day, selectedDay) &&
@@ -198,15 +188,15 @@ export default function Calender() {
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
-                    meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
+                    availabilities.some((availabilities:any) =>
+                      isSameDay(parseISO(availabilities.date), day)
                     ) &&
                     "text-primary-15 hover:border border-primary-15 transition duration-300 ease-in",
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
-                    !meetings.some((meeting) =>
-                      isSameDay(parseISO(meeting.startDatetime), day)
+                    !availabilities.some((availabilities:any) =>
+                      isSameDay(parseISO(availabilities.date), day)
                     ) &&
                     !isSunday(day) &&
                     !isPast(day) &&
@@ -234,9 +224,11 @@ export default function Calender() {
         <div
           className={`${
             (isPast(selectedDay) && !isToday(selectedDay)) ||
-            meetings.some((meeting) =>
-              isSameDay(parseISO(meeting.startDatetime), selectedDay)
-            ) || !isSameMonth(selectedDay, firstDayCurrentMonth) || isSunday(selectedDay)
+            availabilities.some((availabilities:any) =>
+              isSameDay(parseISO(availabilities.date), selectedDay)
+            ) ||
+            !isSameMonth(selectedDay, firstDayCurrentMonth) ||
+            isSunday(selectedDay)
               ? "hidden"
               : "block"
           } `}
@@ -244,7 +236,11 @@ export default function Calender() {
           <h2 className="mt-12 text-gray-900 mb-5">
             Choose slot time (only 30min)
           </h2>
-          <TimePicker />
+          <TimePicker
+            selectedDay={selectedDay}
+            onChange={handleTimeChange}
+            disabled={false}
+          />
           <div></div>
         </div>
         {/* <section className="mt-12 md:mt-0 md:pl-14">
@@ -255,12 +251,10 @@ export default function Calender() {
             </time>
           </h2>
         </section> */}
-
       </div>
       <div className="text-center text-neutral-60 mt-6 text-[13px] font-medium leading-[16px] tracking-[-0.14px] space-y-2">
         <p>1.Only 6 slots/week are available</p>
         <p>2.30min / slot can be booked</p>
-
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
 
 import { Link, useLocation, } from "react-router-dom";
 import { ICONS } from "../../../../assets";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../../types/user.types";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  // const user= useSelector(useCurrentUser)
-
-  const user={role:'admin'}
+  const user= useSelector(useCurrentUser) as TUser;
   // Helper function to check if the link is active
   const isActive = (path: string): boolean => location.pathname === path;
 
