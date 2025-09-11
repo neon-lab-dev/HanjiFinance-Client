@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import FormInstruction from "../../Reusable/FormInstruction/FormInstruction";
 import { ICONS } from "../../../assets";
@@ -5,6 +6,7 @@ import TextInput from "../../Reusable/TextInput/TextInput";
 import Button from "../../Reusable/Button/Button";
 import { useSubscribeNewsLetterMutation } from "../../../redux/Features/NewsLetter/newsLetterApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 type TFormValues = {
   name: string;
@@ -12,8 +14,7 @@ type TFormValues = {
 };
 
 const SubscribeNewsletterForm = () => {
-  const [subscribeNewsLetter, { isLoading }] =
-    useSubscribeNewsLetterMutation();
+  const [subscribeNewsLetter, { isLoading }] = useSubscribeNewsLetterMutation();
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const {
@@ -27,8 +28,10 @@ const SubscribeNewsletterForm = () => {
       const res = await subscribeNewsLetter(data).unwrap();
       console.log("Subscription successful:", res);
       setIsSubscribed(true);
-    } catch (err) {
-      console.error("Subscription failed:", err);
+    } catch (err: any) {
+      toast.error(
+        err?.data?.message || "Subscription failed. Please try again."
+      );
     }
   };
 
@@ -57,16 +60,17 @@ const SubscribeNewsletterForm = () => {
 
       {/* Right Section - Form */}
       {isSubscribed ? (
-        <div className="flex flex-col items-center pb-12 w-full justify-center my-14">
+        <div className="flex flex-col items-center pb-12 w-full lg:w-[60%] justify-center my-14">
           <div className="size-14 rounded-full bg-success-20 flex items-center justify-center p-4">
             <img src={ICONS.tickMark} alt="" className="size-11" />
           </div>
           <h1 className="text-neutral-10 text-[17px] font-semibold leading-8 mt-8 text-center">
-           Newsletter subscribed successfully!
-Optional
+            Newsletter subscribed successfully! Optional
           </h1>
-       
-          <p className="text-neutral-10 text-[15px] font-medium leading-[18px] mt-6 max-w-[550px] mx-auto text-center">Thanks for subscribing! You will receive your weekly newspaper in your inbox, do keep a check for your financial fluency!
+
+          <p className="text-neutral-10 text-[15px] font-medium leading-[18px] mt-6 max-w-[550px] mx-auto text-center">
+            Thanks for subscribing! You will receive your weekly newspaper in
+            your inbox, do keep a check for your financial fluency!
           </p>
         </div>
       ) : (
@@ -97,7 +101,7 @@ Optional
               <Button
                 type="submit"
                 variant="primary"
-                label="Send me the next issue"
+                label="Subscribe"
                 classNames="w-full sm:w-fit"
                 isLoading={isLoading}
                 disabled={isLoading}
