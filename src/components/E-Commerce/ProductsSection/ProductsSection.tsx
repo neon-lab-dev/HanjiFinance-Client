@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { TfiSearch } from "react-icons/tfi";
 import FiltrationDropdown, { type Option } from "../../Reusable/FiltrationDropdown/FiltrationDropdown";
 import Container from "../../Reusable/Container/Container";
@@ -20,74 +20,6 @@ import ProductCard from "../ProductCard/ProductCard";
 
 const ProductsSection: React.FC = () => {
 
-const product: Product[] = [
-  {
-    id: "p1",
-    name: "Nike Air Zoom Pegasus",
-    category: "Shoes",
-    price: 8999,
-    stock: 25,
-    brand: "Nike",
-    rating: 4.5,
-    imageUrl:
-    [  "https://images.unsplash.com/photo-1606813902910-0a2f6f0b5e7f?w=500&q=80",],
-      inStock: false,
-  },
-  {
-    id: "p2",
-    name: "Adidas Ultraboost",
-    category: "Shoes",
-    price: 11999,
-    stock: 10,
-    brand: "Adidas",
-    rating: 4.8,
-    imageUrl:
-    [  "https://images.unsplash.com/photo-1606813902910-0a2f6f0b5e7f?w=500&q=80",],
-
-          inStock: true,
-  },
-  {
-    id: "p3",
-    name: "Apple iPhone 15 Pro",
-    category: "Mobile",
-    price: 129999,
-    stock: 5,
-    brand: "Apple",
-    rating: 4.9,
-    imageUrl:
-         [  "https://images.unsplash.com/photo-1606813902910-0a2f6f0b5e7f?w=500&q=80",],
-
-          inStock: true,
-  },
-  {
-    id: "p4",
-    name: "Samsung Galaxy S24 Ultra",
-    category: "Mobile",
-    price: 119999,
-    stock: 12,
-    brand: "Samsung",
-    rating: 4.7,
-    imageUrl:
-          [  "https://images.unsplash.com/photo-1606813902910-0a2f6f0b5e7f?w=500&q=80",],
-
-          inStock: true,
-  },
-  {
-    id: "p5",
-    name: "Sony WH-1000XM5",
-    category: "Headphones",
-    price: 29999,
-    stock: 20,
-    brand: "Sony",
-    rating: 4.6,
-    imageUrl:
-          [  "https://images.unsplash.com/photo-1606813902910-0a2f6f0b5e7f?w=500&q=80",],
-
-          inStock: true,
-  },
-];
-
-  const [products, setProducts] = useState<Product[]>(product);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [categories] = useState<Option[]>([
@@ -106,23 +38,7 @@ const product: Product[] = [
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // ✅ Fetch products from API
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/products"); // <-- change this to your backend API
-        const data = await res.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  
 
   // ✅ Filtering logic
   const filteredProducts = useMemo(() => {

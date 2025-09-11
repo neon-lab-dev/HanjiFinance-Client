@@ -3,28 +3,31 @@ import { IoChevronDownSharp } from "react-icons/io5";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Button from "../../Reusable/Button/Button";
 
-type TAccordionItem = {
+
+export type TCourse = {
+  imageUrl?: string;
   title: string;
-  description: string[];
+  subtitle: string;
+  tagline: string;
+  benefits : string[];
+  accessType : "lifetime" | "limited";
+  accessValidity: Date;
+  category: string;
+  basePrice: number;
+  discountedPrice: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-type TCourseCard = {
-  title: string;
-  subTitle: string;
-  tag: string;
-  description: string;
-  image: string;
-  accordion: TAccordionItem;
-  price: string;
-};
-
-const CourseCard: React.FC<TCourseCard> = ({
+const CourseCard: React.FC<TCourse> = ({
   title,
-  subTitle,
-  tag,
-  image,
-  accordion,
-  price,
+  subtitle,
+  tagline,
+  imageUrl,
+  basePrice,
+  accessType,
+  benefits
+,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,7 +45,7 @@ const CourseCard: React.FC<TCourseCard> = ({
         isOpen ? "h-full " : ""
       } `}
     >
-      <div> <img src={image} alt={title} className="rounded-t-xl w-full" /></div>
+      <div> <img src={imageUrl} alt={title} className="rounded-t-xl w-full" /></div>
       {/* Course Image */}
      
 
@@ -53,22 +56,22 @@ const CourseCard: React.FC<TCourseCard> = ({
             <h1 className="text-neutral-130 text-xl  tracking-[-0.2px] font-bold leading-6">
               {title}
             </h1>
-            <p className="text-neutral-60 text-sm leading-5">{subTitle}</p>
+            <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
           </div>
           <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
-            {tag}
+            {tagline}
           </span>
         </div>
 
         {/* Accordion */}
-        <div className="px-4">
+       <div className="px-4">
           <article className="">
             <div
               className="flex gap-2 cursor-pointer items-center justify-start w-full"
               onClick={handleClick}
             >
               <h2 className="text-neutral-20 font-semibold leading-[20px] text-sm">
-                {accordion.title}
+               This course will help you
               </h2>
               <motion.div
                 animate={{ rotate: isOpen ? 180 : 0 }}
@@ -88,7 +91,7 @@ const CourseCard: React.FC<TCourseCard> = ({
                   transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
                 >
                   <ul className="list-disc pl-5 space-y-2 text-neutral-20 mb-2 text-sx leading-4">
-                    {accordion.description.map((point, idx) => (
+                    {benefits?.map((point, idx) => (
                       <li key={idx}>{point}</li>
                     ))}
                   </ul>
@@ -105,7 +108,7 @@ const CourseCard: React.FC<TCourseCard> = ({
                   transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
                 >
                   <ul className=" relative list-disc pl-5 space-y-2 text-neutral-20 mb-2 text-sx leading-4 h-10 overflow-hidden">
-                    {accordion.description.map((point, idx) => (
+                    {benefits?.map((point, idx) => (
                       <li key={idx}>{point}</li>
                     ))}
                     <motion.div
@@ -120,14 +123,14 @@ const CourseCard: React.FC<TCourseCard> = ({
               )}
             </AnimatePresence>
           </article>
-        </div>
+        </div> 
         <div className="px-4  pt-2 space-y-5  z-100 mt-auto ">
           <div className="space-y-1">
             <p className="text-neutral-130 text-[17px] leading-5 font-bold tracking-[-0.18px]">
-              ₹ {price}
+              ₹ {basePrice}
             </p>
-            <p className="text-neutral-60 text-sx leading-[14px] tracking-[-0.12]">
-              Lifetime Access
+            <p className="text-neutral-60 text-sx capitalize leading-[14px] tracking-[-0.12]">
+             {accessType}
             </p>
           </div>
 

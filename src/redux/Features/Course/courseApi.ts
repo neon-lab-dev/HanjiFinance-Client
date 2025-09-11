@@ -2,15 +2,18 @@ import { baseApi } from "../../Api/baseApi";
 
 const courseApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        
         getAllCourses: builder.query({
-            query: (searchQuery) => ({
-                url: `/courses?keyword=${searchQuery}`,
-                method: "GET",
-                credentials: "include",
-            }),
-            providesTags: ["course"],
-        }),
+      query: ({ keyword, category }) => ({
+        url: `/course`,
+        method: "GET",
+        credentials: "include",
+        params: {
+          keyword,
+          category,
+        },
+      }),
+      providesTags: ["course"],
+    }),
 
         getSingleCourseById: builder.query({
             query: (id) => ({

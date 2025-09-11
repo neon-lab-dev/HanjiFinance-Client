@@ -65,14 +65,6 @@ const adminApi = baseApi.injectEndpoints({
       providesTags: ["user"],
     }),
 
-    getAllCourses: builder.query({
-      query: ({searchQuery}) => ({
-        url: `/courses?keyword=${searchQuery}`,
-        method: "GET",
-        credentials: "include",
-      }),
-      providesTags: ["course"],
-    }),
 
     approveKyc: builder.mutation({
       query: (id) => ({
@@ -174,7 +166,6 @@ export const {
   useGetSingleOrderByIdQuery,
   useGetSingleUserByIdQuery,
   useUpdateUserDetailsMutation,
-  useGetAllCoursesQuery,
   useApproveKycMutation,
   useRejectKycMutation,
   useApprovePayoutMutation,
