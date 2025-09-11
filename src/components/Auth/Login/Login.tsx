@@ -37,7 +37,6 @@ const Login = () => {
         ...data
       };
       const response = await login(payload).unwrap();
-      console.log(response);
       const user = response.data?.user;
       const accessToken = response.data?.accessToken;
 
@@ -67,7 +66,6 @@ const Login = () => {
         }
       }
     } catch (err: any) {
-      console.log(err);
       toast.error(err?.data?.message || "Something went wrong!");
     }
   };

@@ -40,6 +40,7 @@ import AddCourse from "../pages/AdminDashboard/AddCourse/AddCourse";
 import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashboard";
 import UpdateLectures from "../components/AdminDashboard/Courses/UpdateLectures";
 import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -115,7 +116,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
     errorElement: <NotFound />,
     children: [
       {
@@ -170,7 +171,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard/admin",
-    element: <DashboardLayout />,
+    element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
     errorElement: <NotFound />,
     children: [
       {
