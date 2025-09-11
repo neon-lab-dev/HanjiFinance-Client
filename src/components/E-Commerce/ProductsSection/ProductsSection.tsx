@@ -1,26 +1,37 @@
-import { useState, useMemo } from "react";
+import { useState} from "react";
 import { TfiSearch } from "react-icons/tfi";
 import FiltrationDropdown, { type Option } from "../../Reusable/FiltrationDropdown/FiltrationDropdown";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import ProductCard from "../ProductCard/ProductCard";
+import { useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
 
 
-  export type Product = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  stock: number;
-  brand: string;
-  rating: number;
-  imageUrl: string[];
-  inStock?: boolean;
+export type TProductSize = {
+  _id: string;
+  size: string;
+  quantity: number;
+  basePrice: number;
+  discountedPrice: number;
 };
 
-const ProductsSection: React.FC = () => {
+export type TProduct = {
+  _id: string;
+  productId: string;
+  imageUrls: string[];
+  name: string;
+  description: string;
+  category: string;
+  sizes: TProductSize[];
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  __v: number;
+};
 
-  const [loading, setLoading] = useState<boolean>(false);
+
+const ProductsSection: React.FC = () => {
+  const { data, isLoading: loading } = useGetAllProductsQuery({ keyword: "" });
+
 
   const [categories] = useState<Option[]>([
     { label: "Electronics", value: "electronics" },
@@ -38,31 +49,7 @@ const ProductsSection: React.FC = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  
-
-  // ✅ Filtering logic
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesCategory = selectedCategory
-        ? product.category === selectedCategory
-        : true;
-
-      const matchesPrice =
-        selectedPriceRange === "under-500"
-          ? product.price < 500
-          : selectedPriceRange === "500-1000"
-          ? product.price >= 500 && product.price <= 1000
-          : selectedPriceRange === "above-1000"
-          ? product.price > 1000
-          : true;
-
-      const matchesSearch = searchTerm
-        ? product.name.toLowerCase().includes(searchTerm.toLowerCase())
-        : true;
-
-      return matchesCategory && matchesPrice && matchesSearch;
-    });
-  }, [products, selectedCategory, selectedPriceRange, searchTerm]);
+ 
 
   return (
     
@@ -108,8 +95,8 @@ const ProductsSection: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 mt-8">
         {loading ? (
           <p>Loading products...</p>
-        ) : filteredProducts.length > 0 ? (
-          filteredProducts.map((item) => (
+        ) : data?.data?.products?.length > 0 ? (
+          data?.data?.products?.map((item:TProduct) => (
             <ProductCard key={item._id} item={item} />
           ))
         ) : (

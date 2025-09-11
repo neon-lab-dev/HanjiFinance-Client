@@ -1,31 +1,33 @@
 import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
-import type { Product } from "../ProductsSection/ProductsSection";
+import type { TProduct } from "../ProductsSection/ProductsSection";
 
 type ProductCardProps = {
-  item: Product;
+  item: TProduct;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  const { id, name, price, imageUrl, inStock } = item;
-
+  
+  const inStock = item.sizes.some((size) => size.quantity > 0);
   const handleAddToWishList = async () => {
     console.log("added to cart");
   };
 
   return (
     <div>
-      <div
-        className={`${inStock?"bg-neutral-85":"bg-neutral-105"} rounded-lg h-[270px] lg:h-[429px] overflow-hidden font-Montserrat mt-0 lg:mt-10 relative flex flex-col justify-between`}
+      <Link to={`/product-details/${item._id}`}
+        className={`
+          ${inStock?"bg-neutral-85":"bg-neutral-105"} 
+          rounded-lg h-[270px] lg:h-[429px] overflow-hidden font-Montserrat mt-0 lg:mt-10 relative flex flex-col justify-between`}
       >
         {/* Product header */}
         <div className="absolute top-0 w-full z-20">
           <div className="flex items-center justify-between p-5 w-full">
             <Link
-              to={`/product-details/${id}`}
+              to={`/product-details/${item._id}`}
               className="text-neutral-50 text-sm md:text-base font-medium leading-[22px] md:leading-6 capitalize hover:underline"
             >
-              {name}
+              {item.name}
             </Link>
 
             <img
@@ -39,12 +41,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
         {/* Product image with conditional overlay */}
         <div className="relative w-full h-full">
-          {imageUrl && imageUrl.length > 2 ? (
-            <Link to={`/product-details/${id}`}>
+          {item.imageUrls && item.imageUrls.length > 2 ? (
+            <Link to={`/product-details/${item._id}`}>
               <img
-                src={imageUrl[0]}
+                src={item.imageUrls[0]}
                 className="h-full w-full rounded-lg object-cover"
-                alt={name || "Product Image"}
+                alt={item.name || "Product Image"}
               />
             </Link>
           ) : (
@@ -64,12 +66,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             </div>
           )}
         </div>
-      </div>
+      </Link>
 
       {/* Product price */}
       <div className="mt-4">
         <h1 className="text-neutral-10 text-xl font-medium leading-6">
-          Rs. {price ?? "N/A"}
+          Rs. {item?.sizes[0]?.basePrice ?? "N/A"}
         </h1>
         <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
           inclusive of all taxes
