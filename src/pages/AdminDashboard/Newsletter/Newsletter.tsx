@@ -6,12 +6,16 @@ import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Button from "../../../components/Reusable/Button/Button";
 import Table from "../../../components/Reusable/Table/Table";
 import { useState } from "react";
-import { useGetAllNewsletterQuery } from "../../../redux/Features/NewsLetter/newsLetterApi";
+import {
+  useDeleteNewsletterMutation,
+  useGetAllNewsletterQuery,
+} from "../../../redux/Features/NewsLetter/newsLetterApi";
 import { formatDate } from "../../../utils/formatDate";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { FiEye, FiTrash2, FiCopy } from "react-icons/fi";
+import { FiTrash2, FiCopy } from "react-icons/fi";
+import type { TNewsletter } from "../../../types/newsletter.types";
 
 const Newsletter = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,68 +24,21 @@ const Newsletter = () => {
     keyword: searchValue,
     page,
   });
+  const allNewsletters = data?.data?.newsletters || [];
 
-  // Dummy subscribers
-  const allEmails = [
-    {
-      _id: "1",
-      name: "Prerna Badwane",
-      email: "prerna@example.com",
-      joinedDate: "2025-09-01",
-    },
-    {
-      _id: "2",
-      name: "John Doe",
-      email: "john@example.com",
-      joinedDate: "2025-09-02",
-    },
-    {
-      _id: "3",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      joinedDate: "2025-09-03",
-    },
-    {
-      _id: "1",
-      name: "Prerna Badwane",
-      email: "prerna@example.com",
-      joinedDate: "2025-09-01",
-    },
-    {
-      _id: "2",
-      name: "John Doe",
-      email: "john@example.com",
-      joinedDate: "2025-09-02",
-    },
-    {
-      _id: "3",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      joinedDate: "2025-09-03",
-    },
-    {
-      _id: "1",
-      name: "Prerna Badwane",
-      email: "prerna@example.com",
-      joinedDate: "2025-09-01",
-    },
-    {
-      _id: "2",
-      name: "John Doe",
-      email: "john@example.com",
-      joinedDate: "2025-09-02",
-    },
-    {
-      _id: "3",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      joinedDate: "2025-09-03",
-    },
-  ];
+  const [deleteNewsletter] = useDeleteNewsletterMutation();
 
-  // Map for table
+  const handleDeleteNewsletter = async (id: string) => {
+    toast.promise(deleteNewsletter(id).unwrap(), {
+      loading: "Deleting newsletter...",
+      success: "Newsletter deleted successfully.",
+      error: (err: any) => err?.data?.message || "Something went wrong!",
+    });
+  };
+
+  // Mapping for table
   const allSubscribersData =
-    data?.data?.newsletters?.map((data: any) => {
+    allNewsletters?.map((data: TNewsletter) => {
       return {
         _id: data?._id,
         name: data?.name,
@@ -105,16 +62,16 @@ const Newsletter = () => {
 
   // Bulk copy emails
   const handleBulkCopy = () => {
-    const emails = allEmails.map((s) => s.email).join(", ");
+    const emails = allNewsletters?.map((s: TNewsletter) => s.email).join(", ");
     navigator.clipboard.writeText(emails);
     toast.success("All emails copied!");
   };
 
   // Export to Excel
   const handleExportSubscribers = () => {
-    if (!allEmails || allEmails.length === 0) return;
+    if (!allNewsletters || allNewsletters?.length === 0) return;
 
-    const exportData = allEmails.map((s: any) => {
+    const exportData = allNewsletters?.map((s: any) => {
       const row: Record<string, any> = {};
       subscriberColumns.forEach((col) => {
         row[col.label] = s[col.key] ?? "";
@@ -134,10 +91,6 @@ const Newsletter = () => {
     saveAs(blob, "subscribers.xlsx");
   };
 
-  const handleDeleteSubscriber = (id: string) => {
-    toast.success(`Subscriber ${id} deleted (dummy action).`);
-  };
-
   // Actions
   const subscriberActions = [
     {
@@ -146,14 +99,9 @@ const Newsletter = () => {
       onClick: (row: any) => handleCopyEmail(row?.email),
     },
     {
-      icon: <FiEye />,
-      label: "View",
-      onClick: (row: any) => toast(`Viewing ${row?.name}`),
-    },
-    {
       icon: <FiTrash2 />,
       label: "Delete",
-      onClick: (row: any) => handleDeleteSubscriber(row?._id),
+      onClick: (row: any) => handleDeleteNewsletter(row?._id),
       className: "text-red-600",
     },
   ];
@@ -163,7 +111,7 @@ const Newsletter = () => {
         {/* Total Newsletters */}
         <StatusCard
           icon={<FiList size={28} />}
-          value={data?.data?.newsletters?.length || 0}
+          value={allNewsletters?.length || 0}
           label="Total Newsletters"
           badgeText="All"
           badgeBg="bg-blue-100"

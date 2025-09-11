@@ -1,4 +1,5 @@
-export function formatDate(dateString: string): string {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function formatDate(dateString: any): any {
   const date = new Date(dateString);
 
   const day = date.getDate();

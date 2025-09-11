@@ -18,15 +18,15 @@ const newsletterApi = baseApi.injectEndpoints({
       providesTags: ["newsletter"],
     }),
 
-    // deleteVideo: builder.mutation({
-    //   query: ({ courseId, lectureId }) => ({
-    //     url: `/lectures?courseId=${courseId}&lectureId=${lectureId}`,
-    //     method: "DELETE",
-    //     credentials: "include",
-    //   }),
-    //   invalidatesTags: ["course"],
-    // }),
+    deleteNewsletter: builder.mutation({
+      query: (id) => ({
+        url: `/newsletter/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["newsletter"],
+    }),
   }),
 });
 
-export const { useGetAllNewsletterQuery } = newsletterApi;
+export const { useGetAllNewsletterQuery, useDeleteNewsletterMutation } = newsletterApi;
