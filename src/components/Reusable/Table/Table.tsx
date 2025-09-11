@@ -24,7 +24,6 @@ type TableProps<T> = {
   rowKey: keyof T;
   isLoading?: boolean;
   page?: number;
-  pageSize?: number;
   onPageChange?: (page: number) => void;
   totalPages: number;
 };

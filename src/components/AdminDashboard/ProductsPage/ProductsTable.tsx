@@ -10,9 +10,11 @@ import { useNavigate } from "react-router-dom";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import Dropdown from "../../Reusable/Dropdown/Dropdown";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
-import type { TProduct } from "./ProductPreview";
-import ProductPreview from "./ProductPreview";
+// import ProductPreview from "./ProductPreview";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import { useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
+import type { TProduct } from "../../../types/product.types";
+import { formatDate } from "../../../utils/formatDate";
 
 const Products = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -21,163 +23,129 @@ const Products = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(2);
 
-  // Dummy data
-  const dummyProducts = [
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-    {
-      _id: "1",
-      name: "T-Shirt",
-      category: "Clothing",
-      price: 499,
-      availableStock: 50,
-      status: "available",
-    },
-  ];
-  const sampleProduct: TProduct = {
-    productId: "p1",
-    imageUrls: ["https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image","https://via.placeholder.com/300x400.png?text=Product+Image"],
-    name: "Classic Cotton T-Shirt",
-    description: "A comfortable cotton T-shirt with a relaxed fit.",
-    clothDetails: "100% Organic Cotton",
-    productStory: "Inspired by minimalistic fashion trends.",
-    category: "Clothing",
-    madeIn: "India",
-    sizes: [
-      { size: "S", quantity: 10, basePrice: 20, discountedPrice: 15 },
-      { size: "M", quantity: 5, basePrice: 20, discountedPrice: 18 },
-      { size: "L", quantity: 0, basePrice: 20, discountedPrice: 20 },
-    ],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  // Filter + search logic on dummy data
-  const filteredProducts = dummyProducts.filter((p) => {
-    const matchesSearch = p.name
-      .toLowerCase()
-      .includes(searchValue.toLowerCase());
-    const matchesStatus = statusFilter ? p.status === statusFilter : true;
-    return matchesSearch && matchesStatus;
+  const { data, isLoading, isFetching } = useGetAllProductsQuery({
+    keyword: searchValue,
+    page,
   });
 
+  const allProducts = data?.data?.products as TProduct[];
+  console.log(allProducts);
+
   // Map data for table
+
   const allProductsData =
-    filteredProducts.map((product: any) => {
+    allProducts.map((product: any) => {
+      const totalStock = product.sizes.reduce(
+        (sum: number, size: any) => sum + size.quantity,
+        0
+      );
+
       const statusColor =
-        product.availableStock > 0
+        totalStock > 0
           ? "bg-green-100 text-green-800"
           : "bg-red-100 text-red-800";
 
+      // Price component for each product
+      const PriceWithSizes = () => {
+        const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+
+        return (
+          <div className="flex items-center gap-2">
+            {/* Sizes clickable */}
+            <div className="flex gap-2">
+              {product.sizes.map((s: any) => (
+                <span
+                  key={s._id}
+                  className={`cursor-pointer underline ${
+                    selectedSize.size === s.size
+                      ? "font-semibold text-green-600"
+                      : ""
+                  } ${
+                    s.quantity === 0
+                      ? "text-red-600 line-through cursor-not-allowed"
+                      : ""
+                  }`}
+                  onClick={() => s.quantity > 0 && setSelectedSize(s)}
+                >
+                  {s.size}
+                </span>
+              ))}
+            </div>
+
+            {/* Price display */}
+            <div className="flex items-center gap-2">
+              {selectedSize.discountedPrice &&
+              selectedSize.discountedPrice < selectedSize.basePrice ? (
+                <>
+                  <span className="line-through text-gray-400">
+                    (₹{selectedSize.basePrice}
+                  </span>
+                  <span className="text-green-600 font-semibold">
+                    ₹{selectedSize.discountedPrice})
+                  </span>
+                </>
+              ) : (
+                <span>₹{selectedSize.basePrice}</span>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      // Available stock display with commas and 0 in red
+      const stockDisplay = product.sizes
+        .map(
+          (s: any) =>
+            `${s.size}(${
+              s.quantity === 0 ? (
+                <span className="text-red-600">{s.quantity}</span>
+              ) : (
+                s.quantity
+              )
+            })`
+        )
+        .reduce((prev: any[], curr: any, idx:number, arr: any) => {
+          if (idx < arr.length - 1) return [...prev, curr, ", "];
+          return [...prev, curr];
+        }, []);
+
       return {
+        image: (
+          <img
+            src={product.imageUrls?.[0]}
+            alt={product.name}
+            className="w-16 h-16 object-cover rounded"
+          />
+        ),
         _id: product._id,
+        productId: product.productId,
         name: product.name,
-        category: product.category, // ✅ add category here
-        availableStock: product.availableStock,
+        category: product.category,
+        createdAt: formatDate(product.createdAt),
+        availableStock: <span>{stockDisplay}</span>,
         status: (
           <span
             className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${statusColor}`}
           >
-            {product.availableStock > 0 ? "Available" : "Out of Stock"}
+            {totalStock > 0 ? "Available" : "Out of Stock"}
           </span>
         ),
-        price: `₹${product.price}`,
+        price: <PriceWithSizes />,
+        sizes: product.sizes.map((s: any) => s.size).join(", "),
       };
     }) || [];
 
   const productColumns = [
-    { key: "_id", label: "ID" },
+    { key: "image", label: "Image" },
+    // { key: "_id", label: "ID" },
+    { key: "productId", label: "Product ID" },
     { key: "name", label: "Name" },
     { key: "category", label: "Category" },
     { key: "availableStock", label: "Available Stock" },
     { key: "status", label: "Status" },
     { key: "price", label: "Price" },
+    { key: "sizes", label: "Sizes" },
+    { key: "createdAt", label: "Added At" },
   ];
 
   const handleDeleteProduct = (id: string) => {
@@ -208,9 +176,9 @@ const Products = () => {
 
   // Export to Excel (dummy)
   const handleExportProducts = () => {
-    if (!filteredProducts || filteredProducts.length === 0) return;
+    if (!allProducts || allProducts?.length === 0) return;
 
-    const exportData = filteredProducts.map((product: any) => {
+    const exportData = allProducts?.map((product: any) => {
       const row: Record<string, any> = {};
       productColumns.forEach((col) => {
         row[col.label] = product[col.key] ?? "";
@@ -275,10 +243,10 @@ const Products = () => {
             data={allProductsData}
             actions={productActions}
             rowKey="_id"
-            isLoading={false}
+            isLoading={isLoading || isFetching}
             page={page}
-            pageSize={5}
             onPageChange={setPage}
+            totalPages={data?.data?.pagination?.totalPages}
           />
           <Button
             variant="primary"
@@ -293,7 +261,8 @@ const Products = () => {
         setIsConfirmationModalOpen={setIsProductPreviewOpen}
         isCrossVisible={true}
       >
-        <ProductPreview product={sampleProduct} />
+        {/* <ProductPreview product={sampleProduct} /> */}
+        <div></div>
       </ConfirmationModal>
     </div>
   );
