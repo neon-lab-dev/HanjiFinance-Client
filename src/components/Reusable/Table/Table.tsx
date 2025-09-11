@@ -26,6 +26,7 @@ type TableProps<T> = {
   page?: number;
   pageSize?: number;
   onPageChange?: (page: number) => void;
+  totalPages: number;
 };
 
 function Table<T extends Record<string, any>>({
@@ -35,18 +36,14 @@ function Table<T extends Record<string, any>>({
   rowKey,
   isLoading,
   page = 1,
-  pageSize = 10,
   onPageChange,
+  totalPages,
 }: TableProps<T>) {
   const [openMenu, setOpenMenu] = useState<{
     id: string;
     x: number;
     y: number;
   } | null>(null);
-
-  // Pagination
-  const totalPages = Math.ceil(data.length / pageSize);
-  const paginatedData = data.slice((page - 1) * pageSize, page * pageSize);
 
   const toggleMenu = (event: MouseEvent<HTMLButtonElement>, id: string) => {
     event.stopPropagation();
@@ -97,8 +94,8 @@ function Table<T extends Record<string, any>>({
                 Loading...
               </td>
             </tr>
-          ) : paginatedData?.length > 0 ? (
-            paginatedData.map((row) => (
+          ) : data?.length > 0 ? (
+            data.map((row) => (
               <tr key={String(row[rowKey])} className="hover:bg-gray-50">
                 {columns.map((col) => (
                   <td

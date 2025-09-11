@@ -1,16 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { FiList } from "react-icons/fi";
+import StatusCard from "../../../components/Dashboard/SharedComponents/StatusCard/StatusCard";
+import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
+import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
+import Button from "../../../components/Reusable/Button/Button";
+import Table from "../../../components/Reusable/Table/Table";
 import { useState } from "react";
-import { FiEye, FiTrash2, FiCopy } from "react-icons/fi";
-import * as XLSX from "xlsx";
+import { useGetAllNewsletterQuery } from "../../../redux/Features/NewsLetter/newsLetterApi";
+import { formatDate } from "../../../utils/formatDate";
 import toast from "react-hot-toast";
+import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import SearchInput from "../../../Reusable/SearchInput/SearchInput";
-import Button from "../../../Reusable/Button/Button";
-import DashboardContainer from "../../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
-import Table from "../../../Reusable/Table/Table";
-const NewsletterTable = () => {
+import { FiEye, FiTrash2, FiCopy } from "react-icons/fi";
+
+const Newsletter = () => {
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching } = useGetAllNewsletterQuery({
+    keyword: searchValue,
+    page,
+  });
 
   // Dummy subscribers
   const allEmails = [
@@ -72,12 +81,12 @@ const NewsletterTable = () => {
 
   // Map for table
   const allSubscribersData =
-    allEmails.map((s: any) => {
+    data?.data?.newsletters?.map((data: any) => {
       return {
-        _id: s._id,
-        name: s.name,
-        email: s.email,
-        joinedDate: s.joinedDate,
+        _id: data?._id,
+        name: data?.name,
+        email: data?.email,
+        joinedDate: formatDate(data?.createdAt),
       };
     }) || [];
 
@@ -148,60 +157,74 @@ const NewsletterTable = () => {
       className: "text-red-600",
     },
   ];
-
   return (
-    <div className="mt-6 font-Montserrat">
-      <DashboardContainer>
-        <div className="font-Montserrat flex flex-col gap-6">
-          {/* Header */}
-          <div className="flex justify-between items-start">
-            <div>
-              <h1 className="text-xl font-bold text-neutral-40">
-                Newsletter Subscribers
-              </h1>
-              <p className="text-neutral-65">
-                Manage and export your newsletter subscribers
-              </p>
-            </div>
-            <div className="flex justify-between items-center gap-4 flex-wrap">
-              {/* Filter */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <SearchInput
-                  value={searchValue}
-                  onChange={setSearchValue}
-                  placeholder="Search by name or email..."
-                />
-                <Button
-                  variant="secondary"
-                  onClick={handleBulkCopy}
-                  label="Copy All Emails"
-                  classNames="w-fit py-2 px-3"
-                />
-                <Button
-                  variant="primary"
-                  onClick={handleExportSubscribers}
-                  label="Export"
-                  classNames="w-fit py-2 px-4"
-                />
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Total Newsletters */}
+        <StatusCard
+          icon={<FiList size={28} />}
+          value={data?.data?.newsletters?.length || 0}
+          label="Total Newsletters"
+          badgeText="All"
+          badgeBg="bg-blue-100"
+          badgeBorder="border-blue-400"
+          badgeTextColor="text-blue-600"
+        />
+      </div>
+
+      <div className="mt-6 font-Montserrat">
+        <DashboardContainer>
+          <div className="font-Montserrat flex flex-col gap-6">
+            {/* Header */}
+            <div className="flex justify-between items-start">
+              <div>
+                <h1 className="text-xl font-bold text-neutral-40">
+                  Newsletter Subscribers
+                </h1>
+                <p className="text-neutral-65">
+                  Manage and export your newsletter subscribers
+                </p>
+              </div>
+              <div className="flex justify-between items-center gap-4 flex-wrap">
+                {/* Filter */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <SearchInput
+                    value={searchValue}
+                    onChange={setSearchValue}
+                    placeholder="Search by name or email..."
+                  />
+                  <Button
+                    variant="secondary"
+                    onClick={handleBulkCopy}
+                    label="Copy All Emails"
+                    classNames="w-fit py-2 px-3"
+                  />
+                  <Button
+                    variant="primary"
+                    onClick={handleExportSubscribers}
+                    label="Export"
+                    classNames="w-fit py-2 px-4 border-2 border-primary-10"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Table */}
-          <Table
-            columns={subscriberColumns}
-            data={allSubscribersData}
-            actions={subscriberActions}
-            rowKey="_id"
-            isLoading={false}
-            page={page}
-            pageSize={5}
-            onPageChange={setPage}
-          />
-        </div>
-      </DashboardContainer>
+            {/* Table */}
+            <Table
+              columns={subscriberColumns}
+              data={allSubscribersData}
+              actions={subscriberActions}
+              rowKey="_id"
+              isLoading={isLoading || isFetching}
+              page={page}
+              onPageChange={setPage}
+              totalPages={data?.data?.pagination?.totalPages}
+            />
+          </div>
+        </DashboardContainer>
+      </div>
     </div>
   );
 };
 
-export default NewsletterTable;
+export default Newsletter;
