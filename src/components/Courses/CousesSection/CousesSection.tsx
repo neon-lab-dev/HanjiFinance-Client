@@ -4,6 +4,7 @@ import { IMAGES } from "../../../assets";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import Container from "../../Reusable/Container/Container";
 import CourseCard from "../../HomePage/Courses/CourseCard";
+import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
 const CousesSection = () => {
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -39,62 +40,11 @@ const CousesSection = () => {
       transition: { duration: 1, ease: "easeOut", delay: 0.5 },
     },
   };
-
-  // ---- Dummy Data ----
-  const courses = [
-    {
-      title: "Full Stack Development",
-      subTitle: "Beginner to Advanced",
-      tag: "Best Seller",
-      description: "Learn full-stack development from scratch.",
-      image: IMAGES.courseDummyImage,
-      accordion: {
-        title: "What will you learn?",
-        description: [
-          "React.js fundamentals & advanced concepts",
-          "Node.js & Express backend development",
-          "Database integration (MongoDB)",
-          "Deployment & scaling techniques",
-        ],
-      },
-      price: "9,500",
-    },
-    {
-      title: "UI/UX Design",
-      subTitle: "Design Stunning Interfaces",
-      tag: "Trending",
-      description: "Master modern UI/UX design practices.",
-      image: IMAGES.courseDummyImage,
-      accordion: {
-        title: "What will you learn?",
-        description: [
-          "User research & wireframing",
-          "Prototyping with Figma",
-          "Design systems & accessibility",
-          "Handoff to developers",
-        ],
-      },
-      price: "7,000",
-    },
-    {
-      title: "Data Science & ML",
-      subTitle: "Hands-on Machine Learning",
-      tag: "New",
-      description: "Dive into data science with practical projects.",
-      image: IMAGES.courseDummyImage,
-      accordion: {
-        title: "What will you learn?",
-        description: [
-          "Python for data analysis",
-          "Machine learning models",
-          "Deep learning basics",
-          "Data visualization & deployment",
-        ],
-      },
-      price: "12,000",
-    },
-  ];
-
+const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
+ 
+if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div id="explore-courses" className="relative  bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden">
       <Container>
@@ -117,7 +67,7 @@ const CousesSection = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-          {courses.map((course, index) => (
+           {courses?.data?.map((course, index) => (
             <motion.div key={index} variants={cardVariants}>
               <CourseCard {...course} />
             </motion.div>

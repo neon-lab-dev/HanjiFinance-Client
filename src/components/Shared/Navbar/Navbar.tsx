@@ -35,7 +35,7 @@ const Navbar = () => {
         },
         {
           label: "Brain Gains",
-          path: "/",
+          path: "/courses",
         },
         {
           label: "Fund Management",
