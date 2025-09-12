@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { FiFile, FiTablet, FiTrash2 } from "react-icons/fi";
 import Table from "../../Reusable/Table/Table";
 import * as XLSX from "xlsx";
@@ -7,143 +7,79 @@ import toast from "react-hot-toast";
 import { saveAs } from "file-saver";
 import Button from "../../Reusable/Button/Button";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
-import Dropdown from "../../Reusable/Dropdown/Dropdown";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
-import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
-import AddLecture from "./AddLecture";
-
-type TCourse = {
-  _id: string;
-  title: string;
-  description: string;
-  price: number;
-  duration: string;
-  status: "draft" | "published" | "archived";
-  createdAt: Date;
-};
+import { useDeleteCourseMutation, useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
+import { formatDate } from "../../../utils/formatDate";
+import type { TCourse } from "../../../types/course.types";
 
 const Courses = () => {
+    const [deleteCourse] = useDeleteCourseMutation();
   const [searchValue, setSearchValue] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [isCoursePreviewOpen, setIsCoursePreviewOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<TCourse | null>(null);
+  const { data, isLoading, isFetching } = useGetAllCoursesQuery({
+    keyword: searchValue,
+  });
   const [page, setPage] = useState(1);
-  const pageSize = 5;
 
-  const navigate= useNavigate()
-  
-  // Dummy data
-  const dummyCourses: TCourse[] = [
-    {
-      _id: "C001",
-      title: "Full Stack Web Development",
-      description: "Learn MERN stack with real-world projects.",
-      price: 499,
-      duration: "12 weeks",
-      status: "published",
-      createdAt: new Date(),
-    },
-    {
-      _id: "C002",
-      title: "UI/UX Design Mastery",
-      description: "Become a professional UI/UX designer.",
-      price: 299,
-      duration: "8 weeks",
-      status: "draft",
-      createdAt: new Date(),
-    },
-    {
-      _id: "C003",
-      title: "Data Structures & Algorithms",
-      description: "Crack interviews with advanced problem-solving.",
-      price: 199,
-      duration: "10 weeks",
-      status: "archived",
-      createdAt: new Date(),
-    },
-  ];
+  const allCourses = data?.data?.courses || [];
 
-  // 1️⃣ Filter + Search
-  const filteredCourses = useMemo(() => {
-    return dummyCourses.filter((course) => {
-      const matchesSearch =
-        course.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchValue.toLowerCase());
-      const matchesStatus = statusFilter
-        ? course.status === statusFilter
-        : true;
-      return matchesSearch && matchesStatus;
-    });
-  }, [dummyCourses, searchValue, statusFilter]);
+  const navigate = useNavigate();
 
-  // 2️⃣ Pagination
-  const paginatedCourses = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return filteredCourses.slice(start, start + pageSize);
-  }, [filteredCourses, page, pageSize]);
-
-  // 3️⃣ Table rows
-  const allCoursesData = paginatedCourses.map((course) => {
-    const statusColors: Record<TCourse["status"], string> = {
-      draft: "bg-yellow-100 text-yellow-800",
-      published: "bg-green-100 text-green-800",
-      archived: "bg-red-100 text-red-800",
-    };
-
+  // Table rows
+  const allCoursesData = allCourses?.map((course:TCourse) => {
     return {
       _id: course._id,
       title: course.title,
-      description: (
-        <span title={course.description}>
-          {course.description.slice(0, 30)}...
-        </span>
+      category: course.category,
+      accessType: course.accessType,
+      price: (
+        <>
+          <span className="line-through text-gray-400">
+            ₹{course.basePrice}
+          </span> {" "}
+          <span className="text-green-600 font-semibold">
+            ₹{course.discountedPrice}
+          </span>
+        </>
       ),
-      price: `₹${course.price}`,
       duration: course.duration,
-      status: (
-        <span
-          className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${statusColors[course.status]}`}
-        >
-          {course.status}
-        </span>
-      ),
-      createdAt: course.createdAt.toLocaleDateString(),
+      createdAt: formatDate(course?.createdAt),
     };
   });
 
   const courseColumns = [
     { key: "_id", label: "Course ID" },
     { key: "title", label: "Title" },
-    { key: "description", label: "Description" },
+    { key: "category", label: "Category" },
+    { key: "accessType", label: "Access Type" },
     { key: "price", label: "Price" },
     { key: "duration", label: "Duration" },
-    { key: "status", label: "Status" },
     { key: "createdAt", label: "Created At" },
   ];
 
-  // Actions
-  const handleDeleteCourse = (id: string) => {
-    toast.success(`Course ${id} deleted (dummy action).`);
-  };
+  const handleDeleteCourse = async (id: string) => {
+      toast.promise(deleteCourse(id).unwrap(), {
+        loading: "Deleting course...",
+        success: "Course deleted successfully.",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    };
 
   const courseActions = [
     {
       icon: <FiTablet />,
       label: "Update",
       onClick: (row: any) => {
-        const course = dummyCourses.find((c) => c._id === row?._id) || null;
-       navigate(`/dashboard/admin/add-course`)
-       console.log(course)
+        navigate(`/dashboard/admin/manage-course`, { state: { id: row?._id, action: "update" } });
       },
     },
     {
       icon: <FiFile />,
-      label: "manage Lectures",
+      label: "Manage Lectures",
       onClick: (row: any) => {
-        const course = dummyCourses.find((c) => c._id === row?._id) || null;
-        setSelectedCourse(course);
-        setIsCoursePreviewOpen(true);
+        navigate(`/dashboard/admin/manage-lectures/${row?._id}`, {
+          state: { id: row?._id },
+        });
       },
     },
     {
@@ -155,30 +91,33 @@ const Courses = () => {
   ];
 
   // Export
-  const handleExportCourses = () => {
-    if (!filteredCourses || filteredCourses.length === 0) return;
+const handleExportCourses = () => {
+  if (!allCourses || allCourses.length === 0) return;
 
-    const exportData = filteredCourses.map((course) => ({
-      "Course ID": course._id,
-      Title: course.title,
-      Description: course.description,
-      Price: course.price,
-      Duration: course.duration,
-      Status: course.status,
-      "Created At": course.createdAt.toLocaleDateString(),
-    }));
+  const exportData = allCourses.map((course: TCourse) => ({
+    "_id": course._id,
+    "Image URL": course.imageUrl,
+    "Title": course.title,
+    "Subtitle": course.subtitle,
+    "Tagline": course.tagline,
+    "Benefits": course.benefits?.join(", "),
+    "Access Type": course.accessType,
+    "Category": course.category,
+    "Base Price": course.basePrice,
+    "Discounted Price": course.discountedPrice,
+    "Duration": course.duration || "",
+    "Created At": formatDate(course.createdAt),
+  }));
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Courses");
+  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Courses");
 
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(blob, "courses.xlsx");
-  };
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+  saveAs(blob, "courses.xlsx");
+};
+
 
   return (
     <div className="mt-6 font-Montserrat">
@@ -198,20 +137,12 @@ const Courses = () => {
                   onChange={setSearchValue}
                   placeholder="Search courses..."
                 />
-                <Dropdown
-                  className="py-1 px-3"
-                  value={statusFilter}
-                  onChange={setStatusFilter}
-                  options={[
-                    { value: "", label: "Select Status" },
-                    { value: "draft", label: "Draft" },
-                    { value: "published", label: "Published" },
-                    { value: "archived", label: "Archived" },
-                  ]}
-                />
-                <Button 
+                <Button
                   variant="primary"
-                  onClick={() => {navigate("/dashboard/admin/add-course")
+                  onClick={() => {
+                    navigate("/dashboard/admin/manage-course", {
+                      state: { action: "add" },
+                    });
                   }}
                   label="Add Course"
                   classNames="py-2 px-3"
@@ -226,9 +157,9 @@ const Courses = () => {
             data={allCoursesData}
             actions={courseActions}
             rowKey="_id"
-            isLoading={false}
+            isLoading={isLoading || isFetching}
             page={page}
-            pageSize={pageSize}
+            totalPages={data?.data?.pagination?.totalPages}
             onPageChange={setPage}
           />
 
@@ -240,8 +171,6 @@ const Courses = () => {
           />
         </div>
       </DashboardContainer>
-
-     
     </div>
   );
 };

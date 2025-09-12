@@ -20,7 +20,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
   badgeTextColor,
 }) => {
   return (
-    <div className="bg-white rounded-lg p-4 space-y-6 font-Montserrat w-[280px]">
+    <div className="bg-white rounded-lg p-4 space-y-6 font-Montserrat">
       <div className="flex justify-between items-center">
         <div className="size-[30px] p-[6px] bg-surface-40 flex justify-center items-center rounded-sm">
           {typeof icon === "string" ? (

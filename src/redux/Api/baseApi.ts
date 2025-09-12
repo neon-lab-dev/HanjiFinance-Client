@@ -43,7 +43,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<any> = async (args, api, extraOptio
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["user","course","product","chatandchill"],
+  tagTypes: ["user","course","product", "newsletter", "chatAndChill", "boardroomBanter"],
   endpoints: () => ({}),
 });
 

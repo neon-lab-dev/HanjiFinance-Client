@@ -3,6 +3,7 @@ import { useState, type ReactNode, useEffect } from "react";
 import type { MouseEvent } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import Button from "../Button/Button";
+import Loader from "../../Shared/Loader/Loader";
 
 type TableColumn = {
   key: string;
@@ -24,8 +25,8 @@ type TableProps<T> = {
   rowKey: keyof T;
   isLoading?: boolean;
   page?: number;
-  pageSize?: number;
   onPageChange?: (page: number) => void;
+  totalPages: number;
 };
 
 function Table<T extends Record<string, any>>({
@@ -35,18 +36,14 @@ function Table<T extends Record<string, any>>({
   rowKey,
   isLoading,
   page = 1,
-  pageSize = 10,
   onPageChange,
+  totalPages,
 }: TableProps<T>) {
   const [openMenu, setOpenMenu] = useState<{
     id: string;
     x: number;
     y: number;
   } | null>(null);
-
-  // Pagination
-  const totalPages = Math.ceil(data.length / pageSize);
-  const paginatedData = data.slice((page - 1) * pageSize, page * pageSize);
 
   const toggleMenu = (event: MouseEvent<HTMLButtonElement>, id: string) => {
     event.stopPropagation();
@@ -94,11 +91,11 @@ function Table<T extends Record<string, any>>({
                 colSpan={columns.length + (actions.length > 0 ? 1 : 0)}
                 className="px-6 py-10 text-center"
               >
-                Loading...
+                <Loader/>
               </td>
             </tr>
-          ) : paginatedData?.length > 0 ? (
-            paginatedData.map((row) => (
+          ) : data?.length > 0 ? (
+            data.map((row) => (
               <tr key={String(row[rowKey])} className="hover:bg-gray-50">
                 {columns.map((col) => (
                   <td
@@ -115,7 +112,7 @@ function Table<T extends Record<string, any>>({
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium relative">
                     <button
                       onClick={(e) => toggleMenu(e, String(row[rowKey]))}
-                      className="text-neutral-60 hover:text-gray-700 focus:outline-none p-1 rounded hover:bg-gray-100"
+                      className="text-neutral-60 hover:text-gray-700 focus:outline-none p-1 rounded hover:bg-gray-100 cursor-pointer"
                     >
                       <FiMoreVertical className="h-5 w-5" />
                     </button>
@@ -151,7 +148,7 @@ function Table<T extends Record<string, any>>({
                 if (row) action.onClick(row);
                 setOpenMenu(null);
               }}
-              className={`flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left ${
+              className={`flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer ${
                 action.className || ""
               }`}
             >

@@ -6,9 +6,9 @@ interface ReusableButtonProps {
   onClick?: () => void;
   classNames?: string;
   type?: "button" | "submit" | "reset";
-  disabled?: boolean; // ✅ added disabled prop
+  disabled?: boolean;
   icon?: string;
-  isLoading?: boolean; // ✅ added isLoading prop
+  isLoading?: boolean;
 }
 
 const Button: React.FC<ReusableButtonProps> = ({
@@ -17,9 +17,9 @@ const Button: React.FC<ReusableButtonProps> = ({
   onClick,
   classNames = "",
   type = "button",
-  disabled = false, // ✅ default false
+  disabled = false,
   icon,
-  isLoading = false, // ✅ default false
+  isLoading = false,
 }) => {
   const baseClasses =
     "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap flex items-center justify-center gap-3";

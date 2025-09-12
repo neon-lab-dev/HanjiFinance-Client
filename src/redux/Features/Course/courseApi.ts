@@ -3,15 +3,18 @@ import { baseApi } from "../../Api/baseApi";
 const courseApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCourses: builder.query({
-      query: ({ keyword, category }) => ({
-        url: `/course`,
-        method: "GET",
-        credentials: "include",
-        params: {
-          keyword,
-          category,
-        },
-      }),
+      query: ({ keyword, page }: { keyword?: string; page?: number }) => {
+        const params = new URLSearchParams();
+
+        if (keyword) params.append("keyword", keyword);
+        if (page) params.append("page", page.toString());
+
+        return {
+          url: `/course${params.toString() ? `?${params.toString()}` : ""}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
       providesTags: ["course"],
     }),
 
@@ -24,22 +27,62 @@ const courseApi = baseApi.injectEndpoints({
       providesTags: ["course"],
     }),
 
-    getCourseLecture: builder.query({
+    getAllLecturesByCourseId: builder.query({
       query: (id) => ({
-        url: `/course/${id}`,
+        url: `/course-lecture/all/${id}`,
         method: "GET",
         credentials: "include",
       }),
       providesTags: ["course"],
     }),
 
-    getAllCategories: builder.query({
-      query: () => ({
-        url: `/category`,
-        method: "GET",
+
+     addCourse: builder.mutation({
+      query: (data) => ({
+        url: `/course/add`,
+        method: "POST",
+        body: data,
         credentials: "include",
       }),
-      providesTags: ["course"],
+      invalidatesTags: ["course"],
+    }),
+
+    updateCourse: builder.mutation({
+      query: ({data, id}) => ({
+        url: `/course/update/${id}`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    deleteCourse: builder.mutation({
+      query: (id) => ({
+        url: `/course/delete/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    addLecture: builder.mutation({
+      query: (data) => ({
+        url: `/course-lecture/add`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    deleteLecture: builder.mutation({
+      query: (lectureId) => ({
+        url: `/course-lecture/delete/${lectureId}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
     }),
   }),
 });
@@ -47,6 +90,10 @@ const courseApi = baseApi.injectEndpoints({
 export const {
   useGetAllCoursesQuery,
   useGetSingleCourseByIdQuery,
-  useGetCourseLectureQuery,
-  useGetAllCategoriesQuery,
+  useGetAllLecturesByCourseIdQuery,
+  useAddCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
+  useAddLectureMutation,
+  useDeleteLectureMutation,
 } = courseApi;

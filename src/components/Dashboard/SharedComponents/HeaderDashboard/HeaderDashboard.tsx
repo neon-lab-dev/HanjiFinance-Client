@@ -1,14 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { ICONS } from "../../../../assets";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../../types/user.types";
 const HeaderDashboard = () => {
+  const user = useSelector(useCurrentUser) as TUser;
   const location = useLocation();
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  // Set isAdmin based on the current route
-  useEffect(() => {
-    setIsAdmin(location.pathname.startsWith("/admin"));
-  }, [location.pathname]);
   const pageTitles: Record<string, string> = {
     "/dashboard": "Dashboard",
     "/dashboard/my-courses": "My Courses",
@@ -26,13 +24,9 @@ const HeaderDashboard = () => {
     "/dashboard/update-subscription": "My Subscriptions",
     "/dashboard/admin": "Dashboard",
     "/dashboard/admin/products": "Products",
-    "/dashboard/admin/add-products": "Add Products",
+    "/dashboard/admin/add-or-edit-product": "Add Products",
     "/dashboard/admin/newsletter": "Newsletters",
   };
-  
-  useEffect(() => {
-    setIsAdmin(location.pathname.startsWith("/admin"));
-  }, [location.pathname]);
 
   let currentTitle = pageTitles[location.pathname] || "";
     if (location.pathname.startsWith("/dashboard/my-courses/")) {
@@ -47,7 +41,7 @@ const HeaderDashboard = () => {
         <span className="text-[13px]">Friday, August 1, 2025</span>
       </div>
       <ul className="flex gap-5">
-        {!isAdmin && (
+        {user?.role !== "admin" && (
           <>
             <li className="relative">
               <Link to="/cart">
@@ -59,11 +53,11 @@ const HeaderDashboard = () => {
             </li>
           </>
         )}
-        <li>
+        {/* <li>
           <Link to="/dashboard">
             <img src={ICONS.bell} className="size-6" />
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/dashboard">
             <img src={ICONS.user} className="size-6" />

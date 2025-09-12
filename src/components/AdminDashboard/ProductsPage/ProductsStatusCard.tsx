@@ -9,7 +9,7 @@ type TFormData = {
   category: string;
 };
 const ProductsStatusCard = () => {
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false);
 
   const {
     register,
@@ -22,16 +22,16 @@ const ProductsStatusCard = () => {
   };
   return (
     <div className="w-full ">
-      <div className="flex justify-end py-2 ">
+      {/* <div className="flex justify-end py-2 ">
         <Button
           onClick={() => setIsCategoryModalOpen(true)}
           variant="primary"
           label="Add New Category"
           classNames="px-4 py-2"
         />
-      </div>
+      </div> */}
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 2xl:grid-cols-5 gap-4">
         {/* Total Products */}
         <StatusCard
           icon={<FiPackage size={28} />}
@@ -66,14 +66,12 @@ const ProductsStatusCard = () => {
         />
       </div>
       <ConfirmationModal
+      heading=" Add New Category"
         isConfirmationModalOpen={isCategoryModalOpen}
         setIsConfirmationModalOpen={setIsCategoryModalOpen}
         isCrossVisible={true}
       >
         <div className="flex flex-col items-center pb-6 px-8">
-          <h1 className="text-neutral-20 text-lg font-medium leading-8 text-center tracking-[-0.56px]">
-            Add New Category
-          </h1>
           <form onSubmit={handleSubmit(handleCategory)} className="w-full mt-4 flex flex-col items-end">
             <TextInput
               label="Category Name"

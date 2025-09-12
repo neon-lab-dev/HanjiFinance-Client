@@ -25,7 +25,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-10 pr-3 text-sm py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-10 focus:outline-none"
+        className="w-full pl-8 pr-3 text-sm py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-10 focus:outline-none"
       />
     </div>
   );

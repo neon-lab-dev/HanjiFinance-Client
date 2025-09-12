@@ -28,20 +28,12 @@ const Sidebar: React.FC = () => {
       link: "/dashboard/consultations",
     },
     {
-      name: "Private Group Access",
-      link: "/dashboard/my-profile",
-    },
-    {
       name: "My Subscriptions",
       link: "/dashboard/my-subscriptions",
     },
     {
       name: "My Profile",
       link: "/dashboard/certificates",
-    },
-    {
-      name: "Fashion & Apparel",
-      link: "/dashboard/fashion",
     },
   ];
   const adminMenus = [
@@ -64,19 +56,15 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Consultations",
-      link: "/dashboard/admin/consultations",
+      link: "/dashboard/admin/manage-consultations",
     },
     {
       name: "Subscriptions",
-      link: "/dashboard/admin/my-subscriptions",
+      link: "/dashboard/admin/manage-subscriptions",
     },
     {
       name: "My Profile",
       link: "/dashboard/certificates",
-    },
-    {
-      name: "Fashion & Apparel",
-      link: "/dashboard/fashion",
     },
   ];
 
