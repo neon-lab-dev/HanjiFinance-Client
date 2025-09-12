@@ -26,6 +26,7 @@ const AddLecture = ({courseId, setIsAddLectureModalOpen} : { courseId: string; s
 
  const handleAddLecture = async (data: TLecture) => {
     const formData = new FormData();
+    formData.append("courseId", courseId);
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("duration", data.duration);
@@ -33,7 +34,7 @@ const AddLecture = ({courseId, setIsAddLectureModalOpen} : { courseId: string; s
       formData.append("file", videoFile);
     }
 
-    const response = await addLecture({ formData, courseId }).unwrap();
+    const response = await addLecture(formData).unwrap();
     if (response?.success) {
       toast.success("Lecture added successfully");
       setIsAddLectureModalOpen(false);

@@ -27,9 +27,9 @@ const courseApi = baseApi.injectEndpoints({
       providesTags: ["course"],
     }),
 
-    getCourseLecture: builder.query({
+    getAllLecturesByCourseId: builder.query({
       query: (id) => ({
-        url: `/course/${id}`,
+        url: `/course-lecture/all/${id}`,
         method: "GET",
         credentials: "include",
       }),
@@ -67,18 +67,18 @@ const courseApi = baseApi.injectEndpoints({
     }),
 
     addLecture: builder.mutation({
-      query: ({formData, courseId}) => ({
-        url: `/course/${courseId}`,
-        method: "PUT",
-        body: formData,
+      query: (data) => ({
+        url: `/course-lecture/add`,
+        method: "POST",
+        body: data,
         credentials: "include",
       }),
       invalidatesTags: ["course"],
     }),
 
     deleteLecture: builder.mutation({
-      query: ({courseId, lectureId}) => ({
-        url: `/lectures?courseId=${courseId}&lectureId=${lectureId}`,
+      query: (lectureId) => ({
+        url: `/course-lecture/delete/${lectureId}`,
         method: "DELETE",
         credentials: "include",
       }),
@@ -90,7 +90,7 @@ const courseApi = baseApi.injectEndpoints({
 export const {
   useGetAllCoursesQuery,
   useGetSingleCourseByIdQuery,
-  useGetCourseLectureQuery,
+  useGetAllLecturesByCourseIdQuery,
   useAddCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,

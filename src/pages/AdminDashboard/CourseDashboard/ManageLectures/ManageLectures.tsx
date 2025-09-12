@@ -6,20 +6,25 @@ import ConfirmationModal from "../../../../components/ConfirmationModal/Confirma
 import { useState } from "react";
 import AddLecture from "../../../../components/AdminDashboard/Courses/AddLecture";
 import { useParams } from "react-router-dom";
-import { useDeleteLectureMutation, useGetSingleCourseByIdQuery } from "../../../../redux/Features/Course/courseApi";
+import {
+  useDeleteLectureMutation,
+  useGetAllLecturesByCourseIdQuery,
+} from "../../../../redux/Features/Course/courseApi";
 import type { TLecture } from "../../../../types/course.types";
+import Loader from "../../../../components/Shared/Loader/Loader";
 
 const ManageLectures = () => {
   const { id } = useParams();
-  const { data } = useGetSingleCourseByIdQuery(id);
+  const { data, isLoading } = useGetAllLecturesByCourseIdQuery(id);
   const [deleteLecture] = useDeleteLectureMutation();
-  const [isAddLectureModalOpen, setIsAddLectureModalOpen] = useState<boolean>(false);
+  const [isAddLectureModalOpen, setIsAddLectureModalOpen] =
+    useState<boolean>(false);
   const [deletingVideoId, setDeletingVideoId] = useState<string | null>(null);
 
   const handledDeleteLecture = async (lectureId: string) => {
     try {
       setDeletingVideoId(lectureId);
-      const response = await deleteLecture({ courseId: id, lectureId }).unwrap();
+      const response = await deleteLecture(lectureId).unwrap();
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -28,7 +33,7 @@ const ManageLectures = () => {
     }
   };
 
-  const lectures = data?.course?.lectures || [];
+  const lectures = data?.data?.lectures || [];
 
   return (
     <div>
@@ -36,11 +41,15 @@ const ManageLectures = () => {
         {/* Header */}
         <div className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">Manage Lectures</h2>
-          <p className="text-gray-500 text-sm">Organize your course lectures in an easy way</p>
+          <p className="text-gray-500 text-sm">
+            Organize your course lectures in an easy way
+          </p>
         </div>
 
         {/* Lectures List */}
-        {lectures.length > 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : lectures.length > 0 ? (
           <div className="flex flex-col gap-4">
             {lectures.map((lecture: TLecture) => (
               <div
@@ -54,8 +63,12 @@ const ManageLectures = () => {
                   </div>
                   {/* Title & Duration */}
                   <div>
-                    <h3 className="font-medium text-gray-800">{lecture.title}</h3>
-                    <p className="text-gray-500 text-sm">Duration: {lecture.duration}</p>
+                    <h3 className="font-medium text-neutral-10 capitalize">
+                      {lecture.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm">
+                      Duration: {lecture.duration}
+                    </p>
                   </div>
                 </div>
 
@@ -82,12 +95,11 @@ const ManageLectures = () => {
         )}
 
         {/* Add Lecture Button */}
-        <div className="mt-6 flex justify-start">
+        <div className="mt-6 flex justify-center">
           <Button
             variant="primary"
             label="Add New Lecture"
             type="button"
-            classNames="py-2 px-3"
             onClick={() => setIsAddLectureModalOpen(true)}
           />
         </div>
