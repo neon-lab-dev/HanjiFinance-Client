@@ -20,7 +20,6 @@ import {
 import { startOfWeek } from "date-fns/fp";
 import { useState } from "react";
 import TimePicker from "./TimePicker";
-import { useGetAvailabilityQuery } from "../../../redux/Features/ChatAndChill/ChatAndChillApi";
 
 
 type CalenderProps = {
