@@ -24,7 +24,7 @@ const Products = () => {
   const [searchValue, setSearchValue] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState({} as TProduct);
+  const [selectedProductId, setSelectedProductId] = useState("");
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
 

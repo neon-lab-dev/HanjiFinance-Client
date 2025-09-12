@@ -14,6 +14,7 @@ import {
   useUpdateProductMutation,
 } from "../../../redux/Features/Product/productApi";
 import toast from "react-hot-toast";
+import Loader from "../../../components/Shared/Loader/Loader";
 
 const AddOrEditProduct = () => {
   const location = useLocation();
@@ -54,6 +55,7 @@ const AddOrEditProduct = () => {
       }
     }
   }, [setValue, singleProduct]);
+
   const navigate = useNavigate();
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -61,6 +63,7 @@ const AddOrEditProduct = () => {
     control,
     name: "sizes",
   });
+
   const {
     fields: imageFields,
     append: appendImage,
@@ -126,215 +129,218 @@ const AddOrEditProduct = () => {
   };
 
   return (
-    <div className="font-Montserrat">
-      <SubscriptionStatus>
-        <form
-          onSubmit={handleSubmit(handleSubmitProduct)}
-          className="flex flex-col gap-4 mt-6 w-full"
-        >
-          <div className="grid grid-cols-2 gap-4">
-            {/* Product Name */}
-            <TextInput
-              label="Product Name"
-              placeholder="Enter product name"
-              error={errors.name}
-              {...register("name", { required: "Product name is required" })}
+    <div className="font-Montserrat min-h-screen">
+      {productLoading ? (
+        <Loader />
+      ) : (
+        <SubscriptionStatus>
+          <form
+            onSubmit={handleSubmit(handleSubmitProduct)}
+            className="flex flex-col gap-4 mt-6 w-full"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              {/* Product Name */}
+              <TextInput
+                label="Product Name"
+                placeholder="Enter product name"
+                error={errors.name}
+                {...register("name", { required: "Product name is required" })}
+              />
+
+              {/* Category */}
+              <TextInput
+                label="Category"
+                placeholder="E.g., Shirts, Jeans"
+                error={errors.category}
+                {...register("category", { required: "Category is required" })}
+              />
+
+              {/* Cloth Details */}
+              <TextInput
+                label="Cloth Details"
+                placeholder="E.g., Cotton, Polyester"
+                error={errors.clothDetails}
+                {...register("clothDetails")}
+                isRequired={false}
+              />
+
+              {/* Made In */}
+              <TextInput
+                label="Made In"
+                placeholder="E.g., India"
+                error={errors.madeIn}
+                {...register("madeIn")}
+                isRequired={false}
+              />
+            </div>
+            {/* Description */}
+            <Textarea
+              label="Description"
+              placeholder="Write product description..."
+              rows={4}
+              error={errors.description}
+              {...register("description", {
+                required: "Description is required",
+              })}
             />
 
-            {/* Category */}
-            <TextInput
-              label="Category"
-              placeholder="E.g., Shirts, Jeans"
-              error={errors.category}
-              {...register("category", { required: "Category is required" })}
-            />
-
-            {/* Cloth Details */}
-            <TextInput
-              label="Cloth Details"
-              placeholder="E.g., Cotton, Polyester"
-              error={errors.clothDetails}
-              {...register("clothDetails")}
+            {/* Product Story */}
+            <Textarea
+              label="Product Story"
+              placeholder="Tell your product story..."
+              rows={4}
+              error={errors.productStory}
+              {...register("productStory")}
               isRequired={false}
             />
+            {/* Images */}
+            <div className="space-y-4">
+              <h3 className="text-neutral-10 leading-[18px] text-[15px] font-medium tracking-[-0.16] ">
+                Product Images (max 4)
+              </h3>
+              {imageFields.map((field, index) => {
+                // decide which preview to show: existing DB URL or new file preview
+                const existingUrl =
+                  typeof field?.file === "string" ? field.file : undefined;
+                const previewUrl = previews[index] || existingUrl;
 
-            {/* Made In */}
-            <TextInput
-              label="Made In"
-              placeholder="E.g., India"
-              error={errors.madeIn}
-              {...register("madeIn")}
-              isRequired={false}
-            />
-          </div>
-          {/* Description */}
-          <Textarea
-            label="Description"
-            placeholder="Write product description..."
-            rows={4}
-            error={errors.description}
-            {...register("description", {
-              required: "Description is required",
-            })}
-          />
+                return (
+                  <div key={field.id} className="flex items-center gap-3">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="border rounded-lg p-2"
+                      onChange={(e) => handleFileChange(e, index)}
+                    />
 
-          {/* Product Story */}
-          <Textarea
-            label="Product Story"
-            placeholder="Tell your product story..."
-            rows={4}
-            error={errors.productStory}
-            {...register("productStory")}
-            isRequired={false}
-          />
-          {/* Images */}
-          <div className="space-y-4">
-            <h3 className="text-neutral-10 leading-[18px] text-[15px] font-medium tracking-[-0.16] ">
-              Product Images (max 4)
-            </h3>
-            {imageFields.map((field, index) => {
-              // decide which preview to show: existing DB URL or new file preview
-              const existingUrl =
-                typeof field?.file === "string" ? field.file : undefined;
-              const previewUrl = previews[index] || existingUrl;
+                    {/* Show preview */}
+                    {previewUrl && (
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-16 h-16 object-cover rounded-md border"
+                      />
+                    )}
 
-              return (
-                <div key={field.id} className="flex items-center gap-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="border rounded-lg p-2"
-                    onChange={(e) => handleFileChange(e, index)}
+                    {imageFields.length > 1 && (
+                      <FiTrash2
+                        className="cursor-pointer size-5 text-primary-10"
+                        onClick={() => {
+                          removeImage(index);
+                          const newPreviews = previews.filter(
+                            (_, i) => i !== index
+                          );
+                          setPreviews(newPreviews);
+                        }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+
+              {imageFields.length < 4 && (
+                <Button
+                  variant="primary"
+                  type="button"
+                  label="Add Image"
+                  classNames="py-2 px-4"
+                  onClick={() => appendImage({ file: undefined })}
+                />
+              )}
+            </div>
+
+            {/* Sizes Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Sizes</h3>
+              {fields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="flex gap-4 items-center justify-center"
+                >
+                  <TextInput
+                    label="Size"
+                    placeholder="M, L, XL"
+                    error={errors.sizes?.[index]?.size}
+                    {...register(`sizes.${index}.size` as const, {
+                      required: "Size is required",
+                    })}
                   />
 
-                  {/* Show preview */}
-                  {previewUrl && (
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      className="w-16 h-16 object-cover rounded-md border"
-                    />
-                  )}
+                  <TextInput
+                    label="Quantity"
+                    type="number"
+                    error={errors.sizes?.[index]?.quantity}
+                    {...register(`sizes.${index}.quantity` as const, {
+                      required: "Quantity is required",
+                      valueAsNumber: true,
+                    })}
+                  />
 
-                  {imageFields.length > 1 && (
-                    <FiTrash2
-                      className="cursor-pointer size-5 text-primary-10"
-                      onClick={() => {
-                        removeImage(index);
-                        const newPreviews = previews.filter(
-                          (_, i) => i !== index
-                        );
-                        setPreviews(newPreviews);
-                      }}
-                    />
-                  )}
+                  <TextInput
+                    label="Base Price"
+                    type="number"
+                    error={errors.sizes?.[index]?.basePrice}
+                    {...register(`sizes.${index}.basePrice` as const, {
+                      required: "Base price is required",
+                      valueAsNumber: true,
+                    })}
+                  />
+
+                  <TextInput
+                    label="Discounted Price"
+                    type="number"
+                    error={errors.sizes?.[index]?.discountedPrice}
+                    {...register(`sizes.${index}.discountedPrice` as const, {
+                      required: "Discounted price is required",
+                      valueAsNumber: true,
+                    })}
+                  />
+
+                  <FiTrash2
+                    className="cursor-pointer size-20 text-primary-10 mt-5 "
+                    onClick={() => remove(index)}
+                  />
                 </div>
-              );
-            })}
+              ))}
 
-            {imageFields.length < 4 && (
               <Button
                 variant="primary"
                 type="button"
-                label="Add Image"
+                label="Add Size"
                 classNames="py-2 px-4"
-                onClick={() => appendImage({ file: undefined })}
+                onClick={() =>
+                  append({
+                    size: "",
+                    quantity: 0,
+                    basePrice: 0,
+                    discountedPrice: 0,
+                  })
+                }
               />
-            )}
-          </div>
+            </div>
 
-          {/* Sizes Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Sizes</h3>
-            {fields.map((field, index) => (
-              <div
-                key={field.id}
-                className="flex gap-4 items-center justify-center"
-              >
-                <TextInput
-                  label="Size"
-                  placeholder="M, L, XL"
-                  error={errors.sizes?.[index]?.size}
-                  {...register(`sizes.${index}.size` as const, {
-                    required: "Size is required",
-                  })}
-                />
-
-                <TextInput
-                  label="Quantity"
-                  type="number"
-                  error={errors.sizes?.[index]?.quantity}
-                  {...register(`sizes.${index}.quantity` as const, {
-                    required: "Quantity is required",
-                    valueAsNumber: true,
-                  })}
-                />
-
-                <TextInput
-                  label="Base Price"
-                  type="number"
-                  error={errors.sizes?.[index]?.basePrice}
-                  {...register(`sizes.${index}.basePrice` as const, {
-                    required: "Base price is required",
-                    valueAsNumber: true,
-                  })}
-                />
-
-                <TextInput
-                  label="Discounted Price"
-                  type="number"
-                  error={errors.sizes?.[index]?.discountedPrice}
-                  {...register(`sizes.${index}.discountedPrice` as const, {
-                    required: "Discounted price is required",
-                    valueAsNumber: true,
-                  })}
-                />
-
-                <FiTrash2
-                  className="cursor-pointer size-20 text-primary-10 mt-5 "
-                  onClick={() => remove(index)}
-                />
-              </div>
-            ))}
-
-            <Button
-              variant="primary"
-              type="button"
-              label="Add Size"
-              classNames="py-2 px-4"
-              onClick={() =>
-                append({
-                  size: "",
-                  quantity: 0,
-                  basePrice: 0,
-                  discountedPrice: 0,
-                })
-              }
-            />
-          </div>
-
-          {/* Actions */}
-          <div className="flex justify-end gap-4">
-            <Button
-              variant="custom"
-              label="Cancel"
-              type="button"
-              classNames="py-2 px-3"
-              onClick={() => {
-                navigate("/dashboard/admin/products");
-              }}
-            />
-            <Button
-              variant="primary"
-              label="Save Product"
-              type="submit"
-              classNames="py-2 px-3"
-              isLoading={isLoading || isUpdating}
-            />
-          </div>
-        </form>
-      </SubscriptionStatus>
-      s
+            {/* Actions */}
+            <div className="flex justify-end gap-4">
+              <Button
+                variant="custom"
+                label="Cancel"
+                type="button"
+                classNames="py-2 px-3"
+                onClick={() => {
+                  navigate("/dashboard/admin/products");
+                }}
+              />
+              <Button
+                variant="primary"
+                label="Save Product"
+                type="submit"
+                classNames="py-2 px-3"
+                isLoading={isLoading || isUpdating}
+              />
+            </div>
+          </form>
+        </SubscriptionStatus>
+      )}
     </div>
   );
 };

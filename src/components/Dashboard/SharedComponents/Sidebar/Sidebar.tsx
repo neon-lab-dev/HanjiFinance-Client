@@ -72,10 +72,6 @@ const Sidebar: React.FC = () => {
       name: "My Profile",
       link: "/dashboard/certificates",
     },
-    {
-      name: "Fashion & Apparel",
-      link: "/dashboard/fashion",
-    },
   ];
 
   const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;
