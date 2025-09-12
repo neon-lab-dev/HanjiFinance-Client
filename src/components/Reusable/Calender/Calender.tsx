@@ -20,6 +20,7 @@ import {
 import { startOfWeek } from "date-fns/fp";
 import { useState } from "react";
 import TimePicker from "./TimePicker";
+import { useGetAllAvailabilityQuery } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 
 
 type CalenderProps = {
@@ -30,7 +31,7 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 export default function Calender({ onBookingChange }: CalenderProps) {
-  const { data } = useGetAvailabilityQuery({});
+  const { data } = useGetAllAvailabilityQuery({});
 const availabilities = data?.data?.availabilities || [];
 
   const today = startOfToday();

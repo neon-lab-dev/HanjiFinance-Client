@@ -1,14 +1,16 @@
 
-import { Link, useLocation, } from "react-router-dom";
+import { Link, useLocation, useNavigate, } from "react-router-dom";
 import { ICONS } from "../../../../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../../types/user.types";
+import Cookies from "js-cookie";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  const navigate= useNavigate();
   const user= useSelector(useCurrentUser) as TUser;
-  const dispatch =useDispatch()
+  const dispatch =useDispatch();
   // Helper function to check if the link is active
   const isActive = (path: string): boolean => location.pathname === path;
 
@@ -73,8 +75,13 @@ const Sidebar: React.FC = () => {
 
 
 
-  const handleLogout = () => {
-    dispatch(logout());}
+ const handleLogout = async () => {
+    Cookies.remove("accessToken");
+    Cookies.remove("role");
+    dispatch(logout());
+    localStorage.clear();
+    navigate("/auth/signin");
+  };
 
   return (
     <div className="w-60 min-w-60 h-screen font-Inter flex flex-col justify-between sticky left-0 top-0 font-Montserrat overflow-auto">
