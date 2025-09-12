@@ -3,7 +3,7 @@ import { baseApi } from "../../Api/baseApi";
 
 const courseApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-   getAllCourses: builder.query({
+    getAllCourses: builder.query({
       query: ({ keyword, page }: { keyword?: string; page?: number }) => {
         const params = new URLSearchParams();
 
@@ -18,7 +18,6 @@ const courseApi = baseApi.injectEndpoints({
       },
       providesTags: ["course"],
     }),
-
 
     getSingleCourseById: builder.query({
       query: (id) => ({
@@ -37,6 +36,36 @@ const courseApi = baseApi.injectEndpoints({
       }),
       providesTags: ["course"],
     }),
+
+
+     addCourse: builder.mutation({
+      query: (data) => ({
+        url: `/course/add`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    updateCourse: builder.mutation({
+      query: ({data, id}) => ({
+        url: `/course/update/${id}`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    deleteCourse: builder.mutation({
+      query: (id) => ({
+        url: `/course/delete/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -44,4 +73,7 @@ export const {
   useGetAllCoursesQuery,
   useGetSingleCourseByIdQuery,
   useGetCourseLectureQuery,
+  useAddCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation
 } = courseApi;

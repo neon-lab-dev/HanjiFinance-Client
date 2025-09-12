@@ -14,6 +14,7 @@ import { formatDate } from "../../../utils/formatDate";
 import type { TCourse } from "../../../types/course.types";
 
 const Courses = () => {
+  
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading, isFetching } = useGetAllCoursesQuery({
     keyword: searchValue,
@@ -24,7 +25,7 @@ const Courses = () => {
 
   const navigate = useNavigate();
 
-  // 3️⃣ Table rows
+  // Table rows
   const allCoursesData = allCourses?.map((course:TCourse) => {
     return {
       _id: course._id,
@@ -66,14 +67,16 @@ const Courses = () => {
       icon: <FiTablet />,
       label: "Update",
       onClick: (row: any) => {
-        navigate(`/dashboard/admin/add-course`, { state: { id: row?._id } });
+        navigate(`/dashboard/admin/manage-course`, { state: { id: row?._id, action: "update" } });
       },
     },
     {
       icon: <FiFile />,
       label: "Manage Lectures",
       onClick: (row: any) => {
-        console.log(row);
+        navigate(`/dashboard/admin/manage-lectures`, {
+          state: { id: row?._id },
+        });
       },
     },
     {
@@ -134,7 +137,9 @@ const handleExportCourses = () => {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    navigate("/dashboard/admin/add-course");
+                    navigate("/dashboard/admin/manage-course", {
+                      state: { action: "add" },
+                    });
                   }}
                   label="Add Course"
                   classNames="py-2 px-3"

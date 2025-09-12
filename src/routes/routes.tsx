@@ -34,13 +34,13 @@ import Login from "../pages/AdminLogin/AdminLogin";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboard";
 import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
 import AdminOrders from "../pages/AdminDashboard/AdminOrders/AdminOrders";
-import AddCourse from "../pages/AdminDashboard/AddCourse/AddCourse";
 import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashboard";
 import UpdateLectures from "../components/AdminDashboard/Courses/UpdateLectures";
 import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import Newsletter from "../pages/AdminDashboard/Newsletter/Newsletter";
 import AddOrEditProduct from "../pages/AdminDashboard/AddOrEditProduct/AddOrEditProduct";
+import ManageCourseForm from "../pages/AdminDashboard/ManageCourseForm/ManageCourseForm";
 
 export const router = createBrowserRouter([
   {
@@ -195,8 +195,8 @@ export const router = createBrowserRouter([
         element: <AdminOrders />,
       },
       {
-        path: "add-course",
-        element: <AddCourse />,
+        path: "manage-course",
+        element: <ManageCourseForm />,
       },
       {
         path: "courses",
