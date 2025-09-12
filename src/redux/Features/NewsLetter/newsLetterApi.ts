@@ -17,6 +17,16 @@ const newsletterApi = baseApi.injectEndpoints({
       },
       providesTags: ["newsletter"],
     }),
+    
+    subscribeNewsLetter: builder.mutation({
+      query: (SubscribersData) => ({
+        url: "/newsletter/subscribe",
+        method: "POST",
+        body: SubscribersData,
+        credentials: "include",
+      }),
+      invalidatesTags: ["user"],
+    }),
 
     deleteNewsletter: builder.mutation({
       query: (id) => ({
@@ -29,4 +39,4 @@ const newsletterApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllNewsletterQuery, useDeleteNewsletterMutation } = newsletterApi;
+export const { useGetAllNewsletterQuery, useSubscribeNewsLetterMutation,useDeleteNewsletterMutation } = newsletterApi;

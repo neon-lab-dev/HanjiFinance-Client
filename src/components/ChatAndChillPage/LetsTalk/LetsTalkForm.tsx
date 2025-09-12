@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import TextInput from "../../Reusable/TextInput/TextInput";
-import { useEffect} from "react";
+import { useEffect, useState } from "react";
 import Textarea from "../../Reusable/TextArea/TextArea";
 import Button from "../../Reusable/Button/Button";
 import Calender from "../../Reusable/Calender/Calender";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../../../redux/Features/Auth/authModalSlice";
+import type { RootState } from "../../../redux/store";
 
 type TFormValues = {
   name: string;
@@ -12,42 +16,53 @@ type TFormValues = {
   occupation: string;
   message: string;
   phoneNumber: string;
+  bookingDate: string;
 };
 
 const LetsTalkForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<TFormValues>();
 
+  const bookingDate = watch("bookingDate"); // watch field changes
+  const [readableDate, setReadableDate] = useState<string>("");
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.token);
 
   useEffect(() => {
-    register("occupation", {
-      required: "Occupation is required",
-    });
+    register("bookingDate", { required: "Please select a date & time" });
   }, [register]);
 
-  const handleLetsTalk = (data: TFormValues) => {
-    const finalData = { ...data};
-    console.log("Form Data:", finalData);
-  };
-
+  // Whenever bookingDate changes, format it
   useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      console.log(event);
-    };
+    if (bookingDate) {
+      const readable = new Date(bookingDate).toLocaleString("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+      setReadableDate(readable);
+    }
+  }, [bookingDate]);
 
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
+  const handleLetsTalk = (data: TFormValues) => {
+    if (!isLoggedIn) {
+      toast.error("Please login to proceed");
+      dispatch(openModal("login"));
+      return;
+    }
+
+    const finalData = { ...data };
+    console.log(finalData);
+  };
 
   return (
     <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex flex-col lg:flex-row mt-9">
-      {/* Left Section */}
-    <Calender/>
+      {/* Left Section (Calendar + TimePicker) */}
+      <Calender onBookingChange={(value) => setValue("bookingDate", value)} />
 
       {/* Right Section - Form */}
       <div className="p-6 rounded-tr-[20px] w-full lg:w-[60%]">
@@ -63,18 +78,14 @@ const LetsTalkForm = () => {
             label="Name"
             placeholder="Your name"
             error={errors.name}
-            {...register("name", {
-              required: "Your name is required",
-            })}
+            {...register("name", { required: "Your name is required" })}
           />
           <TextInput
             label="Email"
             type="email"
             placeholder="you@email.com"
             error={errors.email}
-            {...register("email", {
-              required: "Email is required",
-            })}
+            {...register("email", { required: "Email is required" })}
           />
           <TextInput
             label="Phone Number"
@@ -84,9 +95,6 @@ const LetsTalkForm = () => {
             {...register("phoneNumber")}
             isRequired={false}
           />
-
-          {/* Custom Dropdown */}
-         
           <Textarea
             label="If we were chatting over coffee, what’s one thing you’d say about money or markets that not everyone agrees with?"
             placeholder="Your answer goes here....."
@@ -96,12 +104,23 @@ const LetsTalkForm = () => {
             isRequired={false}
           />
 
+          {/* Hidden bookingDate field */}
+          <input type="hidden" {...register("bookingDate")} />
+
+          {/* Show the selected time */}
+          {readableDate && (
+            <p className="text-success-20 text-sm font-medium text-start">
+              Slot you are booking: {readableDate}
+            </p>
+          )}
+
           <div className="flex justify-center">
             <Button
               type="submit"
               variant="primary"
               label="Proceed to Book @ ₹999"
               classNames="w-full sm:w-fit"
+              disabled={!bookingDate} // ✅ disable until date is selected
             />
           </div>
 

@@ -54,6 +54,9 @@
   --color-neutral-170: #ebedee ;
   --color-neutral-175: #525252 ;
   --color-neutral-180: #404040 ;
+  --color-neutral-185: #D1D1D1 ;
+  --color-neutral-190: #F6F6F6 ;
+  --color-neutral-195: #4f4f4f ;
 
 
   
@@ -130,6 +133,7 @@
   --bg-gradient-brown: linear-gradient(90deg, rgba(192, 57, 43, 0.60) 3.47%, rgba(157, 97, 0, 0.60) 110.42%);
   --bg-gradient-brown-text: linear-gradient(90deg, #C0392B 3.47%, #9D6100 110.42%); 
   --bg-gradient-brown-bg: linear-gradient(90deg, #C41A1F 0%, #1F2937 103.17%);
+  --bg-gradient-cart: linear-gradient(180deg, rgba(248, 250, 252, 0.00) 0%, #F8FAFC 100%);
 
   
   
@@ -208,6 +212,9 @@
 }
 .bg-gradient-brown-bg{
   background: var(--bg-gradient-brown-bg);
+}
+.bg-gradient-cart{
+  background: var(--bg-gradient-cart);
 }
 
 /* Custom scrollbar for a specific section */

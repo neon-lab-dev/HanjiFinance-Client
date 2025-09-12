@@ -29,7 +29,7 @@ const Hero = () => {
       icon: ICONS.brainGains,
       title: "Brain Gains",
       description: "Browse our courses",
-      path: "/",
+      path: "/courses",
     },
     {
       icon: ICONS.fundManagement,

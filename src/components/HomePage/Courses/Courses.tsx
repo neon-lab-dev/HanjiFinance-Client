@@ -3,12 +3,11 @@ import type { Variants } from "framer-motion";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import CourseCard from "./CourseCard";
-import { IMAGES } from "../../../assets";
 import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
 
 const Courses = () => {
  const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
-  // console.log(data);
+ console.log(courses)
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -124,11 +123,12 @@ const Courses = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-          {courses?.data?.map((course, index) => (
-            <motion.div key={index} variants={cardVariants}>
-              <CourseCard {...course} />
-            </motion.div>
-          ))}
+            {courses?.data?.courses?.map((course, index: number) => (
+  <motion.div key={index} variants={cardVariants}>
+    <CourseCard {...course} />
+  </motion.div>
+))}
+
         </motion.div>
       </Container>
       <motion.div

@@ -43,6 +43,8 @@ import ManageCourseForm from "../pages/AdminDashboard/ManageCourseForm/ManageCou
 import ManageLectures from "../pages/AdminDashboard/CourseDashboard/ManageLectures/ManageLectures";
 import ManageConsultations from "../pages/AdminDashboard/ManageConsultations/ManageConsultations";
 import ManageSubscriptions from "../pages/AdminDashboard/ManageSubscriptions/ManageSubscriptions";
+import Cart from "../pages/Cart/Cart";
+import CoursePayment from "../pages/CoursePayment/CoursePayment";
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +115,14 @@ export const router = createBrowserRouter([
       {
         path: "/product-details/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/course-payment/:id",
+        element: <CoursePayment />,
       },
     ],
   },

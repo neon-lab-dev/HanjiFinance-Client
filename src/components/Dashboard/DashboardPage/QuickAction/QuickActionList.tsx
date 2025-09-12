@@ -7,16 +7,19 @@ const quickActions = [
     icon: ICONS.email,
     title: "Chat & Chill",
     description: "Book 1 on 1 meet",
+    link:"/dashboard/consultations"
   },
   {
     icon: ICONS.author,
-    title: "Schedule",
-    description: "Plan your tasks",
+    title: "Boardroom Banter",
+    description: "WhatsApp group awaits you here",
+       link:"/dashboard/my-subscriptions"
   },
   {
     icon: ICONS.bell,
-    title: "Notifications",
-    description: "Check recent alerts",
+    title: "Brain Games",
+    description: "Browse our courses",
+       link:"/dashboard/my-courses"
   },
 ];
 
@@ -30,6 +33,7 @@ const QuickActionsList = () => {
             icon={action.icon}
             title={action.title}
             description={action.description}
+            link={action.link}
           />
         ))}
       </div>
