@@ -3,6 +3,7 @@ import { useState, type ReactNode, useEffect } from "react";
 import type { MouseEvent } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import Button from "../Button/Button";
+import Loader from "../../Shared/Loader/Loader";
 
 type TableColumn = {
   key: string;
@@ -90,7 +91,7 @@ function Table<T extends Record<string, any>>({
                 colSpan={columns.length + (actions.length > 0 ? 1 : 0)}
                 className="px-6 py-10 text-center"
               >
-                Loading...
+                <Loader/>
               </td>
             </tr>
           ) : data?.length > 0 ? (

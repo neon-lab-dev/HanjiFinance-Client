@@ -164,7 +164,6 @@ const Products = () => {
       icon: <FiEye />,
       label: "View",
       onClick: (row: any) => {
-        console.log(row);
         setSelectedProductId(row?._id);
         setIsProductPreviewOpen(true);
       },

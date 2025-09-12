@@ -2,12 +2,17 @@
 import { useState } from "react";
 import { useGetSingleProductByIdQuery } from "../../../redux/Features/Product/productApi";
 import Loader from "../../Shared/Loader/Loader";
+import { useEffect } from 'react';
 
 const ProductPreview = ({ productId }: { productId: string }) => {
   const { data, isLoading } = useGetSingleProductByIdQuery(productId);
-  const [selectedImage, setSelectedImage] = useState(
-    data?.data?.imageUrls[0] || ""
-  );
+  const [selectedImage, setSelectedImage] = useState<string>("");
+
+  useEffect(() => {
+    if(data?.data?.imageUrls?.length > 0){
+      setSelectedImage(data?.data?.imageUrls[0])
+    }
+  }, [data?.data])
 
   return (
     <div className="p-4 rounded-lg shadow-md w-full font-Montserrat">
@@ -17,7 +22,9 @@ const ProductPreview = ({ productId }: { productId: string }) => {
         <>
           {/* Main Image */}
           <div className="w-full h-full  flex gap-4 items-center justify-center overflow-hidden rounded-md">
-            {data?.data?.imageUrls[0] ? (
+            {
+            data?.data?.imageUrls?.length > 0 &&
+            data?.data?.imageUrls[0] ? (
               <img
                 src={data?.data?.imageUrls[0]}
                 alt={data?.data?.name}

@@ -77,7 +77,7 @@ const Courses = () => {
       icon: <FiFile />,
       label: "Manage Lectures",
       onClick: (row: any) => {
-        navigate(`/dashboard/admin/manage-lectures`, {
+        navigate(`/dashboard/admin/manage-lectures/${row?._id}`, {
           state: { id: row?._id },
         });
       },

@@ -9,7 +9,7 @@ type TFormData = {
   category: string;
 };
 const ProductsStatusCard = () => {
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false);
 
   const {
     register,

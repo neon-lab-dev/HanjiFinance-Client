@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "../../Api/baseApi";
 
 const courseApi = baseApi.injectEndpoints({
@@ -66,6 +65,25 @@ const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["course"],
     }),
+
+    addLecture: builder.mutation({
+      query: ({formData, courseId}) => ({
+        url: `/course/${courseId}`,
+        method: "PUT",
+        body: formData,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    deleteLecture: builder.mutation({
+      query: ({courseId, lectureId}) => ({
+        url: `/lectures?courseId=${courseId}&lectureId=${lectureId}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -75,5 +93,7 @@ export const {
   useGetCourseLectureQuery,
   useAddCourseMutation,
   useUpdateCourseMutation,
-  useDeleteCourseMutation
+  useDeleteCourseMutation,
+  useAddLectureMutation,
+  useDeleteLectureMutation,
 } = courseApi;

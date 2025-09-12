@@ -14,3 +14,11 @@ export type TCourse = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type TLecture = {
+  _id: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  duration: string;
+};

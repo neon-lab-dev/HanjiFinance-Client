@@ -41,6 +41,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Newsletter from "../pages/AdminDashboard/Newsletter/Newsletter";
 import AddOrEditProduct from "../pages/AdminDashboard/AddOrEditProduct/AddOrEditProduct";
 import ManageCourseForm from "../pages/AdminDashboard/ManageCourseForm/ManageCourseForm";
+import ManageLectures from "../pages/AdminDashboard/CourseDashboard/ManageLectures/ManageLectures";
 
 export const router = createBrowserRouter([
   {
@@ -194,13 +195,18 @@ export const router = createBrowserRouter([
         path: "orders",
         element: <AdminOrders />,
       },
+      
+      {
+        path: "courses",
+        element: <CourseDashboard />,
+      },
       {
         path: "manage-course",
         element: <ManageCourseForm />,
       },
       {
-        path: "courses",
-        element: <CourseDashboard />,
+        path: "manage-lectures/:id",
+        element: <ManageLectures />,
       },
       {
         path: "update-lecture",
