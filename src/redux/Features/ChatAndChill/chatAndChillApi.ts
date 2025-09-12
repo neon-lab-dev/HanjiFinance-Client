@@ -2,6 +2,14 @@ import { baseApi } from "../../Api/baseApi";
 
 const chatAndChillApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+     getAllAvailability: builder.query({
+      query: () => ({
+        url: `/availability`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["chatAndChill"],
+    }),
     getAllConsultations: builder.query({
       query: ({
         keyword,
@@ -70,6 +78,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetAllAvailabilityQuery,
   useGetAllConsultationsQuery,
   useGetSingleConsultationByIdQuery,
   useGetAllBookingsByUserIdQuery,
