@@ -12,7 +12,7 @@ import Dropdown from "../../Reusable/Dropdown/Dropdown";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
 // import ProductPreview from "./ProductPreview";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-import { useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
+import { useDeleteProductMutation, useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
 import type { TProduct } from "../../../types/product.types";
 import { formatDate } from "../../../utils/formatDate";
 
@@ -95,17 +95,16 @@ const Products = () => {
 
       // Available stock display with commas and 0 in red
       const stockDisplay = product.sizes.map((s: any, idx: number) => (
-  <span key={s._id}>
-    {s.size}(
-    {s.quantity === 0 ? (
-      <span className="text-red-600">{s.quantity}</span>
-    ) : (
-      s.quantity
-    )}
-    ){idx < product.sizes.length - 1 ? ", " : ""}
-  </span>
-));
-
+        <span key={s._id}>
+          {s.size}(
+          {s.quantity === 0 ? (
+            <span className="text-red-600">{s.quantity}</span>
+          ) : (
+            s.quantity
+          )}
+          ){idx < product.sizes.length - 1 ? ", " : ""}
+        </span>
+      ));
 
       return {
         image: (
@@ -146,9 +145,15 @@ const Products = () => {
     { key: "createdAt", label: "Added At" },
   ];
 
-  const handleDeleteProduct = (id: string) => {
-    toast.success(`Product ${id} deleted (dummy action).`);
-  };
+  const [deleteProduct] = useDeleteProductMutation();
+
+   const handleDeleteProduct = async (id: string) => {
+      toast.promise(deleteProduct(id).unwrap(), {
+        loading: "Deleting product...",
+        success: "Product deleted successfully.",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    };
 
   const productActions = [
     {
