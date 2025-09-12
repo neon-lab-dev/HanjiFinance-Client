@@ -1,36 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  FiCalendar,
-  FiClock,
-  FiCheckCircle,
-  FiXCircle,
-  FiUser,
-  FiLink,
-} from "react-icons/fi";
-import StatusCard from "../../../components/Dashboard/SharedComponents/StatusCard/StatusCard";
+import { FiCheckCircle, FiXCircle, FiLink } from "react-icons/fi";
 import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
-import Button from "../../../components/Reusable/Button/Button";
 import Table from "../../../components/Reusable/Table/Table";
 import { useState } from "react";
 import {
   useGetAllConsultationsQuery,
-  useScheduleMeetingMutation,
   useUpdateStatusMutation,
 } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 import type { TConsultation } from "../../../types/consultations.types";
 import { formatDate } from "../../../utils/formatDate";
 import {} from "react-icons/fi";
 import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
-import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
-import TextInput from "../../../components/Reusable/TextInput/TextInput";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import ConsultationsStats from "../../../components/AdminDashboard/ManageConsultationsPage/ConsultationsStats/ConsultationsStats";
+import ScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ScheduleMeetingModal/ScheduleMeetingModal";
 
-type TFormData = {
-  bookingId: string;
-  meetingLink: string;
-};
+
 const ManageConsultations = () => {
   const [bookingId, setBookingId] = useState<string>("");
   const [isScheduleMeetingModalOpen, setIsScheduleMeetingModalOpen] =
@@ -38,26 +24,20 @@ const ManageConsultations = () => {
   const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const { data, isLoading, isFetching, refetch } = useGetAllConsultationsQuery({
+  const { data, isLoading, isFetching } = useGetAllConsultationsQuery({
     keyword: searchValue,
     status: status,
     page: page,
   });
-  const [scheduleMeeting, { isLoading: isSchedulingMeeting }] =
-    useScheduleMeetingMutation();
+  
   const [updateStatus] = useUpdateStatusMutation();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TFormData>();
+
 
   const allConsultations = data?.data?.bookings as TConsultation[];
 
-  const allConsultationsData = allConsultations?.map(
-    (consultation: TConsultation) => {
-      // Define status color mapping
+  const allConsultationsData = allConsultations
+    ?.map((consultation: TConsultation) => {
       const statusColors: Record<string, string> = {
         booked: "text-blue-600 bg-blue-100 border-blue-400",
         scheduled: "text-purple-600 bg-purple-100 border-purple-400",
@@ -65,12 +45,26 @@ const ManageConsultations = () => {
         completed: "text-green-600 bg-green-100 border-green-400",
       };
 
+      const bookingDateObj = new Date(consultation.bookingDate);
+      const today = new Date();
+      const isToday = bookingDateObj.toDateString() === today.toDateString();
+
       return {
+        ...consultation,
         _id: consultation._id,
         name: consultation.name,
         email: consultation.email,
         phoneNumber: consultation.phoneNumber,
-        bookingDate: formatDate(consultation.bookingDate),
+        bookingDate: (
+          <div className="flex items-center gap-2">
+            <span>{formatDate(consultation.bookingDate)}</span>
+            {isToday && (
+              <span className="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded-full">
+                Today
+              </span>
+            )}
+          </div>
+        ),
         status: (
           <span
             className={`px-2 py-1 rounded-full text-xs font-semibold border capitalize ${
@@ -99,9 +93,25 @@ const ManageConsultations = () => {
           consultation?.topicsToDiscuss!.length > 15
             ? consultation?.topicsToDiscuss!.slice(0, 15) + "..."
             : consultation.topicsToDiscuss,
+        bookingDateObj, // keep this for sorting
       };
-    }
-  );
+    })
+    // Sort: today's first, then latest booking first
+    .sort((a, b) => {
+      const today = new Date().toDateString();
+
+      const aIsToday = a.bookingDateObj.toDateString() === today;
+      const bIsToday = b.bookingDateObj.toDateString() === today;
+
+      if (aIsToday && !bIsToday) return -1;
+      if (!aIsToday && bIsToday) return 1;
+
+      // Otherwise sort by latest booking first
+      return (
+        new Date(b.bookingDateObj).getTime() -
+        new Date(a.bookingDateObj).getTime()
+      );
+    });
 
   // Columns
   const consultationColumns = [
@@ -165,106 +175,12 @@ const ManageConsultations = () => {
     },
   ];
 
-  const scheduled = allConsultations?.filter(
-    (consultation: TConsultation) => consultation.status === "scheduled"
-  );
-  const completed = allConsultations?.filter(
-    (consultation: TConsultation) => consultation.status === "completed"
-  );
-  const cancelled = allConsultations?.filter(
-    (consultation: TConsultation) => consultation.status === "cancelled"
-  );
-  const todaysConsultations = allConsultations?.filter(
-    (consultation: TConsultation) =>
-      consultation.status === "scheduled" &&
-      consultation.bookingDate === formatDate(new Date())
-  );
-
-  const stats = {
-    total: allConsultations?.length || 0,
-    scheduled: scheduled?.length || 0,
-    completed: completed?.length || 0,
-    cancelled: cancelled?.length || 0,
-    todaysConsultations: todaysConsultations?.length || 0,
-  };
-
-  const handleScheduleMeeting = async (data: TFormData) => {
-    try {
-      const payload = {
-        bookingId,
-        meetingLink: data?.meetingLink,
-      };
-
-      const response = await scheduleMeeting(payload).unwrap();
-      if (response?.success) {
-        refetch();
-        toast.success(response?.message);
-        setIsScheduleMeetingModalOpen(false);
-      }
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Something went wrong!");
-    }
-  };
+  
 
   return (
     <div>
       {/* Status cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-5">
-        {/* Total Consultations */}
-        <StatusCard
-          icon={<FiCalendar size={28} />}
-          value={stats?.total}
-          label="Total Consultations"
-          badgeText="All"
-          badgeBg="bg-blue-100"
-          badgeBorder="border-blue-400"
-          badgeTextColor="text-blue-600"
-        />
-
-        {/* Scheduled Consultations */}
-        <StatusCard
-          icon={<FiClock size={28} />}
-          value={stats?.scheduled}
-          label="Scheduled"
-          badgeText="Upcoming"
-          badgeBg="bg-yellow-100"
-          badgeBorder="border-yellow-400"
-          badgeTextColor="text-yellow-600"
-        />
-
-        {/* Completed Consultations */}
-        <StatusCard
-          icon={<FiCheckCircle size={28} />}
-          value={stats?.completed}
-          label="Completed"
-          badgeText="Done"
-          badgeBg="bg-green-100"
-          badgeBorder="border-green-400"
-          badgeTextColor="text-green-600"
-        />
-
-        {/* Cancelled Consultations */}
-        <StatusCard
-          icon={<FiXCircle size={28} />}
-          value={stats?.cancelled}
-          label="Cancelled"
-          badgeText="Cancelled"
-          badgeBg="bg-red-100"
-          badgeBorder="border-red-400"
-          badgeTextColor="text-red-600"
-        />
-
-        {/* Consultations Today */}
-        <StatusCard
-          icon={<FiUser size={28} />}
-          value={stats?.todaysConsultations}
-          label="Today’s Consultations"
-          badgeText="Today"
-          badgeBg="bg-purple-100"
-          badgeBorder="border-purple-400"
-          badgeTextColor="text-purple-600"
-        />
-      </div>
+      <ConsultationsStats allConsultations={allConsultations} />
 
       <DashboardContainer>
         <div className="font-Montserrat flex flex-col gap-6">
@@ -316,56 +232,10 @@ const ManageConsultations = () => {
             totalPages={data?.data?.pagination?.totalPages}
             onPageChange={setPage}
           />
-
-          <Button
-            variant="primary"
-            // onClick={handleExportCourses}
-            label="Export"
-            classNames="w-fit self-end py-2 px-4"
-          />
         </div>
       </DashboardContainer>
 
-      <ConfirmationModal
-        heading="Schedule Meeting"
-        isConfirmationModalOpen={isScheduleMeetingModalOpen}
-        setIsConfirmationModalOpen={setIsScheduleMeetingModalOpen}
-        isCrossVisible={true}
-      >
-        <div className="flex flex-col items-center py-5 px-8">
-          <form
-            onSubmit={handleSubmit(handleScheduleMeeting)}
-            className="w-full mt-4 flex flex-col gap-4 items-end"
-          >
-            <TextInput
-              label="Add Meeting Link"
-              placeholder="Ex : https://meet.google.com"
-              error={errors.meetingLink}
-              {...register("meetingLink", {
-                required: "Meeting link is required",
-              })}
-            />
-            <div className="flex items-center gap-2">
-              <Button
-                type="submit"
-                label="Cancel"
-                variant="tertiary"
-                classNames="w-fit px-3 py-2"
-                onClick={() => setIsScheduleMeetingModalOpen(false)}
-              />
-              <Button
-                type="submit"
-                label="Schedule Meeting"
-                variant="primary"
-                classNames="w-fit p-3"
-                isLoading={isSchedulingMeeting}
-              />
-            </div>
-          </form>
-
-          <div className="w-full px-6"></div>
-        </div>
-      </ConfirmationModal>
+     <ScheduleMeetingModal bookingId={bookingId} isScheduleMeetingModalOpen={isScheduleMeetingModalOpen} setIsScheduleMeetingModalOpen={setIsScheduleMeetingModalOpen} />
     </div>
   );
 };
