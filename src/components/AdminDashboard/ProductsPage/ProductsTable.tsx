@@ -21,22 +21,23 @@ const Products = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
   const navigate = useNavigate();
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, isFetching } = useGetAllProductsQuery({
     keyword: searchValue,
     page,
   });
 
+  console.log(data);
+
   const allProducts = data?.data?.products as TProduct[];
-  console.log(allProducts);
 
   // Map data for table
 
   const allProductsData =
-    allProducts.map((product: any) => {
-      const totalStock = product.sizes.reduce(
-        (sum: number, size: any) => sum + size.quantity,
+    allProducts?.map((product: any) => {
+      const totalStock = product?.sizes?.reduce(
+        (sum: number, size: any) => sum + size?.quantity,
         0
       );
 
@@ -93,21 +94,18 @@ const Products = () => {
       };
 
       // Available stock display with commas and 0 in red
-      const stockDisplay = product.sizes
-        .map(
-          (s: any) =>
-            `${s.size}(${
-              s.quantity === 0 ? (
-                <span className="text-red-600">{s.quantity}</span>
-              ) : (
-                s.quantity
-              )
-            })`
-        )
-        .reduce((prev: any[], curr: any, idx:number, arr: any) => {
-          if (idx < arr.length - 1) return [...prev, curr, ", "];
-          return [...prev, curr];
-        }, []);
+      const stockDisplay = product.sizes.map((s: any, idx: number) => (
+  <span key={s._id}>
+    {s.size}(
+    {s.quantity === 0 ? (
+      <span className="text-red-600">{s.quantity}</span>
+    ) : (
+      s.quantity
+    )}
+    ){idx < product.sizes.length - 1 ? ", " : ""}
+  </span>
+));
+
 
       return {
         image: (
