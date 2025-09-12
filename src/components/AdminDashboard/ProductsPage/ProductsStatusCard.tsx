@@ -22,16 +22,16 @@ const ProductsStatusCard = () => {
   };
   return (
     <div className="w-full ">
-      <div className="flex justify-end py-2 ">
+      {/* <div className="flex justify-end py-2 ">
         <Button
           onClick={() => setIsCategoryModalOpen(true)}
           variant="primary"
           label="Add New Category"
           classNames="px-4 py-2"
         />
-      </div>
+      </div> */}
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 2xl:grid-cols-5 gap-4">
         {/* Total Products */}
         <StatusCard
           icon={<FiPackage size={28} />}

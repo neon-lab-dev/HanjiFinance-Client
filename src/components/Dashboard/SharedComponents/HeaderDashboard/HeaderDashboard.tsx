@@ -26,7 +26,7 @@ const HeaderDashboard = () => {
     "/dashboard/update-subscription": "My Subscriptions",
     "/dashboard/admin": "Dashboard",
     "/dashboard/admin/products": "Products",
-    "/dashboard/admin/add-products": "Add Products",
+    "/dashboard/admin/add-or-edit-product": "Add Products",
     "/dashboard/admin/newsletter": "Newsletters",
   };
   

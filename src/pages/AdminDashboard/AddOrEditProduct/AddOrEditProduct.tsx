@@ -5,14 +5,24 @@ import Button from "../../../components/Reusable/Button/Button";
 import Textarea from "../../../components/Reusable/TextArea/TextArea";
 import SubscriptionStatus from "../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import { FiTrash2 } from "react-icons/fi";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { TProduct } from "../../../types/product.types";
-import { useAddProductMutation } from "../../../redux/Features/Product/productApi";
+import {
+  useAddProductMutation,
+  useGetSingleProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../../redux/Features/Product/productApi";
 import toast from "react-hot-toast";
 
-const AddProduct = () => {
+const AddOrEditProduct = () => {
+  const location = useLocation();
+  const { id, action } = location.state;
+  const { data: singleProduct, isLoading: productLoading } =
+    useGetSingleProductByIdQuery(id);
+
   const [addProduct, { isLoading }] = useAddProductMutation();
+  const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
   const {
     register,
     handleSubmit,
@@ -25,6 +35,25 @@ const AddProduct = () => {
       imageUrls: [{ file: undefined }],
     },
   });
+
+  useEffect(() => {
+    if (singleProduct?.data) {
+      setValue("name", singleProduct.data.name);
+      setValue("category", singleProduct.data.category);
+      setValue("clothDetails", singleProduct.data.clothDetails);
+      setValue("madeIn", singleProduct.data.madeIn);
+      setValue("description", singleProduct.data.description);
+      setValue("productStory", singleProduct.data.productStory);
+      setValue("sizes", singleProduct.data.sizes);
+      // ✅ normalize imageUrls to match field array structure
+      if (singleProduct.data.imageUrls?.length) {
+        setValue(
+          "imageUrls",
+          singleProduct.data.imageUrls.map((url: string) => ({ file: url }))
+        );
+      }
+    }
+  }, [setValue, singleProduct]);
   const navigate = useNavigate();
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -41,43 +70,43 @@ const AddProduct = () => {
     name: "imageUrls",
   });
 
-  const onSubmit = async (
+  const handleSubmitProduct = async (
     data: TProduct & { imageUrls?: { file?: File }[] }
   ) => {
+    const formData = new FormData();
+
+    formData.append("name", data.name);
+    formData.append("category", data.category);
+    if (data.clothDetails) formData.append("clothDetails", data.clothDetails);
+    if (data.madeIn) formData.append("madeIn", data.madeIn);
+    formData.append("description", data.description);
+    if (data.productStory) formData.append("productStory", data.productStory);
+
+    data.sizes?.forEach((size, index) => {
+      formData.append(`sizes[${index}][size]`, size.size);
+      formData.append(`sizes[${index}][quantity]`, size.quantity.toString());
+      formData.append(`sizes[${index}][basePrice]`, size.basePrice.toString());
+      formData.append(
+        `sizes[${index}][discountedPrice]`,
+        size.discountedPrice.toString()
+      );
+    });
+
+    data.imageUrls?.forEach((imgObj) => {
+      if (imgObj.file) formData.append("files", imgObj.file);
+    });
     try {
-      const formData = new FormData();
-
-      // Append simple fields
-      formData.append("name", data.name);
-      formData.append("category", data.category);
-      if (data.clothDetails) formData.append("clothDetails", data.clothDetails);
-      if (data.madeIn) formData.append("madeIn", data.madeIn);
-      formData.append("description", data.description);
-      if (data.productStory) formData.append("productStory", data.productStory);
-
-      // Append sizes
-      data.sizes?.forEach((size, index) => {
-        formData.append(`sizes[${index}][size]`, size.size);
-        formData.append(`sizes[${index}][quantity]`, size.quantity.toString());
-        formData.append(
-          `sizes[${index}][basePrice]`,
-          size.basePrice.toString()
+      if (action === "update") {
+        const response = await updateProduct({ data: formData, id }).unwrap();
+        toast.success(
+          response?.data?.message || "Product updated successfully!"
         );
-        formData.append(
-          `sizes[${index}][discountedPrice]`,
-          size.discountedPrice.toString()
-        );
-      });
-
-      console.log(data.imageUrls);
-
-      data.imageUrls?.forEach((imgObj) => {
-        if (imgObj.file) formData.append("files", imgObj.file);
-      });
-
-      await addProduct(formData).unwrap();
-      toast.success("Product added successfully!");
-      navigate("/dashboard/admin/products");
+        navigate("/dashboard/admin/products");
+      } else {
+        const response = await addProduct(formData).unwrap();
+        toast.success(response?.data?.message || "Product added successfully!");
+        navigate("/dashboard/admin/products");
+      }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");
     }
@@ -90,12 +119,9 @@ const AddProduct = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Update preview
     const newPreviews = [...previews];
     newPreviews[index] = URL.createObjectURL(file);
     setPreviews(newPreviews);
-
-    // ✅ CORRECTED: Update form state for this index using setValue
     setValue(`imageUrls.${index}.file`, file);
   };
 
@@ -103,7 +129,7 @@ const AddProduct = () => {
     <div className="font-Montserrat">
       <SubscriptionStatus>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleSubmitProduct)}
           className="flex flex-col gap-4 mt-6 w-full"
         >
           <div className="grid grid-cols-2 gap-4">
@@ -166,38 +192,45 @@ const AddProduct = () => {
             <h3 className="text-neutral-10 leading-[18px] text-[15px] font-medium tracking-[-0.16] ">
               Product Images (max 4)
             </h3>
-            {imageFields.map((field, index) => (
-              <div key={field.id} className="flex items-center gap-3">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="border rounded-lg p-2"
-                  onChange={(e) => handleFileChange(e, index)}
-                />
+            {imageFields.map((field, index) => {
+              // decide which preview to show: existing DB URL or new file preview
+              const existingUrl =
+                typeof field?.file === "string" ? field.file : undefined;
+              const previewUrl = previews[index] || existingUrl;
 
-                {/* Show preview */}
-                {previews[index] && (
-                  <img
-                    src={previews[index]}
-                    alt="Preview"
-                    className="w-16 h-16 object-cover rounded-md border"
+              return (
+                <div key={field.id} className="flex items-center gap-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="border rounded-lg p-2"
+                    onChange={(e) => handleFileChange(e, index)}
                   />
-                )}
 
-                {imageFields.length > 1 && (
-                  <FiTrash2
-                    className="cursor-pointer size-5 text-primary-10"
-                    onClick={() => {
-                      removeImage(index);
-                      const newPreviews = previews.filter(
-                        (_, i) => i !== index
-                      );
-                      setPreviews(newPreviews);
-                    }}
-                  />
-                )}
-              </div>
-            ))}
+                  {/* Show preview */}
+                  {previewUrl && (
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="w-16 h-16 object-cover rounded-md border"
+                    />
+                  )}
+
+                  {imageFields.length > 1 && (
+                    <FiTrash2
+                      className="cursor-pointer size-5 text-primary-10"
+                      onClick={() => {
+                        removeImage(index);
+                        const newPreviews = previews.filter(
+                          (_, i) => i !== index
+                        );
+                        setPreviews(newPreviews);
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
 
             {imageFields.length < 4 && (
               <Button
@@ -296,7 +329,7 @@ const AddProduct = () => {
               label="Save Product"
               type="submit"
               classNames="py-2 px-3"
-              isLoading={isLoading}
+              isLoading={isLoading || isUpdating}
             />
           </div>
         </form>
@@ -306,4 +339,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddOrEditProduct;

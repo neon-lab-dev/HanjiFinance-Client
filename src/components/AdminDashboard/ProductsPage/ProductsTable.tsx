@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Reusable/Table/Table";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
+// import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
-import { saveAs } from "file-saver";
 import Button from "../../Reusable/Button/Button";
 import { useNavigate } from "react-router-dom";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
@@ -12,14 +12,19 @@ import Dropdown from "../../Reusable/Dropdown/Dropdown";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
 // import ProductPreview from "./ProductPreview";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-import { useDeleteProductMutation, useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "../../../redux/Features/Product/productApi";
 import type { TProduct } from "../../../types/product.types";
 import { formatDate } from "../../../utils/formatDate";
+import ProductPreview from "./ProductPreview";
 
 const Products = () => {
   const [searchValue, setSearchValue] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState({} as TProduct);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
@@ -27,8 +32,6 @@ const Products = () => {
     keyword: searchValue,
     page,
   });
-
-  console.log(data);
 
   const allProducts = data?.data?.products as TProduct[];
 
@@ -147,27 +150,31 @@ const Products = () => {
 
   const [deleteProduct] = useDeleteProductMutation();
 
-   const handleDeleteProduct = async (id: string) => {
-      toast.promise(deleteProduct(id).unwrap(), {
-        loading: "Deleting product...",
-        success: "Product deleted successfully.",
-        error: (err: any) => err?.data?.message || "Something went wrong!",
-      });
-    };
+  const handleDeleteProduct = async (id: string) => {
+    toast.promise(deleteProduct(id).unwrap(), {
+      loading: "Deleting product...",
+      success: "Product deleted successfully.",
+      error: (err: any) => err?.data?.message || "Something went wrong!",
+    });
+  };
 
   const productActions = [
     {
       icon: <FiEye />,
       label: "View",
       onClick: (row: any) => {
-        toast(`Viewing ${row?.name}`);
+        console.log(row);
+        setSelectedProductId(row?._id);
         setIsProductPreviewOpen(true);
       },
     },
     {
       icon: <FiEdit />,
       label: "Update",
-      onClick: (row: any) => toast(`Editing ${row?.name}`),
+      onClick: (row: any) =>
+        navigate("/dashboard/admin/add-or-edit-product", {
+          state: { id: row?._id, action: "update" },
+        }),
     },
     {
       icon: <FiTrash2 />,
@@ -177,29 +184,29 @@ const Products = () => {
     },
   ];
 
-  // Export to Excel (dummy)
-  const handleExportProducts = () => {
-    if (!allProducts || allProducts?.length === 0) return;
+  // Export to Excel
+  // const handleExportProducts = () => {
+  //   if (!allProducts || allProducts?.length === 0) return;
 
-    const exportData = allProducts?.map((product: any) => {
-      const row: Record<string, any> = {};
-      productColumns.forEach((col) => {
-        row[col.label] = product[col.key] ?? "";
-      });
-      return row;
-    });
+  //   const exportData = allProducts?.map((product: any) => {
+  //     const row: Record<string, any> = {};
+  //     productColumns.forEach((col) => {
+  //       row[col.label] = product[col.key] ?? "";
+  //     });
+  //     return row;
+  //   });
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+  //   const worksheet = XLSX.utils.json_to_sheet(exportData);
+  //   const workbook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
 
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-    saveAs(blob, "products.xlsx");
-  };
+  //   const excelBuffer = XLSX.write(workbook, {
+  //     bookType: "xlsx",
+  //     type: "array",
+  //   });
+  //   const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+  //   saveAs(blob, "products.xlsx");
+  // };
 
   return (
     <div className="mt-6 font-Montserrat">
@@ -232,7 +239,9 @@ const Products = () => {
 
                 <Button
                   variant="primary"
-                  onClick={() => navigate("/dashboard/admin/add-products")}
+                  onClick={() =>
+                    navigate("/dashboard/admin/add-or-edit-product")
+                  }
                   label="Add Product"
                   classNames="w-fit py-2 px-3 "
                 />
@@ -251,12 +260,12 @@ const Products = () => {
             onPageChange={setPage}
             totalPages={data?.data?.pagination?.totalPages}
           />
-          <Button
+          {/* <Button
             variant="primary"
             onClick={handleExportProducts}
             label="Export"
             classNames="w-fit self-end py-2 px-4 "
-          />
+          /> */}
         </div>
       </DashboardContainer>
       <ConfirmationModal
@@ -264,8 +273,7 @@ const Products = () => {
         setIsConfirmationModalOpen={setIsProductPreviewOpen}
         isCrossVisible={true}
       >
-        {/* <ProductPreview product={sampleProduct} /> */}
-        <div></div>
+        <ProductPreview productId={selectedProductId} />
       </ConfirmationModal>
     </div>
   );

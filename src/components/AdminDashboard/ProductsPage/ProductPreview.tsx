@@ -1,97 +1,80 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import { useGetSingleProductByIdQuery } from "../../../redux/Features/Product/productApi";
+import Loader from "../../Shared/Loader/Loader";
 
-export type TProduct = {
-  productId: string;
-  imageUrls: string[];
-  name: string;
-  description: string;
-  clothDetails?: string;
-  productStory?: string;
-  category: string;
-  madeIn?: string;
-  sizes: {
-    size: string;
-    quantity: number;
-    basePrice: number;
-    discountedPrice: number;
-  }[];
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
-type ProductPreviewProps = {
-  product: TProduct;
-};
-
-const ProductPreview: React.FC<ProductPreviewProps> = ({ product }) => {
+const ProductPreview = ({ productId }: { productId: string }) => {
+  const { data, isLoading } = useGetSingleProductByIdQuery(productId);
   const [selectedImage, setSelectedImage] = useState(
-    product.imageUrls[0] || ""
+    data?.data?.imageUrls[0] || ""
   );
 
-  return (
-    <div className="p-4border rounded-lg shadow-md w-full p-5 mt-5 font-Montserrat">
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <div className="p-4 rounded-lg shadow-md w-full font-Montserrat">
       {/* Main Image */}
       <div className="w-full h-full  flex gap-4 items-center justify-center overflow-hidden rounded-md">
-        {selectedImage ? (
+        {data?.data?.imageUrls[0] ? (
           <img
-            src={selectedImage}
-            alt={product.name}
-            className="w-full h-full"
+            src={data?.data?.imageUrls[0]}
+            alt={data?.data?.name}
+            className="w-full h-full rounded-xl"
           />
         ) : (
           <span className="text-neutral-70">No Image</span>
         )}
         <div>
-           {/* Image Thumbnails (max 4) */}
-      {product.imageUrls.length > 1 && (
-        <div className="flex flex-col gap-2 mt-4">
-          {product.imageUrls.slice(0, 4).map((url, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedImage(url)}
-              className={`w-16 h-16 border rounded overflow-hidden ${
-                selectedImage === url ? "ring-2 ring-blue-500" : ""
-              }`}
-            >
-              <img
-                src={url}
-                alt={`preview-${index}`}
-                className="object-cover w-full h-full"
-              />
-            </button>
-          ))}
+          {data?.data?.imageUrls?.length > 1 && (
+            <div className="flex flex-col gap-2 mt-4">
+              {data?.data?.imageUrls?.slice(0, 4).map((url:string, index:number) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(url)}
+                  className={`w-16 h-16 border rounded overflow-hidden ${
+                    selectedImage === url ? "ring-2 ring-blue-500" : ""
+                  }`}
+                >
+                  <img
+                    src={url}
+                    alt={`preview-${index}`}
+                    className="object-cover w-full h-full"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-        </div>
-      
       </div>
-
-     
 
       {/* Product Info */}
       <div className="mt-4">
-        <h2 className="text-lg font-semibold">{product.name}</h2>
-        <p className="text-sm text-gray-600">{product.category}</p>
-        <p className="mt-2 text-gray-700 line-clamp-2">{product.description}</p>
+        <h2 className="text-lg font-semibold">{data?.data?.name}</h2>
+        <p className="text-sm text-gray-600">{data?.data?.category}</p>
+        <p className="mt-2 text-gray-700 line-clamp-2">
+          {data?.data?.description}
+        </p>
       </div>
 
       {/* Price & Sizes */}
       <div className="mt-3">
-        {product.sizes.length > 0 ? (
+        {data?.data?.sizes?.length > 0 ? (
           <div className="flex flex-wrap gap-2">
-            {product.sizes.map((size) => (
+            {data?.data?.sizes?.map((size:any) => (
               <div
                 key={size.size}
                 className="border px-2 py-1 gap-4 rounded flex items-center"
               >
                 <span className="font-medium">{size.size}</span>
-                <div className=""> <div className="line-through text-neutral-65 text-xs">
-                  ${size.basePrice}
+                <div className="">
+                  {" "}
+                  <div className="line-through text-neutral-65 text-xs">
+                    ${size.basePrice}
+                  </div>
+                  <span className="text-success-15 font-semibold">
+                    ${size.discountedPrice}
+                  </span>
                 </div>
-                <span className="text-success-15 font-semibold">
-                  ${size.discountedPrice}
-                </span></div>
-               
               </div>
             ))}
           </div>
@@ -101,8 +84,10 @@ const ProductPreview: React.FC<ProductPreviewProps> = ({ product }) => {
       </div>
 
       {/* Optional Details */}
-      {product.madeIn && (
-        <p className="mt-3 text-xs text-gray-500">Made in: {product.madeIn}</p>
+      {data?.data?.madeIn && (
+        <p className="mt-3 text-xs text-gray-500">
+          Made in: {data?.data?.madeIn}
+        </p>
       )}
     </div>
   );
