@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/E-Commerce/ProductDetailsPage/Breadcrumbs/Breadcrumbs";
 import ImageCarousel from "../../components/E-Commerce/ProductDetailsPage/ProductCarousel/ImageCarousel";
 import Container from "../../components/Reusable/Container/Container";
@@ -13,6 +13,8 @@ import DeliveryDetails from "../../components/E-Commerce/ProductDetailsPage/Deli
 import DetailCard from "../../components/E-Commerce/ProductDetailsPage/DetailsCard/DetailCard";
 import ProductInfo from "../../components/E-Commerce/ProductDetailsPage/ProductInfo/ProductInfo";
 import Button from "../../components/Reusable/Button/Button";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/Features/Cart/cartSlice";
 
 const ProductsDetails = () => {
   const { id } = useParams();
@@ -31,6 +33,11 @@ const ProductsDetails = () => {
     description,
     imageUrls: images,
     sizes = [],
+    clothDetails,
+    productStory,
+    madeIn,
+    productId,
+    category,
   } = data?.data || {};
 
   // State to track selected size and price
@@ -40,7 +47,8 @@ const ProductsDetails = () => {
   const [selectedProducts, setSelectedProducts] = useState<
     Partial<SelectedProduct>
   >({});
-
+const dispatch =useDispatch()
+const navigate = useNavigate()
   //  Setting the first size product in state automatically befor clicking
   useEffect(() => {
     if (sizes && sizes.length > 0) {
@@ -71,7 +79,12 @@ const ProductsDetails = () => {
     basePrice: number;
     discountedPrice: number;
     image: string;
+    size:Size;
   }
+
+    const handleAddToWishList = async () => {
+      dispatch(addToCart({ product: data.data, size: selectedSize, quantity: 1 }));
+    };
 
   const handleSizeClick = (size: Size) => {
     setSelectedSize(size);
@@ -116,7 +129,7 @@ const ProductsDetails = () => {
                 </h1>
 
                 <img
-                  // onClick={handleAddToWishList}
+                  onClick={handleAddToWishList}
                   // src={isInCart ? ICONS.redHeart : IMAGES.heart}
                   src={ICONS.cartPlus}
                   className="cursor-pointer size-5"
@@ -152,12 +165,7 @@ const ProductsDetails = () => {
                   <h1 className="text-xl font-medium text-neutral-10 leading-normal">
                     Sizes
                   </h1>
-                  <div className="px-3 py-2 bg-neutral-190 rounded-xl flex items-center gap-3">
-                    <img src={ICONS.ruler} alt="size-icon" className="size-6" />
-                    <h1 className="text-sm md:text-base font-semibold leading-6 text-neutral-20">
-                      Size Guide
-                    </h1>
-                  </div>
+                  
                 </div>
 
                 <div className="flex items-center gap-2 mt-6">
@@ -180,23 +188,21 @@ const ProductsDetails = () => {
 
               {/* buttons */}
               <div className="hidden md:flex items-center gap-[10px] mt-6 pb-6 w-full">
-               
                 <Button
-                 // onClick={() => {
-                  //   handleAddToCart();
-                  //   setModalType(dispatch(setModalType("cart")));
-                  //   setOpenModal(dispatch(setOpenModal(true)));
-                  // }}
+                  onClick={handleAddToWishList}
+                 
                   variant="custom"
                   label="Add to bag"
                   classNames="border-surface-90 bg-surface-30 w-full text-neutral-10 py-4"
                   icon={ICONS.cartPlus}
                 />
-                 <Button
-                variant="primary"
-                label="Buy Now"
-                classNames="w-full py-4"
-                
+                <Button
+                  variant="primary"
+                  label="Buy Now"
+                  classNames="w-full py-4"
+                  onClick={()=>{handleAddToWishList()
+                    navigate("/cart")
+                  }}
                 />
               </div>
 
@@ -217,31 +223,14 @@ const ProductsDetails = () => {
                   variant="clothDetails"
                   icon={ICONS.fabric}
                   title={"Cloth Details"}
-                  description={
-                    "Morem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu"
-                  }
-                >
-                  <div className="space-y-4">
-                    <p className="text-[#454545] text-lg font-medium leading-8">
-                      Made with{" "}
-                      <span className="font-bold">
-                        80% cotton, 10% polyester, 5% nylon and 5% raynon
-                      </span>
-                    </p>
-
-                    <p className="text-[#454545] text-lg font-medium leading-8">
-                      Clean easily without hassle with cold machine wash.
-                    </p>
-                  </div>
-                </DetailCard>
+                  description={clothDetails}
+                ></DetailCard>
 
                 <DetailCard
                   variant="productStory"
                   icon={ICONS.tshirt}
                   title={"Product Story"}
-                  description={
-                    "Horem ipsum dolor sit amet, consectetur  elit. Nunc vulputate libero et velit , ac aliquet odio mattis. Class aptent taciti sociosqu."
-                  }
+                  description={productStory}
                 ></DetailCard>
 
                 <DetailCard
@@ -255,7 +244,11 @@ const ProductsDetails = () => {
               </div>
 
               {/* Product info (Product Code, Collection, Made In) */}
-              <ProductInfo productCode={_id} />
+              <ProductInfo
+                category={category}
+                madeIn={madeIn}
+                productCode={productId}
+              />
             </div>
           </div>
         </div>

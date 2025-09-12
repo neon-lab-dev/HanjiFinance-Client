@@ -1,4 +1,4 @@
-const ProductInfo = ({productCode} : {productCode: string}) => {
+const ProductInfo = ({productCode,madeIn,category} : {productCode: string,madeIn:string,category:string}) => {
   return (
     <div className="flex items-center gap-3 mt-6 md:mt-8 mb-8">
       <div className="flex flex-col gap-4 text-base md:text-xl font-medium leading-normal text-neutral-50">
@@ -20,11 +20,11 @@ const ProductInfo = ({productCode} : {productCode: string}) => {
         </p>
         {/* Collection */}
         <p className="text-neutral-20 text-lg md:text-xl font-semibold leading-normal">
-          The Blessing of Sky
+         {category}
         </p>
         {/* Made in */}
         <p className="text-neutral-20 text-lg md:text-xl font-semibold leading-normal">
-          India
+          {madeIn}
         </p>
       </div>
     </div>

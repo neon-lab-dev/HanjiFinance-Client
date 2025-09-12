@@ -81,10 +81,11 @@ const Navbar = () => {
       icons: ICONS.user,
       path: "/",
       onClick: () => {
-        if(userToken){
-          navigate("/dashboard")
+        if(!userToken){
+          dispatch(openModal("login"));
+         
         }
-        else{dispatch(openModal("login"));}
+        else{ navigate("/dashboard")}
         
       },
     },

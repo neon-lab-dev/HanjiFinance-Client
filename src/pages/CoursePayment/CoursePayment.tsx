@@ -9,7 +9,7 @@ const CoursePayment = () => {
   const { data: course, isLoading, isError } = useGetSingleCourseByIdQuery(id);
 
   const courseData={
-    price:course.data.discountedPrice,
+    price:course?.data?.discountedPrice,
     quantity:1
   }
 
@@ -28,7 +28,7 @@ const CoursePayment = () => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31 my-10">
-          <PaymentProductsCard item={course.data} />
+          <PaymentProductsCard item={course?.data} />
           <PaymentCard
             items={[courseData]} 
             gstRate={18}

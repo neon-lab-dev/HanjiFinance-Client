@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
         {/* Product image with conditional overlay */}
         <div className="relative w-full h-full">
-          {item.imageUrls && item.imageUrls.length > 2 ? (
+          {item.imageUrls && item.imageUrls.length > 0 ? (
             <Link to={`/product-details/${item._id}`}>
               <img
                 src={item.imageUrls[0]}

@@ -4,7 +4,6 @@ import { ICONS, IMAGES } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import PaymentCancellationForm from "../PaymentCancellationForm/PaymentCancellationForm";
-import type { TProduct } from "../../E-Commerce/ProductsSection/ProductsSection";
 
 interface PaymentCardProps {
   items: any;
@@ -22,7 +21,12 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
   onProceed,
 }) => {
   const [visibleTooltip, setVisibleTooltip] = useState("");
-  const itemTotal = items.reduce((sum, item) => (sum + item.price*item.quantity), 0);
+  interface PaymentItem {
+    price: number;
+    quantity: number;
+  }
+
+  const itemTotal = items.reduce((sum: number, item: PaymentItem) => (sum + item.price * item.quantity), 0);
   const gstAmount = +(itemTotal * (gstRate / 100)).toFixed(2);
   const totalToPay = +(itemTotal + gstAmount).toFixed(2);
 
