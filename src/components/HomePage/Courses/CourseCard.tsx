@@ -2,9 +2,11 @@ import { useState } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Button from "../../Reusable/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 
 export type TCourse = {
+  _id:string,
   imageUrl?: string;
   title: string;
   subtitle: string;
@@ -20,6 +22,7 @@ export type TCourse = {
 };
 
 const CourseCard: React.FC<TCourse> = ({
+  _id,
   title,
   subtitle,
   tagline,
@@ -30,7 +33,7 @@ const CourseCard: React.FC<TCourse> = ({
 ,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate=useNavigate()
   const handleClick = () => setIsOpen((prev) => !prev);
   const blurVariants: Variants = {
     hidden: { opacity: 0 },
@@ -45,7 +48,7 @@ const CourseCard: React.FC<TCourse> = ({
         isOpen ? "h-full " : ""
       } `}
     >
-      <div> <img src={imageUrl} alt={title} className="rounded-t-xl w-full" /></div>
+      <div> <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px]" /></div>
       {/* Course Image */}
      
 
@@ -134,7 +137,7 @@ const CourseCard: React.FC<TCourse> = ({
             </p>
           </div>
 
-          <Button label="Enroll Now" variant="primary" classNames="w-full" />
+          <Button label="Enroll Now" variant="primary" classNames="w-full" onClick={()=>navigate(`/course-payment/${_id}`)} />
         </div>
       </div>
     </div>

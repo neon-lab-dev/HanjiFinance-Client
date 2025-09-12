@@ -1,23 +1,26 @@
 import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import type { TProduct } from "../ProductsSection/ProductsSection";
-
+import {
+  addToCart,
+} from "../../../redux/Features/Cart/cartSlice";
+import { useDispatch, } from "react-redux";
 type ProductCardProps = {
   item: TProduct;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  
+  const dispatch = useDispatch();
   const inStock = item.sizes.some((size) => size.quantity > 0);
   const handleAddToWishList = async () => {
-    console.log("added to cart");
+    dispatch(addToCart({ product: item, size: item.sizes[0], quantity: 1 }));
   };
 
   return (
     <div>
-      <Link to={`/product-details/${item._id}`}
+      <div
         className={`
-          ${inStock?"bg-neutral-85":"bg-neutral-105"} 
+          ${inStock ? "bg-neutral-85" : "bg-neutral-105"} 
           rounded-lg h-[270px] lg:h-[429px] overflow-hidden font-Montserrat mt-0 lg:mt-10 relative flex flex-col justify-between`}
       >
         {/* Product header */}
@@ -66,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             </div>
           )}
         </div>
-      </Link>
+      </div>
 
       {/* Product price */}
       <div className="mt-4">

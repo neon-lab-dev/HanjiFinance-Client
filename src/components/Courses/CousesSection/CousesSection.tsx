@@ -67,7 +67,7 @@ if (isLoading) {
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-           {courses?.data?.map((course, index) => (
+           {courses?.data?.courses?.map((course, index) => (
             <motion.div key={index} variants={cardVariants}>
               <CourseCard {...course} />
             </motion.div>
