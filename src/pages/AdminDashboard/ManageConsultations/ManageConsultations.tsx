@@ -71,7 +71,7 @@ const ManageConsultations = () => {
               statusColors[consultation.status]
             }`}
           >
-            {consultation.status}
+            {consultation.status === "booked" ? "Not Scheduled" : consultation.status}
           </span>
         ),
         meetingLink: (
@@ -206,7 +206,7 @@ const ManageConsultations = () => {
                   onChange={setStatus}
                   options={[
                     { value: "", label: "All Status" },
-                    { value: "booked", label: "Booked" },
+                    { value: "booked", label: "Not Scheduled" },
                     { value: "scheduled", label: "Scheduled" },
                     { value: "cancelled", label: "Cancelled" },
                     { value: "completed", label: "Completed" },

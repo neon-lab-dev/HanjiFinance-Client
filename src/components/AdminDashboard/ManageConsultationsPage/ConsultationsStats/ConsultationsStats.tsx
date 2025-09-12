@@ -22,7 +22,7 @@ const ConsultationsStats = ({allConsultations} : {allConsultations: TConsultatio
       const todaysConsultations = allConsultations?.filter(
         (consultation: TConsultation) =>
           consultation.status === "scheduled" &&
-          consultation.bookingDate === formatDate(new Date())
+          formatDate(consultation.bookingDate) === formatDate(new Date())
       );
     
       const stats = {

@@ -38,23 +38,13 @@ const chatAndChillApi = baseApi.injectEndpoints({
       providesTags: ["chatAndChill"],
     }),
 
-    getAllLecturesByCourseId: builder.query({
+    getAllBookingsByUserId: builder.query({
       query: (id) => ({
-        url: `/chat-and-chill/${id}`,
+        url: `/chat-and-chill/user/${id}`,
         method: "GET",
         credentials: "include",
       }),
       providesTags: ["chatAndChill"],
-    }),
-
-    addCourse: builder.mutation({
-      query: (data) => ({
-        url: `/chat-and-chill/add`,
-        method: "POST",
-        body: data,
-        credentials: "include",
-      }),
-      invalidatesTags: ["chatAndChill"],
     }),
 
     scheduleMeeting: builder.mutation({
@@ -68,7 +58,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
     }),
 
     updateStatus: builder.mutation({
-      query: ({data, id}) => ({
+      query: ({ data, id }) => ({
         url: `/chat-and-chill/update-status/${id}`,
         method: "PUT",
         body: data,
@@ -82,8 +72,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
 export const {
   useGetAllConsultationsQuery,
   useGetSingleConsultationByIdQuery,
-  useGetAllLecturesByCourseIdQuery,
-  useAddCourseMutation,
+  useGetAllBookingsByUserIdQuery,
   useScheduleMeetingMutation,
   useUpdateStatusMutation,
 } = chatAndChillApi;
