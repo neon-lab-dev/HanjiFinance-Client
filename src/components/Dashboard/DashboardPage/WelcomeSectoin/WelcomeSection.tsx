@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux"
 import { IMAGES } from "../../../../assets"
+import { useCurrentUser } from "../../../../redux/Features/Auth/authSlice"
+import type { TUser } from "../../../../types/user.types";
 
 const WelcomeSection = () => {
+  const user =useSelector(useCurrentUser) as TUser;
   return (
     <div className="relative w-full h-fit flex rounded-2xl bg-surface-80 p-6 overflow-hidden font-Montserrat">
       <div className="absolute right-0 top-0 bottom-0 rounded-r-2xl h-full">
@@ -8,7 +12,7 @@ const WelcomeSection = () => {
       </div>
       <div className="space-y-1 text-white flex flex-col justify-center">
         <h2 className="text-2xl font-medium"> 
-          Welcome back, Mohit!
+          {`Welcome back, ${user?.name}!`}
         </h2>
         <p className="leading-[22px]">Here's what's happening with your account today</p>
       </div>
