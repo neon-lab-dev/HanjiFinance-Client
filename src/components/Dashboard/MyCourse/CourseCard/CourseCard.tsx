@@ -45,7 +45,7 @@ type TCourseCard = {
   subTitle: string;
   tag: string;
   description: string;
-  image: string;
+  imageUrl: string;
   progressData?: {
     completed: number;
     total: number;
@@ -57,14 +57,14 @@ const CourseCard: React.FC<TCourseCard> = ({
   title,
   subTitle,
   tag,
-  image,
+  imageUrl,
   progressData,
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg font-Montserrat">
       {/* Course Image */}
       <div>
-        <img src={image} alt={title} className="rounded-t-xl w-full" />
+        <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px]" />
       </div>
 
       {/* Course Content */}

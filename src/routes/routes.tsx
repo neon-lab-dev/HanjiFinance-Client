@@ -41,6 +41,8 @@ import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashb
 import UpdateLectures from "../components/AdminDashboard/Courses/UpdateLectures";
 import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
 import ProtectedRoute from "./ProtectedRoute";
+import Cart from "../pages/Cart/Cart";
+import CoursePayment from "../pages/CoursePayment/CoursePayment";
 
 export const router = createBrowserRouter([
   {
@@ -111,6 +113,14 @@ export const router = createBrowserRouter([
       {
         path: "/product-details/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/course-payment/:id",
+        element: <CoursePayment />,
       },
     ],
   },

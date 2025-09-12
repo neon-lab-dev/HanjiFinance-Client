@@ -1,18 +1,31 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../../Reusable/Container/Container";
 import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
 import Button from "../../Reusable/Button/Button";
 import MegaMenu from "./MegaMenu";
-import { useDispatch } from "react-redux";
-import { openModal, } from "../../../redux/Features/Auth/authModalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../../../redux/Features/Auth/authModalSlice";
+import { getCartProducts } from "../../../redux/Features/Cart/cartSlice";
+import { useAuthToken} from "../../../redux/Features/Auth/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
- 
+  const navigate = useNavigate();
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const cartProducts = useSelector(getCartProducts);
+  const cartCount = cartProducts.length;
+  
+  const userToken = useSelector(useAuthToken);
+  // Type for each nav item
+  type IconNavLink = {
+    icons: string;
+    path: string;
+    count?: number;
+    onClick?: () => void;
+  };
 
   const navLinks = [
     { label: "Home", path: "/", isDropDown: false, dropdownLinks: [] },
@@ -30,12 +43,12 @@ const Navbar = () => {
           path: "/services/boardroom-banter",
         },
         {
-          label: "Financial Fashion", 
+          label: "Financial Fashion",
           path: "/fashion-and-apparels",
         },
         {
           label: "Brain Gains",
-          path: "/",
+          path: "/courses",
         },
         {
           label: "Fund Management",
@@ -55,13 +68,25 @@ const Navbar = () => {
     },
   ];
 
-  const iconNavLinks = [
-    { icons: ICONS.cartPlus, path: "/" },
+  const iconNavLinks: IconNavLink[] = [
+    {
+      icons: ICONS.cartPlus,
+      path: "/cart",
+      count: cartCount,
+      onClick: () => {
+        navigate("/cart");
+      },
+    },
     {
       icons: ICONS.user,
       path: "/",
       onClick: () => {
-        dispatch(openModal("login"));
+        if(!userToken){
+          dispatch(openModal("login"));
+         
+        }
+        else{ navigate("/dashboard")}
+        
       },
     },
   ];
@@ -78,7 +103,15 @@ const Navbar = () => {
             />
           </a>
 
-          <div className={`items-center gap-6 ${location.pathname === "/payment" || location.pathname === "/payment-success" || location.pathname === "/payment-cancelled" ? "hidden" : "flex"}`}>
+          <div
+            className={`items-center gap-6 ${
+              location.pathname === "/payment" ||
+              location.pathname === "/payment-success" ||
+              location.pathname === "/payment-cancelled"
+                ? "hidden"
+                : "flex"
+            }`}
+          >
             <div className="hidden md:flex items-center gap-6 relative">
               {navLinks.map((item, index) => (
                 <div
@@ -154,13 +187,18 @@ const Navbar = () => {
               <button
                 key={index}
                 onClick={item.onClick}
-                className="cursor-pointer"
+                className="cursor-pointer relative"
               >
                 <img
                   src={item.icons}
                   alt="icon"
                   className="size-6 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 />
+                {item?.count && item?.count > 0 ? (
+                  <div className="absolute -top-1 -right-1 bg-primary-10 size-[14px] rounded-full flex items-center justify-center text-xs text-white">
+                    {item.count}
+                  </div>
+                ):("")}
               </button>
             ))}
 

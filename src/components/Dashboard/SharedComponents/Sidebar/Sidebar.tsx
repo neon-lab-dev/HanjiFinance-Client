@@ -1,12 +1,14 @@
 
 import { Link, useLocation, } from "react-router-dom";
 import { ICONS } from "../../../../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../../types/user.types";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  // const user= useSelector(useCurrentUser)
-
-  const user={role:'admin'}
+  const user= useSelector(useCurrentUser) as TUser;
+  const dispatch =useDispatch()
   // Helper function to check if the link is active
   const isActive = (path: string): boolean => location.pathname === path;
 
@@ -83,6 +85,8 @@ const Sidebar: React.FC = () => {
 
 
 
+  const handleLogout = () => {
+    dispatch(logout());}
 
   return (
     <div className="w-60 min-w-60 h-screen font-Inter flex flex-col justify-between sticky left-0 top-0 font-Montserrat overflow-auto">
@@ -112,7 +116,7 @@ const Sidebar: React.FC = () => {
       </div>
       <div className="rounded-xl mx-4 mb-6">
         <button
-        //   onClick={handleLogout}
+          onClick={handleLogout}
           className="hover:bg-primary-30 hover:text-primary-20 font-medium leading-[22px] w-full rounded-lg text-center flex items-center gap-2 justify-between py-2 px-3"
         >
           Logout

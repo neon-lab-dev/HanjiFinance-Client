@@ -18,13 +18,13 @@ const ExpandableDescription = ({ description } : {description:string}) => {
 
   return (
     <div>
-      <p className="text-base md:text-lg font-medium leading-6 md:leading-[32px] text-[#888]">
+      <p className="text-base md:text-lg font-medium leading-6 md:leading-[32px] text-neutral-85">
         {renderDescription()}{" "}
         {/* The button is inline with the text */}
         {description.length > 80 && (
           <button
             onClick={toggleExpanded}
-            className="text-[#262626] font-semibold leading-8 text-lg underline inline"
+            className="text-primary-20 font-semibold leading-8 text-lg underline inline"
           >
             {isExpanded ? "Show Less" : "More"}
           </button>

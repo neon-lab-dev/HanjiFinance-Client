@@ -9,11 +9,18 @@ const NewsLetterApi = baseApi.injectEndpoints({
         body: SubscribersData,
         credentials: "include",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["chatandchill"],
+    }),
+    getAvailability: builder.query({
+      query: () => ({
+        url: `/availability`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["chatandchill"],
     }),
   }),
 });
 
-export const {
-  useSubscribeNewsLetterMutation,
-} = NewsLetterApi;
+export const { useSubscribeNewsLetterMutation, useGetAvailabilityQuery } =
+  NewsLetterApi;

@@ -1,8 +1,20 @@
+import { useLocation } from "react-router-dom";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import LetsTalkForm from "./LetsTalkForm";
+import { useEffect } from "react";
 
 const LetsTalk = () => {
+    const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
   return (
     <div id="chat-chill-booking" className="bg-gradient-newsletter pt-[60px]">
       <Container>

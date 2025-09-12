@@ -1,30 +1,41 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Features/Auth/authSlice";
 import authModalReducer from "./Features/Auth/authModalSlice";
+import cartReducer from "./Features/Cart/cartSlice"; // ✅ import cart
 import {
-  persistReducer, persistStore, FLUSH,
+  persistReducer,
+  persistStore,
+  FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { baseApi } from './Api/baseApi';
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { baseApi } from "./Api/baseApi";
 
-const persistConfig = {
-  key: 'auth',
+// Auth persistence
+const authPersistConfig = {
+  key: "auth",
   storage,
 };
 
+// Cart persistence
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+};
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer)
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
-    authModal: authModalReducer
+    authModal: authModalReducer,
+    cart: persistedCartReducer, // ✅ added cart
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -34,7 +45,8 @@ export const store = configureStore({
       },
     }).concat(baseApi.middleware),
 });
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const persistor = persistStore(store);

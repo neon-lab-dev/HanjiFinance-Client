@@ -1,14 +1,11 @@
-import CourseSection from "../../../../components/Dashboard/MyCourse/CourseSection/CourseSection"
-import StatusSectoin from "../../../../components/Dashboard/SharedComponents/StatusSectoin/StatusSectoin"
-
+import CourseSection from "../../../../components/Dashboard/MyCourse/CourseSection/CourseSection";
 
 const MyCourses = () => {
   return (
     <div>
-        <StatusSectoin/>
-        <CourseSection/>
+      <CourseSection />
     </div>
-  )
-}
+  );
+};
 
-export default MyCourses
+export default MyCourses;
