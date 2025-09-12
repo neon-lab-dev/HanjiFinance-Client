@@ -26,7 +26,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
           credentials: "include",
         };
       },
-      providesTags: ["course"],
+      providesTags: ["chatAndChill"],
     }),
 
     getSingleConsultationById: builder.query({
@@ -35,7 +35,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
         method: "GET",
         credentials: "include",
       }),
-      providesTags: ["course"],
+      providesTags: ["chatAndChill"],
     }),
 
     getAllLecturesByCourseId: builder.query({
@@ -44,7 +44,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
         method: "GET",
         credentials: "include",
       }),
-      providesTags: ["course"],
+      providesTags: ["chatAndChill"],
     }),
 
     addCourse: builder.mutation({
@@ -54,45 +54,27 @@ const chatAndChillApi = baseApi.injectEndpoints({
         body: data,
         credentials: "include",
       }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["chatAndChill"],
     }),
 
-    updateCourse: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/chat-and-chill/update/${id}`,
+    scheduleMeeting: builder.mutation({
+      query: (data) => ({
+        url: `/chat-and-chill/schedule-meeting`,
         method: "PUT",
         body: data,
         credentials: "include",
       }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["chatAndChill"],
     }),
 
-    deleteCourse: builder.mutation({
-      query: (id) => ({
-        url: `/chat-and-chill/delete/${id}`,
-        method: "DELETE",
-        credentials: "include",
-      }),
-      invalidatesTags: ["course"],
-    }),
-
-    addLecture: builder.mutation({
-      query: (data) => ({
-        url: `/chat-and-chill-lecture/add`,
-        method: "POST",
+    updateStatus: builder.mutation({
+      query: ({data, id}) => ({
+        url: `/chat-and-chill/update-status/${id}`,
+        method: "PUT",
         body: data,
         credentials: "include",
       }),
-      invalidatesTags: ["course"],
-    }),
-
-    deleteLecture: builder.mutation({
-      query: (lectureId) => ({
-        url: `/chat-and-chill-lecture/delete/${lectureId}`,
-        method: "DELETE",
-        credentials: "include",
-      }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["chatAndChill"],
     }),
   }),
 });
@@ -102,8 +84,6 @@ export const {
   useGetSingleConsultationByIdQuery,
   useGetAllLecturesByCourseIdQuery,
   useAddCourseMutation,
-  useUpdateCourseMutation,
-  useDeleteCourseMutation,
-  useAddLectureMutation,
-  useDeleteLectureMutation,
+  useScheduleMeetingMutation,
+  useUpdateStatusMutation,
 } = chatAndChillApi;

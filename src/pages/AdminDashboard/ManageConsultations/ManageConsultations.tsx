@@ -13,20 +13,45 @@ import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Button from "../../../components/Reusable/Button/Button";
 import Table from "../../../components/Reusable/Table/Table";
 import { useState } from "react";
-import { useGetAllConsultationsQuery } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
+import {
+  useGetAllConsultationsQuery,
+  useScheduleMeetingMutation,
+  useUpdateStatusMutation,
+} from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 import type { TConsultation } from "../../../types/consultations.types";
 import { formatDate } from "../../../utils/formatDate";
 import {} from "react-icons/fi";
+import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
+import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
+import TextInput from "../../../components/Reusable/TextInput/TextInput";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
+type TFormData = {
+  bookingId: string;
+  meetingLink: string;
+};
 const ManageConsultations = () => {
+  const [bookingId, setBookingId] = useState<string>("");
+  const [isScheduleMeetingModalOpen, setIsScheduleMeetingModalOpen] =
+    useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-  const { data, isLoading, isFetching } = useGetAllConsultationsQuery({
+  const { data, isLoading, isFetching, refetch } = useGetAllConsultationsQuery({
     keyword: searchValue,
     status: status,
     page: page,
   });
+  const [scheduleMeeting, { isLoading: isSchedulingMeeting }] =
+    useScheduleMeetingMutation();
+  const [updateStatus] = useUpdateStatusMutation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormData>();
 
   const allConsultations = data?.data?.bookings as TConsultation[];
 
@@ -62,7 +87,7 @@ const ManageConsultations = () => {
             className="text-blue-600 hover:underline flex items-center gap-1"
           >
             {consultation?.meetingLink ? (
-              <span>
+              <span className="flex items-center gap-1">
                 <FiLink /> Join
               </span>
             ) : (
@@ -90,17 +115,38 @@ const ManageConsultations = () => {
     { key: "topicsToDiscuss", label: "Topics" },
   ];
 
+  const handleUpdateStatus = async (status: string, id: string) => {
+    const payload = {
+      status,
+    };
+    try {
+      await toast.promise(updateStatus({ data: payload, id }).unwrap(), {
+        loading: "Updating status...",
+        success: (res: any) => res?.message || "Status updated successfully!",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
+  };
+
   // Actions array
   const consultationActions = [
     {
       icon: <FiLink />,
       label: "Schedule Meeting",
-      // onClick: (row: any) => handleScheduleMeeting(row._id),
+
+      onClick: (row: any) => {
+        setBookingId(row._id);
+        setIsScheduleMeetingModalOpen(true);
+      },
     },
     {
       icon: <FiCheckCircle />,
       label: "Mark Completed",
-      // onClick: (row: any) => handleMarkCompleted(row._id),
+      onClick: (row: any) => {
+        handleUpdateStatus("completed", row?._id);
+      },
       condition: (row: any) =>
         row.status.props.children !== "completed" &&
         row.status.props.children !== "cancelled",
@@ -109,7 +155,9 @@ const ManageConsultations = () => {
     {
       icon: <FiXCircle />,
       label: "Cancel",
-      // onClick: (row: any) => handleCancelConsultation(row._id),
+      onClick: (row: any) => {
+        handleUpdateStatus("cancelled", row?._id);
+      },
       className: "text-red-600",
       condition: (row: any) =>
         row.status.props.children !== "completed" &&
@@ -138,6 +186,24 @@ const ManageConsultations = () => {
     completed: completed?.length || 0,
     cancelled: cancelled?.length || 0,
     todaysConsultations: todaysConsultations?.length || 0,
+  };
+
+  const handleScheduleMeeting = async (data: TFormData) => {
+    try {
+      const payload = {
+        bookingId,
+        meetingLink: data?.meetingLink,
+      };
+
+      const response = await scheduleMeeting(payload).unwrap();
+      if (response?.success) {
+        refetch();
+        toast.success(response?.message);
+        setIsScheduleMeetingModalOpen(false);
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
 
   return (
@@ -212,17 +278,29 @@ const ManageConsultations = () => {
             </div>
             <div className="flex justify-between items-center gap-4 flex-wrap">
               {/* Filters */}
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center flex-wrap">
                 <SearchInput
                   value={searchValue}
                   onChange={setSearchValue}
                   placeholder="Search by name, email, phone number..."
                 />
-                <Button
+                <Dropdown
+                  className="py-1 px-3 w-60"
+                  value={status}
+                  onChange={setStatus}
+                  options={[
+                    { value: "", label: "All Status" },
+                    { value: "booked", label: "Booked" },
+                    { value: "scheduled", label: "Scheduled" },
+                    { value: "cancelled", label: "Cancelled" },
+                    { value: "completed", label: "Completed" },
+                  ]}
+                />
+                {/* <Button
                   variant="primary"
                   label="Export Data"
                   classNames="py-2 px-3"
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -247,6 +325,47 @@ const ManageConsultations = () => {
           />
         </div>
       </DashboardContainer>
+
+      <ConfirmationModal
+        heading="Schedule Meeting"
+        isConfirmationModalOpen={isScheduleMeetingModalOpen}
+        setIsConfirmationModalOpen={setIsScheduleMeetingModalOpen}
+        isCrossVisible={true}
+      >
+        <div className="flex flex-col items-center py-5 px-8">
+          <form
+            onSubmit={handleSubmit(handleScheduleMeeting)}
+            className="w-full mt-4 flex flex-col gap-4 items-end"
+          >
+            <TextInput
+              label="Add Meeting Link"
+              placeholder="Ex : https://meet.google.com"
+              error={errors.meetingLink}
+              {...register("meetingLink", {
+                required: "Meeting link is required",
+              })}
+            />
+            <div className="flex items-center gap-2">
+              <Button
+                type="submit"
+                label="Cancel"
+                variant="tertiary"
+                classNames="w-fit px-3 py-2"
+                onClick={() => setIsScheduleMeetingModalOpen(false)}
+              />
+              <Button
+                type="submit"
+                label="Schedule Meeting"
+                variant="primary"
+                classNames="w-fit p-3"
+                isLoading={isSchedulingMeeting}
+              />
+            </div>
+          </form>
+
+          <div className="w-full px-6"></div>
+        </div>
+      </ConfirmationModal>
     </div>
   );
 };

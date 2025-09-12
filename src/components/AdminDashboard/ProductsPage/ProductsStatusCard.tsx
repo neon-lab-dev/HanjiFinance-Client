@@ -66,14 +66,12 @@ const ProductsStatusCard = () => {
         />
       </div>
       <ConfirmationModal
+      heading=" Add New Category"
         isConfirmationModalOpen={isCategoryModalOpen}
         setIsConfirmationModalOpen={setIsCategoryModalOpen}
         isCrossVisible={true}
       >
         <div className="flex flex-col items-center pb-6 px-8">
-          <h1 className="text-neutral-20 text-lg font-medium leading-8 text-center tracking-[-0.56px]">
-            Add New Category
-          </h1>
           <form onSubmit={handleSubmit(handleCategory)} className="w-full mt-4 flex flex-col items-end">
             <TextInput
               label="Category Name"

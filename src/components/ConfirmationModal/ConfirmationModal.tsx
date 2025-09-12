@@ -30,12 +30,12 @@ const ConfirmationModal: React.FC<TConfirmationModal> = ({
       >
         <div className="w-full">
          <div  className="pt-6 px-6 flex items-center justify-between">
-          {heading && <h2 className="text-xl font-semibold text-neutral-10">{heading}</h2>}
+           <h2 className="text-xl font-semibold text-neutral-10">{heading}</h2>
            {isCrossVisible && (
             <div>
               <RxCrossCircled
                 onClick={() => setIsConfirmationModalOpen(false)}
-                className="text-end justify-self-end text-2xl text-neutral-125 cursor-pointer"
+                className="text-end text-2xl text-neutral-125 cursor-pointer"
               />
             </div>
           )}
