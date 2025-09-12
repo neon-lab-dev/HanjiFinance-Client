@@ -3,7 +3,7 @@ import TextInput from "../../../components/Reusable/TextInput/TextInput";
 import Button from "../../../components/Reusable/Button/Button";
 import SubscriptionStatus from "../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import { FiTrash2 } from "react-icons/fi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   useAddCourseMutation,
@@ -37,11 +37,14 @@ const ManageCourseForm = () => {
     useUpdateCourseMutation();
   const navigate = useNavigate();
 
+  const [previewImage, setPreviewImage] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<TFormDate>({
     defaultValues: {
@@ -49,28 +52,47 @@ const ManageCourseForm = () => {
     },
   });
 
-  useEffect(() => {
-    if (singleData?.data && action === "update") {
-      setValue("title", singleData?.data?.title);
-      setValue("subtitle", singleData?.data?.subtitle);
-      setValue("tagline", singleData?.data?.tagline);
-      setValue("benefits", singleData?.data?.benefits);
-      setValue("accessType", singleData?.data?.accessType);
-      setValue("category", singleData?.data?.category);
-      setValue("duration", singleData?.data?.duration);
-      setValue("basePrice", singleData?.data?.basePrice);
-      setValue("discountedPrice", singleData?.data?.discountedPrice);
-    }
-  }, [action, singleData, setValue]);
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "benefits",
   });
 
-  const onSubmit = async (data: TFormDate) => {
-    console.log("Course Data:", data);
+  const watchFile = watch("file");
 
+  useEffect(() => {
+    if (singleData?.data && action === "update") {
+      const course = singleData.data;
+
+      setValue("title", course.title);
+      setValue("subtitle", course.subtitle);
+      setValue("tagline", course.tagline);
+      setValue(
+        "benefits",
+        course.benefits?.length > 0
+          ? course.benefits.map((b: string) => ({ value: b }))
+          : [{ value: "" }]
+      );
+      setValue("accessType", course.accessType);
+      setValue("category", course.category);
+      setValue("duration", course.duration);
+      setValue("basePrice", course.basePrice);
+      setValue("discountedPrice", course.discountedPrice);
+
+      // Show existing image
+      if (course.imageUrl) setPreviewImage(course.imageUrl);
+    }
+  }, [action, singleData, setValue]);
+
+  // Preview image if file input changes
+  useEffect(() => {
+    if (watchFile && watchFile[0]) {
+      const reader = new FileReader();
+      reader.onload = () => setPreviewImage(reader.result as string);
+      reader.readAsDataURL(watchFile[0]);
+    }
+  }, [watchFile]);
+
+  const handleSubmitCourse = async (data: TFormDate) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("subtitle", data.subtitle);
@@ -85,13 +107,13 @@ const ManageCourseForm = () => {
 
     try {
       if (action === "update" && id) {
-        const response = await updateCourse({ id, formData }).unwrap();
+        const response = await updateCourse({ data: formData, id }).unwrap();
         if (response?.success) {
           toast.success(response?.message || "Course updated successfully!");
+          navigate(`/dashboard/admin/courses`);
         }
       } else {
         const response = await addCourse(formData).unwrap();
-        console.log(response);
 
         if (response?.success) {
           toast.success(response?.message || "Course added successfully!");
@@ -112,7 +134,7 @@ const ManageCourseForm = () => {
       ) : (
         <SubscriptionStatus>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(handleSubmitCourse)}
             className="flex flex-col gap-4 mt-6 w-full"
           >
             <div className="grid grid-cols-2 gap-4">
@@ -222,16 +244,23 @@ const ManageCourseForm = () => {
             </div>
 
             {/* File Upload */}
-
-            <TextInput
-              label="Thumbnail / Preview Image"
-              placeholder="Choose file"
-              type="file"
-              error={errors.file}
-              {...register("file", {
-                required: "Image is required",
-              })}
-            />
+            {/* File Upload */}
+            <div className="flex flex-col gap-2">
+              <TextInput
+                label="Thumbnail / Preview Image"
+                placeholder="Choose file"
+                type="file"
+                error={errors.file}
+                {...register("file")}
+              />
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  alt="Course Preview"
+                  className="w-40 h-40 object-cover mt-2 rounded-md border"
+                />
+              )}
+            </div>
 
             {/* Actions */}
             <div className="flex justify-end gap-4 mt-6">

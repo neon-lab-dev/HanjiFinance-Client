@@ -9,12 +9,12 @@ import Button from "../../Reusable/Button/Button";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
 import { useNavigate } from "react-router-dom";
-import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
+import { useDeleteCourseMutation, useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
 import { formatDate } from "../../../utils/formatDate";
 import type { TCourse } from "../../../types/course.types";
 
 const Courses = () => {
-  
+    const [deleteCourse] = useDeleteCourseMutation();
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading, isFetching } = useGetAllCoursesQuery({
     keyword: searchValue,
@@ -57,10 +57,13 @@ const Courses = () => {
     { key: "createdAt", label: "Created At" },
   ];
 
-  // Actions
-  const handleDeleteCourse = (id: string) => {
-    toast.success(`Course ${id} deleted (dummy action).`);
-  };
+  const handleDeleteCourse = async (id: string) => {
+      toast.promise(deleteCourse(id).unwrap(), {
+        loading: "Deleting course...",
+        success: "Course deleted successfully.",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    };
 
   const courseActions = [
     {

@@ -21,7 +21,7 @@ const courseApi = baseApi.injectEndpoints({
 
     getSingleCourseById: builder.query({
       query: (id) => ({
-        url: `/course/single/${id}`,
+        url: `/course/${id}`,
         method: "GET",
         credentials: "include",
       }),

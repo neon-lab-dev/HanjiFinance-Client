@@ -21,6 +21,7 @@ import { formatDate } from "../../../utils/formatDate";
 import ProductPreview from "./ProductPreview";
 
 const Products = () => {
+    const [deleteProduct] = useDeleteProductMutation();
   const [searchValue, setSearchValue] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
@@ -148,7 +149,7 @@ const Products = () => {
     { key: "createdAt", label: "Added At" },
   ];
 
-  const [deleteProduct] = useDeleteProductMutation();
+
 
   const handleDeleteProduct = async (id: string) => {
     toast.promise(deleteProduct(id).unwrap(), {
