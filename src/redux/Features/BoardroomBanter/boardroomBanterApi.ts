@@ -66,6 +66,24 @@ const boardroomBanterApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["boardroomBanter"],
     }),
+
+    suspendUser: builder.mutation({
+      query: (id) => ({
+        url: `/boardroom-banter-subscription/suspend/${id}`,
+        method: "PUT",
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+
+    withdrawSuspension: builder.mutation({
+      query: (id) => ({
+        url: `/boardroom-banter-subscription/withdraw-suspension/${id}`,
+        method: "PUT",
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
   }),
 });
 
@@ -73,4 +91,6 @@ export const {
   useGetAllSubscriptionsQuery,
   useGetSingleConsultationByIdQuery,
   useUpdateWhatsAppStatusMutation,
+  useSuspendUserMutation,
+  useWithdrawSuspensionMutation,
 } = boardroomBanterApi;

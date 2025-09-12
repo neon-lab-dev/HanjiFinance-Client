@@ -2,11 +2,13 @@
 import { useState } from "react";
 import {
   useGetAllSubscriptionsQuery,
+  useSuspendUserMutation,
   useUpdateWhatsAppStatusMutation,
+  useWithdrawSuspensionMutation,
 } from "../../../redux/Features/BoardroomBanter/boardroomBanterApi";
 import type { TBoardRoomBanterSubscription } from "../../../types/boardroomBanter.types";
 import { formatDate } from "../../../utils/formatDate";
-import { FiPauseCircle, FiUsers, FiUserX } from "react-icons/fi";
+import { FiPauseCircle, FiUsers } from "react-icons/fi";
 import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
@@ -27,6 +29,8 @@ const ManageSubscriptions = () => {
     ?.subscriptions as TBoardRoomBanterSubscription[];
 
   const [updateWhatsAppStatus] = useUpdateWhatsAppStatusMutation();
+  const [suspendUser] = useSuspendUserMutation();
+  const [withdrawSuspension] = useWithdrawSuspensionMutation();
 
   const handleUpdateWhatsAppStatus = async (
     isAdded: boolean,
@@ -40,6 +44,25 @@ const ManageSubscriptions = () => {
 
       await toast.promise(updateWhatsAppStatus(payload).unwrap(), {
         loading: "Updating status...",
+        success: (res: any) => res?.message || "Status updated successfully!",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
+  };
+
+  const handleUpdateSuspendedStatus = async (
+    userId: string,
+    isSuspended: boolean
+  ) => {
+    try {
+      const actionPromise = isSuspended
+        ? withdrawSuspension(userId).unwrap()
+        : suspendUser(userId).unwrap();
+
+      await toast.promise(actionPromise, {
+        loading: "Updating suspension status...",
         success: (res: any) => res?.message || "Status updated successfully!",
         error: (err: any) => err?.data?.message || "Something went wrong!",
       });
@@ -93,29 +116,15 @@ const ManageSubscriptions = () => {
         suspend: (
           <button
             className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs cursor-pointer"
-            // onClick={() =>
-            //   subscription.isSuspended
-            //     ? handleWithdrawSuspension(subscription._id)
-            //     : handleSuspend(subscription._id)
-            // }
+            onClick={() =>
+              handleUpdateSuspendedStatus(
+                subscription?._id,
+                subscription?.isSuspended ?? false
+              )
+            }
           >
             <FiPauseCircle />
-            {subscription.isSuspended
-              ? "Mark as Withdrawn Suspension"
-              : "Mark as Suspended"}
-          </button>
-        ),
-        remove: (
-          <button
-            className="flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded text-xs cursor-pointer"
-            // onClick={() =>
-            //   subscription.isRemoved
-            //     ? handleReAdd(subscription._id)
-            //     : handleRemove(subscription._id)
-            // }
-          >
-            <FiUserX />
-            {subscription.isRemoved ? "Mark as Re-added" : "Mark as Removed"}
+            {subscription.isSuspended ? "Mark as Suspension Withdrawn" : "Mark as Suspend"}
           </button>
         ),
         createdAt: subscription.createdAt,
@@ -136,7 +145,6 @@ const ManageSubscriptions = () => {
     { key: "status", label: "Status" },
     { key: "whatsappGroup", label: "WhatsApp Group" },
     { key: "suspend", label: "Suspension" },
-    { key: "remove", label: "Remove" },
   ];
 
   return (
