@@ -16,7 +16,6 @@ import toast from "react-hot-toast";
 import ConsultationsStats from "../../../components/AdminDashboard/ManageConsultationsPage/ConsultationsStats/ConsultationsStats";
 import ScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ScheduleMeetingModal/ScheduleMeetingModal";
 
-
 const ManageConsultations = () => {
   const [bookingId, setBookingId] = useState<string>("");
   const [isScheduleMeetingModalOpen, setIsScheduleMeetingModalOpen] =
@@ -29,10 +28,8 @@ const ManageConsultations = () => {
     status: status,
     page: page,
   });
-  
+
   const [updateStatus] = useUpdateStatusMutation();
-
-
 
   const allConsultations = data?.data?.bookings as TConsultation[];
 
@@ -71,7 +68,9 @@ const ManageConsultations = () => {
               statusColors[consultation.status]
             }`}
           >
-            {consultation.status === "booked" ? "Not Scheduled" : consultation.status}
+            {consultation.status === "booked"
+              ? "Not Scheduled"
+              : consultation.status}
           </span>
         ),
         meetingLink: (
@@ -175,8 +174,6 @@ const ManageConsultations = () => {
     },
   ];
 
-  
-
   return (
     <div>
       {/* Status cards */}
@@ -235,7 +232,11 @@ const ManageConsultations = () => {
         </div>
       </DashboardContainer>
 
-     <ScheduleMeetingModal bookingId={bookingId} isScheduleMeetingModalOpen={isScheduleMeetingModalOpen} setIsScheduleMeetingModalOpen={setIsScheduleMeetingModalOpen} />
+      <ScheduleMeetingModal
+        bookingId={bookingId}
+        isScheduleMeetingModalOpen={isScheduleMeetingModalOpen}
+        setIsScheduleMeetingModalOpen={setIsScheduleMeetingModalOpen}
+      />
     </div>
   );
 };

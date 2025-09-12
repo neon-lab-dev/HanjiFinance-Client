@@ -58,7 +58,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Subscriptions",
-      link: "/dashboard/admin/my-subscriptions",
+      link: "/dashboard/admin/manage-subscriptions",
     },
     {
       name: "My Profile",

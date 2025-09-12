@@ -42,6 +42,7 @@ import AddOrEditProduct from "../pages/AdminDashboard/AddOrEditProduct/AddOrEdit
 import ManageCourseForm from "../pages/AdminDashboard/ManageCourseForm/ManageCourseForm";
 import ManageLectures from "../pages/AdminDashboard/CourseDashboard/ManageLectures/ManageLectures";
 import ManageConsultations from "../pages/AdminDashboard/ManageConsultations/ManageConsultations";
+import ManageSubscriptions from "../pages/AdminDashboard/ManageSubscriptions/ManageSubscriptions";
 
 export const router = createBrowserRouter([
   {
@@ -211,6 +212,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-consultations",
         element: <ManageConsultations />,
+      },
+      {
+        path: "manage-subscriptions",
+        element: <ManageSubscriptions />,
       },
     ],
   },

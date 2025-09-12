@@ -1,0 +1,76 @@
+import { baseApi } from "../../Api/baseApi";
+
+const boardroomBanterApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllSubscriptions: builder.query({
+      query: ({
+        keyword,
+        page,
+        status,
+        isAddedToWhatsappGroup,
+        isSuspended,
+        isRemoved,
+      }: {
+        keyword?: string;
+        page?: number;
+        status?: string;
+        isAddedToWhatsappGroup?: boolean;
+        isSuspended?: boolean;
+        isRemoved?: boolean;
+      }) => {
+        const params = new URLSearchParams();
+
+        if (keyword) params.append("keyword", keyword);
+        if (page) params.append("page", page.toString());
+        if (status) params.append("status", status);
+
+        if (typeof isAddedToWhatsappGroup === "boolean") {
+          params.append(
+            "isAddedToWhatsappGroup",
+            String(isAddedToWhatsappGroup)
+          );
+        }
+        if (typeof isSuspended === "boolean") {
+          params.append("isSuspended", String(isSuspended));
+        }
+        if (typeof isRemoved === "boolean") {
+          params.append("isRemoved", String(isRemoved));
+        }
+
+        return {
+          url: `/boardroom-banter-subscription${
+            params.toString() ? `?${params.toString()}` : ""
+          }`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["boardroomBanter"],
+    }),
+
+    getSingleConsultationById: builder.query({
+      query: (id) => ({
+        url: `/boardroom-banter-subscription/${id}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["boardroomBanter"],
+    }),
+
+    updateWhatsAppStatus: builder.mutation({
+      query: (data) => ({
+        url: `/boardroom-banter-subscription/update-whatsapp-status`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+  }),
+});
+
+export const {
+  useGetAllSubscriptionsQuery,
+  useGetSingleConsultationByIdQuery,
+  useUpdateWhatsAppStatusMutation,
+} = boardroomBanterApi;
