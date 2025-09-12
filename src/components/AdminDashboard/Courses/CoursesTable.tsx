@@ -35,10 +35,10 @@ const Courses = () => {
       price: (
         <>
           <span className="line-through text-gray-400">
-            (₹{course.basePrice}
+            ₹{course.basePrice}
           </span> {" "}
           <span className="text-green-600 font-semibold">
-            ₹{course.discountedPrice})
+            ₹{course.discountedPrice}
           </span>
         </>
       ),
