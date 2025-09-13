@@ -29,7 +29,7 @@ const productOrdersApi = baseApi.injectEndpoints({
 
     getSingleProductOrderById: builder.query({
       query: (id) => ({
-        url: `/product/${id}`,
+        url: `/product-order/${id}`,
         method: "GET",
         credentials: "include",
       }),

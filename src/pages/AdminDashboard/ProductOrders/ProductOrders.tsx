@@ -17,18 +17,17 @@ import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
 import Table from "../../../components/Reusable/Table/Table";
 import Button from "../../../components/Reusable/Button/Button";
 import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
+import OrdersPreview from "../../../components/AdminDashboard/OrdersPage/OrdersPreview";
 
 const ProductOrders = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("");
   const { data, isLoading, isFetching } = useGetAllProductOrdersQuery({
     keyword: searchValue,
     status: statusFilter,
   });
   const [isOrderPreviewOpen, setIsOrderPreviewOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<TProductOrder | null>(
-    null
-  );
+  const [selectedOrderId, setSelectedOrderId] = useState<string>("");
   const [page, setPage] = useState(1);
 
   const allProductOrders = data?.data?.productOrders || [];
@@ -90,15 +89,12 @@ const ProductOrders = () => {
     }
   };
 
-  const orderActions = [
+  const productOrderActions = [
     {
       icon: <FiEye />,
       label: "View",
       onClick: (row: any) => {
-        const order =
-          allProductOrders?.find((o: TProductOrder) => o._id === row?._id) ||
-          null;
-        setSelectedOrder(order);
+        setSelectedOrderId(row?.orderId);
         setIsOrderPreviewOpen(true);
       },
     },
@@ -191,7 +187,7 @@ const ProductOrders = () => {
             <Table
               columns={orderColumns}
               data={allOrdersData}
-              actions={orderActions}
+              actions={productOrderActions}
               rowKey="_id"
               isLoading={isLoading || isFetching}
               page={page}
@@ -214,7 +210,7 @@ const ProductOrders = () => {
           setIsConfirmationModalOpen={setIsOrderPreviewOpen}
           isCrossVisible={true}
         >
-          {/* <OrdersPreview order={selectedOrder} /> */}
+          <OrdersPreview orderId={selectedOrderId} />
         </ConfirmationModal>
       </div>
     </div>
