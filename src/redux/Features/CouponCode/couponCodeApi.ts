@@ -37,7 +37,17 @@ const couponCodeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["couponCode"],
     }),
+
+    validateCouponCode: builder.mutation({
+      query: (data) => ({
+        url: `/coupon-code/validate`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["couponCode"],
+    }),
   }),
 });
 
-export const { useGetAllCouponCodesQuery, useAddCouponCodeMutation, useDeleteCouponCodeMutation } = couponCodeApi;
+export const { useGetAllCouponCodesQuery, useAddCouponCodeMutation, useDeleteCouponCodeMutation, useValidateCouponCodeMutation } = couponCodeApi;
