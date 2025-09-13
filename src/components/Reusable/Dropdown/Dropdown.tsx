@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full px-3 py-2 border text-sm border-gray-300 rounded-lg flex justify-between items-center bg-whit "
+        className="w-full px-3 py-2 border text-sm border-gray-300 rounded-lg flex justify-between items-center bg-white cursor-pointer"
       >
         <span>{selected ? selected.label : "Select an option"}</span>
         <img

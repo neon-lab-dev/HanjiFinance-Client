@@ -157,8 +157,8 @@ const ProductOrders = () => {
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-xl font-bold text-neutral-40">Orders</h1>
-                <p className="text-neutral-65">Manage customer orders</p>
+                <h1 className="text-xl font-bold text-neutral-40">Product Orders</h1>
+                <p className="text-neutral-65">Manage customer product orders</p>
               </div>
               <div className="flex justify-between items-center gap-4 flex-wrap">
                 {/* Filters */}
