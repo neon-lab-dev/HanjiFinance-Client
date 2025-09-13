@@ -84,6 +84,16 @@ const boardroomBanterApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["boardroomBanter"],
     }),
+
+    joinWaitlist: builder.mutation({
+      query: (data) => ({
+        url: `/boardroom-banter-subscription/join-waitlist`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
   }),
 });
 
@@ -93,4 +103,5 @@ export const {
   useUpdateWhatsAppStatusMutation,
   useSuspendUserMutation,
   useWithdrawSuspensionMutation,
+  useJoinWaitlistMutation,
 } = boardroomBanterApi;

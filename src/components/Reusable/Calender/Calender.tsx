@@ -18,7 +18,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { startOfWeek } from "date-fns/fp";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TimePicker from "./TimePicker";
 import { useGetAllAvailabilityQuery } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 
@@ -47,10 +47,10 @@ const availabilities = data?.data?.availabilities || [];
     status: null,
   });
 
-  const days = eachDayOfInterval({
-    start: startOfWeek(firstDayCurrentMonth),
-    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
-  });
+  const days = useMemo(() => eachDayOfInterval({
+  start: startOfWeek(firstDayCurrentMonth),
+  end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
+}), [firstDayCurrentMonth]);
 
   function previousMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
@@ -79,9 +79,12 @@ const availabilities = data?.data?.availabilities || [];
     // ✅ send the actual booking slot
     setBookingDate(value);
     onBookingChange(value);
-    console.log(bookingDate)
   }
 };
+
+useEffect(() => {
+  console.log(bookingDate);
+}, [bookingDate]);
 
 
   const hoverDateDetail = (day: Date) => {
@@ -93,9 +96,9 @@ const availabilities = data?.data?.availabilities || [];
       ) &&
         isSameMonth(day, firstDayCurrentMonth))
     ) {
-      setHoverInfo({ date: day, status: "slot not Available" });
+      setHoverInfo({ date: day, status: "Slot not Available" });
     } else {
-      setHoverInfo({ date: day, status: "slot Available" });
+      setHoverInfo({ date: day, status: "Slot Available" });
     }
   };
 

@@ -72,6 +72,10 @@ const Sidebar: React.FC = () => {
       link: "/dashboard/admin/manage-subscriptions",
     },
     {
+      name: "Coupon Code",
+      link: "/dashboard/admin/manage-coupon-codes",
+    },
+    {
       name: "My Profile",
       link: "/dashboard/certificates",
     },

@@ -9,48 +9,21 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
         credentials: "include",
       }),
-      providesTags: ["user", "course"],
+      providesTags: ["user"],
     }),
 
-    // myReferralSummary: builder.query({
-    //   query: () => ({
-    //     url: "/refral/summary",
-    //     method: "GET",
-    //     credentials: "include",
-    //   }),
-    //   providesTags: ["user"],
-    // }),
-
-    // getMe: builder.query({
-    //   query: () => ({
-    //     url: "/user/me",
-    //     method: "GET",
-    //     credentials: "include",
-    //   }),
-    //   providesTags: ["user"],
-    // }),
-
-    // myOrders: builder.query({
-    //   query: () => ({
-    //     url: "/my-orders",
-    //     method: "GET",
-    //     credentials: "include",
-    //   }),
-    //   providesTags: ["user"],
-    // }),
-
-    // updateProfile: builder.mutation({
-    //   query: (profileUpdatedData) => ({
-    //     method: "PUT",
-    //     url: `/me/update`,
-    //     body: profileUpdatedData,
-    //     credentials: "include",
-    //   }),
-    //   invalidatesTags: ["user"],
-    // }),
+    getRazorpayKey: builder.query({
+      query: () => ({
+        url: "/get-key",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
 export const {
   useGetMeQuery,
+  useGetRazorpayKeyQuery
 } = userApi;

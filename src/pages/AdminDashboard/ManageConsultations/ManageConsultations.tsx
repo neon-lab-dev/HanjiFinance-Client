@@ -209,11 +209,7 @@ const ManageConsultations = () => {
                     { value: "completed", label: "Completed" },
                   ]}
                 />
-                {/* <Button
-                  variant="primary"
-                  label="Export Data"
-                  classNames="py-2 px-3"
-                /> */}
+                
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import TextInput from "../../Reusable/TextInput/TextInput";
 import { useEffect, useState } from "react";
@@ -7,14 +8,24 @@ import Calender from "../../Reusable/Calender/Calender";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../redux/Features/Auth/authModalSlice";
-import type { RootState } from "../../../redux/store";
+import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../types/user.types";
+import { useGetRazorpayKeyQuery } from "../../../redux/Features/User/userApi";
+import { useCheckoutMutation } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
+
+// Add Razorpay type to window
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 type TFormValues = {
   name: string;
   email: string;
   qualification: string;
   occupation: string;
-  message: string;
+  topicsToDiscuss: string;
   phoneNumber: string;
   bookingDate: string;
 };
@@ -28,16 +39,11 @@ const LetsTalkForm = () => {
     formState: { errors },
   } = useForm<TFormValues>();
 
-  const bookingDate = watch("bookingDate"); // watch field changes
+  const bookingDate = watch("bookingDate");
   const [readableDate, setReadableDate] = useState<string>("");
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => !!state.auth.token);
+  const user = useSelector(useCurrentUser) as TUser;
 
-  useEffect(() => {
-    register("bookingDate", { required: "Please select a date & time" });
-  }, [register]);
-
-  // Whenever bookingDate changes, format it
   useEffect(() => {
     if (bookingDate) {
       const readable = new Date(bookingDate).toLocaleString("en-IN", {
@@ -48,15 +54,78 @@ const LetsTalkForm = () => {
     }
   }, [bookingDate]);
 
-  const handleLetsTalk = (data: TFormValues) => {
-    if (!isLoggedIn) {
+  console.log(bookingDate);
+
+  const { data: apiKey } = useGetRazorpayKeyQuery({});
+  // console.log(data);
+  const [checkout] = useCheckoutMutation();
+
+  const [loading, setLoading] = useState(false);
+
+  const totalAmount = 999;
+
+  const handleLetsTalk = async (data: TFormValues) => {
+    if (!user) {
       toast.error("Please login to proceed");
       dispatch(openModal("login"));
       return;
     }
 
-    const finalData = { ...data };
-    console.log(finalData);
+    setLoading(true);
+
+    const payload = {
+      amount:totalAmount
+    }
+
+    let response;
+    try {
+      response = await checkout(payload);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const options = {
+        key: apiKey?.key,
+        amount: response?.data?.amount,
+        currency: "INR",
+        name: "Hanjifinance",
+        description: "Test Transaction",
+        image: "https://i.ibb.co/0jpqmJzJ/logo.png",
+        order_id: response?.data?.id,
+        callback_url : "https://hanjifinance-api.vercel.app/api/v1/chat-and-chill/verify-payment",
+        prefill: {
+          name: user?.name,
+          email: user?.email,
+          userId: user?._id,
+        },
+        theme: { color: "#b91c1c" },
+      };
+
+      // **Directly open Razorpay** here in the click handler
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+      const chatAndChillData = {
+        bookingDate,
+        name: data?.name,
+        email: data?.email,
+        phoneNumber: data?.phoneNumber,
+        topicsToDiscuss: data?.topicsToDiscuss,
+      };
+
+      localStorage.setItem(
+        "chatAndChillData",
+        JSON.stringify(chatAndChillData)
+      );
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -99,8 +168,8 @@ const LetsTalkForm = () => {
             label="If we were chatting over coffee, what’s one thing you’d say about money or markets that not everyone agrees with?"
             placeholder="Your answer goes here....."
             rows={6}
-            error={errors.message}
-            {...register("message")}
+            error={errors.topicsToDiscuss}
+            {...register("topicsToDiscuss")}
             isRequired={false}
           />
 
@@ -120,7 +189,8 @@ const LetsTalkForm = () => {
               variant="primary"
               label="Proceed to Book @ ₹999"
               classNames="w-full sm:w-fit"
-              disabled={!bookingDate} // ✅ disable until date is selected
+              disabled={!bookingDate}
+              isLoading={loading}
             />
           </div>
 

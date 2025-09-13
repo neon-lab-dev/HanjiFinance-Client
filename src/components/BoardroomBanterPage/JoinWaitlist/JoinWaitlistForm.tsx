@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import { ICONS } from "../../../assets";
 import TextInput from "../../Reusable/TextInput/TextInput";
@@ -6,6 +7,8 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import Textarea from "../../Reusable/TextArea/TextArea";
 import Button from "../../Reusable/Button/Button";
 import FormInstruction from "../../Reusable/FormInstruction/FormInstruction";
+import { useJoinWaitlistMutation } from "../../../redux/Features/BoardroomBanter/boardroomBanterApi";
+import toast from "react-hot-toast";
 
 type TFormValues = {
   name: string;
@@ -17,6 +20,7 @@ type TFormValues = {
 };
 
 const JoinWaitlistForm = () => {
+  const [joinWaitlist, { isLoading }] = useJoinWaitlistMutation();
   const {
     register,
     handleSubmit,
@@ -71,9 +75,20 @@ const JoinWaitlistForm = () => {
     });
   }, [register]);
 
-  const handleJoinWaitlist = (data: TFormValues) => {
-    const finalData = { ...data, occupation: selectedOccupation };
-    console.log("Form Data:", finalData);
+  const handleJoinWaitlist = async (data: TFormValues) => {
+    try {
+      const payload = {
+        ...data,
+      };
+      const response = await joinWaitlist(payload).unwrap();
+      if (response?.success) {
+        toast.success(
+          response?.message || "Application submitted successfully!"
+        );
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
 
   useEffect(() => {

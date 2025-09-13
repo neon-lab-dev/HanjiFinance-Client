@@ -46,6 +46,7 @@ import Cart from "../pages/Cart/Cart";
 import CoursePayment from "../pages/CoursePayment/CoursePayment";
 import ProductOrders from "../pages/AdminDashboard/ProductOrders/ProductOrders";
 import CourseOrders from "../pages/AdminDashboard/CourseOrders/CourseOrders";
+import CouponCode from "../pages/AdminDashboard/CouponCode/CouponCode";
 
 export const router = createBrowserRouter([
   {
@@ -227,6 +228,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-consultations",
         element: <ManageConsultations />,
+      },
+      {
+        path: "manage-coupon-codes",
+        element: <CouponCode />,
       },
       {
         path: "manage-subscriptions",

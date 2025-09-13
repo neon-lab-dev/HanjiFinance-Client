@@ -3,6 +3,7 @@ export type TUser = {
   userId: string;
   name: string;
   email: string;
+  phoneNumber:string;
   role: "admin" | "user" | "moderator";
   avatar: string;
 };

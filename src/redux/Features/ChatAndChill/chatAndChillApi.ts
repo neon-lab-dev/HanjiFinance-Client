@@ -10,6 +10,7 @@ const chatAndChillApi = baseApi.injectEndpoints({
       }),
       providesTags: ["chatAndChill"],
     }),
+
     getAllConsultations: builder.query({
       query: ({
         keyword,
@@ -74,6 +75,36 @@ const chatAndChillApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["chatAndChill"],
     }),
+
+    checkout: builder.mutation({
+      query: (data) => ({
+        url: `/chat-and-chill/checkout`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["chatAndChill"],
+    }),
+
+    verifyPayment: builder.mutation({
+      query: (data) => ({
+        url: `/chat-and-chill/verify-payment`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["chatAndChill"],
+    }),
+
+    bookChatAndChill: builder.mutation({
+      query: (data) => ({
+        url: `/chat-and-chill/book`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["chatAndChill"],
+    }),
   }),
 });
 
@@ -84,4 +115,7 @@ export const {
   useGetAllBookingsByUserIdQuery,
   useScheduleMeetingMutation,
   useUpdateStatusMutation,
+  useCheckoutMutation,
+  useVerifyPaymentMutation,
+  useBookChatAndChillMutation,
 } = chatAndChillApi;
