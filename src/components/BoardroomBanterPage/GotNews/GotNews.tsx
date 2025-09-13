@@ -7,7 +7,6 @@ import Button from "../../Reusable/Button/Button";
 import { useValidateCouponCodeMutation } from "../../../redux/Features/CouponCode/couponCodeApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
 
 type FormData = {
   couponCode: string;
@@ -87,12 +86,13 @@ const GotNews = () => {
             </div>
 
             {/* Proceed button */}
-            <Link to={"/"}>
+            <Link to={"/payment"}>
               <Button
                 label="Proceed to Pay"
-                variant={isCouponValid ? "primary" : "disabled"}
+                // variant={isCouponValid ? "primary" : "disabled"}
+                variant="primary"
                 classNames="px-4 py-[14px] h-fit"
-                disabled={!isCouponValid}
+                // disabled={!isCouponValid}
               />
             </Link>
           </div>
