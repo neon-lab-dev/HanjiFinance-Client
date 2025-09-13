@@ -45,6 +45,7 @@ import ManageSubscriptions from "../pages/AdminDashboard/ManageSubscriptions/Man
 import Cart from "../pages/Cart/Cart";
 import CoursePayment from "../pages/CoursePayment/CoursePayment";
 import ProductOrders from "../pages/AdminDashboard/ProductOrders/ProductOrders";
+import CourseOrders from "../pages/AdminDashboard/CourseOrders/CourseOrders";
 
 export const router = createBrowserRouter([
   {
@@ -205,6 +206,10 @@ export const router = createBrowserRouter([
       {
         path: "product-orders",
         element: <ProductOrders />,
+      },
+      {
+        path: "course-orders",
+        element: <CourseOrders />,
       },
       
       {

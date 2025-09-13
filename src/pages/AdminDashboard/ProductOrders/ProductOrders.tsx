@@ -28,7 +28,7 @@ const ProductOrders = () => {
   });
   const [isOrderPreviewOpen, setIsOrderPreviewOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState<string>("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   const allProductOrders = data?.data?.productOrders || [];
 
