@@ -4,6 +4,7 @@ import { ICONS } from "../../../assets";
 type Option = {
   value: string;
   label: string;
+  disabled?: boolean;
 };
 
 type DropdownProps = {
@@ -25,15 +26,18 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div className={`relative w-fit font-Montserrat ${className}`}>
-
       {/* Selected box */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full px-3 py-2 border text-sm border-gray-300 rounded-lg flex justify-between items-center bg-whit "
+        className="w-full px-3 py-2 border text-sm border-gray-300 rounded-lg flex justify-between items-center bg-white cursor-pointer"
       >
         <span>{selected ? selected.label : "Select an option"}</span>
-        <img src={ICONS.arrowDown} alt="Dropdown Icon" className="h-4 w-4 ml-2" />
+        <img
+          src={ICONS.arrowDown}
+          alt="Dropdown Icon"
+          className="h-4 w-4 ml-2"
+        />
       </button>
 
       {/* Dropdown options */}
@@ -43,11 +47,17 @@ const Dropdown: React.FC<DropdownProps> = ({
             <li
               key={opt.value}
               onClick={() => {
-                onChange(opt.value);
-                setOpen(false);
+                if (!opt.disabled) {
+                  onChange(opt.value);
+                  setOpen(false);
+                }
               }}
               className={`px-3 py-2 cursor-pointer hover:bg-primary-30 ${
                 value === opt.value ? "bg-primary-30 font-semibold" : ""
+              } ${
+                opt.disabled
+                  ? "opacity-50 cursor-not-allowed hover:bg-white"
+                  : ""
               }`}
             >
               {opt.label}

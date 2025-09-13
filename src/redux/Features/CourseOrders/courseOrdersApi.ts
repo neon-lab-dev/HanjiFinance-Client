@@ -1,25 +1,22 @@
 import { baseApi } from "../../Api/baseApi";
 
-const productOrdersApi = baseApi.injectEndpoints({
+const courseOrdersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllProductOrders: builder.query({
+    getAllCourseOrders: builder.query({
       query: ({
         keyword,
         page,
-        status,
       }: {
         keyword?: string;
         page?: number;
-        status?: string;
       }) => {
         const params = new URLSearchParams();
 
         if (keyword) params.append("keyword", keyword);
         if (page) params.append("page", page.toString());
-        if (status) params.append("status", status);
 
         return {
-          url: `/product-order${params.toString() ? `?${params.toString()}` : ""}`,
+          url: `/course-order${params.toString() ? `?${params.toString()}` : ""}`,
           method: "GET",
           credentials: "include",
         };
@@ -68,9 +65,9 @@ const productOrdersApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllProductOrdersQuery,
+  useGetAllCourseOrdersQuery,
   useGetSingleProductOrderByIdQuery,
   useAddProductMutation,
   useUpdateOrderStatusMutation,
   useDeleteProductMutation,
-} = productOrdersApi;
+} = courseOrdersApi;

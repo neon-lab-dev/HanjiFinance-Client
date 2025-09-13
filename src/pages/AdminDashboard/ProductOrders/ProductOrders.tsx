@@ -17,19 +17,18 @@ import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
 import Table from "../../../components/Reusable/Table/Table";
 import Button from "../../../components/Reusable/Button/Button";
 import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
+import OrdersPreview from "../../../components/AdminDashboard/OrdersPage/OrdersPreview";
 
 const ProductOrders = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("");
   const { data, isLoading, isFetching } = useGetAllProductOrdersQuery({
     keyword: searchValue,
     status: statusFilter,
   });
   const [isOrderPreviewOpen, setIsOrderPreviewOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<TProductOrder | null>(
-    null
-  );
-  const [page, setPage] = useState(1);
+  const [selectedOrderId, setSelectedOrderId] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   const allProductOrders = data?.data?.productOrders || [];
 
@@ -90,15 +89,12 @@ const ProductOrders = () => {
     }
   };
 
-  const orderActions = [
+  const productOrderActions = [
     {
       icon: <FiEye />,
       label: "View",
       onClick: (row: any) => {
-        const order =
-          allProductOrders?.find((o: TProductOrder) => o._id === row?._id) ||
-          null;
-        setSelectedOrder(order);
+        setSelectedOrderId(row?.orderId);
         setIsOrderPreviewOpen(true);
       },
     },
@@ -161,8 +157,8 @@ const ProductOrders = () => {
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-xl font-bold text-neutral-40">Orders</h1>
-                <p className="text-neutral-65">Manage customer orders</p>
+                <h1 className="text-xl font-bold text-neutral-40">Product Orders</h1>
+                <p className="text-neutral-65">Manage customer product orders</p>
               </div>
               <div className="flex justify-between items-center gap-4 flex-wrap">
                 {/* Filters */}
@@ -191,7 +187,7 @@ const ProductOrders = () => {
             <Table
               columns={orderColumns}
               data={allOrdersData}
-              actions={orderActions}
+              actions={productOrderActions}
               rowKey="_id"
               isLoading={isLoading || isFetching}
               page={page}
@@ -214,7 +210,7 @@ const ProductOrders = () => {
           setIsConfirmationModalOpen={setIsOrderPreviewOpen}
           isCrossVisible={true}
         >
-          {/* <OrdersPreview order={selectedOrder} /> */}
+          <OrdersPreview orderId={selectedOrderId} />
         </ConfirmationModal>
       </div>
     </div>
