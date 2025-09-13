@@ -1,16 +1,18 @@
-
-import { Link, useLocation, useNavigate, } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ICONS } from "../../../../assets";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
+import {
+  logout,
+  useCurrentUser,
+} from "../../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../../types/user.types";
 import Cookies from "js-cookie";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  const navigate= useNavigate();
-  const user= useSelector(useCurrentUser) as TUser;
-  const dispatch =useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(useCurrentUser) as TUser;
+  const dispatch = useDispatch();
   // Helper function to check if the link is active
   const isActive = (path: string): boolean => location.pathname === path;
 
@@ -41,16 +43,21 @@ const Sidebar: React.FC = () => {
   const adminMenus = [
     { name: "Dashboard", link: "/dashboard/admin" },
     {
-      name: "Products",
-      link: "/dashboard/admin/products",
-    },
-    {
       name: "Newsletters",
       link: "/dashboard/admin/newsletter",
     },
     {
-      name: "Orders",
-      link: "/dashboard/admin/orders",
+      name: "Products",
+      link: "/dashboard/admin/products",
+    },
+
+    {
+      name: "Product Orders",
+      link: "/dashboard/admin/product-orders",
+    },
+    {
+      name: "Course Orders",
+      link: "/dashboard/admin/course-orders",
     },
     {
       name: "Courses",
@@ -72,10 +79,7 @@ const Sidebar: React.FC = () => {
 
   const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;
 
-
-
-
- const handleLogout = async () => {
+  const handleLogout = async () => {
     Cookies.remove("accessToken");
     Cookies.remove("role");
     dispatch(logout());
@@ -86,13 +90,19 @@ const Sidebar: React.FC = () => {
   return (
     <div className="w-60 min-w-60 h-screen font-Inter flex flex-col justify-between sticky left-0 top-0 font-Montserrat overflow-auto">
       <div className="space-y-2">
-        <Link to="/" className="flex items-center justify-center gap-2 w-full p-5 border-b border-b-neutral-98 border-r border-r-neutral-98 ">
-          <img src={ICONS.logoWithName} alt="HanjiFinance" className="w-20 h-[58p]" />
-
+        <Link
+          to="/"
+          className="flex items-center justify-center gap-2 w-full p-5 border-b border-b-neutral-98 border-r border-r-neutral-98 "
+        >
+          <img
+            src={ICONS.logoWithName}
+            alt="HanjiFinance"
+            className="w-20 h-[58p]"
+          />
         </Link>
         <div className="px-4">
           <ul className="flex flex-col gap-2">
-            { sidebarLinks.map((menu) => (
+            {sidebarLinks.map((menu) => (
               <li
                 key={menu.link}
                 className={`px-3 py-2 ${
@@ -102,7 +112,7 @@ const Sidebar: React.FC = () => {
                 } hover:bg-neutral-155 rounded-lg text-neutral-20 font-medium`}
               >
                 <Link to={menu.link} className="flex items-center gap-2">
-                {menu.name}
+                  {menu.name}
                 </Link>
               </li>
             ))}
@@ -115,7 +125,11 @@ const Sidebar: React.FC = () => {
           className="hover:bg-primary-30 hover:text-primary-20 font-medium leading-[22px] w-full rounded-lg text-center flex items-center gap-2 justify-between py-2 px-3"
         >
           Logout
-          <img src={ICONS.arrowLogout} alt="logout-icon" className="size-[18px]" />
+          <img
+            src={ICONS.arrowLogout}
+            alt="logout-icon"
+            className="size-[18px]"
+          />
         </button>
       </div>
     </div>

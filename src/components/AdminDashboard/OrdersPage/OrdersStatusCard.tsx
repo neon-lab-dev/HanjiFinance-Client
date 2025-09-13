@@ -5,28 +5,14 @@ import {
   FiPackage,
   FiXCircle,
 } from "react-icons/fi";
-import Button from "../../Reusable/Button/Button";
-import { useState } from "react";
-import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
-import TextInput from "../../Reusable/TextInput/TextInput";
-import { useForm } from "react-hook-form";
+import type { TProductOrder } from "../../../types/productOrder.types";
 
-type TFormData = {
-  status: string;
-};
 
-const OrderStatusCards = () => {
-  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+const OrderStatusCards = ({allProductOrders} : {allProductOrders:TProductOrder[]}) => {
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TFormData>();
-
-  const handleStatus = (data: TFormData) => {
-    console.log("New order status:", data);
-  };
+  const pending = allProductOrders?.filter((productOrder:TProductOrder) => productOrder.status === "pending")?.length || 0;
+  const shipped = allProductOrders.filter((productOrder:TProductOrder) => productOrder.status === "shipped")?.length || 0;
+  const cancelled = allProductOrders.filter((productOrder:TProductOrder) => productOrder.status === "cancelled")?.length || 0;
 
   return (
     <div className="w-full ">
@@ -35,7 +21,7 @@ const OrderStatusCards = () => {
         {/* Total Orders */}
         <StatusCard
           icon={<FiPackage size={28} />}
-          value={320}
+          value={allProductOrders?.length || 0}
           label="Total Orders"
           badgeText="All"
           badgeBg="bg-blue-100"
@@ -46,7 +32,7 @@ const OrderStatusCards = () => {
         {/* Pending Orders */}
         <StatusCard
           icon={<FiAlertCircle size={28} />}
-          value={85}
+          value={pending}
           label="Pending Orders"
           badgeText="Pending"
           badgeBg="bg-yellow-100"
@@ -57,9 +43,9 @@ const OrderStatusCards = () => {
         {/* Delivered Orders */}
         <StatusCard
           icon={<FiCheckCircle size={28} />}
-          value={200}
-          label="Delivered Orders"
-          badgeText="Delivered"
+          value={shipped}
+          label="Shipped Orders"
+          badgeText="Shipped"
           badgeBg="bg-green-100"
           badgeBorder="border-green-400"
           badgeTextColor="text-green-600"
@@ -68,7 +54,7 @@ const OrderStatusCards = () => {
         {/* Cancelled Orders */}
         <StatusCard
           icon={<FiXCircle size={28} />}
-          value={35}
+          value={cancelled}
           label="Cancelled Orders"
           badgeText="Cancelled"
           badgeBg="bg-red-100"
@@ -76,39 +62,6 @@ const OrderStatusCards = () => {
           badgeTextColor="text-red-600"
         />
       </div>
-
-      {/* Modal for adding new order status */}
-      <ConfirmationModal
-        isConfirmationModalOpen={isStatusModalOpen}
-        setIsConfirmationModalOpen={setIsStatusModalOpen}
-        isCrossVisible={true}
-      >
-        <div className="flex flex-col items-center pb-6 px-8">
-          <h1 className="text-neutral-20 text-lg font-medium leading-8 text-center tracking-[-0.56px]">
-            Add New Order Status
-          </h1>
-          <form
-            onSubmit={handleSubmit(handleStatus)}
-            className="w-full mt-4 flex flex-col items-end"
-          >
-            <TextInput
-              label="Status Name"
-              type="text"
-              placeholder="e.g. Processing"
-              error={errors.status}
-              {...register("status", {
-                required: "Status is required",
-              })}
-            />
-            <Button
-              type="submit"
-              label="Add Status"
-              variant="primary"
-              classNames="w-fit mt-4 px-3 py-2"
-            />
-          </form>
-        </div>
-      </ConfirmationModal>
     </div>
   );
 };

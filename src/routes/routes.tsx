@@ -33,7 +33,6 @@ import ProductDetails from "../pages/ProductsDetails/ProductsDetails";
 import Login from "../pages/AdminLogin/AdminLogin";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard/AdminDashboard";
 import AdminProducts from "../pages/AdminDashboard/AdminProducts/AdminProducts";
-import AdminOrders from "../pages/AdminDashboard/AdminOrders/AdminOrders";
 import CourseDashboard from "../pages/AdminDashboard/CourseDashboard/CourseDashboard";
 import ResetPassword from "../components/Auth/ResetPassword/ResetPassword";
 import ProtectedRoute from "./ProtectedRoute";
@@ -45,6 +44,7 @@ import ManageConsultations from "../pages/AdminDashboard/ManageConsultations/Man
 import ManageSubscriptions from "../pages/AdminDashboard/ManageSubscriptions/ManageSubscriptions";
 import Cart from "../pages/Cart/Cart";
 import CoursePayment from "../pages/CoursePayment/CoursePayment";
+import ProductOrders from "../pages/AdminDashboard/ProductOrders/ProductOrders";
 
 export const router = createBrowserRouter([
   {
@@ -203,8 +203,8 @@ export const router = createBrowserRouter([
         element: <Newsletter />,
       },
       {
-        path: "orders",
-        element: <AdminOrders />,
+        path: "product-orders",
+        element: <ProductOrders />,
       },
       
       {
