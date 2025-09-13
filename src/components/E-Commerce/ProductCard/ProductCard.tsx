@@ -74,7 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       {/* Product price */}
       <div className="mt-4">
         <h1 className="text-neutral-10 text-xl font-medium leading-6">
-          Rs. {item?.sizes[0]?.basePrice ?? "N/A"}
+          Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
         </h1>
         <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
           inclusive of all taxes
