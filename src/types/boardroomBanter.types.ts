@@ -7,7 +7,7 @@ export type TBoardRoomBanterSubscription = {
   phoneNumber: string;
   startDate: Date;
   endDate: Date;
-  status: "active" | "paused" | "expired" | "pending";
+  status: "waitlist" | "code sent" | "active" | "paused" | "expired" | "pending";
   pauseDate?: Date;
   resumeDate?: Date;
   razorpaySubscriptionId: string;

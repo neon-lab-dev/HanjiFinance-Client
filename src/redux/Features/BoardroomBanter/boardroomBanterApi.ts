@@ -98,7 +98,7 @@ const boardroomBanterApi = baseApi.injectEndpoints({
     sendCouponCode: builder.mutation({
       query: (data) => ({
         url: `/boardroom-banter-subscription/send-coupon-code`,
-        method: "POST",
+        method: "PUT",
         body: data,
         credentials: "include",
       }),

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import {
   useGetAllSubscriptionsQuery,
+  useSendCouponCodeMutation,
   useSuspendUserMutation,
   useUpdateWhatsAppStatusMutation,
   useWithdrawSuspensionMutation,
@@ -14,8 +15,28 @@ import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
 import Table from "../../../components/Reusable/Table/Table";
 import toast from "react-hot-toast";
+import Button from "../../../components/Reusable/Button/Button";
+import { RiCoupon3Line } from "react-icons/ri";
+import { useForm } from "react-hook-form";
+import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
+import TextInput from "../../../components/Reusable/TextInput/TextInput";
 
+type TFormData = {
+  subscriptionId: string;
+  email: string;
+  couponCode: string;
+};
 const ManageSubscriptions = () => {
+  const [isSendCouponCodeModalOpen, setIsCouponCodeModalOpen] =
+    useState<boolean>(false);
+  const [subscriptionId, setSubscriptionId] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormData>();
   const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
   const [status, setStatus] = useState<string>("");
@@ -71,23 +92,31 @@ const ManageSubscriptions = () => {
     }
   };
 
-  const allSubscriptionsData = allSubscriptions
-    ?.map((subscription: TBoardRoomBanterSubscription) => {
-      const statusColors: Record<string, string> = {
-        active: "text-green-600 bg-green-100 border-green-400",
-        paused: "text-yellow-600 bg-yellow-100 border-yellow-400",
-        expired: "text-red-600 bg-red-100 border-red-400",
-        pending: "text-blue-600 bg-blue-100 border-blue-400",
-      };
+  const statusColors: Record<string, string> = {
+    active: "text-green-600 bg-green-100 border-green-400",
+    paused: "text-yellow-600 bg-yellow-100 border-yellow-400",
+    expired: "text-red-600 bg-red-100 border-red-400",
+    pending: "text-blue-600 bg-blue-100 border-blue-400",
+    waitlist: "text-purple-600 bg-purple-100 border-purple-400",
+    "code sent": "text-indigo-600 bg-indigo-100 border-indigo-400",
+  };
 
+  const allSubscriptionsData = allSubscriptions
+    ?.filter(
+      (subscription: TBoardRoomBanterSubscription) =>
+        subscription.status !== "waitlist"
+    )
+    ?.map((subscription: TBoardRoomBanterSubscription) => {
       return {
         _id: subscription._id,
         name: subscription.name,
         email: subscription.email,
         phoneNumber: subscription.phoneNumber,
-        date: `${formatDate(subscription.startDate)} - ${formatDate(
-          subscription.endDate
-        )}`,
+        date: subscription?.startDate
+          ? `${formatDate(subscription.startDate)} - ${formatDate(
+              subscription.endDate
+            )}`
+          : "N/A",
         status: (
           <span
             className={`px-2 py-1 rounded-full text-xs font-semibold border capitalize ${
@@ -99,13 +128,14 @@ const ManageSubscriptions = () => {
         ),
         whatsappGroup: (
           <button
-            className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs cursor-pointer"
+            className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs cursor-pointer disabled:cursor-not-allowed"
             onClick={() =>
               handleUpdateWhatsAppStatus(
                 !subscription.isAddedToWhatsappGroup,
                 subscription._id
               )
             }
+            disabled={subscription.status === "code sent"}
           >
             <FiUsers />
             {subscription.isAddedToWhatsappGroup
@@ -115,16 +145,62 @@ const ManageSubscriptions = () => {
         ),
         suspend: (
           <button
-            className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs cursor-pointer"
+            className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs cursor-pointer disabled:cursor-not-allowed"
             onClick={() =>
               handleUpdateSuspendedStatus(
                 subscription?._id,
                 subscription?.isSuspended ?? false
               )
             }
+            disabled={subscription.status === "code sent"}
           >
             <FiPauseCircle />
-            {subscription.isSuspended ? "Mark as Suspension Withdrawn" : "Mark as Suspend"}
+            {subscription.isSuspended
+              ? "Mark as Suspension Withdrawn"
+              : "Mark as Suspend"}
+          </button>
+        ),
+        createdAt: subscription.createdAt,
+      };
+    })
+    // Sort by newest first
+    .sort((a, b) => {
+      const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return bTime - aTime;
+    });
+
+  const allWaitlistedUsersData = allSubscriptions
+    .filter(
+      (subscription: TBoardRoomBanterSubscription) =>
+        subscription.status === "waitlist"
+    )
+    ?.map((subscription: TBoardRoomBanterSubscription) => {
+      return {
+        _id: subscription._id,
+        name: subscription.name,
+        email: subscription.email,
+        phoneNumber: subscription.phoneNumber,
+        status: (
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-semibold border capitalize ${
+              statusColors[subscription.status]
+            }`}
+          >
+            {subscription.status}
+          </span>
+        ),
+        sendCouponCode: (
+          <button
+            className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs cursor-pointer"
+            onClick={() => {
+              setIsCouponCodeModalOpen(true);
+              setSubscriptionId(subscription._id);
+              setEmail(subscription.email);
+            }}
+          >
+            <RiCoupon3Line />
+            Send Coupon Code
           </button>
         ),
         createdAt: subscription.createdAt,
@@ -147,6 +223,38 @@ const ManageSubscriptions = () => {
     { key: "suspend", label: "Suspension" },
   ];
 
+  const waitlistedUserColumns = [
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "phoneNumber", label: "Phone Number" },
+    { key: "status", label: "Status" },
+    { key: "sendCouponCode", label: "Send Coupon Code" },
+  ];
+
+  const [activeTab, setActiveTab] = useState<string>("All");
+
+  const tabButtons = ["All", "Waitlisted Users"];
+
+  const [sendCouponCode, { isLoading: isSendingCouponCode }] =
+    useSendCouponCodeMutation();
+  const handleSendCouponCode = async (data: TFormData) => {
+    try {
+      const payload = {
+        subscriptionId,
+        email,
+        couponCode: data.couponCode,
+      };
+      const response = await sendCouponCode(payload).unwrap();
+      if (response?.success) {
+        toast.success(response?.message);
+        setIsCouponCodeModalOpen(false);
+        setActiveTab("All");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
+  };
+
   return (
     <div>
       <DashboardContainer>
@@ -167,34 +275,96 @@ const ManageSubscriptions = () => {
                   onChange={setSearchValue}
                   placeholder="Search by name, email, phone number..."
                 />
-                <Dropdown
-                  className="py-1 px-3 w-60"
-                  value={status}
-                  onChange={setStatus}
-                  options={[
-                    { value: "", label: "All Status" },
-                    { value: "active", label: "Active" },
-                    { value: "paused", label: "Paused" },
-                    { value: "expired", label: "Expired" },
-                    { value: "pending", label: "Pending" },
-                  ]}
-                />
+                {activeTab === "All" && (
+                  <Dropdown
+                    className="py-1 px-3 w-60"
+                    value={status}
+                    onChange={setStatus}
+                    options={[
+                      { value: "", label: "All Status" },
+                      { value: "waitlist", label: "Waitlisted" },
+                      { value: "code sent", label: "Code Sent" },
+                      { value: "active", label: "Active" },
+                      { value: "paused", label: "Paused" },
+                      { value: "expired", label: "Expired" },
+                      { value: "pending", label: "Pending" },
+                    ]}
+                  />
+                )}
+                <div
+                  className={`flex items-center gap-2 ${
+                    activeTab !== "All" ? "ml-2" : ""
+                  }`}
+                >
+                  {tabButtons?.map((tab) => (
+                    <Button
+                      variant={activeTab === tab ? "primary" : "secondary"}
+                      onClick={() => setActiveTab(tab)}
+                      label={tab}
+                      classNames="py-2 px-3"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Table */}
-          <Table
-            columns={subscriptionColumns}
-            data={allSubscriptionsData}
-            rowKey="_id"
-            isLoading={isLoading || isFetching}
-            page={page}
-            totalPages={data?.data?.pagination?.totalPages}
-            onPageChange={setPage}
-          />
+          {activeTab === "All" ? (
+            <Table
+              columns={subscriptionColumns}
+              data={allSubscriptionsData}
+              rowKey="_id"
+              isLoading={isLoading || isFetching}
+              page={page}
+              totalPages={data?.data?.pagination?.totalPages}
+              onPageChange={setPage}
+            />
+          ) : (
+            <Table
+              columns={waitlistedUserColumns}
+              data={allWaitlistedUsersData}
+              rowKey="_id"
+              isLoading={isLoading || isFetching}
+              page={page}
+              totalPages={data?.data?.pagination?.totalPages}
+              onPageChange={setPage}
+            />
+          )}
         </div>
       </DashboardContainer>
+
+      <ConfirmationModal
+        heading="Send Coupon Code"
+        isConfirmationModalOpen={isSendCouponCodeModalOpen}
+        setIsConfirmationModalOpen={setIsCouponCodeModalOpen}
+        isCrossVisible={true}
+      >
+        <div className="flex flex-col items-center pb-6 px-8">
+          <form
+            onSubmit={handleSubmit(handleSendCouponCode)}
+            className="w-full mt-4 flex flex-col items-end"
+          >
+            <TextInput
+              label="Coupon Code"
+              placeholder="Enter the coupon code"
+              error={errors.couponCode}
+              {...register("couponCode", {
+                required: "Coupon Code is required",
+              })}
+            />
+            <Button
+              type="submit"
+              label="Send"
+              variant="primary"
+              classNames="w-fit mt-4 px-3 py-2"
+              isLoading={isSendingCouponCode}
+            />
+          </form>
+
+          <div className="w-full px-6"></div>
+        </div>
+      </ConfirmationModal>
     </div>
   );
 };
