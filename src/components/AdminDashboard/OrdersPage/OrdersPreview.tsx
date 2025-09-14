@@ -63,7 +63,13 @@ const OrdersPreview: React.FC<TOrdersPreviewProps> = ({ orderId }) => {
               {singleProductOrder.userId?.email})
             </p>
             <p className="text-sm text-gray-600">
-              Address: {singleProductOrder?.customerAddress}
+              Address Line 1: {singleProductOrder?.userId?.addressLine1 || "N/A"}
+            </p>
+            <p className="text-sm text-gray-600">
+              Address Line 2: {singleProductOrder?.userId?.addressLine2 || "N/A"}
+            </p>
+            <p className="text-sm text-gray-600">
+              City: {singleProductOrder?.userId?.city}, Pin Code:{singleProductOrder?.userId?.pinCode}
             </p>
             <p className="text-sm text-gray-500">
               Placed on: {formatDate(singleProductOrder?.createdAt)}

@@ -64,6 +64,27 @@ const productOrdersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["productOrder"],
     }),
+
+
+     productCheckout: builder.mutation({
+      query: (data) => ({
+        url: `/product-order/checkout`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    createProductOrder: builder.mutation({
+      query: (data) => ({
+        url: `/product-order/create`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -73,4 +94,6 @@ export const {
   useAddProductMutation,
   useUpdateOrderStatusMutation,
   useDeleteProductMutation,
+  useProductCheckoutMutation,
+  useCreateProductOrderMutation
 } = productOrdersApi;

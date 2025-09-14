@@ -4,6 +4,7 @@ import { ICONS } from "../../assets";
 import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
 import Loader from "../../components/Shared/Loader/Loader";
 import { useCreateCourseOrderMutation } from "../../redux/Features/Course/courseApi";
+import { useCreateProductOrderMutation } from "../../redux/Features/ProductOrders/productOrdersApi";
 
 const PaymentSuccess = () => {
   const [params] = useSearchParams();
@@ -13,8 +14,12 @@ const PaymentSuccess = () => {
 
   const [counter, setCounter] = useState<number | null>(null);
 
-  const [bookChatAndChill, { isLoading: isBooking }] = useBookChatAndChillMutation(); // for chat and chill booking
-  const [createCourseOrder, { isLoading: isPlacingOrder }] = useCreateCourseOrderMutation(); // for course order placing
+  const [bookChatAndChill, { isLoading: isBooking }] =
+    useBookChatAndChillMutation(); // for chat and chill booking
+  const [createCourseOrder, { isLoading: isPlacingOrder }] =
+    useCreateCourseOrderMutation(); // for course order placing
+  const [createProductOrder, { isLoading: isPlacingProductOrder }] =
+    useCreateProductOrderMutation(); // for course order placing
 
   // trigger redirect countdown once counter starts
   useEffect(() => {
@@ -39,6 +44,7 @@ const PaymentSuccess = () => {
 
     const chatAndChillData = localStorage.getItem("chatAndChillData");
     const courseOrderData = localStorage.getItem("courseOrderData");
+    const productOrderData = localStorage.getItem("productOrderData");
 
     const handlePayment = async () => {
       try {
@@ -57,7 +63,7 @@ const PaymentSuccess = () => {
           }
 
           case "boardroomBanter": {
-              setCounter(10);
+            setCounter(10);
             break;
           }
 
@@ -73,9 +79,16 @@ const PaymentSuccess = () => {
             }
             break;
 
-          case "booking":
-            console.log("Confirming booking with:", orderId);
-            setCounter(10);
+          case "product":
+            if (productOrderData) {
+              const parsedData = JSON.parse(productOrderData);
+
+              const response = await createProductOrder(parsedData).unwrap();
+              if (response?.success) {
+                setCounter(10);
+                localStorage.removeItem("productOrderData");
+              }
+            }
             break;
 
           default:
@@ -87,11 +100,11 @@ const PaymentSuccess = () => {
     };
 
     handlePayment();
-  }, [type, orderId, bookChatAndChill, createCourseOrder]);
+  }, [type, orderId, bookChatAndChill, createCourseOrder, createProductOrder]);
 
   return (
     <div className="bg-surface-30 flex items-center justify-center min-h-screen">
-      {isBooking || isPlacingOrder ? (
+      {isBooking || isPlacingOrder || isPlacingProductOrder ? (
         <Loader />
       ) : (
         <div className="flex flex-col items-center">

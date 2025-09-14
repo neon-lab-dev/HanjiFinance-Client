@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BiTrash } from "react-icons/bi";
 import { useDispatch} from "react-redux";
 import { removeFromCart, updateQuantity } from "../../../redux/Features/Cart/cartSlice";
 
-const PaymentProductsCards = ({ items }) => {
+const PaymentProductsCards = ({ items } : any) => {
     const dispatch = useDispatch();
 
     const handleIncrement = (productId: string, sizeId: string, currentQuantity: number) => {
@@ -24,7 +25,7 @@ const PaymentProductsCards = ({ items }) => {
 
   return (
     <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-4">
-      {items.map((item, index) => (
+      {items.map((item:any, index:number) => (
         <div
           key={index}
           className="p-6 flex justify-between h-fit border-b border-neutral-98"
@@ -34,7 +35,7 @@ const PaymentProductsCards = ({ items }) => {
               <img src={item.image} alt={item.name} className="h-16 lg" />
             </div>
             <div className="flex flex-col justify-between">
-              <h3 className="font-medium text-neutral-25 leading-[22px]">
+              <h3 className="font-medium text-neutral-25 leading-[22px] capitalize">
                 {item.name}
               </h3>
               <p className="text-[17px] font-semibold leading-5 text-neutral-20">
