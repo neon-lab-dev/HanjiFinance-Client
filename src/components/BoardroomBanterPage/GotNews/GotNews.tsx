@@ -90,10 +90,9 @@ const GotNews = () => {
             <Link to={"/payment"}>
               <Button
                 label="Proceed to Pay"
-                // variant={isCouponValid ? "primary" : "disabled"}
-                variant="primary"
+                variant={isCouponValid ? "primary" : "disabled"}
                 classNames="px-4 py-[14px] h-fit"
-                // disabled={!isCouponValid}
+                disabled={!isCouponValid}
               />
             </Link>
           </div>

@@ -11,6 +11,7 @@ interface PaymentCardProps {
   showAutopayOption?: boolean;
   isAutopayAvailable?: boolean;
   onProceed: () => void;
+  isLoading?: boolean;
 }
 
 const PaymentCard: React.FC<PaymentCardProps> = ({
@@ -19,6 +20,7 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
   showAutopayOption = false,
   isAutopayAvailable = false,
   onProceed,
+  isLoading,
 }) => {
   const [visibleTooltip, setVisibleTooltip] = useState("");
   interface PaymentItem {
@@ -126,10 +128,11 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
           <div className="w-[60%]">
             <Button
               type="submit"
-              label="Proceed to Pay"
+              label="Pay Now"
               variant="primary"
               classNames="w-full"
               onClick={onProceed}
+              isLoading={isLoading}
             />
           </div>
         </div>

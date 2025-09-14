@@ -54,8 +54,6 @@ const LetsTalkForm = () => {
     }
   }, [bookingDate]);
 
-  console.log(bookingDate);
-
   const { data: apiKey } = useGetRazorpayKeyQuery({});
   // console.log(data);
   const [checkout] = useCheckoutMutation();

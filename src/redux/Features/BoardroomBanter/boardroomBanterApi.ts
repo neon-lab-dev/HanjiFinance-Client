@@ -106,10 +106,9 @@ const boardroomBanterApi = baseApi.injectEndpoints({
     }),
 
     createSubscription: builder.mutation({
-      query: (data) => ({
+      query: () => ({
         url: `/boardroom-banter-subscription/create`,
         method: "POST",
-        body: data,
         credentials: "include",
       }),
       invalidatesTags: ["boardroomBanter"],

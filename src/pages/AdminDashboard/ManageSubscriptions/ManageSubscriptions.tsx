@@ -171,7 +171,7 @@ const ManageSubscriptions = () => {
     });
 
   const allWaitlistedUsersData = allSubscriptions
-    .filter(
+    ?.filter(
       (subscription: TBoardRoomBanterSubscription) =>
         subscription.status === "waitlist"
     )

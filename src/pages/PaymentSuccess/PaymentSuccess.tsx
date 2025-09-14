@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ICONS } from "../../assets";
 import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
-import { useCreateSubscriptionMutation } from "../../redux/Features/BoardroomBanter/boardroomBanterApi";
 import Loader from "../../components/Shared/Loader/Loader";
 
 const PaymentSuccess = () => {
@@ -15,8 +14,6 @@ const PaymentSuccess = () => {
 
   const [bookChatAndChill, { isLoading: isBooking }] =
     useBookChatAndChillMutation();
-  const [createSubscription, { isLoading: isSubscribing }] =
-    useCreateSubscriptionMutation();
 
   // trigger redirect countdown once counter starts
   useEffect(() => {
@@ -58,10 +55,7 @@ const PaymentSuccess = () => {
           }
 
           case "boardroomBanter": {
-            const response = await createSubscription({ orderId }).unwrap();
-            if (response?.success) {
               setCounter(10);
-            }
             break;
           }
 
@@ -84,11 +78,11 @@ const PaymentSuccess = () => {
     };
 
     handlePayment();
-  }, [type, orderId, bookChatAndChill, createSubscription]);
+  }, [type, orderId, bookChatAndChill]);
 
   return (
     <div className="bg-surface-30 flex items-center justify-center min-h-screen">
-      {isBooking || isSubscribing ? (
+      {isBooking ? (
         <Loader />
       ) : (
         <div className="flex flex-col items-center">
