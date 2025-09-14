@@ -45,7 +45,7 @@ const OrdersPreview: React.FC<TOrdersPreviewProps> = ({ orderId }) => {
       ) : (
         <>
           {/* Order Details */}
-          <div className="mb-4">
+          <div className="mb-4 space-y-2">
             <h2 className="text-lg font-semibold flex items-center gap-2">
               Order #{singleProductOrder?.orderId}
               <FiCopy
@@ -77,7 +77,7 @@ const OrdersPreview: React.FC<TOrdersPreviewProps> = ({ orderId }) => {
 
             {/* Status Dropdown */}
             <div className="mt-2 flex items-center">
-              <label className="mr-2 font-medium">Status:</label>
+              <label className="mr-2 font-medium">Change Status:</label>
               <Dropdown
                 className="py-1 px-3"
                 value={status}

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import Container from "../../components/Reusable/Container/Container";
 import { getCartProducts } from "../../redux/Features/Cart/cartSlice";
 import Location from "../../components/Payment/Location/Location";
@@ -12,6 +12,7 @@ import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
 
 const Cart = () => {
+  
   const user = useSelector(useCurrentUser) as TUser;
   const cartProducts = useSelector(getCartProducts);
 
