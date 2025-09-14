@@ -18,7 +18,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { startOfWeek } from "date-fns/fp";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import TimePicker from "./TimePicker";
 import { useGetAllAvailabilityQuery } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 
@@ -61,7 +61,7 @@ const availabilities = data?.data?.availabilities || [];
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
-  const handleTimeChange = (value: string) => {
+  const handleTimeChange = useCallback((value: string) => {
   // Check if the selected day is valid
   const isUnavailable =
     (isPast(selectedDay) && !isToday(selectedDay)) ||
@@ -80,7 +80,7 @@ const availabilities = data?.data?.availabilities || [];
     setBookingDate(value);
     onBookingChange(value);
   }
-};
+}, [selectedDay, availabilities, firstDayCurrentMonth, onBookingChange]);
 
 useEffect(() => {
   console.log(bookingDate);
