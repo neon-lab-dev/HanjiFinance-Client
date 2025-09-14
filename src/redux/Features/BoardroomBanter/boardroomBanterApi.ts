@@ -94,6 +94,26 @@ const boardroomBanterApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["boardroomBanter"],
     }),
+
+    sendCouponCode: builder.mutation({
+      query: (data) => ({
+        url: `/boardroom-banter-subscription/send-coupon-code`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+
+    createSubscription: builder.mutation({
+      query: (data) => ({
+        url: `/boardroom-banter-subscription/create`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
   }),
 });
 
@@ -104,4 +124,6 @@ export const {
   useSuspendUserMutation,
   useWithdrawSuspensionMutation,
   useJoinWaitlistMutation,
+  useSendCouponCodeMutation,
+  useCreateSubscriptionMutation,
 } = boardroomBanterApi;

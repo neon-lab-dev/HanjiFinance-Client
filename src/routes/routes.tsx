@@ -21,7 +21,6 @@ import Consultations from "../pages/Dashboard/Consultations/Consultations";
 import BookConsultation from "../pages/Dashboard/BookConsultation/BookConsultation";
 import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import MyCourses from "../pages/Dashboard/MyCourses/MyCourses/MyCourses";
-import CoursesDetails from "../pages/Dashboard/MyCourses/MyCourses/[id]/Page";
 import MySubscription from "../pages/Dashboard/MySubscription/MySubscription/MySubscription";
 import PauseSubsrciption from "../pages/Dashboard/MySubscription/PauseSubsrciption/PauseSubsrciption";
 import ReactivateSubscription from "../pages/Dashboard/MySubscription/ReactivateSubscription/ReactivateSubscription";
@@ -103,6 +102,10 @@ export const router = createBrowserRouter([
         element: <PaymentSuccess />,
       },
       {
+        path: "/payment/failed/:id",
+        element: <PaymentCancelled />,
+      },
+      {
         path: "/payment-cancelled",
         element: <PaymentCancelled />,
       },
@@ -157,10 +160,10 @@ export const router = createBrowserRouter([
         path: "my-courses",
         element: <MyCourses />,
       },
-      {
-        path: "my-courses/:id",
-        element: <CoursesDetails />,
-      },
+      // {
+      //   path: "my-courses/:id",
+      //   element: <CoursesDetails />,
+      // },
       {
         path: "my-subscriptions",
         element: <MySubscription />,

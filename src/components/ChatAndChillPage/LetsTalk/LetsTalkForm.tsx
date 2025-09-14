@@ -95,7 +95,8 @@ const LetsTalkForm = () => {
         description: "Test Transaction",
         image: "https://i.ibb.co/0jpqmJzJ/logo.png",
         order_id: response?.data?.id,
-        callback_url : "https://hanjifinance-api.vercel.app/api/v1/chat-and-chill/verify-payment",
+        callback_url : "http://localhost:5000/api/v1/chat-and-chill/verify-payment",
+        // callback_url : "https://hanjifinance-api.vercel.app/api/v1/chat-and-chill/verify-payment",
         prefill: {
           name: user?.name,
           email: user?.email,
