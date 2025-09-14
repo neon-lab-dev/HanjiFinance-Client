@@ -74,11 +74,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           <img src={icon} className="size-6" />
         </div>}
         
-        {/* ✅ Show tick when valid */}
         {isValidField && !error && (
           <IoCheckmark className="absolute top-[36%] right-3 text-success-20 text-base" />
         )}
-        {/* ✅ Show error only if not valid */}
         {!isValidField && error?.message && (
           <span className="text-red-500 text-sm">{String(error.message)}</span>
         )}

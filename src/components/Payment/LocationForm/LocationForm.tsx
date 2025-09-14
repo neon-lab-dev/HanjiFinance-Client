@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import TextInput from "../../Reusable/TextInput/TextInput";
 import { ICONS } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
+import { useEffect } from "react";
+import {
+  useGetMeQuery,
+  useUpdateProfileMutation,
+} from "../../../redux/Features/User/userApi";
+import toast from "react-hot-toast";
 type TFormData = {
   name: string;
   email: string;
@@ -9,23 +16,59 @@ type TFormData = {
   addressLine1: string;
   addressLine2: string;
   city: string;
-  zipCode: string;
+  pinCode: string;
 };
 type LocationFormProps = {
   setLocationModalOpen: (isOpen: boolean) => void;
 };
 
 const LocationForm = ({ setLocationModalOpen }: LocationFormProps) => {
+  const { data: myProfile, isLoading } = useGetMeQuery({});
+  const [updateProfile, { isLoading: isUpdateProfileLoading }] =
+    useUpdateProfileMutation();
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TFormData>();
 
-  const handleFormSubmit = (data: TFormData) => {
-    console.log(data);
-    setLocationModalOpen(false);
+  useEffect(() => {
+    if (myProfile?.data) {
+      const user = myProfile.data;
+      setValue("name", user?.name);
+      setValue("email", user?.email);
+      setValue("phoneNumber", user?.phoneNumber);
+      setValue("addressLine1", user?.addressLine1);
+      setValue("addressLine2", user?.addressLine2 || "");
+      setValue("city", user?.city);
+      setValue("pinCode", user?.pinCode);
+    }
+  }, [myProfile?.data, setValue]);
+
+  const handleUpdateDeliveryAddress = async (data: TFormData) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("phoneNumber", data.phoneNumber);
+      formData.append("addressLine1", data.addressLine1 || "");
+      formData.append("addressLine2", data.addressLine2 || "");
+      formData.append("city", data.city);
+      formData.append("pinCode", data.pinCode);
+      const response = await updateProfile(formData).unwrap();
+      if (response?.success) {
+        toast.success("Delivery address saved.");
+        setLocationModalOpen(false);
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="px-12 py-6 space-y-9">
       <h3 className=" text-center text-neutral-20 text-2xl leading-7 font-medium">
@@ -35,7 +78,10 @@ const LocationForm = ({ setLocationModalOpen }: LocationFormProps) => {
         Form{" "}
       </h3>
       <div>
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+        <form
+          onSubmit={handleSubmit(handleUpdateDeliveryAddress)}
+          className="space-y-5"
+        >
           <TextInput
             label="Name"
             placeholder="For e.g., Mohit Naroune"
@@ -73,16 +119,15 @@ const LocationForm = ({ setLocationModalOpen }: LocationFormProps) => {
             label="Address Line 2"
             placeholder="Apartment, Landmark"
             error={errors.addressLine2}
-            {...register("addressLine2", {
-              required: "Address Line 2 is required",
-            })}
+            {...register("addressLine2")}
+            isRequired={false}
           />
           <TextInput
-            label="PinCode"
+            label="Pin Code"
             placeholder="For e.g., 110056"
-            error={errors.zipCode}
-            {...register("zipCode", {
-              required: "Zip Code is required",
+            error={errors.pinCode}
+            {...register("pinCode", {
+              required: "Pin Code is required",
             })}
           />
           <TextInput
@@ -98,6 +143,7 @@ const LocationForm = ({ setLocationModalOpen }: LocationFormProps) => {
             label="Save"
             type="submit"
             classNames="w-full"
+            isLoading={isUpdateProfileLoading}
           />
         </form>
       </div>

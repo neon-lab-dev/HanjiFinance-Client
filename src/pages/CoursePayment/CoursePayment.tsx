@@ -80,7 +80,7 @@ const CoursePayment = () => {
 
       const courseOrderData = {
         courseId: course?.data?._id,
-        totalAmount: course?.data?.discountedPrice,
+        totalAmount: totalToPay,
       };
 
       localStorage.setItem("courseOrderData", JSON.stringify(courseOrderData));

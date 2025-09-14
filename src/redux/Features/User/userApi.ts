@@ -12,6 +12,16 @@ const userApi = baseApi.injectEndpoints({
       providesTags: ["user"],
     }),
 
+    updateProfile: builder.mutation({
+      query: (data) => ({
+        url: `/user/update-profile/`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["user"],
+    }),
+
     getRazorpayKey: builder.query({
       query: () => ({
         url: "/get-key",
@@ -20,10 +30,12 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    
   }),
 });
 
 export const {
   useGetMeQuery,
+  useUpdateProfileMutation,
   useGetRazorpayKeyQuery
 } = userApi;
