@@ -28,6 +28,7 @@ const CourseCard: React.FC<TCourse> = ({
   tagline,
   imageUrl,
   basePrice,
+  discountedPrice,
   accessType,
   benefits
 ,
@@ -130,7 +131,7 @@ const CourseCard: React.FC<TCourse> = ({
         <div className="px-4  pt-2 space-y-5  z-100 mt-auto ">
           <div className="space-y-1">
             <p className="text-neutral-130 text-[17px] leading-5 font-bold tracking-[-0.18px]">
-              ₹ {basePrice}
+              <span className="font-normal text-sm line-through text-primary-10">₹{basePrice}</span> ₹{discountedPrice}
             </p>
             <p className="text-neutral-60 text-sx capitalize leading-[14px] tracking-[-0.12]">
              {accessType}

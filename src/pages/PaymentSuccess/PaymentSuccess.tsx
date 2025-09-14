@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ICONS } from "../../assets";
 import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
 import Loader from "../../components/Shared/Loader/Loader";
+import { useCreateCourseOrderMutation } from "../../redux/Features/Course/courseApi";
 
 const PaymentSuccess = () => {
   const [params] = useSearchParams();
@@ -12,8 +13,8 @@ const PaymentSuccess = () => {
 
   const [counter, setCounter] = useState<number | null>(null);
 
-  const [bookChatAndChill, { isLoading: isBooking }] =
-    useBookChatAndChillMutation();
+  const [bookChatAndChill, { isLoading: isBooking }] = useBookChatAndChillMutation(); // for chat and chill booking
+  const [createCourseOrder, { isLoading: isPlacingOrder }] = useCreateCourseOrderMutation(); // for course order placing
 
   // trigger redirect countdown once counter starts
   useEffect(() => {
@@ -37,6 +38,7 @@ const PaymentSuccess = () => {
     if (!type) return;
 
     const chatAndChillData = localStorage.getItem("chatAndChillData");
+    const courseOrderData = localStorage.getItem("courseOrderData");
 
     const handlePayment = async () => {
       try {
@@ -59,9 +61,16 @@ const PaymentSuccess = () => {
             break;
           }
 
-          case "lms":
-            console.log("Enrolling course with:", orderId);
-            setCounter(10);
+          case "course":
+            if (courseOrderData) {
+              const parsedData = JSON.parse(courseOrderData);
+
+              const response = await createCourseOrder(parsedData).unwrap();
+              if (response?.success) {
+                setCounter(10);
+                localStorage.removeItem("courseOrderData");
+              }
+            }
             break;
 
           case "booking":
@@ -78,11 +87,11 @@ const PaymentSuccess = () => {
     };
 
     handlePayment();
-  }, [type, orderId, bookChatAndChill]);
+  }, [type, orderId, bookChatAndChill, createCourseOrder]);
 
   return (
     <div className="bg-surface-30 flex items-center justify-center min-h-screen">
-      {isBooking ? (
+      {isBooking || isPlacingOrder ? (
         <Loader />
       ) : (
         <div className="flex flex-col items-center">

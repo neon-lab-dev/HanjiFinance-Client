@@ -36,8 +36,7 @@ const courseApi = baseApi.injectEndpoints({
       providesTags: ["course"],
     }),
 
-
-     addCourse: builder.mutation({
+    addCourse: builder.mutation({
       query: (data) => ({
         url: `/course/add`,
         method: "POST",
@@ -48,7 +47,7 @@ const courseApi = baseApi.injectEndpoints({
     }),
 
     updateCourse: builder.mutation({
-      query: ({data, id}) => ({
+      query: ({ data, id }) => ({
         url: `/course/update/${id}`,
         method: "PUT",
         body: data,
@@ -84,6 +83,26 @@ const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["course"],
     }),
+
+    courseCheckout: builder.mutation({
+      query: (data) => ({
+        url: `/course-order/checkout`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    createCourseOrder: builder.mutation({
+      query: (data) => ({
+        url: `/course-order/create`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -96,4 +115,6 @@ export const {
   useDeleteCourseMutation,
   useAddLectureMutation,
   useDeleteLectureMutation,
+  useCourseCheckoutMutation,
+  useCreateCourseOrderMutation,
 } = courseApi;

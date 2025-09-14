@@ -56,7 +56,6 @@ const LetsTalkForm = () => {
   }, [bookingDate]);
 
   const { data: apiKey } = useGetRazorpayKeyQuery({});
-  // console.log(data);
   const [checkout] = useCheckoutMutation();
 
   const [loading, setLoading] = useState(false);
@@ -78,7 +77,7 @@ const LetsTalkForm = () => {
 
     let response;
     try {
-      response = await checkout(payload);
+      response = await checkout(payload).unwrap();
     } catch (error) {
       console.error(error);
       setLoading(false);
