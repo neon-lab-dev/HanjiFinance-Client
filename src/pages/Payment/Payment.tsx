@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useCreateSubscriptionMutation } from "../../redux/Features/BoardroomBanter/boardroomBanterApi";
 import toast from "react-hot-toast";
 import { openModal } from "../../redux/Features/Auth/authModalSlice";
+import { config } from "../../config/config";
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -43,9 +44,8 @@ const Payment = () => {
         subscription_id: subscriptionId,
         name: "Hanjifinance",
         description: "Boardroom Banter Membership",
-        image: "https://i.ibb.co/0jpqmJzJ/logo.png",
-        callback_url:
-          "http://localhost:5000/api/v1/boardroom-banter-subscription/verify-payment",
+        image: config.razorpayLogo,
+        callback_url: `${config.baseUrl}/boardroom-banter-subscription/verify-payment`,
         prefill: {
           name: user?.name,
           email: user?.email,

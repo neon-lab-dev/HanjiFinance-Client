@@ -12,6 +12,7 @@ import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../types/user.types";
 import { useGetRazorpayKeyQuery } from "../../../redux/Features/User/userApi";
 import { useCheckoutMutation } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
+import { config } from "../../../config/config";
 
 // Add Razorpay type to window
 declare global {
@@ -72,8 +73,8 @@ const LetsTalkForm = () => {
     setLoading(true);
 
     const payload = {
-      amount:totalAmount
-    }
+      amount: totalAmount,
+    };
 
     let response;
     try {
@@ -91,10 +92,9 @@ const LetsTalkForm = () => {
         currency: "INR",
         name: "Hanjifinance",
         description: "Test Transaction",
-        image: "https://i.ibb.co/0jpqmJzJ/logo.png",
+        image: config.razorpayLogo,
         order_id: response?.data?.id,
-        callback_url : "http://localhost:5000/api/v1/chat-and-chill/verify-payment",
-        // callback_url : "https://hanjifinance-api.vercel.app/api/v1/chat-and-chill/verify-payment",
+        callback_url: `${config.baseUrl}/chat-and-chill/verify-payment`,
         prefill: {
           name: user?.name,
           email: user?.email,
@@ -103,7 +103,6 @@ const LetsTalkForm = () => {
         theme: { color: "#b91c1c" },
       };
 
-      // **Directly open Razorpay** here in the click handler
       const rzp = new window.Razorpay(options);
       rzp.open();
 
