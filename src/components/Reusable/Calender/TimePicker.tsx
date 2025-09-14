@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 type TimePickerProps = {
   selectedDay: Date;
@@ -14,18 +14,18 @@ const TimePicker = ({ selectedDay, onChange, disabled = true }: TimePickerProps)
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const minutes = ["00", "15", "30", "45"];
   const periods = ["AM", "PM"];
+useEffect(() => {
+  if (!selectedDay) return;
+  let h = hour % 12;
+  if (period === "PM") h += 12;
 
-  useEffect(() => {
-    if (!selectedDay) return;
+  const bookingDate = new Date(selectedDay);
+  bookingDate.setHours(h, Number(minute), 0, 0);
 
-    let h = hour % 12;
-    if (period === "PM") h += 12;
+  const iso = bookingDate.toISOString();
+  onChange(iso);
+}, [hour, minute, period, selectedDay]);
 
-    const bookingDate = new Date(selectedDay);
-    bookingDate.setHours(h, Number(minute), 0, 0);
-
-    onChange(bookingDate.toISOString()); // send ISO string up
-  }, [hour, minute, period, selectedDay, onChange]);
 
   return (
     <div className="flex items-center space-x-2 ">
@@ -76,4 +76,4 @@ const TimePicker = ({ selectedDay, onChange, disabled = true }: TimePickerProps)
   );
 };
 
-export default TimePicker;
+export default React.memo(TimePicker);

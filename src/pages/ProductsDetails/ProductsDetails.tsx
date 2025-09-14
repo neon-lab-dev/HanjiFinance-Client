@@ -146,9 +146,9 @@ const navigate = useNavigate()
               <div className="flex items-center gap-4 mt-[6px]">
                 {/* Price */}
                 <h1 className="text-[28px] md:text-[32px] font-semibold md:font-medium text-neutral-10 leading-normal">
-                  Rs. {selectedProducts?.basePrice}{" "}
+                 Rs. {selectedProducts?.discountedPrice} {" "}
                   <span className="line-through text-sm lg:text-base text-primary-10">
-                    Rs. {selectedProducts?.discountedPrice}
+                    Rs. {selectedProducts?.basePrice}
                   </span>
                 </h1>
               </div>
