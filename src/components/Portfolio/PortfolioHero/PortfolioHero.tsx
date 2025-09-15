@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import Container from "../../Reusable/Container/Container";
@@ -7,6 +8,7 @@ import PortfolioCards from "./PortfolioCards";
 import { useState } from "react";
 
 const PortfolioHero = () => {
+  const navigate = useNavigate();
   const [onBoardingStatus, setOnBoardingStatus] = useState<boolean>(false);
   const [onSuccessful, setOnSuccessful] = useState<boolean>(false);
   const [onFormOpen, setOnFormOpen] = useState<boolean>(false);
@@ -31,8 +33,9 @@ const PortfolioHero = () => {
       description:
         "Get the basic advice or your portfolio reviewed over a 30-min 1 on 1 call",
       price: "₹999",
-      path: "/",
+      path: "/services/chat-and-chill",
       buttonLabel: "Learn More",
+      onClick: () => navigate("/services/chat-and-chill"),
     },
     {
       icon: ICONS.financialCheakup,

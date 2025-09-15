@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
         element: <ChatAndChill />,
       },
       {
-        path: "/portfolio",
+        path: "/advisor-services",
         element: <Portfolio />,
       },
       {

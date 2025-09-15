@@ -23,8 +23,9 @@ const PortfolioCards = ({ item }: any) => {
           One time payment
         </p>
       </div>
-      <button      
-        className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1" onClick={item.onClick}
+      <button
+        className="text-primary-20 flex items-center gap-2 text-[17px] font-semibold leading-5 transition-all duration-300 delay-100 transform hover:-translate-y-1 cursor-pointer"
+        onClick={item.onClick}
       >
         {item?.buttonLabel} <FaAngleRight />
       </button>

@@ -8,15 +8,15 @@ type Props = {
   setIsOpen: any;
 };
 
-const statusColors: Record<string, string> = {
-  active: "text-green-600 bg-green-100 border-green-400",
-  paused: "text-yellow-600 bg-yellow-100 border-yellow-400",
-  expired: "text-red-600 bg-red-100 border-red-400",
-  pending: "text-blue-600 bg-blue-100 border-blue-400",
-  waitlist: "text-purple-600 bg-purple-100 border-purple-400",
-  "code sent": "text-indigo-600 bg-indigo-100 border-indigo-400",
-  cancelled: "text-gray-600 bg-gray-100 border-gray-400",
-};
+  const statusColors: Record<string, string> = {
+    active: "text-green-600 bg-green-100 border-green-400",
+    paused: "text-yellow-600 bg-yellow-100 border-yellow-400",
+    expired: "text-red-600 bg-red-100 border-red-400",
+    pending: "text-blue-600 bg-blue-100 border-blue-400",
+    waitlist: "text-purple-600 bg-purple-100 border-purple-400",
+    "code sent": "text-indigo-600 bg-indigo-100 border-indigo-400",
+    cancelled: "text-red-600 bg-red-50 border-red-50",
+  };
 
 export default function SubscriptionPreviewModal({
   subscription,

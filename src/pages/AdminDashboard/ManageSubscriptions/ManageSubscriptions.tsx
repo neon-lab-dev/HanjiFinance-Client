@@ -103,6 +103,7 @@ const ManageSubscriptions = () => {
     pending: "text-blue-600 bg-blue-100 border-blue-400",
     waitlist: "text-purple-600 bg-purple-100 border-purple-400",
     "code sent": "text-indigo-600 bg-indigo-100 border-indigo-400",
+    cancelled: "text-red-600 bg-red-50 border-red-50",
   };
 
   const allSubscriptionsData = allSubscriptions
