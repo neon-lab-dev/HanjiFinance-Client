@@ -1,70 +1,82 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import Button from "../../../../components/Reusable/Button/Button";
 import { useForm } from "react-hook-form";
 import Textarea from "../../../../components/Reusable/TextArea/TextArea";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { useCancelSubscriptionMutation } from "../../../../redux/Features/BoardroomBanter/boardroomBanterApi";
 
-interface PauseFormData {
-  message?: string;
+type TFormData = {
+  cancelReason?: string;
 }
 
 const CancelSubscription = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PauseFormData>();
+  } = useForm<TFormData>();
 
-  const handlePause = (data: PauseFormData) => {
-    console.log("Form Data:", data);
+  const [cancelSubscription, { isLoading: isCanceling }] =
+    useCancelSubscriptionMutation();
+
+  const handleCancelSubscription = async (data: TFormData) => {
+    try {
+      const payload = {
+        cancelReason: data.cancelReason,
+      };
+      const response = await cancelSubscription(payload).unwrap();
+
+      if (response?.success) {
+        toast.success(response?.message);
+        navigate("/dashboard/my-subscriptions");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
-
-  useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      console.log("Clicked:", event.target);
-    };
-
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
 
   return (
     <div className="font-Montserrat">
       <SubscriptionStatus>
         <p className="font-bold text-neutral-10">It’s sad to see you go,</p>
         <form
-          onSubmit={handleSubmit(handlePause)}
+          onSubmit={handleSubmit(handleCancelSubscription)}
           className="flex flex-col gap-8 mt-6 w-full"
-        >   
-
+        >
           {/* Message */}
-             <Textarea
+          <Textarea
             label="Please tell us the reason for your subscription cancellation"
             placeholder="Your answer goes here....."
             rows={6}
-            error={errors.message}
-            {...register("message")}
+            error={errors.cancelReason}
+            {...register("cancelReason")}
             isRequired={true}
           />
 
           {/* Actions */}
-          <div className="flex gap-8 w-full items-center justify-center">
-            <Button
-              variant="custom"
-              label="Don’t Cancel"
-              classNames="px-8 border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
-              type="button"
-            />
+          <div className="flex gap-3 w-full items-center justify-center">
+            <Link to={"/dashboard/my-subscriptions"}>
+              <Button
+                variant="custom"
+                label="Don’t Cancel"
+                classNames="px-8 py-[11px] border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
+                type="button"
+              />
+            </Link>
             <Button
               variant="primary"
               label="Cancel Subscription"
               type="submit"
+              isLoading={isCanceling}
             />
           </div>
         </form>
-        <p className="text-neutral-60 text-center mt-8 font-medium text-[13px] mb-2">Hope to see you back super soon!</p>
+        <p className="text-neutral-60 text-center mt-8 font-medium text-[13px] mb-2">
+          Hope to see you back super soon!
+        </p>
       </SubscriptionStatus>
     </div>
   );

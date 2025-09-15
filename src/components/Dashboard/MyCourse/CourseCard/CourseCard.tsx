@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 import Button from "../../../Reusable/Button/Button";
 import { Link } from "react-router-dom";
@@ -44,6 +45,7 @@ const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progres
 
 type TCourseCard = {
   _id:string;
+  courseId: any;
   courseTitle: string;
   subtitle: string;
   tagline: string;
@@ -54,15 +56,13 @@ type TCourseCard = {
     total: number;
     progress: number; // in percentage
   };
+  createdAt: string;
 };
 
 const CourseCard: React.FC<TCourseCard> = ({
   _id,
   courseId,
   courseTitle,
-  subtitle,
-  tagline,
-  imageUrl,
   progressData,
   createdAt,
 }) => {

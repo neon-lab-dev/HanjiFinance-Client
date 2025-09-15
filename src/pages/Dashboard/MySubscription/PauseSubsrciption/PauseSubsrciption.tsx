@@ -12,7 +12,7 @@ import { usePauseSubscriptionMutation } from "../../../../redux/Features/Boardro
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
-interface PauseFormData {
+type TFormData = {
   dateRange: string;
   pauseReason?: string;
 }
@@ -24,12 +24,12 @@ const PauseSubscription = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<PauseFormData>();
+  } = useForm<TFormData>();
 
   const [pauseSubscription, { isLoading: isPausing }] =
     usePauseSubscriptionMutation();
 
-  const handlePauseSubscription = async (data: PauseFormData) => {
+  const handlePauseSubscription = async (data: TFormData) => {
     try {
       const payload = {
         dateRange: data.dateRange,
