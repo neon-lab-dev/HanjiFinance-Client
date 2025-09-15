@@ -26,8 +26,9 @@ const Location = () => {
   return (
     <div>
       {address ? (<div className="">
-        <h3 className="font-semibold text-neutral-20">Delivery Address</h3>
-        <p className="text-neutral-80 ">Delivery Address: {myProfile?.data?.addressLine1}</p>
+        <div className="flex items-center justify-start gap-2"><h3 className="font-semibold text-neutral-20">Delivery Address</h3><img 
+           onClick={() => setLocationModalOpen(true)}src={ICONS.pen} alt="" className="size-4 cursor-pointer" /> </div>
+        <p className="text-neutral-20 text-sm font-medium">Delivery Address: {myProfile?.data?.addressLine1}</p>
       </div>
         
       ) : (
@@ -39,15 +40,16 @@ const Location = () => {
             classNames="bg-white shadow-none p-0 text-neutral-20 border-surface-90 bg-surface-30 px-4 py-2"
             icon={ICONS.addLocation}
           />
-          <ConfirmationModal
+          
+        </>
+      )}
+      <ConfirmationModal
             isConfirmationModalOpen={isLocationModalOpen}
             setIsConfirmationModalOpen={setLocationModalOpen}
             isCrossVisible={true}
           >
             <LocationForm setLocationModalOpen={setLocationModalOpen} />
           </ConfirmationModal>
-        </>
-      )}
     </div>
   );
 };

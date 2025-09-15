@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import type { TProduct } from "../ProductsSection/ProductsSection";
-import {
-  addToCart,
-} from "../../../redux/Features/Cart/cartSlice";
-import { useDispatch, } from "react-redux";
+import { addToCart } from "../../../redux/Features/Cart/cartSlice";
+import { useDispatch } from "react-redux";
 type ProductCardProps = {
   item: TProduct;
 };
@@ -73,9 +71,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
       {/* Product price */}
       <div className="mt-4">
-        <h1 className="text-neutral-10 text-xl font-medium leading-6">
-          Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
-        </h1>
+        <div className="flex gap-2 items-baseline">
+          <h1 className="text-neutral-10 text-2xl font-medium leading-6">
+            Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
+          </h1>{" "}
+          <span className="line-through text-xs lg:text-base text-primary-10">
+            Rs. {item?.sizes[0]?.basePrice}
+          </span>
+        </div>
+
         <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
           inclusive of all taxes
         </p>

@@ -212,7 +212,7 @@ const navigate = useNavigate()
               <div className="border-b border-neutral-185 border-dashed pb-6"></div>
 
               {/* Delivery Options */}
-              <DeliveryOptions />
+              {/* <DeliveryOptions /> */}
 
               {/* Delivery details */}
               <DeliveryDetails />
