@@ -21,7 +21,7 @@ const courseOrdersApi = baseApi.injectEndpoints({
           credentials: "include",
         };
       },
-      providesTags: ["productOrder"],
+      providesTags: ["courseOrder"],
     }),
 
     getSingleProductOrderById: builder.query({
@@ -30,7 +30,32 @@ const courseOrdersApi = baseApi.injectEndpoints({
         method: "GET",
         credentials: "include",
       }),
-      providesTags: ["productOrder"],
+      providesTags: ["courseOrder"],
+    }),
+
+     getMyCourseOrders: builder.query({
+      query: ({
+        keyword,
+        page,
+        status,
+      }: {
+        keyword?: string;
+        page?: number;
+        status?: string;
+      }) => {
+        const params = new URLSearchParams();
+
+        if (keyword) params.append("keyword", keyword);
+        if (page) params.append("page", page.toString());
+        if (status) params.append("status", status);
+
+        return {
+          url: `/course-order/my-orders${params.toString() ? `?${params.toString()}` : ""}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["courseOrder"],
     }),
 
     addProduct: builder.mutation({
@@ -40,7 +65,7 @@ const courseOrdersApi = baseApi.injectEndpoints({
         body: data,
         credentials: "include",
       }),
-      invalidatesTags: ["productOrder"],
+      invalidatesTags: ["courseOrder"],
     }),
 
     updateOrderStatus: builder.mutation({
@@ -50,7 +75,7 @@ const courseOrdersApi = baseApi.injectEndpoints({
         body: data,
         credentials: "include",
       }),
-      invalidatesTags: ["productOrder"],
+      invalidatesTags: ["courseOrder"],
     }),
 
     deleteProduct: builder.mutation({
@@ -59,7 +84,7 @@ const courseOrdersApi = baseApi.injectEndpoints({
         method: "DELETE",
         credentials: "include",
       }),
-      invalidatesTags: ["productOrder"],
+      invalidatesTags: ["courseOrder"],
     }),
   }),
 });
@@ -67,6 +92,7 @@ const courseOrdersApi = baseApi.injectEndpoints({
 export const {
   useGetAllCourseOrdersQuery,
   useGetSingleProductOrderByIdQuery,
+  useGetMyCourseOrdersQuery,
   useAddProductMutation,
   useUpdateOrderStatusMutation,
   useDeleteProductMutation,
