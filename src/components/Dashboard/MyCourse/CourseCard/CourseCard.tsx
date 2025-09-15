@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Button from "../../../Reusable/Button/Button";
+import { Link } from "react-router-dom";
 
 // Progress Section Component
 type TProgressSection = {
@@ -41,9 +42,10 @@ const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progres
 
 
 type TCourseCard = {
+  _id:string;
   title: string;
-  subTitle: string;
-  tag: string;
+  subtitle: string;
+  tagline: string;
   description: string;
   imageUrl: string;
   progressData?: {
@@ -54,9 +56,10 @@ type TCourseCard = {
 };
 
 const CourseCard: React.FC<TCourseCard> = ({
+  _id,
   title,
-  subTitle,
-  tag,
+  subtitle,
+  tagline,
   imageUrl,
   progressData,
 }) => {
@@ -75,29 +78,35 @@ const CourseCard: React.FC<TCourseCard> = ({
             <h1 className="text-neutral-130 text-xl tracking-[-0.2px] font-bold leading-6">
               {title}
             </h1>
-            <p className="text-neutral-60 text-sm leading-5">{subTitle}</p>
+            <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
           </div>
           <span className="text-neutral-160 text-xs font-medium leading-[14px] tracking-[-0.12px]">
-            {tag}
+            {tagline}
           </span>
         </div>
 
         {/* Progress Section (reusable) */}
         <div className="px-4 pt-2 space-y-5 mt-auto">
-          {progressData && (
-            <ProgressSection
+          {/* {progressData && ( */}
+            {/* <ProgressSection
               completed={progressData.completed}
               total={progressData.total}
-              progress={progressData.progress}
+              progress={progressData.progress} */}
+            {/* /> */}
+          {/* )} */}
+           <ProgressSection
+              completed={10}
+              total={15}
+              progress={56}
             />
-          )}
 
           {/* CTA Button */}
+          <Link to={`${_id}`}>
           <Button
             label="Continue Learning"
             variant="primary"
             classNames="w-full"
-          />
+          /></Link>
         </div>
       </div>
     </div>
