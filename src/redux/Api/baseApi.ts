@@ -22,7 +22,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<any> = async (args, api, extraOptio
   console.log(result);
 
   if(result.error?.status === 401){
-    const res = await fetch('https://hanjifinance-api.vercel.app/api/v1/auth/refresh-token', {
+    const res = await fetch('http://localhost:5000/api/v1/auth/refresh-token', {
       credentials : 'include'
     });
 

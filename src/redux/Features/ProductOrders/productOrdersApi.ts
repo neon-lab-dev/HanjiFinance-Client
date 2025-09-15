@@ -36,6 +36,31 @@ const productOrdersApi = baseApi.injectEndpoints({
       providesTags: ["productOrder"],
     }),
 
+    getMyProductOrders: builder.query({
+      query: ({
+        keyword,
+        page,
+        status,
+      }: {
+        keyword?: string;
+        page?: number;
+        status?: string;
+      }) => {
+        const params = new URLSearchParams();
+
+        if (keyword) params.append("keyword", keyword);
+        if (page) params.append("page", page.toString());
+        if (status) params.append("status", status);
+
+        return {
+          url: `/product-order/my-orders${params.toString() ? `?${params.toString()}` : ""}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["productOrder"],
+    }),
+
     addProduct: builder.mutation({
       query: (data) => ({
         url: `/product/add`,
@@ -91,6 +116,7 @@ const productOrdersApi = baseApi.injectEndpoints({
 export const {
   useGetAllProductOrdersQuery,
   useGetSingleProductOrderByIdQuery,
+  useGetMyProductOrdersQuery,
   useAddProductMutation,
   useUpdateOrderStatusMutation,
   useDeleteProductMutation,
