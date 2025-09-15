@@ -36,6 +36,7 @@ const ConsultationsSection = () => {
             {bookings.map((item: TChatAndChill, index: number) => (
               <ConsultationsCard
                 key={index}
+                id={item?._id}
                 title={item?.title as string}
                 subtitle={item?.topicsToDiscuss as string}
                 date={formatDate(item.bookingDate)}
@@ -43,7 +44,6 @@ const ConsultationsSection = () => {
                 duration={"30 min"}
                 status={item.status}
                 meetingLink={item.meetingLink}
-                onCancel={() => console.log(`Cancelled: ${item.title}`)}
               />
             ))}
 

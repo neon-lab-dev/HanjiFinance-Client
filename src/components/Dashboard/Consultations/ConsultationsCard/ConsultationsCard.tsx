@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import toast from "react-hot-toast";
 import { ICONS } from "../../../../assets";
+import { useUpdateStatusMutation } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
 import Button from "../../../Reusable/Button/Button";
 
 interface ConsultationsCardProps {
+  id: string;
   title: string;
   subtitle: string;
   date: string;
@@ -10,10 +14,10 @@ interface ConsultationsCardProps {
   status: string;
   statusType?: "success" | "warning" | "error";
   meetingLink?: string;
-  onCancel?: () => void;
 }
 
 const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
+  id,
   title,
   subtitle,
   date,
@@ -21,8 +25,22 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
   duration,
   status,
   meetingLink,
-  onCancel,
 }) => {
+  const [updateStatus, { isLoading }] = useUpdateStatusMutation();
+  const handleUpdateStatus = async () => {
+    const payload = {
+      status: "cancelled",
+    };
+    try {
+      await toast.promise(updateStatus({ data: payload, id }).unwrap(), {
+        loading: "cancelling meeting...",
+        success: () => "Meeting cancelled!",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
+  };
   const statusColors: Record<string, string> = {
     booked: "text-blue-600 bg-blue-100 border-blue-400",
     scheduled: "text-purple-600 bg-purple-100 border-purple-400",
@@ -55,7 +73,11 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
           <div className="flex gap-4 mt-6">
             <a href={meetingLink} target="_blank">
               <Button
-              disabled={!meetingLink}
+                disabled={
+                  !meetingLink ||
+                  status === "completed" ||
+                  status === "cancelled"
+                }
                 label="Join Session"
                 variant="primary"
                 classNames="px-4 py-2"
@@ -63,11 +85,12 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
             </a>
 
             <Button
-            disabled={status === "completed" || status === "cancelled"}
-              label="Cancel"
-              variant="secondary"
+              disabled={status === "completed" || status === "cancelled"}
+              label={status === "cancelled" ? "Cancelled" : "Cancel"}
+              variant={status === "cancelled" ? "custom" : "secondary"}
               classNames="px-4 py-2"
-              onClick={onCancel}
+              onClick={handleUpdateStatus}
+              isLoading={isLoading}
             />
           </div>
         </div>
