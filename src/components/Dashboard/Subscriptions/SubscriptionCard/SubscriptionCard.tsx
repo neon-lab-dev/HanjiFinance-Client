@@ -15,7 +15,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ icon, value, label,
       </div>
 
       <div className="space-y-1 font-medium">
-        <p className={`text-[28px] leading-[32px] ${classNames}`}>{value}</p>
+        <p className={`text-[28px] leading-[32px] capitalize ${classNames}`}>{value}</p>
         <p className="leading-[22px] text-neutral-600">{label}</p>
       </div>
     </div>

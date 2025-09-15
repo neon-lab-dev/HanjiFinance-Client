@@ -218,6 +218,7 @@ const JoinWaitlistForm = () => {
               variant="primary"
               label="Join the Waitlist"
               classNames="w-full sm:w-fit"
+              isLoading={isLoading}
             />
           </div>
 

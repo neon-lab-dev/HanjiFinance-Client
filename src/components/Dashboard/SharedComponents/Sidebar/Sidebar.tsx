@@ -113,7 +113,7 @@ const Sidebar: React.FC = () => {
                   isActive(menu.link)
                     ? "bg-primary-30 text-primary-20 font-semibold"
                     : "text-neutral-20 "
-                } hover:bg-neutral-155 rounded-lg text-neutral-20 font-medium`}
+                } hover:bg-neutral-155 rounded-lg text-neutral-20 font-medium cursor-pointer`}
               >
                 <Link to={menu.link} className="flex items-center gap-2">
                   {menu.name}
@@ -126,7 +126,7 @@ const Sidebar: React.FC = () => {
       <div className="rounded-xl mx-4 mb-6">
         <button
           onClick={handleLogout}
-          className="hover:bg-primary-30 hover:text-primary-20 font-medium leading-[22px] w-full rounded-lg text-center flex items-center gap-2 justify-between py-2 px-3"
+          className="hover:bg-primary-30 hover:text-primary-20 font-medium leading-[22px] w-full rounded-lg text-center flex items-center gap-2 justify-between py-2 px-3 cursor-pointer"
         >
           Logout
           <img

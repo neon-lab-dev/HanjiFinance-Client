@@ -33,7 +33,7 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
     };
     try {
       await toast.promise(updateStatus({ data: payload, id }).unwrap(), {
-        loading: "cancelling meeting...",
+        loading: "Cancelling meeting...",
         success: () => "Meeting cancelled!",
         error: (err: any) => err?.data?.message || "Something went wrong!",
       });
@@ -98,7 +98,7 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
       <div
         className={`border-[1px] rounded-sm p-1 text-[13px] leading-4 font-medium capitalize ${statusColors[status]}`}
       >
-        {status}
+        {status === "booked" ? "Not scheduled yet" : status} 
       </div>
     </div>
   );

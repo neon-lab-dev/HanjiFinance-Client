@@ -1,16 +1,17 @@
 import { ICONS } from "../../../../assets"
+import { formatDate } from "../../../../utils/formatDate"
 import SubscriptionCard from "../SubscriptionCard/SubscriptionCard"
 
-const SubscriptionCardsList = () => {
+const SubscriptionCardsList = ({status, nextBilling} : {status: string, nextBilling: string}) => {
   const cards = [
     {
       icon: ICONS.medal,
-      value: "Active",
+      value: status,
       label: "Subscription Status",
     },
     {
       icon: ICONS.calendarMinimalistic,
-      value: "21 Aug, 2025",
+      value: formatDate(nextBilling),
       label: "Next Billing",
     },
   ]
@@ -20,9 +21,9 @@ const SubscriptionCardsList = () => {
       {cards.map((card) => {
         // compute conditional class for the value
         const classNames =
-          card.value === "Active"
+          card.value === "active"
             ? "text-success-20"
-            : card.value === "Paused" || card.value === "Cancelled"
+            : card.value === "Paused" || card.value === "cancelled"
             ? "text-primary-15"
             : card.value === "Not Available"
             ? "text-primary-40"

@@ -57,6 +57,33 @@ const boardroomBanterApi = baseApi.injectEndpoints({
       providesTags: ["boardroomBanter"],
     }),
 
+    getMySubscription: builder.query({
+      query: () => ({
+        url: `/boardroom-banter-subscription/my-subscription`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["boardroomBanter"],
+    }),
+
+    pauseSubscription: builder.mutation({
+      query: () => ({
+        url: `/boardroom-banter-subscription/pause`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+
+    resumeSubscription: builder.mutation({
+      query: () => ({
+        url: `/boardroom-banter-subscription/resume`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+
     updateWhatsAppStatus: builder.mutation({
       query: (data) => ({
         url: `/boardroom-banter-subscription/update-whatsapp-status`,
@@ -119,7 +146,10 @@ const boardroomBanterApi = baseApi.injectEndpoints({
 export const {
   useGetAllSubscriptionsQuery,
   useGetSingleConsultationByIdQuery,
+  useGetMySubscriptionQuery,
   useUpdateWhatsAppStatusMutation,
+  usePauseSubscriptionMutation,
+  useResumeSubscriptionMutation,
   useSuspendUserMutation,
   useWithdrawSuspensionMutation,
   useJoinWaitlistMutation,
