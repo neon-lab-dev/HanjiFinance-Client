@@ -18,7 +18,7 @@ import Loader from "../../../components/Shared/Loader/Loader";
 
 const AddOrEditProduct = () => {
   const location = useLocation();
-  const { id, action } = location.state;
+  const { id, action } = location.state || {};
   const { data: singleProduct, isLoading: productLoading } =
     useGetSingleProductByIdQuery(id);
 

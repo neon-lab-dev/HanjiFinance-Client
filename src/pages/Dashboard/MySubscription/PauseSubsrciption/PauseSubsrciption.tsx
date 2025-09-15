@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionStatus/SubscriptionStatus";
 import Button from "../../../../components/Reusable/Button/Button";
@@ -7,22 +8,42 @@ import Textarea from "../../../../components/Reusable/TextArea/TextArea";
 import { ICONS } from "../../../../assets";
 import TwoMonthsCalender from "../../../../components/Reusable/Calender/TwoMonthsCalender";
 import { useState } from "react";
+import { usePauseSubscriptionMutation } from "../../../../redux/Features/BoardroomBanter/boardroomBanterApi";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 interface PauseFormData {
   dateRange: string;
-  message?: string;
+  pauseReason?: string;
 }
 
 const PauseSubscription = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue, // 🔑 from react-hook-form
+    setValue,
   } = useForm<PauseFormData>();
 
-  const handlePause = (data: PauseFormData) => {
-    console.log("Form Data:", data);
+  const [pauseSubscription, { isLoading: isPausing }] =
+    usePauseSubscriptionMutation();
+
+  const handlePauseSubscription = async (data: PauseFormData) => {
+    try {
+      const payload = {
+        dateRange: data.dateRange,
+        pauseReason: data.pauseReason,
+      };
+      const response = await pauseSubscription(payload).unwrap();
+
+      if (response?.success) {
+        toast.success(response?.message);
+        navigate("/dashboard/my-subscriptions");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Something went wrong!");
+    }
   };
 
   const [showCalender, setShowCalender] = useState(false);
@@ -31,8 +52,8 @@ const PauseSubscription = () => {
     <div className="font-Montserrat">
       <SubscriptionStatus>
         <form
-          onSubmit={handleSubmit(handlePause)}
-          className="flex flex-col gap-8 mt-6 w-full"
+          onSubmit={handleSubmit(handlePauseSubscription)}
+          className="flex flex-col gap-8 w-full"
         >
           {/* Date Range */}
           <div className="relative w-full">
@@ -45,7 +66,6 @@ const PauseSubscription = () => {
               })}
               icon={ICONS.calendarMinimalistic}
               onClickIcon={() => setShowCalender(!showCalender)}
-              
             />
             {showCalender && (
               <div className="absolute z-10 mt-2">
@@ -54,11 +74,12 @@ const PauseSubscription = () => {
                     if (range.start && range.end) {
                       // format dd/MM/yyyy - dd/MM/yyyy
                       const formatted = `${range.start.toLocaleDateString()} - ${range.end.toLocaleDateString()}`;
-                      setValue("dateRange", formatted, { shouldValidate: true });
-                     
+                      setValue("dateRange", formatted, {
+                        shouldValidate: true,
+                      });
                     }
                   }}
-                  onClickApply={()=> setShowCalender(false)}
+                  onClickApply={() => setShowCalender(false)}
                 />
               </div>
             )}
@@ -69,20 +90,27 @@ const PauseSubscription = () => {
             label="Please tell us the reason for your subscription pause"
             placeholder="Your answer goes here....."
             rows={6}
-            error={errors.message}
-            {...register("message")}
+            error={errors.pauseReason}
+            {...register("pauseReason")}
             isRequired={true}
           />
 
           {/* Actions */}
-          <div className="flex gap-8 w-full items-center justify-center">
+          <div className="flex gap-3 w-full items-center justify-center">
+            <Link to={"/dashboard/my-subscriptions"}>
+              <Button
+                variant="custom"
+                label="Don’t Pause"
+                classNames="py-[11px] px-8 border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
+                type="button"
+              />
+            </Link>
             <Button
-              variant="custom"
-              label="Don’t Pause"
-              classNames="px-8 border-[1px] border-surface-90 text-neutral-10 bg-surface-30"
-              type="button"
+              variant="primary"
+              label="Pause Subscription"
+              type="submit"
+              isLoading={isPausing}
             />
-            <Button variant="primary" label="Pause Subscription" type="submit" />
           </div>
         </form>
 
