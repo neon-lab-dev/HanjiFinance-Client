@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../../Reusable/Container/Container";
 import { ICONS } from "../../../assets";
 import { IoChevronDownSharp } from "react-icons/io5";
@@ -8,7 +8,7 @@ import MegaMenu from "./MegaMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../redux/Features/Auth/authModalSlice";
 import { getCartProducts } from "../../../redux/Features/Cart/cartSlice";
-import { useAuthToken} from "../../../redux/Features/Auth/authSlice";
+import { useAuthToken } from "../../../redux/Features/Auth/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const cartProducts = useSelector(getCartProducts);
   const cartCount = cartProducts.length;
-  
+
   const userToken = useSelector(useAuthToken);
   // Type for each nav item
   type IconNavLink = {
@@ -81,12 +81,11 @@ const Navbar = () => {
       icons: ICONS.user,
       path: "/",
       onClick: () => {
-        if(!userToken){
+        if (!userToken) {
           dispatch(openModal("login"));
-         
+        } else {
+          navigate("/dashboard");
         }
-        else{ navigate("/dashboard")}
-        
       },
     },
   ];
@@ -198,14 +197,16 @@ const Navbar = () => {
                   <div className="absolute -top-1 -right-1 bg-primary-10 size-[14px] rounded-full flex items-center justify-center text-xs text-white">
                     {item.count}
                   </div>
-                ):("")}
+                ) : (
+                  ""
+                )}
               </button>
             ))}
-
-            <div className="hidden md:block">
-              <Button label="Book a Call" variant="secondary" />
-            </div>
-
+            <Link to="/services/chat-and-chill#chat-chill-booking">
+              <div className="hidden md:block">
+                <Button label="Book a Call" variant="secondary" />
+              </div>
+            </Link>
             <div className="md:hidden">
               <img src={ICONS.hamburgerMenu} alt="menu" className="size-6" />
             </div>
