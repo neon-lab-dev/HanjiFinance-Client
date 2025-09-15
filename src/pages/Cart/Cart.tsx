@@ -10,6 +10,7 @@ import { useState } from "react";
 import { config } from "../../config/config";
 import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   
@@ -27,6 +28,10 @@ const Cart = () => {
   );
 
   const handlePlaceProductOrder = async () => {
+    if(cartProducts?.length < 1){
+      toast.error("Cart is empty")
+      return
+    }
     setLoading(true);
 
     const payload = {
