@@ -1,52 +1,96 @@
+import { useState } from "react";
+import DashboardContainer from "../../SharedComponents/DashboardContainer/DashboardContainer";
+import ConsultationsCard from "../ConsultationsCard/ConsultationsCard";
+import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
+import type { TChatAndChill } from "../../../../types/chatAndChill.types";
+import { formatDate } from "../../../../utils/formatDate";
+import { MdEventBusy } from "react-icons/md";
+import Loader from "../../../Shared/Loader/Loader";
 
-import DashboardContainer from '../../SharedComponents/DashboardContainer/DashboardContainer'
-import ConsultationsCard from '../ConsultationsCard/ConsultationsCard'
-const consultationsData = [
-  {
-    title: "Chat & Chill",
-    subtitle: "with Aman Juneja",
-    date: "1 August, 2025",
-    time: "07:00 PM",
-    duration: "30 min",
-    status: "complete",
-  },
-  {
-    title: "Portfolio Review",
-    subtitle: "with Rishi Sharma",
-    date: "3 August, 2025",
-    time: "05:00 PM",
-    duration: "45 min",
-    status: "upcoming",
-  },
-  {
-    title: "Career Mentorship",
-    subtitle: "with Priya Desai",
-    date: "5 August, 2025",
-    time: "06:30 PM",
-    duration: "60 min",
-    status: "cancelled",
-  },
-];
 const ConsultationsSection = () => {
+  const [page, setPage] = useState<number>(1);
+
+  const { data, isLoading, isFetching } = useGetMyBookingsQuery({
+    page,
+  });
+
+  const pagination = data?.data?.pagination;
+  const bookings = data?.data?.bookings || [];
+
   return (
     <DashboardContainer headerText="Upcoming Sessions">
-       <div className="flex flex-col gap-4">
-      {consultationsData.map((item, index) => (
-        <ConsultationsCard
-          key={index}
-          title={item.title}
-          subtitle={item.subtitle}
-          date={item.date}
-          time={item.time}
-          duration={item.duration}
-          // status={item.status}
-          onJoin={() => console.log(`Joining: ${item.title}`)}
-          onCancel={() => console.log(`Cancelled: ${item.title}`)}
-        />
-      ))}
-    </div>
-    </DashboardContainer>
-  )
-}
+      <div className="flex flex-col gap-4">
+        {/* Loader */}
+        {isLoading || isFetching ? (
+          <div className="flex justify-center py-10">
+            <Loader />
+          </div>
+        ) : bookings.length === 0 ? (
+          // Empty state
+          <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+            <MdEventBusy className="text-6xl mb-3 text-gray-400" />
+            <p className="text-lg font-medium">No upcoming consultations</p>
+          </div>
+        ) : (
+          <>
+            {bookings.map((item: TChatAndChill, index: number) => (
+              <ConsultationsCard
+                key={index}
+                title={item?.title as string}
+                subtitle={item?.topicsToDiscuss as string}
+                date={formatDate(item.bookingDate)}
+                time={"7:00 PM - 7:30 PM"}
+                duration={"30 min"}
+                status={item.status}
+                meetingLink={item.meetingLink}
+                onCancel={() => console.log(`Cancelled: ${item.title}`)}
+              />
+            ))}
 
-export default ConsultationsSection
+            {/* Pagination */}
+            {pagination && (
+              <div className="flex items-center justify-center gap-2">
+                {/* Prev button */}
+                <button
+                  disabled={page === 1}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                >
+                  &laquo;
+                </button>
+
+                {/* Page numbers */}
+                {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(
+                  (pageNum) => (
+                    <button
+                      key={pageNum}
+                      onClick={() => setPage(pageNum)}
+                      className={`px-3 py-2 size-[38px] flex items-center justify-center border rounded hover:bg-primary-15 cursor-pointer transition duration-300 ${
+                        page === pageNum ? "bg-primary-10 text-white" : ""
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  )
+                )}
+
+                {/* Next button */}
+                <button
+                  disabled={page === pagination.pages}
+                  onClick={() =>
+                    setPage((p) => Math.min(pagination.pages, p + 1))
+                  }
+                  className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                >
+                  &raquo;
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </DashboardContainer>
+  );
+};
+
+export default ConsultationsSection;

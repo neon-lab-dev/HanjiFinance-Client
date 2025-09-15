@@ -56,6 +56,27 @@ const chatAndChillApi = baseApi.injectEndpoints({
       providesTags: ["chatAndChill"],
     }),
 
+    getMyBookings: builder.query({
+      query: ({
+        page,
+      }: {
+        page?: number;
+      }) => {
+        const params = new URLSearchParams();
+
+        if (page) params.append("page", page.toString());
+
+        return {
+          url: `/chat-and-chill/my-bookings${
+            params.toString() ? `?${params.toString()}` : ""
+          }`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["chatAndChill"],
+    }),
+
     scheduleMeeting: builder.mutation({
       query: (data) => ({
         url: `/chat-and-chill/schedule-meeting`,
@@ -86,16 +107,6 @@ const chatAndChillApi = baseApi.injectEndpoints({
       invalidatesTags: ["chatAndChill"],
     }),
 
-    verifyPayment: builder.mutation({
-      query: (data) => ({
-        url: `/chat-and-chill/verify-payment`,
-        method: "POST",
-        body: data,
-        credentials: "include",
-      }),
-      invalidatesTags: ["chatAndChill"],
-    }),
-
     bookChatAndChill: builder.mutation({
       query: (data) => ({
         url: `/chat-and-chill/book`,
@@ -113,9 +124,9 @@ export const {
   useGetAllConsultationsQuery,
   useGetSingleConsultationByIdQuery,
   useGetAllBookingsByUserIdQuery,
+  useGetMyBookingsQuery,
   useScheduleMeetingMutation,
   useUpdateStatusMutation,
   useCheckoutMutation,
-  useVerifyPaymentMutation,
   useBookChatAndChillMutation,
 } = chatAndChillApi;

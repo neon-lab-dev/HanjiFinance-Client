@@ -22,11 +22,11 @@ const Button: React.FC<ReusableButtonProps> = ({
   isLoading = false,
 }) => {
   const baseClasses =
-    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap flex items-center justify-center gap-3";
+    "text-[15px] leading-[18px] font-Montserrat -tracking-[0.16px] rounded-lg font-semibold flex items-center gap-1 justify-center transition-all cursor-pointer disabled:cursor-not-allowed duration-300 ease-in-out transform px-4 py-4 whitespace-nowrap flex items-center justify-center gap-3";
 
   const variantClasses =
     variant === "primary"
-      ? "bg-primary-20 text-white border-transparent hover:scale-105 active:scale-95 border-2 border-primary-20 py-[10px]"
+      ? "bg-primary-20 disabled:bg-primary-20/70 text-white border-transparent hover:scale-105 active:scale-95 border-2 border-primary-20 disabled:border-primary-20/70 py-[10px]"
       : variant === "secondary"
       ? "border-2 border-primary-20 text-primary-20 py-[10px] bg-transparent hover:bg-primary-20 hover:text-white hover:scale-105 active:scale-95"
       : variant === "tertiary"
@@ -41,7 +41,7 @@ const Button: React.FC<ReusableButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled} // ✅ disables button
+      disabled={disabled}
       className={twMerge(`${baseClasses} ${variantClasses}`, classNames)}
     >
      {isLoading ? (

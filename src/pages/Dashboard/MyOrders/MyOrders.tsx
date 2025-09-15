@@ -35,7 +35,6 @@ const MyOrders = () => {
   });
 
   const allCourseOrders = myCourseOrders?.data?.orders || [];
-  console.log(allCourseOrders);
   const allProductOrders = myProductOrders?.data?.orders || [];
   const [activeTab, setActiveTab] = useState<string>(
     "Fashion & Apparel Orders"

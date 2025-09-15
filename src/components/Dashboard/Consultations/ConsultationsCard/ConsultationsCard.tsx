@@ -7,9 +7,9 @@ interface ConsultationsCardProps {
   date: string;
   time: string;
   duration: string;
-  // status: string;
-  statusType?: "success" | "warning" | "error"; // optional for future status colors
-  onJoin?: () => void;
+  status: string;
+  statusType?: "success" | "warning" | "error";
+  meetingLink?: string;
   onCancel?: () => void;
 }
 
@@ -19,10 +19,16 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
   date,
   time,
   duration,
-  // status,
-  onJoin,
+  status,
+  meetingLink,
   onCancel,
 }) => {
+  const statusColors: Record<string, string> = {
+    booked: "text-blue-600 bg-blue-100 border-blue-400",
+    scheduled: "text-purple-600 bg-purple-100 border-purple-400",
+    cancelled: "text-red-600 bg-red-100 border-red-400",
+    completed: "text-green-600 bg-green-100 border-green-400",
+  };
   return (
     <div className="flex justify-between items-start bg-surface-30 p-4 border-[1px] rounded-lg border-neutral-98 font-Montserrat">
       <div className="flex items-start justify-start gap-4">
@@ -47,13 +53,17 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
             </div>
           </div>
           <div className="flex gap-4 mt-6">
+            <a href={meetingLink} target="_blank">
+              <Button
+              disabled={!meetingLink}
+                label="Join Session"
+                variant="primary"
+                classNames="px-4 py-2"
+              />
+            </a>
+
             <Button
-              label="Join Session"
-              variant="primary"
-              classNames="px-4 py-2"
-              onClick={onJoin}
-            />
-            <Button
+            disabled={status === "completed" || status === "cancelled"}
               label="Cancel"
               variant="secondary"
               classNames="px-4 py-2"
@@ -62,8 +72,10 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="border-[1px] rounded-sm p-1 border-success-25 bg-surface-5 text-success-20 text-[13px] leading-4 font-medium ">
-        Complete
+      <div
+        className={`border-[1px] rounded-sm p-1 text-[13px] leading-4 font-medium capitalize ${statusColors[status]}`}
+      >
+        {status}
       </div>
     </div>
   );
