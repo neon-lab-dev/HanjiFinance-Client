@@ -1,30 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICONS } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import LocationForm from "../LocationForm/LocationForm";
+import { useGetMeQuery } from "../../../redux/Features/User/userApi";
 
 const Location = () => {
-    
-      const [isLocationModalOpen, setLocationModalOpen] = useState<boolean>(false);
-  return (
-    <div>  <Button
-              onClick={() => {
-                setLocationModalOpen(true);
-              }}
-              variant="custom"
-              label="Add Delivery Address"
-              classNames="bg-white shadow-none p-0 text-neutral-20 border-surface-90 bg-surface-30 px-4 py-2"
-              icon={ICONS.addLocation}
-            />
-      <ConfirmationModal
-        isConfirmationModalOpen={isLocationModalOpen}
-        setIsConfirmationModalOpen={setLocationModalOpen}
-        isCrossVisible={true}
-      >
-        <LocationForm setLocationModalOpen={setLocationModalOpen} />
-      </ConfirmationModal></div>
-  )
-}
+  const [isLocationModalOpen, setLocationModalOpen] = useState<boolean>(false);
+  const { data: myProfile, isLoading } = useGetMeQuery({});
+  const [address, setAddress] = useState(false);
 
-export default Location
+  // ✅ Update address only when myProfile changes
+  useEffect(() => {
+    if (myProfile?.data?.addressLine1) {
+      setAddress(true);
+    } else {
+      setAddress(false);
+    }
+  }, [myProfile]);
+  console.log(myProfile,"profile")
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div>
+      {address ? (<div className="">
+        <h3 className="font-semibold text-neutral-20">Delivery Address</h3>
+        <p className="text-neutral-80 ">Delivery Address: {myProfile?.data?.addressLine1}</p>
+      </div>
+        
+      ) : (
+        <>
+          <Button
+            onClick={() => setLocationModalOpen(true)}
+            variant="custom"
+            label="Add Delivery Address"
+            classNames="bg-white shadow-none p-0 text-neutral-20 border-surface-90 bg-surface-30 px-4 py-2"
+            icon={ICONS.addLocation}
+          />
+          <ConfirmationModal
+            isConfirmationModalOpen={isLocationModalOpen}
+            setIsConfirmationModalOpen={setLocationModalOpen}
+            isCrossVisible={true}
+          >
+            <LocationForm setLocationModalOpen={setLocationModalOpen} />
+          </ConfirmationModal>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Location;
