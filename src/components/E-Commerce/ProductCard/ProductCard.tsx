@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import type { TProduct } from "../ProductsSection/ProductsSection";
-import {
-  addToCart,
-} from "../../../redux/Features/Cart/cartSlice";
-import { useDispatch, } from "react-redux";
+import { addToCart } from "../../../redux/Features/Cart/cartSlice";
+import { useDispatch } from "react-redux";
 type ProductCardProps = {
   item: TProduct;
 };
@@ -26,12 +24,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         {/* Product header */}
         <div className="absolute top-0 w-full z-20">
           <div className="flex items-center justify-between p-5 w-full">
-            <Link
-              to={`/product-details/${item._id}`}
+            <a href={`/product-details/${item._id}`} 
               className="text-neutral-50 text-sm md:text-base font-medium leading-[22px] md:leading-6 capitalize hover:underline"
             >
               {item.name}
-            </Link>
+            </a>
 
             <img
               onClick={handleAddToWishList}
@@ -45,13 +42,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         {/* Product image with conditional overlay */}
         <div className="relative w-full h-full">
           {item.imageUrls && item.imageUrls.length > 0 ? (
-            <Link to={`/product-details/${item._id}`}>
+            <a href={`/product-details/${item._id}`} >
               <img
                 src={item.imageUrls[0]}
                 className="h-full w-full rounded-lg object-cover"
                 alt={item.name || "Product Image"}
               />
-            </Link>
+            </a>
           ) : (
             <img
               src={IMAGES.product}
@@ -73,9 +70,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
       {/* Product price */}
       <div className="mt-4">
-        <h1 className="text-neutral-10 text-xl font-medium leading-6">
-          Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
-        </h1>
+        <div className="flex gap-2 items-baseline">
+          <h1 className="text-neutral-10 text-2xl font-medium leading-6">
+            Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
+          </h1>{" "}
+          <span className="line-through text-xs lg:text-base text-primary-10">
+            Rs. {item?.sizes[0]?.basePrice}
+          </span>
+        </div>
+
         <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
           inclusive of all taxes
         </p>

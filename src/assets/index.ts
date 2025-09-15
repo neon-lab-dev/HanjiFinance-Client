@@ -75,6 +75,7 @@ import tshirt from "./icons/tshirt.svg";
 import ruler from "./icons/ruler.svg";
 import addLocation from "./icons/MapPointAdd.svg";
 import graduationCap from "./icons/Square-academic-cap.svg";
+import pen from "./icons/pen.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -195,6 +196,6 @@ export const ICONS = {
   tshirt,
   ruler,
   addLocation,
-  graduationCap
-  
+  graduationCap,
+  pen,
 };
