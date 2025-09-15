@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Button from "../../../Reusable/Button/Button";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../../../utils/formatDate";
 
 // Progress Section Component
 type TProgressSection = {
@@ -43,7 +44,7 @@ const ProgressSection: React.FC<TProgressSection> = ({ completed, total, progres
 
 type TCourseCard = {
   _id:string;
-  title: string;
+  courseTitle: string;
   subtitle: string;
   tagline: string;
   description: string;
@@ -57,31 +58,33 @@ type TCourseCard = {
 
 const CourseCard: React.FC<TCourseCard> = ({
   _id,
-  title,
+  courseId,
+  courseTitle,
   subtitle,
   tagline,
   imageUrl,
   progressData,
+  createdAt,
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg font-Montserrat">
       {/* Course Image */}
       <div>
-        <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px]" />
+        <img src={courseId?.imageUrl} alt={courseTitle} className="rounded-t-xl w-full h-[250px]" />
       </div>
 
       {/* Course Content */}
       <div className="flex flex-col gap-4 pb-4">
         {/* Details */}
-        <div className="w-full p-4 space-y-2">
+        <div className="w-full bg-surface-30 p-4 space-y-2">
           <div>
             <h1 className="text-neutral-130 text-xl tracking-[-0.2px] font-bold leading-6">
-              {title}
+              {courseTitle}
             </h1>
-            <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
+            <p className="text-neutral-60 text-sm leading-5">{courseId?.subtitle}</p>
           </div>
           <span className="text-neutral-160 text-xs font-medium leading-[14px] tracking-[-0.12px]">
-            {tagline}
+            Enrolled on {formatDate(createdAt)}
           </span>
         </div>
 
@@ -101,7 +104,7 @@ const CourseCard: React.FC<TCourseCard> = ({
             />
 
           {/* CTA Button */}
-          <Link to={`${_id}`}>
+          <Link to={`${courseId?._id}`}>
           <Button
             label="Continue Learning"
             variant="primary"

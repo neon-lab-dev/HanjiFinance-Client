@@ -7,6 +7,7 @@ import { ICONS } from "../../../../assets";
 const CoursePlayer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: lectures, isLoading } = useGetAllLecturesByCourseIdQuery(id);
+  console.log(lectures);
 
   const [selectedLecture, setSelectedLecture] = useState<any>(null);
 
