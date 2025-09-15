@@ -97,13 +97,14 @@ const Cart = () => {
       <Container>
         <div className="space-y-8">
           <div className="flex justify-between items-center  pb-8 border-b border-b-neutral-97 ">
-            <h2 className="text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
+            <h2 className="md:w-[60%] text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
               Cart Page{" "}
               <span>{`(${cartProducts.length} ${
                 cartProducts.length == 1 ? "item" : "items"
               })`}</span>
             </h2>
-            <Location />
+            <div className="flex items-center justify-end"> <Location /></div>
+           
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31 my-10">

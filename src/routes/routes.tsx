@@ -46,6 +46,7 @@ import CoursePayment from "../pages/CoursePayment/CoursePayment";
 import ProductOrders from "../pages/AdminDashboard/ProductOrders/ProductOrders";
 import CourseOrders from "../pages/AdminDashboard/CourseOrders/CourseOrders";
 import CouponCode from "../pages/AdminDashboard/CouponCode/CouponCode";
+import CourseLectures from "../pages/Dashboard/MyCourses/CourseLectures/CourseLectures";
 
 export const router = createBrowserRouter([
   {
@@ -128,7 +129,7 @@ export const router = createBrowserRouter([
       {
         path: "/course-payment/:id",
         element: <CoursePayment />,
-      },
+      }
     ],
   },
   {
@@ -160,10 +161,10 @@ export const router = createBrowserRouter([
         path: "my-courses",
         element: <MyCourses />,
       },
-      // {
-      //   path: "my-courses/:id",
-      //   element: <CoursesDetails />,
-      // },
+      {
+        path: "my-courses/:id",
+        element: <CourseLectures />,
+      },
       {
         path: "my-subscriptions",
         element: <MySubscription />,

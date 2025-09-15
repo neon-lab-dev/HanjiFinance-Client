@@ -3,7 +3,7 @@ import CourseCard from "../CourseCard/CourseCard";
 import { useGetAllCoursesQuery } from "../../../../redux/Features/Course/courseApi";
 
 const CourseSection = () => {
-  const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
+  const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", });
   
   if(isLoading){
     <div>Loading...</div>
