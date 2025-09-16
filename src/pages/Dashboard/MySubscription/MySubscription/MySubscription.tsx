@@ -6,7 +6,6 @@ import { useGetMySubscriptionQuery } from "../../../../redux/Features/BoardroomB
 
 const MySubscription = () => {
   const { data } = useGetMySubscriptionQuery({});
-  console.log(data);
   return (
     <div>
       <SubscriptionHero subscription={data?.data} />

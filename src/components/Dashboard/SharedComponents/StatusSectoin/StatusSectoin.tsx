@@ -1,11 +1,38 @@
 import { ICONS } from "../../../../assets";
-import StatusCard from "../StatusCard/StatusCard"
+import { useGetMySubscriptionQuery } from "../../../../redux/Features/BoardroomBanter/boardroomBanterApi";
+import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
+import { useGetMyCourseOrdersQuery } from "../../../../redux/Features/CourseOrders/courseOrdersApi";
+import type { TChatAndChill } from "../../../../types/chatAndChill.types";
+import StatusCard from "../StatusCard/StatusCard";
 
 const StatusSectoin = () => {
-     const cardsData = [
+  const { data: courses } = useGetMyCourseOrdersQuery({});
+  const { data: myBookings } = useGetMyBookingsQuery({});
+   const { data:mySubscription } = useGetMySubscriptionQuery({});
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay()); // Sunday (start of week)
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 7); // next Sunday
+  endOfWeek.setHours(23, 59, 59, 999);
+
+  const thisWeeksBookings =
+    myBookings?.data?.bookings?.filter((booking:TChatAndChill) => {
+      const bookingDate = new Date(booking.bookingDate);
+      return (
+        booking.status === "scheduled" &&
+        booking.meetingLink &&
+        bookingDate >= startOfWeek &&
+        bookingDate <= endOfWeek
+      );
+    }) ?? [];
+
+  const cardsData = [
     {
       icon: ICONS.calendarMinimalistic,
-      value: 2,
+      value: thisWeeksBookings.length || 0,
       label: "Upcoming Consultations",
       badgeText: "This Week",
       badgeBg: "bg-surface-40",
@@ -14,7 +41,7 @@ const StatusSectoin = () => {
     },
     {
       icon: ICONS.graduationCap,
-      value: 10,
+      value: courses?.data?.orders?.length || 0,
       label: "Active Courses",
       badgeText: "In Progress",
       badgeBg: "bg-surface-40",
@@ -23,7 +50,7 @@ const StatusSectoin = () => {
     },
     {
       icon: ICONS.curatedConversations,
-      value: 5,
+      value: mySubscription?.data?.status === "active" ? 1 : 0,
       label: "Private Group Access",
       badgeText: "This Month",
       badgeBg: "bg-blue-200",
@@ -32,12 +59,12 @@ const StatusSectoin = () => {
     },
   ];
   return (
-     <div className="flex gap-4 w-full">
+    <div className="flex gap-4 w-full">
       {cardsData.map((card, index) => (
         <StatusCard key={index} {...card} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default StatusSectoin
+export default StatusSectoin;
