@@ -7,6 +7,8 @@ import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import ProductCard from "../ProductCard/ProductCard";
 import { useGetAllProductsQuery } from "../../../redux/Features/Product/productApi";
+import { useGetAllCategoriesQuery } from "../../../redux/Features/Category/categoryApi";
+import type { TCategory } from "../../../types/category.types";
 
 export type TProductSize = {
   _id: string;
@@ -43,6 +45,7 @@ const getPriceQuery = (range: string) => {
 };
 
 const ProductsSection: React.FC = () => {
+  const { data: categories } = useGetAllCategoriesQuery({});
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -50,21 +53,22 @@ const ProductsSection: React.FC = () => {
 
   const { data, isLoading, isFetching } = useGetAllProductsQuery({
     keyword: searchTerm,
+    category: selectedCategory,
     minPrice,
     maxPrice,
   });
-
-  const [categories] = useState<Option[]>([
-    { label: "Electronics", value: "electronics" },
-    { label: "Clothing", value: "clothing" },
-    { label: "Books", value: "books" },
-  ]);
 
   const [priceRanges] = useState<Option[]>([
     { label: "Under ₹500", value: "under-500" },
     { label: "₹500 - ₹1000", value: "500-1000" },
     { label: "Above ₹1000", value: "above-1000" },
   ]);
+
+  const allCategories =
+    categories?.data?.categories?.map((category: TCategory) => ({
+      label: category?.name,
+      value: category?.name,
+    })) ?? [];
 
   return (
     <div
@@ -81,8 +85,8 @@ const ProductsSection: React.FC = () => {
         <div className="mt-12 hidden lg:flex items-center justify-between">
           <div className="flex items-center gap-3">
             <FiltrationDropdown
-              label="Category"
-              options={categories}
+              label="Select Category"
+              options={allCategories ?? []}
               value={selectedCategory}
               onChange={setSelectedCategory}
             />
