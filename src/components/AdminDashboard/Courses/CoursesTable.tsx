@@ -9,12 +9,15 @@ import Button from "../../Reusable/Button/Button";
 import DashboardContainer from "../../Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../Reusable/SearchInput/SearchInput";
 import { useNavigate } from "react-router-dom";
-import { useDeleteCourseMutation, useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
+import {
+  useDeleteCourseMutation,
+  useGetAllCoursesQuery,
+} from "../../../redux/Features/Course/courseApi";
 import { formatDate } from "../../../utils/formatDate";
 import type { TCourse } from "../../../types/course.types";
 
 const Courses = () => {
-    const [deleteCourse] = useDeleteCourseMutation();
+  const [deleteCourse] = useDeleteCourseMutation();
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading, isFetching } = useGetAllCoursesQuery({
     keyword: searchValue,
@@ -26,7 +29,7 @@ const Courses = () => {
   const navigate = useNavigate();
 
   // Table rows
-  const allCoursesData = allCourses?.map((course:TCourse) => {
+  const allCoursesData = allCourses?.map((course: TCourse) => {
     return {
       _id: course._id,
       title: course.title,
@@ -36,7 +39,7 @@ const Courses = () => {
         <>
           <span className="line-through text-gray-400">
             ₹{course.basePrice}
-          </span> {" "}
+          </span>{" "}
           <span className="text-green-600 font-semibold">
             ₹{course.discountedPrice}
           </span>
@@ -58,19 +61,21 @@ const Courses = () => {
   ];
 
   const handleDeleteCourse = async (id: string) => {
-      toast.promise(deleteCourse(id).unwrap(), {
-        loading: "Deleting course...",
-        success: "Course deleted successfully.",
-        error: (err: any) => err?.data?.message || "Something went wrong!",
-      });
-    };
+    toast.promise(deleteCourse(id).unwrap(), {
+      loading: "Deleting course...",
+      success: "Course deleted successfully.",
+      error: (err: any) => err?.data?.message || "Something went wrong!",
+    });
+  };
 
   const courseActions = [
     {
       icon: <FiTablet />,
       label: "Update",
       onClick: (row: any) => {
-        navigate(`/dashboard/admin/manage-course`, { state: { id: row?._id, action: "update" } });
+        navigate(`/dashboard/admin/manage-course`, {
+          state: { id: row?._id, action: "update" },
+        });
       },
     },
     {
@@ -91,33 +96,35 @@ const Courses = () => {
   ];
 
   // Export
-const handleExportCourses = () => {
-  if (!allCourses || allCourses.length === 0) return;
+  const handleExportCourses = () => {
+    if (!allCourses || allCourses.length === 0) return;
 
-  const exportData = allCourses.map((course: TCourse) => ({
-    "_id": course._id,
-    "Image URL": course.imageUrl,
-    "Title": course.title,
-    "Subtitle": course.subtitle,
-    "Tagline": course.tagline,
-    "Benefits": course.benefits?.join(", "),
-    "Access Type": course.accessType,
-    "Category": course.category,
-    "Base Price": course.basePrice,
-    "Discounted Price": course.discountedPrice,
-    "Duration": course.duration || "",
-    "Created At": formatDate(course.createdAt),
-  }));
+    const exportData = allCourses.map((course: TCourse) => ({
+      _id: course._id,
+      "Image URL": course.imageUrl,
+      Title: course.title,
+      Subtitle: course.subtitle,
+      Tagline: course.tagline,
+      Benefits: course.benefits?.join(", "),
+      "Access Type": course.accessType,
+      Category: course.category,
+      "Base Price": course.basePrice,
+      "Discounted Price": course.discountedPrice,
+      Duration: course.duration || "",
+      "Created At": formatDate(course.createdAt),
+    }));
 
-  const worksheet = XLSX.utils.json_to_sheet(exportData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Courses");
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Courses");
 
-  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  saveAs(blob, "courses.xlsx");
-};
-
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(blob, "courses.xlsx");
+  };
 
   return (
     <div className="mt-6 font-Montserrat">

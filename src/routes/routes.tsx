@@ -47,6 +47,7 @@ import ProductOrders from "../pages/AdminDashboard/ProductOrders/ProductOrders";
 import CourseOrders from "../pages/AdminDashboard/CourseOrders/CourseOrders";
 import CouponCode from "../pages/AdminDashboard/CouponCode/CouponCode";
 import CourseLectures from "../pages/Dashboard/MyCourses/CourseLectures/CourseLectures";
+import Category from "../pages/AdminDashboard/Category/Category";
 
 export const router = createBrowserRouter([
   {
@@ -195,6 +196,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <AdminDashboard />,
+      },
+      {
+        path: "category",
+        element: <Category />,
       },
       {
         path: "products",

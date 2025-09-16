@@ -64,6 +64,11 @@ const Sidebar: React.FC = () => {
     icon: FiMail,
   },
   {
+    name: "Category",
+    link: "/dashboard/admin/category",
+    icon: FiBox,
+  },
+  {
     name: "Products",
     link: "/dashboard/admin/products",
     icon: FiBox,
