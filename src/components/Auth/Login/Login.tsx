@@ -57,6 +57,7 @@ const Login = () => {
       if(response?.success){
         dispatch(setUser({ user, token: response?.data?.accessToken }));
         toast.success(response?.message);
+        dispatch(setIsModalOpen(false));
         if(userRole === "admin"){
           navigate("/dashboard/admin");
         } else if (userRole === "user"){
