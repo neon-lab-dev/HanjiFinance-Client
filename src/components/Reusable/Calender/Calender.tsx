@@ -22,7 +22,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import TimePicker from "./TimePicker";
 import { useGetAllAvailabilityQuery } from "../../../redux/Features/Availability/availabilityApi";
 
-
 type CalenderProps = {
   onBookingChange: (value: string) => void;
 };
@@ -40,7 +39,7 @@ type CalenderProps = {
 
 export default function Calender({ onBookingChange }: CalenderProps) {
   const { data } = useGetAllAvailabilityQuery({});
-const availabilities = data?.data?.availabilities || [];
+  const availabilities = data?.data?.availabilities || [];
 
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -55,10 +54,14 @@ const availabilities = data?.data?.availabilities || [];
     status: null,
   });
 
-  const days = useMemo(() => eachDayOfInterval({
-  start: startOfWeek(firstDayCurrentMonth),
-  end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
-}), [firstDayCurrentMonth]);
+  const days = useMemo(
+    () =>
+      eachDayOfInterval({
+        start: startOfWeek(firstDayCurrentMonth),
+        end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
+      }),
+    [firstDayCurrentMonth]
+  );
 
   function previousMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
@@ -69,38 +72,44 @@ const availabilities = data?.data?.availabilities || [];
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
-  const handleTimeChange = useCallback((value: string) => {
-  // Check if the selected day is valid
-  const isUnavailable =
-    (isPast(selectedDay) && !isToday(selectedDay)) ||
-    availabilities.some((availability:any) =>
-      isSameDay(parseISO(availability.date), selectedDay)
-    ) ||
-    !isSameMonth(selectedDay, firstDayCurrentMonth) ||
-    isSunday(selectedDay);
+  const handleTimeChange = useCallback(
+    (value: string) => {
+      // Check if the selected day is valid
+      const isUnavailable =
+        (isPast(selectedDay) && !isToday(selectedDay)) ||
+        availabilities.some(
+          (availability: any) =>
+            isSameDay(parseISO(availability.date), selectedDay) &&
+            availability.isBooked
+        ) ||
+        !isSameMonth(selectedDay, firstDayCurrentMonth) ||
+        isSunday(selectedDay);
 
-  if (isUnavailable) {
-    // ❌ send empty if not available
-    setBookingDate(null);
-    onBookingChange("");
-  } else {
-    // ✅ send the actual booking slot
-    setBookingDate(value);
-    onBookingChange(value);
-  }
-}, [selectedDay, availabilities, firstDayCurrentMonth, onBookingChange]);
+      if (isUnavailable) {
+        // ❌ send empty if not available
+        setBookingDate(null);
+        onBookingChange("");
+      } else {
+        // ✅ send the actual booking slot
+        setBookingDate(value);
+        onBookingChange(value);
+      }
+    },
+    [selectedDay, availabilities, firstDayCurrentMonth, onBookingChange]
+  );
 
-useEffect(() => {
-  console.log(bookingDate);
-}, [bookingDate]);
-
+  useEffect(() => {
+    console.log(bookingDate);
+  }, [bookingDate]);
 
   const hoverDateDetail = (day: Date) => {
     if (
       isSunday(day) ||
       (isPast(day) && !isToday(day)) ||
-      (availabilities.some((availabilities:any) =>
-        isSameDay(parseISO(availabilities.date), day)
+      (availabilities.some(
+        (availabilities: any) =>
+          isSameDay(parseISO(availabilities.date), day) &&
+          availabilities.isBooked
       ) &&
         isSameMonth(day, firstDayCurrentMonth))
     ) {
@@ -170,14 +179,14 @@ useEffect(() => {
                   isEqual(day, selectedDay) && "text-white",
                   !isEqual(day, selectedDay) &&
                     isToday(day) &&
-                    availabilities.some((availabilities:any) =>
-                      isSameDay(parseISO(availabilities.date), day)
+                    availabilities.some((availabilities: any) =>
+                      isSameDay(parseISO(availabilities.date), day) && availabilities.isBooked
                     ) &&
                     "text-primary-15",
                   !isEqual(day, selectedDay) &&
                     isToday(day) &&
-                    !availabilities.some((availabilities:any) =>
-                      isSameDay(parseISO(availabilities.date), day)
+                    availabilities.some((availabilities: any) =>
+                      isSameDay(parseISO(availabilities.date), day) && !availabilities.isBooked
                     ) &&
                     "text-success-20",
                   ((!isEqual(day, selectedDay) &&
@@ -199,15 +208,19 @@ useEffect(() => {
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
-                    availabilities.some((availabilities:any) =>
-                      isSameDay(parseISO(availabilities.date), day)
+                    availabilities.some((availabilities: any) =>
+                      isSameDay(parseISO(availabilities.date), day)&& !availabilities.isBooked
                     ) &&
                     "text-primary-15 hover:border border-primary-15 transition duration-300 ease-in",
+                    isSameMonth(day, firstDayCurrentMonth) && ! availabilities.some((availabilities: any) =>
+                      isSameDay(parseISO(availabilities.date), day)
+                    )&& "text-neutral-125"
+                    ,
                   (!isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
                     (isToday(day) || !isToday(day)) &&
                     isSameMonth(day, firstDayCurrentMonth) &&
-                    !availabilities.some((availabilities:any) =>
-                      isSameDay(parseISO(availabilities.date), day)
+                    availabilities.some((availabilities: any) =>
+                      isSameDay(parseISO(availabilities.date), day) && !availabilities.isBooked
                     ) &&
                     !isSunday(day) &&
                     !isPast(day) &&
@@ -235,7 +248,7 @@ useEffect(() => {
         <div
           className={`${
             (isPast(selectedDay) && !isToday(selectedDay)) ||
-            availabilities.some((availabilities:any) =>
+            availabilities.some((availabilities: any) =>
               isSameDay(parseISO(availabilities.date), selectedDay)
             ) ||
             !isSameMonth(selectedDay, firstDayCurrentMonth) ||

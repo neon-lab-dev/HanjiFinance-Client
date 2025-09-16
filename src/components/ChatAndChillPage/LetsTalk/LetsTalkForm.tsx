@@ -10,9 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../redux/Features/Auth/authModalSlice";
 import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../types/user.types";
-import { useGetRazorpayKeyQuery } from "../../../redux/Features/User/userApi";
-import { useCheckoutMutation } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
-import { config } from "../../../config/config";
+import { useNavigate } from "react-router-dom";
 
 // Add Razorpay type to window
 declare global {
@@ -55,75 +53,90 @@ const LetsTalkForm = () => {
     }
   }, [bookingDate]);
 
-  const { data: apiKey } = useGetRazorpayKeyQuery({});
-  const [checkout] = useCheckoutMutation();
+  // const { data: apiKey } = useGetRazorpayKeyQuery({});
+  // const [checkout] = useCheckoutMutation();
 
   const [loading, setLoading] = useState(false);
 
-  const totalAmount = 999;
+  // const totalAmount = 999;
 
-  const handleLetsTalk = async (data: TFormValues) => {
-    if (!user) {
-      toast.error("Please login to proceed");
-      dispatch(openModal("login"));
-      return;
-    }
+  // const handleLetsTalk = async (data: TFormValues) => {
+  //   if (!user) {
+  //     toast.error("Please login to proceed");
+  //     dispatch(openModal("login"));
+  //     return;
+  //   }
 
-    setLoading(true);
+  //   setLoading(true);
 
-    const payload = {
-      amount: totalAmount,
-    };
+  //   const payload = {
+  //     amount: totalAmount,
+  //   };
 
-    let response;
-    try {
-      response = await checkout(payload).unwrap();
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-      return;
-    }
+  //   let response;
+  //   try {
+  //     response = await checkout(payload).unwrap();
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    try {
-      const options = {
-        key: apiKey?.key,
-        amount: response?.data?.amount,
-        currency: "INR",
-        name: "Hanjifinance",
-        description: "Test Transaction",
-        image: config.razorpayLogo,
-        order_id: response?.data?.id,
-        callback_url: `${config.baseUrl}/chat-and-chill/verify-payment`,
-        prefill: {
-          name: user?.name,
-          email: user?.email,
-          userId: user?._id,
-        },
-        theme: { color: "#b91c1c" },
-      };
+  //   try {
+  //     const options = {
+  //       key: apiKey?.key,
+  //       amount: response?.data?.amount,
+  //       currency: "INR",
+  //       name: "Hanjifinance",
+  //       description: "Test Transaction",
+  //       image: config.razorpayLogo,
+  //       order_id: response?.data?.id,
+  //       callback_url: `${config.baseUrl}/chat-and-chill/verify-payment`,
+  //       prefill: {
+  //         name: user?.name,
+  //         email: user?.email,
+  //         userId: user?._id,
+  //       },
+  //       theme: { color: "#b91c1c" },
+  //     };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+  //     const rzp = new window.Razorpay(options);
+  //     rzp.open();
 
-      const chatAndChillData = {
-        bookingDate,
-        name: data?.name,
-        email: data?.email,
-        phoneNumber: data?.phoneNumber,
-        topicsToDiscuss: data?.topicsToDiscuss,
-      };
+  //     const chatAndChillData = {
+  //       bookingDate,
+  //       name: data?.name,
+  //       email: data?.email,
+  //       phoneNumber: data?.phoneNumber,
+  //       topicsToDiscuss: data?.topicsToDiscuss,
+  //     };
 
-      localStorage.setItem(
-        "chatAndChillData",
-        JSON.stringify(chatAndChillData)
-      );
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     localStorage.setItem(
+  //       "chatAndChillData",
+  //       JSON.stringify(chatAndChillData)
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoading(false);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const navigate = useNavigate();
+
+const handleLetsTalk = async (data: TFormValues) => {
+  if (!user) {
+    toast.error("Please login to proceed");
+    dispatch(openModal("login"));
+    return;
+  }
+ setLoading(false)
+  // save form data
+  localStorage.setItem("chatAndChillData", JSON.stringify(data));
+
+  // go to payment page
+  navigate("/chat-and-chill-payment");
+};
 
   return (
     <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex flex-col lg:flex-row mt-9">
