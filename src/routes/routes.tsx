@@ -48,6 +48,8 @@ import CourseOrders from "../pages/AdminDashboard/CourseOrders/CourseOrders";
 import CouponCode from "../pages/AdminDashboard/CouponCode/CouponCode";
 import CourseLectures from "../pages/Dashboard/MyCourses/CourseLectures/CourseLectures";
 import ChatAndChillPayment from "../pages/ChatAndChillPayment/ChatAndChillPayment";
+import Category from "../pages/AdminDashboard/Category/Category";
+import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/ManageAvailability";
 
 export const router = createBrowserRouter([
   {
@@ -92,7 +94,7 @@ export const router = createBrowserRouter([
         element: <ChatAndChill />,
       },
       {
-        path: "/portfolio",
+        path: "/advisor-services",
         element: <Portfolio />,
       },
       {
@@ -202,6 +204,10 @@ export const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
+        path: "category",
+        element: <Category />,
+      },
+      {
         path: "products",
         element: <AdminProducts />,
       },
@@ -233,6 +239,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-lectures/:id",
         element: <ManageLectures />,
+      },
+      {
+        path: "manage-availability",
+        element: <ManageAvailability />,
       },
       {
         path: "manage-consultations",

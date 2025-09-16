@@ -9,7 +9,7 @@ import {
 } from "../../../redux/Features/BoardroomBanter/boardroomBanterApi";
 import type { TBoardRoomBanterSubscription } from "../../../types/boardroomBanter.types";
 import { formatDate } from "../../../utils/formatDate";
-import { FiPauseCircle, FiUsers } from "react-icons/fi";
+import { FiEye, FiPauseCircle, FiUsers } from "react-icons/fi";
 import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
@@ -20,6 +20,7 @@ import { RiCoupon3Line } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import ConfirmationModal from "../../../components/ConfirmationModal/ConfirmationModal";
 import TextInput from "../../../components/Reusable/TextInput/TextInput";
+import SubscriptionPreviewModal from "../../../components/AdminDashboard/ManageSubscriptionsPage/SubscriptionPreviewModal/SubscriptionPreviewModal";
 
 type TFormData = {
   subscriptionId: string;
@@ -27,10 +28,13 @@ type TFormData = {
   couponCode: string;
 };
 const ManageSubscriptions = () => {
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isSendCouponCodeModalOpen, setIsCouponCodeModalOpen] =
     useState<boolean>(false);
   const [subscriptionId, setSubscriptionId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+
+  const [selectedSubscription, setSelectedSubscription] = useState<TBoardRoomBanterSubscription | null>(null);
 
   const {
     register,
@@ -99,6 +103,7 @@ const ManageSubscriptions = () => {
     pending: "text-blue-600 bg-blue-100 border-blue-400",
     waitlist: "text-purple-600 bg-purple-100 border-purple-400",
     "code sent": "text-indigo-600 bg-indigo-100 border-indigo-400",
+    cancelled: "text-red-600 bg-red-50 border-red-50",
   };
 
   const allSubscriptionsData = allSubscriptions
@@ -158,6 +163,18 @@ const ManageSubscriptions = () => {
             {subscription.isSuspended
               ? "Mark as Suspension Withdrawn"
               : "Mark as Suspend"}
+          </button>
+        ),
+        viewDetails: (
+          <button
+            className="flex items-center gap-1 text-neutral-10 rounded cursor-pointer disabled:cursor-not-allowed"
+           
+            onClick={() =>{
+              setIsPreviewOpen(true);
+              setSelectedSubscription(subscription);
+            }}
+          >
+            <FiEye /> View Details
           </button>
         ),
         createdAt: subscription.createdAt,
@@ -221,6 +238,7 @@ const ManageSubscriptions = () => {
     { key: "status", label: "Status" },
     { key: "whatsappGroup", label: "WhatsApp Group" },
     { key: "suspend", label: "Suspension" },
+    { key: "viewDetails", label: "View Details" },
   ];
 
   const waitlistedUserColumns = [
@@ -235,8 +253,7 @@ const ManageSubscriptions = () => {
 
   const tabButtons = ["All", "Waitlisted Users"];
 
-  const [sendCouponCode, { isLoading: isSendingCouponCode }] =
-    useSendCouponCodeMutation();
+  const [sendCouponCode, { isLoading: isSendingCouponCode }] = useSendCouponCodeMutation();
   const handleSendCouponCode = async (data: TFormData) => {
     try {
       const payload = {
@@ -365,6 +382,12 @@ const ManageSubscriptions = () => {
           <div className="w-full px-6"></div>
         </div>
       </ConfirmationModal>
+
+      <SubscriptionPreviewModal
+        subscription={selectedSubscription}
+        isOpen={isPreviewOpen}
+        setIsOpen={setIsPreviewOpen}
+      />
     </div>
   );
 };

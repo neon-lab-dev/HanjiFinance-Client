@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 
 interface BreadcrumbItem {
   label: string;
@@ -12,11 +11,11 @@ const Breadcrumbs = ({ items }: { items: BreadcrumbItem[] }) => {
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;
           return (
-            <li key={index} className="flex items-center">
+            <li key={index} className="flex items-center capitalize">
               {!isLastItem ? (
-                <Link to={item.link || "#"} className="hover:underline">
+                <span className="">
                   {item.label}
-                </Link>
+                </span>
               ) : (
                 <span className="font-semibold text-[#454545]">
                   {item.label}

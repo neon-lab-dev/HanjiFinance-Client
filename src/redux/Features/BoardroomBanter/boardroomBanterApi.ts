@@ -67,18 +67,31 @@ const boardroomBanterApi = baseApi.injectEndpoints({
     }),
 
     pauseSubscription: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: `/boardroom-banter-subscription/pause`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["boardroomBanter"],
+    }),
+
+    //Not being used anymore
+    resumeSubscription: builder.mutation({
+      query: () => ({
+        url: `/boardroom-banter-subscription/resume`,
         method: "POST",
         credentials: "include",
       }),
       invalidatesTags: ["boardroomBanter"],
     }),
 
-    resumeSubscription: builder.mutation({
-      query: () => ({
-        url: `/boardroom-banter-subscription/resume`,
+    //Not being used anymore
+    cancelSubscription: builder.mutation({
+      query: (data) => ({
+        url: `/boardroom-banter-subscription/cancel`,
         method: "POST",
+        body: data,
         credentials: "include",
       }),
       invalidatesTags: ["boardroomBanter"],
@@ -150,6 +163,7 @@ export const {
   useUpdateWhatsAppStatusMutation,
   usePauseSubscriptionMutation,
   useResumeSubscriptionMutation,
+  useCancelSubscriptionMutation,
   useSuspendUserMutation,
   useWithdrawSuspensionMutation,
   useJoinWaitlistMutation,

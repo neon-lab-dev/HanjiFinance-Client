@@ -12,7 +12,7 @@ const SubscriptionCardsList = ({status, nextBilling} : {status: string, nextBill
     {
       icon: ICONS.calendarMinimalistic,
       value: formatDate(nextBilling),
-      label: "Next Billing",
+      label: "Next Billing (Manual Payment)",
     },
   ]
 

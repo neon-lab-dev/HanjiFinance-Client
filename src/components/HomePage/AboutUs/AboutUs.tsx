@@ -50,7 +50,7 @@ const AboutUs = () => {
       transition: { duration: 0.6, ease: "easeOut" },
     },
   };
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="font-Montserrat mt-[116px] lg:mt-[150px]">
@@ -90,11 +90,7 @@ const AboutUs = () => {
                 </div>
                 <div className="bg-gradient-profile-picture size-[262px] rounded-full p-1">
                   <div className="bg-white rounded-full p-4">
-                    <img
-                      src={IMAGES.avatar}
-                      alt=""
-                      className="rounded-full"
-                    />
+                    <img src={IMAGES.avatar} alt="" className="rounded-full" />
                   </div>
                 </div>
               </div>
@@ -199,8 +195,8 @@ const AboutUs = () => {
                   variant="primary"
                   label="Book 1 on 1 call with me"
                   classNames="w-full sm:w-fit"
-                  onClick={()=>{  navigate("/services/chat-and-chill#chat-chill-booking");
-                    
+                  onClick={() => {
+                    navigate("/services/chat-and-chill#chat-chill-booking");
                   }}
                 />
               </motion.div>

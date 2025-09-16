@@ -22,6 +22,15 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    getMyActivity: builder.query({
+      query: () => ({
+        url: "/activity/my-activities",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["user"],
+    }),
+
     getRazorpayKey: builder.query({
       query: () => ({
         url: "/get-key",
@@ -37,5 +46,6 @@ const userApi = baseApi.injectEndpoints({
 export const {
   useGetMeQuery,
   useUpdateProfileMutation,
+  useGetMyActivityQuery,
   useGetRazorpayKeyQuery
 } = userApi;

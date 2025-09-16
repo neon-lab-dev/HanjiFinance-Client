@@ -52,7 +52,7 @@ const Navbar = () => {
         },
         {
           label: "Fund Management",
-          path: "/",
+          path: "/advisor-services",
         },
         {
           label: "Chat & Chill",

@@ -8,7 +8,7 @@ import ProductImages from "../../components/E-Commerce/ProductDetailsPage/produc
 import { ICONS, IMAGES } from "../../assets";
 import { useEffect, useState } from "react";
 import ExpandableDescription from "../../components/E-Commerce/ProductDetailsPage/ExpandableDescription/ExpandableDescription";
-import DeliveryOptions from "../../components/E-Commerce/ProductDetailsPage/DeliveryOptions/DeliveryOptions";
+// import DeliveryOptions from "../../components/E-Commerce/ProductDetailsPage/DeliveryOptions/DeliveryOptions";
 import DeliveryDetails from "../../components/E-Commerce/ProductDetailsPage/DeliveryDetails/DeliveryDetails";
 import DetailCard from "../../components/E-Commerce/ProductDetailsPage/DetailsCard/DetailCard";
 import ProductInfo from "../../components/E-Commerce/ProductDetailsPage/ProductInfo/ProductInfo";
@@ -22,8 +22,7 @@ const ProductsDetails = () => {
   console.log(data);
   const breadcrumbItems = [
     { label: "Home", link: "/" },
-    { label: "Products", link: "/fashion-and-apparels" },
-    { label: "Age Group", link: "/tees/age-group" },
+    { label: data?.data?.category },
     { label: data?.data?.name },
   ];
 
@@ -40,16 +39,13 @@ const ProductsDetails = () => {
     category,
   } = data?.data || {};
 
-  // State to track selected size and price
   const [selectedSize, setSelectedSize] = useState<any>([]);
 
-  // State to track selected products with sizes
   const [selectedProducts, setSelectedProducts] = useState<
     Partial<SelectedProduct>
   >({});
 const dispatch =useDispatch()
 const navigate = useNavigate()
-  //  Setting the first size product in state automatically befor clicking
   useEffect(() => {
     if (sizes && sizes.length > 0) {
       const firstSize = sizes[0];
@@ -61,7 +57,7 @@ const navigate = useNavigate()
         selectedSize: firstSize.size,
         basePrice: firstSize.basePrice,
         discountedPrice: firstSize.discountedPrice,
-        image: images?.[0] || ICONS.logo, // Replace 'ICONS.logo' with an appropriate existing property from ICONS
+        image: images?.[0] || ICONS.logo,
       });
     }
   }, [sizes, _id, name, images]);

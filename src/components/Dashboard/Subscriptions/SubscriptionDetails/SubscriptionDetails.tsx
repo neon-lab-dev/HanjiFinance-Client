@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react"
 import DashboardContainer from "../../SharedComponents/DashboardContainer/DashboardContainer"
-import { ICONS } from "../../../../assets"
-import { TiTick } from "react-icons/ti"
+import { formatDate } from "../../../../utils/formatDate"
 
 export interface SubscriptionData {
-  plan: string
-  status: "Active" | "Paused" | "Inactive"
-  monthlyFee: string
-  nextBillingDate?: string | null
-  autoRenewal: boolean
+  status: any
+  nextBilling?: string | null
+  // autoRenewal: boolean
 }
 
 const SubscriptionDetails: React.FC<{ data: SubscriptionData }> = ({ data }) => {
@@ -17,13 +15,13 @@ const SubscriptionDetails: React.FC<{ data: SubscriptionData }> = ({ data }) => 
     label: "Plan",
     value: (
       <div className="flex items-center gap-2">
-        <span>{data.plan}</span>
+        <span>Premium Chat Subscription</span>
         <span
-          className={`p-1 text-[13px] leading-4 font-medium rounded-md border
+          className={`p-1 text-[13px] leading-4 font-medium rounded-md border capitalize
             ${
-              data.status === "Active"
+              data.status === "active"
                 ? "bg-green-50 text-green-600 border-green-200"
-                : data.status === "Paused"
+                : data.status === "cancelled"
                 ? "bg-primary-30 text-primary-15 border-primary-35"
                 : "bg-gray-100 text-gray-600 border-gray-300"
             }`}
@@ -33,25 +31,25 @@ const SubscriptionDetails: React.FC<{ data: SubscriptionData }> = ({ data }) => 
       </div>
     ),
   },
-  { label: "Monthly Fee", value: data.monthlyFee },
-  { label: "Next Billing Date", value: data.nextBillingDate ?? "Not Available" },
-  {
-    label: "Auto-Renewal",
-    value: (
-      <div className="flex items-center gap-2">
-        <div className="w-10 h-6 flex items-center rounded-full bg-gray-100 px-1">
-          <div className="w-4 h-4 rounded-full transition flex items-center justify-center">
-            {data.autoRenewal ? (
-              <TiTick className="text-primary-10 text-[10px]" />
-            ) : (
-              <img src={ICONS.cross} className="size-[10px]" />
-            )}
-          </div>
-        </div>
-        {data.autoRenewal ? "On" : "Off"}
-      </div>
-    ),
-  },
+  { label: "Monthly Fee", value: "₹999/month" },
+  { label: "Next Billing Date", value: formatDate(data.nextBilling) ?? "Not Available" },
+  // {
+  //   label: "Auto-Renewal",
+  //   value: (
+  //     <div className="flex items-center gap-2">
+  //       <div className="w-10 h-6 flex items-center rounded-full bg-gray-100 px-1">
+  //         <div className="w-4 h-4 rounded-full transition flex items-center justify-center">
+  //           {data.autoRenewal ? (
+  //             <TiTick className="text-primary-10 text-[10px]" />
+  //           ) : (
+  //             <img src={ICONS.cross} className="size-[10px]" />
+  //           )}
+  //         </div>
+  //       </div>
+  //       {data.autoRenewal ? "On" : "Off"}
+  //     </div>
+  //   ),
+  // },
 ]
 
 
