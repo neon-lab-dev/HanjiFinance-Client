@@ -33,12 +33,17 @@ const LetsTalkForm = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<TFormValues>();
 
-  const bookingDate = watch("bookingDate");
+  // const bookingDate = watch("bookingDate");
+  const [bookingDate, setBookingDate] = useState<null | string>(null);
+
+  const ISOFormatDate = bookingDate
+    ? new Date(bookingDate).toISOString().replace("Z", "+00:00")
+    : null;
+
+  console.log(ISOFormatDate);
   const [readableDate, setReadableDate] = useState<string>("");
   const dispatch = useDispatch();
   const user = useSelector(useCurrentUser) as TUser;
@@ -52,96 +57,27 @@ const LetsTalkForm = () => {
       setReadableDate(readable);
     }
   }, [bookingDate]);
-
-  // const { data: apiKey } = useGetRazorpayKeyQuery({});
-  // const [checkout] = useCheckoutMutation();
-
   const [loading, setLoading] = useState(false);
-
-  // const totalAmount = 999;
-
-  // const handleLetsTalk = async (data: TFormValues) => {
-  //   if (!user) {
-  //     toast.error("Please login to proceed");
-  //     dispatch(openModal("login"));
-  //     return;
-  //   }
-
-  //   setLoading(true);
-
-  //   const payload = {
-  //     amount: totalAmount,
-  //   };
-
-  //   let response;
-  //   try {
-  //     response = await checkout(payload).unwrap();
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const options = {
-  //       key: apiKey?.key,
-  //       amount: response?.data?.amount,
-  //       currency: "INR",
-  //       name: "Hanjifinance",
-  //       description: "Test Transaction",
-  //       image: config.razorpayLogo,
-  //       order_id: response?.data?.id,
-  //       callback_url: `${config.baseUrl}/chat-and-chill/verify-payment`,
-  //       prefill: {
-  //         name: user?.name,
-  //         email: user?.email,
-  //         userId: user?._id,
-  //       },
-  //       theme: { color: "#b91c1c" },
-  //     };
-
-  //     const rzp = new window.Razorpay(options);
-  //     rzp.open();
-
-  //     const chatAndChillData = {
-  //       bookingDate,
-  //       name: data?.name,
-  //       email: data?.email,
-  //       phoneNumber: data?.phoneNumber,
-  //       topicsToDiscuss: data?.topicsToDiscuss,
-  //     };
-
-  //     localStorage.setItem(
-  //       "chatAndChillData",
-  //       JSON.stringify(chatAndChillData)
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //     setLoading(false);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const navigate = useNavigate();
 
-const handleLetsTalk = async (data: TFormValues) => {
-  if (!user) {
-    toast.error("Please login to proceed");
-    dispatch(openModal("login"));
-    return;
-  }
- setLoading(false)
-  // save form data
-  localStorage.setItem("chatAndChillData", JSON.stringify(data));
+  const handleLetsTalk = async (data: TFormValues) => {
+    if (!user) {
+      toast.error("Please login to proceed");
+      dispatch(openModal("login"));
+      return;
+    }
+    setLoading(false);
+    // save form data
+    localStorage.setItem("chatAndChillData", JSON.stringify(data));
 
-  // go to payment page
-  navigate("/chat-and-chill-payment");
-};
+    // go to payment page
+    navigate("/chat-and-chill-payment");
+  };
 
   return (
     <div className="rounded-[20px] bg-white border border-neutral-98 font-Montserrat flex flex-col lg:flex-row mt-9">
       {/* Left Section (Calendar + TimePicker) */}
-      <Calender onBookingChange={(value) => setValue("bookingDate", value)} />
+      <Calender onBookingChange={setBookingDate} />
 
       {/* Right Section - Form */}
       <div className="p-6 rounded-tr-[20px] w-full lg:w-[60%]">
