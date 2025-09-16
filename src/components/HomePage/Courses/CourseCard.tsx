@@ -19,6 +19,7 @@ export type TCourse = {
   discountedPrice: number;
   createdAt?: Date;
   updatedAt?: Date;
+  isEnrolled?: boolean;
 };
 
 const CourseCard: React.FC<TCourse> = ({
@@ -30,7 +31,8 @@ const CourseCard: React.FC<TCourse> = ({
   basePrice,
   discountedPrice,
   accessType,
-  benefits
+  benefits,
+  isEnrolled
 ,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -138,7 +140,13 @@ const CourseCard: React.FC<TCourse> = ({
             </p>
           </div>
 
-          <Button label="Enroll Now" variant="primary" classNames="w-full" onClick={()=>navigate(`/course-payment/${_id}`)} />
+          <Button label={isEnrolled ? "Continue with Course" : "Enroll Now"} variant="primary" classNames="w-full" onClick={() => {
+            if (isEnrolled) {
+              navigate(`dashboard/my-courses`);
+            } else {
+              navigate(`/course-payment/${_id}`);
+            }
+          }} />
         </div>
       </div>
     </div>
