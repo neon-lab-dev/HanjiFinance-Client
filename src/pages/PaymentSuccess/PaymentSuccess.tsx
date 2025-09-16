@@ -64,6 +64,7 @@ const PaymentSuccess = () => {
               if (response?.success) {
                 setCounter(10);
                 localStorage.removeItem("chatAndChillData");
+                navigate("/dashboard/consultations");
               }
             }
             break;
@@ -71,6 +72,7 @@ const PaymentSuccess = () => {
 
           case "boardroomBanter": {
             setCounter(10);
+            navigate("/dashboard/my-subscriptions");
             break;
           }
 
@@ -82,6 +84,7 @@ const PaymentSuccess = () => {
               if (response?.success) {
                 setCounter(10);
                 localStorage.removeItem("courseOrderData");
+                navigate("/dashboard/my-courses");
               }
             }
             break;
@@ -96,6 +99,7 @@ const PaymentSuccess = () => {
                 localStorage.removeItem("productOrderData");
                 dispatch(clearCart());
                 persistor.flush();
+                navigate("/dashboard/my-orders");
               }
             }
             break;
@@ -111,6 +115,17 @@ const PaymentSuccess = () => {
     handlePayment();
   }, [type, orderId, dispatch]);
 
+  const descriptions: Record<string, string> = {
+    chatAndChill:
+      "You have successfully booked your Chat and Chill session. You will receive an email with further details shortly!",
+    boardroomBanter:
+      "You will receive an email shortly regarding the joining link of the Boardroom Banter WhatsApp group!",
+    course:
+      "Your course order has been successfully placed. You can continue learning from the dashboard!",
+    product:
+      "Your product order has been successfully placed. You can track your order status from the dashboard!",
+  };
+
   return (
     <div className="bg-surface-30 flex items-center justify-center min-h-screen">
       {isBooking || isPlacingOrder || isPlacingProductOrder ? (
@@ -124,8 +139,8 @@ const PaymentSuccess = () => {
             Payment Successful!
           </h1>
           <p className="text-neutral-10 text-[15px] font-medium leading-[18px] mt-8 text-center">
-            You will receive an email shortly, regarding the joining link of the
-            Boardroom Banter WhatsApp group!
+            {descriptions[type ?? ""] ||
+              "Payment is successful! Please continue to the dashboard."}
           </p>
 
           {counter !== null && (

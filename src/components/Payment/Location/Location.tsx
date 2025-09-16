@@ -20,7 +20,7 @@ const Location = ({
       setAddress(false);
     }
   }, [myProfile]);
-  console.log(myProfile, "profile");
+  
   if (isLoading) {
     return <p>Loading...</p>;
   }
