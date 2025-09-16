@@ -36,7 +36,7 @@ const PaymentProductsCards = ({ items } : any) => {
             </div>
             <div className="flex flex-col justify-between">
               <h3 className="font-medium text-neutral-25 leading-[22px] capitalize">
-                {item.name}
+                {item.name} 
               </h3>
               <p className="text-[17px] font-semibold leading-5 text-neutral-20">
                 ₹{item.price} x {item.quantity}

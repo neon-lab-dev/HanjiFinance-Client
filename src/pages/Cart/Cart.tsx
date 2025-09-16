@@ -108,7 +108,9 @@ const Cart = () => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31 my-10">
-          <PaymentProductsCards items={cartProducts} />
+      { cartProducts?.length < 1? (<div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-4">
+        <p className="text-neutral-50 font-medium">No Product found</p>
+      </div>): (<PaymentProductsCards items={cartProducts} /> )}
           <PaymentCard
             items={cartProducts}
             onProceed={handlePlaceProductOrder}
