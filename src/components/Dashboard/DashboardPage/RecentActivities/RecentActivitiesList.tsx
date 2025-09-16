@@ -5,9 +5,11 @@ import { ICONS } from "../../../../assets";
 import { useGetMyActivityQuery } from "../../../../redux/Features/User/userApi";
 import { formatDate } from "../../../../utils/formatDate";
 import type { TActivity } from "../../../../types/activities.types";
+import { FiActivity } from "react-icons/fi";
+import Loader from "../../../Shared/Loader/Loader";
 
 const RecentActivitiesList: React.FC = () => {
-  const { data } = useGetMyActivityQuery({});
+  const { data, isLoading } = useGetMyActivityQuery({});
 
   const activities = data?.data?.activities
     ? [...data.data.activities].reverse()
@@ -19,17 +21,26 @@ const RecentActivitiesList: React.FC = () => {
       btn="View All"
       btnLink="recent-activities"
     >
-      <div className="space-y-4">
-        {activities.map((activity: TActivity, index: number) => (
-          <RecentActivitiesCard
-            key={index}
-            icon={ICONS.email}
-            title={activity.title}
-            description={activity.description}
-            date={formatDate(activity.createdAt)}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="text-center py-10"><Loader/></div>
+      ) : activities?.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+          <FiActivity className="text-4xl mb-4" />
+          <p>No recent activities found.</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {activities?.map((activity: TActivity, index: number) => (
+            <RecentActivitiesCard
+              key={index}
+              icon={ICONS.email}
+              title={activity.title}
+              description={activity.description}
+              date={formatDate(activity.createdAt)}
+            />
+          ))}
+        </div>
+      )}
     </DashboardContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ICONS } from "../../assets";
 import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
@@ -43,8 +43,11 @@ const PaymentSuccess = () => {
     };
   }, [counter, navigate]);
 
+  const hasRun = useRef(false);
+
   useEffect(() => {
-    if (!type) return;
+    if (!type || hasRun.current) return;
+    hasRun.current = true;
 
     const chatAndChillData = localStorage.getItem("chatAndChillData");
     const courseOrderData = localStorage.getItem("courseOrderData");
@@ -106,7 +109,7 @@ const PaymentSuccess = () => {
     };
 
     handlePayment();
-  }, [type, orderId, bookChatAndChill, createCourseOrder, createProductOrder]);
+  }, [type, orderId, dispatch]);
 
   return (
     <div className="bg-surface-30 flex items-center justify-center min-h-screen">
