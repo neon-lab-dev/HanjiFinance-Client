@@ -20,13 +20,21 @@ import {
 import { startOfWeek } from "date-fns/fp";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import TimePicker from "./TimePicker";
-import { useGetAllAvailabilityQuery } from "../../../redux/Features/ChatAndChill/chatAndChillApi";
+import { useGetAllAvailabilityQuery } from "../../../redux/Features/Availability/availabilityApi";
 
 
 type CalenderProps = {
   onBookingChange: (value: string) => void;
 };
-function classNames(...classes: (string | boolean)[]) {
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Returns a string of class names by filtering out any falsy values.
+ *
+ * @param {string|boolean} classes - A variable number of strings or booleans.
+ * @returns {string} A string of class names joined by a space.
+ */
+/*******  9eae5ed0-af6d-45d3-8552-8b6adc3aaaa3  *******/function classNames(...classes: (string | boolean)[]) {
+
   return classes.filter(Boolean).join(" ");
 }
 

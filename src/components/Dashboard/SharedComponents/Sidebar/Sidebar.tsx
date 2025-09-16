@@ -19,6 +19,7 @@ import {
   FiUser,
   FiShoppingBag
 } from "react-icons/fi";
+import { AiOutlineCheckCircle, AiOutlineTag } from "react-icons/ai";
 
 
 const Sidebar: React.FC = () => {
@@ -66,7 +67,7 @@ const Sidebar: React.FC = () => {
   {
     name: "Category",
     link: "/dashboard/admin/category",
-    icon: FiBox,
+    icon: AiOutlineTag,
   },
   {
     name: "Products",
@@ -87,6 +88,11 @@ const Sidebar: React.FC = () => {
     name: "Courses",
     link: "/dashboard/admin/courses",
     icon: FiBookOpen,
+  },
+  {
+    name: "Availability",
+    link: "/dashboard/admin/manage-availability",
+    icon: AiOutlineCheckCircle,
   },
   {
     name: "Consultations",

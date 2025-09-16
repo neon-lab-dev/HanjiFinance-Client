@@ -1,9 +1,9 @@
 import AvailableSlotsCard from "../AvailableSlotsCard/AvailableSlotsCard";
 import DashboardContainer from "../../SharedComponents/DashboardContainer/DashboardContainer";
-import { useGetAllAvailabilityQuery } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
 import { formatDate } from "../../../../utils/formatDate";
 import type { TAvailability } from "../../../../types/availability.types";
 import Loader from "../../../Shared/Loader/Loader";
+import { useGetAllAvailabilityQuery } from "../../../../redux/Features/Availability/availabilityApi";
 
 const AvailableSlotsList = () => {
   const { data, isLoading } = useGetAllAvailabilityQuery({});
