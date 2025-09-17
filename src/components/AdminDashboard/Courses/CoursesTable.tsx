@@ -15,13 +15,38 @@ import {
 } from "../../../redux/Features/Course/courseApi";
 import { formatDate } from "../../../utils/formatDate";
 import type { TCourse } from "../../../types/course.types";
+import Dropdown from "../../Reusable/Dropdown/Dropdown";
+import {
+  useDeleteCourseBundleMutation,
+  useGetAllCourseBundlesQuery,
+  useGetSingleCourseBundleByIdQuery,
+} from "../../../redux/Features/CourseBundle/courseBundleApi";
+import type { TCourseBundle } from "../../../types/courseBundle.types";
+import CreateOrEditBundleForm from "./CreateorEditBundleForm";
 
 const Courses = () => {
+  const [selectedBundleId, setSelectedBundleId] = useState<string>("");
+  const [modalType, setModalType] = useState<string>("");
+  const [isCourseBundleModalOpen, setIsCourseBundleModalOpen] =
+    useState<boolean>(false);
   const [deleteCourse] = useDeleteCourseMutation();
+  const [deleteCourseBundle] = useDeleteCourseBundleMutation();
+  const [type, setType] = useState<string>("Single Courses");
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading, isFetching } = useGetAllCoursesQuery({
     keyword: searchValue,
   });
+  const {
+    data: courseBundle,
+    isLoading: isCourseBundleLoading,
+    isFetching: isCourseBundleFetching,
+  } = useGetAllCourseBundlesQuery({
+    keyword: searchValue,
+  });
+
+  const { data: singleBundleData } =
+    useGetSingleCourseBundleByIdQuery(selectedBundleId);
+
   const [page, setPage] = useState(1);
 
   const allCourses = data?.data?.courses || [];
@@ -50,6 +75,34 @@ const Courses = () => {
     };
   });
 
+  // Table rows
+  const courseBundleData = courseBundle?.data?.bundles?.map(
+    (bundle: TCourseBundle) => {
+      return {
+        _id: bundle._id,
+        name: (
+          <div className="flex items-center gap-2">
+            <img
+              src={bundle.imageUrl}
+              alt={bundle.name}
+              className="size-12 rounded"
+            />
+            <p className="capitalize">{bundle.name}</p>
+          </div>
+        ),
+        bundleSize: `${bundle.courseId?.length} Courses`,
+        price: (
+          <>
+            <span className="text-green-600 font-semibold">
+              ₹{bundle.price}
+            </span>
+          </>
+        ),
+        createdAt: formatDate(bundle?.createdAt),
+      };
+    }
+  );
+
   const courseColumns = [
     { key: "_id", label: "Course ID" },
     { key: "title", label: "Title" },
@@ -60,10 +113,26 @@ const Courses = () => {
     { key: "createdAt", label: "Created At" },
   ];
 
+  const courseBundleColumns = [
+    { key: "_id", label: "Course ID" },
+    { key: "name", label: "Name" },
+    { key: "bundleSize", label: "Bundle Size" },
+    { key: "price", label: "Price" },
+    { key: "createdAt", label: "Created At" },
+  ];
+
   const handleDeleteCourse = async (id: string) => {
     toast.promise(deleteCourse(id).unwrap(), {
       loading: "Deleting course...",
       success: "Course deleted successfully.",
+      error: (err: any) => err?.data?.message || "Something went wrong!",
+    });
+  };
+
+  const handleDeleteCourseBundle = async (id: string) => {
+    toast.promise(deleteCourseBundle(id).unwrap(), {
+      loading: "Deleting bundle...",
+      success: "Bundle deleted successfully.",
       error: (err: any) => err?.data?.message || "Something went wrong!",
     });
   };
@@ -91,6 +160,24 @@ const Courses = () => {
       icon: <FiTrash2 />,
       label: "Delete",
       onClick: (row: any) => handleDeleteCourse(row?._id),
+      className: "text-red-600",
+    },
+  ];
+
+  const courseBundleActions = [
+    {
+      icon: <FiTablet />,
+      label: "Update",
+      onClick: (row: any) => {
+        setModalType("edit");
+        setSelectedBundleId(row?._id);
+        setIsCourseBundleModalOpen(true);
+      },
+    },
+    {
+      icon: <FiTrash2 />,
+      label: "Delete",
+      onClick: (row: any) => handleDeleteCourseBundle(row?._id),
       className: "text-red-600",
     },
   ];
@@ -133,16 +220,30 @@ const Courses = () => {
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-xl font-bold text-neutral-40">Courses</h1>
-              <p className="text-neutral-65">Manage all courses</p>
+              <h1 className="text-xl font-bold text-neutral-40">
+                {type === "Single Courses" ? "Courses" : "Bundle Courses"}
+              </h1>
+              <p className="text-neutral-65">
+                Manage all{" "}
+                {type === "Single Courses" ? "courses" : "bundle courses"}
+              </p>
             </div>
             <div className="flex justify-between items-center gap-4 flex-wrap">
               {/* Filters */}
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center flex-wrap">
                 <SearchInput
                   value={searchValue}
                   onChange={setSearchValue}
                   placeholder="Search courses..."
+                />
+                <Dropdown
+                  className="py-1 px-3 w-60"
+                  value={type}
+                  onChange={setType}
+                  options={[
+                    { value: "Single Courses", label: "Single Courses" },
+                    { value: "Bundle Courses", label: "Bundle Courses" },
+                  ]}
                 />
                 <Button
                   variant="primary"
@@ -159,25 +260,62 @@ const Courses = () => {
           </div>
 
           {/* Table */}
-          <Table
-            columns={courseColumns}
-            data={allCoursesData}
-            actions={courseActions}
-            rowKey="_id"
-            isLoading={isLoading || isFetching}
-            page={page}
-            totalPages={data?.data?.pagination?.totalPages}
-            onPageChange={setPage}
-          />
+          {type === "Single Courses" ? (
+            <Table
+              columns={courseColumns}
+              data={allCoursesData}
+              actions={courseActions}
+              rowKey="_id"
+              isLoading={isLoading || isFetching}
+              page={page}
+              totalPages={data?.data?.pagination?.totalPages}
+              onPageChange={setPage}
+            />
+          ) : (
+            <Table
+              columns={courseBundleColumns}
+              data={courseBundleData}
+              actions={courseBundleActions}
+              rowKey="_id"
+              isLoading={isCourseBundleLoading || isCourseBundleFetching}
+              page={page}
+              totalPages={data?.data?.pagination?.totalPages}
+              onPageChange={setPage}
+            />
+          )}
 
-          <Button
-            variant="primary"
-            onClick={handleExportCourses}
-            label="Export"
-            classNames="w-fit self-end py-2 px-4"
-          />
+          <div className="flex items-center justify-between">
+            <p className="text-neutral-140 leading-5">
+              Create a new{" "}
+              <button
+                onClick={() => {
+                  setModalType("add");
+                  setIsCourseBundleModalOpen(true);
+                }}
+                className="text-primary-20 font-semibold hover:underline cursor-pointer"
+              >
+                Course Bundle
+              </button>
+            </p>
+
+            <Button
+              variant="primary"
+              onClick={handleExportCourses}
+              label="Export"
+              classNames="w-fit self-end py-2 px-4"
+            />
+          </div>
         </div>
       </DashboardContainer>
+
+      <CreateOrEditBundleForm
+        modalType={modalType}
+        isCourseBundleModalOpen={isCourseBundleModalOpen}
+        setIsCourseBundleModalOpen={setIsCourseBundleModalOpen}
+        allCoursesData={allCoursesData}
+        setType={setType}
+        defaultValues={modalType === "edit" ? singleBundleData?.data : {}}
+      />
     </div>
   );
 };
