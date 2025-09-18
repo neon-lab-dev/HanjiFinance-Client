@@ -142,7 +142,7 @@ const CourseCard: React.FC<TCourse> = ({
 
           <Button label={isEnrolled ? "Continue with Course" : "Enroll Now"} variant="primary" classNames="w-full" onClick={() => {
             if (isEnrolled) {
-              navigate(`dashboard/my-courses`);
+              navigate(`/dashboard/my-courses`);
             } else {
               navigate(`/course-payment/${_id}`);
             }
