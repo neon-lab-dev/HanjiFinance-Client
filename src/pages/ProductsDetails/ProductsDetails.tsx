@@ -44,19 +44,25 @@ const ProductsDetails = () => {
   const [selectedProducts, setSelectedProducts] = useState<
     Partial<SelectedProduct>
   >({});
-const dispatch =useDispatch()
-const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     if (sizes && sizes.length > 0) {
-      const firstSize = sizes[0];
-      console.log(firstSize);
-      setSelectedSize(firstSize);
+   const availableSize = sizes.find((size) => size.quantity > 0);
+
+// If found, set it as selected
+if (availableSize) {
+  setSelectedSize(availableSize);
+} else {
+  // Optional: handle case when all sizes are out of stock
+  setSelectedSize(null);
+}
       setSelectedProducts({
         productId: _id,
         name,
-        selectedSize: firstSize.size,
-        basePrice: firstSize.basePrice,
-        discountedPrice: firstSize.discountedPrice,
+        selectedSize: availableSize.size,
+        basePrice: availableSize.basePrice,
+        discountedPrice: availableSize.discountedPrice,
         image: images?.[0] || ICONS.logo,
       });
     }
@@ -66,6 +72,7 @@ const navigate = useNavigate()
     size: string;
     basePrice: number;
     discountedPrice: number;
+    quantity: number;
   }
 
   interface SelectedProduct {
@@ -75,14 +82,19 @@ const navigate = useNavigate()
     basePrice: number;
     discountedPrice: number;
     image: string;
-    size:Size;
+    size: Size;
   }
 
-    const handleAddToWishList = async () => {
-      dispatch(addToCart({ product: data.data, size: selectedSize, quantity: 1 }));
-    };
+  const handleAddToWishList = async () => {
+    dispatch(
+      addToCart({ product: data.data, size: selectedSize, quantity: 1 })
+    );
+  };
 
   const handleSizeClick = (size: Size) => {
+    if (size.quantity < 1) {
+      return;
+    }
     setSelectedSize(size);
 
     setSelectedProducts({
@@ -142,7 +154,7 @@ const navigate = useNavigate()
               <div className="flex items-center gap-4 mt-[6px]">
                 {/* Price */}
                 <h1 className="text-[28px] md:text-[32px] font-semibold md:font-medium text-neutral-10 leading-normal">
-                 Rs. {selectedProducts?.discountedPrice} {" "}
+                  Rs. {selectedProducts?.discountedPrice}{" "}
                   <span className="line-through text-sm lg:text-base text-primary-10">
                     Rs. {selectedProducts?.basePrice}
                   </span>
@@ -161,7 +173,6 @@ const navigate = useNavigate()
                   <h1 className="text-xl font-medium text-neutral-10 leading-normal">
                     Sizes
                   </h1>
-                  
                 </div>
 
                 <div className="flex items-center gap-2 mt-6">
@@ -170,11 +181,17 @@ const navigate = useNavigate()
                     <button
                       key={index}
                       onClick={() => handleSizeClick(size)}
-                      className={`${
-                        selectedSize.size === size.size
-                          ? "bg-primary-30 border-primary-20 text-primary-20"
-                          : "border-surface-90 text-neutral-20"
-                      } flex h-[56px] px-3 py-2 justify-center items-center gap-3 rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px]`}
+                      className={`
+  ${
+    selectedSize.size === size.size
+      ? "bg-primary-30 border-primary-20 text-primary-20"
+      : size?.quantity < 1
+      ? "bg-neutral-85/20 border-neutral-20/50 text-neutral-20/50"
+      : "border-surface-90 text-neutral-20"
+  }
+
+ 
+                      flex h-[56px] px-3 py-2 justify-center items-center gap-3 rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px]`}
                     >
                       {size?.size}
                     </button>
@@ -186,7 +203,6 @@ const navigate = useNavigate()
               <div className="hidden md:flex items-center gap-[10px] mt-6 pb-6 w-full">
                 <Button
                   onClick={handleAddToWishList}
-                 
                   variant="custom"
                   label="Add to bag"
                   classNames="border-surface-90 bg-surface-30 w-full text-neutral-10 py-4"
@@ -196,8 +212,9 @@ const navigate = useNavigate()
                   variant="primary"
                   label="Buy Now"
                   classNames="w-full py-4"
-                  onClick={()=>{handleAddToWishList()
-                    navigate("/cart")
+                  onClick={() => {
+                    handleAddToWishList();
+                    navigate("/cart");
                   }}
                 />
               </div>
