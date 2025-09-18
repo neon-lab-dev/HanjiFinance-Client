@@ -22,7 +22,7 @@ import {
   useGetSingleCourseBundleByIdQuery,
 } from "../../../redux/Features/CourseBundle/courseBundleApi";
 import type { TCourseBundle } from "../../../types/courseBundle.types";
-import CreateOrEditBundleForm from "./CreateorEditBundleForm";
+import CreateOrEditBundleForm from "./CreateOrEditBundleForm";
 
 const Courses = () => {
   const [selectedBundleId, setSelectedBundleId] = useState<string>("");
