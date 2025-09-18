@@ -79,8 +79,9 @@ const CoursePayment = () => {
       rzp.open();
 
       const courseOrderData = {
-        courseId: course?.data?._id,
+        courses: [{courseId:course?.data?._id} ],
         totalAmount: totalToPay,
+        orderType : "single"
       };
 
       localStorage.setItem("courseOrderData", JSON.stringify(courseOrderData));

@@ -1,10 +1,13 @@
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Container from "../../components/Reusable/Container/Container";
 import { getCartProducts } from "../../redux/Features/Cart/cartSlice";
 import Location from "../../components/Payment/Location/Location";
 import PaymentCard from "../../components/Payment/PaymentCard/PaymentCard";
 import PaymentProductsCards from "./../../components/Payment/PaymentProductsCards/PaymentProductsCards";
-import { useGetRazorpayKeyQuery } from "../../redux/Features/User/userApi";
+import {
+  useGetMeQuery,
+  useGetRazorpayKeyQuery,
+} from "../../redux/Features/User/userApi";
 import { useProductCheckoutMutation } from "../../redux/Features/ProductOrders/productOrdersApi";
 import { useState } from "react";
 import { config } from "../../config/config";
@@ -13,7 +16,8 @@ import type { TUser } from "../../types/user.types";
 import toast from "react-hot-toast";
 
 const Cart = () => {
-  
+  const [isLocationModalOpen, setLocationModalOpen] = useState<boolean>(false);
+  const { data: myProfile, isLoading } = useGetMeQuery({});
   const user = useSelector(useCurrentUser) as TUser;
   const cartProducts = useSelector(getCartProducts);
 
@@ -28,9 +32,19 @@ const Cart = () => {
   );
 
   const handlePlaceProductOrder = async () => {
-    if(cartProducts?.length < 1){
-      toast.error("Cart is empty")
-      return
+    if (cartProducts?.length < 1) {
+      toast.error("Cart is empty");
+      return;
+    }
+
+    if (
+      !myProfile?.data?.addressLine1 ||
+      !myProfile?.data?.city ||
+      !myProfile?.data?.pinCode
+    ) {
+      toast.error("Please add delivery address");
+      setLocationModalOpen(true);
+      return;
     }
     setLoading(true);
 
@@ -103,14 +117,25 @@ const Cart = () => {
                 cartProducts.length == 1 ? "item" : "items"
               })`}</span>
             </h2>
-            <div className="flex items-center justify-end"> <Location /></div>
-           
+            <div className="flex items-center justify-end">
+              {" "}
+              <Location
+                myProfile={myProfile?.data}
+                isLoading={isLoading}
+                isLocationModalOpen={isLocationModalOpen}
+                setLocationModalOpen={setLocationModalOpen}
+              />
+            </div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31 my-10">
-      { cartProducts?.length < 1? (<div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-4">
-        <p className="text-neutral-50 font-medium">No Product found</p>
-      </div>): (<PaymentProductsCards items={cartProducts} /> )}
+          {cartProducts?.length < 1 ? (
+            <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-4">
+              <p className="text-neutral-50 font-medium">No product added</p>
+            </div>
+          ) : (
+            <PaymentProductsCards items={cartProducts} />
+          )}
           <PaymentCard
             items={cartProducts}
             onProceed={handlePlaceProductOrder}

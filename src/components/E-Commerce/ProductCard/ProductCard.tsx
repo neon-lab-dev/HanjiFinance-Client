@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ICONS, IMAGES } from "../../../assets";
 import type { TProduct } from "../ProductsSection/ProductsSection";
 import { addToCart } from "../../../redux/Features/Cart/cartSlice";
