@@ -19,7 +19,6 @@ import { addToCart } from "../../redux/Features/Cart/cartSlice";
 const ProductsDetails = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleProductByIdQuery(id);
-  console.log(data);
   const breadcrumbItems = [
     { label: "Home", link: "/" },
     { label: data?.data?.category },
@@ -48,15 +47,15 @@ const ProductsDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (sizes && sizes.length > 0) {
-   const availableSize = sizes.find((size:Size) => size.quantity > 0);
+      const availableSize = sizes.find((size: Size) => size.quantity > 0);
 
-// If found, set it as selected
-if (availableSize) {
-  setSelectedSize(availableSize);
-} else {
-  // Optional: handle case when all sizes are out of stock
-  setSelectedSize(null);
-}
+      // If found, set it as selected
+      if (availableSize) {
+        setSelectedSize(availableSize);
+      } else {
+        // Optional: handle case when all sizes are out of stock
+        setSelectedSize(null);
+      }
       setSelectedProducts({
         productId: _id,
         name,
@@ -191,7 +190,7 @@ if (availableSize) {
   }
 
  
-                      flex h-[56px] px-3 py-2 justify-center items-center gap-3 rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px]`}
+                      flex h-[56px] px-3 py-2 justify-center items-center gap-3 rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px] cursor-pointer disabled:cursor-not-allowed hover:bg-primary-30 transition duration-300`}
                     >
                       {size?.size}
                     </button>

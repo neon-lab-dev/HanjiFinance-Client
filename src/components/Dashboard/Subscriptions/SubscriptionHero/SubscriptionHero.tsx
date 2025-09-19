@@ -5,14 +5,13 @@ import { useCurrentUser } from "../../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../../types/user.types";
 import { formatDate } from "../../../../utils/formatDate";
 import type { TBoardRoomBanterSubscription } from "../../../../types/boardroomBanter.types";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SubscriptionHero = ({
   subscription,
 }: {
   subscription: TBoardRoomBanterSubscription;
 }) => {
-  const navigate = useNavigate();
   const user = useSelector(useCurrentUser) as TUser;
   const isDisabled =
     subscription?.status === "cancelled" ||
@@ -45,13 +44,14 @@ const SubscriptionHero = ({
             Continue enjoying your premium subscription for private Whatsapp
             group with selected elite like minded people!{" "}
           </p>
+          <Link to={"/dashboard/cancel-subscription"}>
           <Button
             variant="custom"
-            label={"Pause Subscription"}
+            label={"Cancel Subscription"}
             classNames="px-8 border-[1px] w-fit border-surface-90 text-neutral-20 bg-surface-30 text-[15px] font-medium disabled:bg-gray-300"
             disabled={isDisabled}
-            onClick={() => navigate("/dashboard/pause-subscription")}
           />
+          </Link>
         </div>
         <div
           className={`${

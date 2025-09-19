@@ -11,7 +11,10 @@ import {
 import { useProductCheckoutMutation } from "../../redux/Features/ProductOrders/productOrdersApi";
 import { useState } from "react";
 import { config } from "../../config/config";
-import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
+import {
+  setRedirectPath,
+  useCurrentUser,
+} from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
 import toast from "react-hot-toast";
 import { openModal } from "../../redux/Features/Auth/authModalSlice";
@@ -21,7 +24,7 @@ const Cart = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
   const user = useSelector(useCurrentUser) as TUser;
   const cartProducts = useSelector(getCartProducts);
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
   const { data: apiKey } = useGetRazorpayKeyQuery({});
   const [productCheckout] = useProductCheckoutMutation();
 
@@ -34,11 +37,12 @@ const Cart = () => {
 
   const handlePlaceProductOrder = async () => {
     if (!user) {
-          toast.error("Please login to proceed");
-          dispatch(openModal("login"));
-          return;
-        }
-    
+      toast.error("Please login to proceed");
+      dispatch(openModal("login"));
+      dispatch(setRedirectPath("/cart"));
+      return;
+    }
+
     if (cartProducts?.length < 1) {
       toast.error("Cart is empty");
       return;

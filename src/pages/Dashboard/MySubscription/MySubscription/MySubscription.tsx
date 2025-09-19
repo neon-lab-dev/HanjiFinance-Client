@@ -3,10 +3,17 @@ import SubscriptionDetails from "../../../../components/Dashboard/Subscriptions/
 import SubscriptionHero from "../../../../components/Dashboard/Subscriptions/SubscriptionHero/SubscriptionHero";
 import SubscriptionQuickList from "../../../../components/Dashboard/Subscriptions/SubscriptionQuickList/SubscriptionQuickList";
 import { useGetMySubscriptionQuery } from "../../../../redux/Features/BoardroomBanter/boardroomBanterApi";
+import SubscriptionStatus from "../../../SubscriptionStatus/SubscriptionStatus";
 
 const MySubscription = () => {
   const { data } = useGetMySubscriptionQuery({});
   return (
+    data?.data?.status === "waitlist" ?
+    <SubscriptionStatus status="waitlisted" />
+    :
+    data?.data?.status === "code sent" ?
+    <SubscriptionStatus status="coupon-sent" />
+    :
     <div>
       <SubscriptionHero subscription={data?.data} />
       <SubscriptionCardsList status={data?.data?.status} nextBilling={data?.data?.endDate} />

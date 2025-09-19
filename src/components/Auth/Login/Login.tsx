@@ -8,11 +8,15 @@ import {
   setIsModalOpen,
   setModalType,
 } from "../../../redux/Features/Auth/authModalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../../redux/Features/Auth/authApi";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
-import { setUser } from "../../../redux/Features/Auth/authSlice";
+import {
+  clearRedirectPath,
+  setUser,
+  useRedirectPath,
+} from "../../../redux/Features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 type TFormData = {
@@ -21,6 +25,7 @@ type TFormData = {
 };
 const Login = () => {
   const navigate = useNavigate();
+  const redirectPath = useSelector(useRedirectPath);
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -31,10 +36,10 @@ const Login = () => {
     formState: { errors },
   } = useForm<TFormData>();
 
-  const handleLogin = async(data: TFormData) => {
+  const handleLogin = async (data: TFormData) => {
     try {
       const payload = {
-        ...data
+        ...data,
       };
       const response = await login(payload).unwrap();
       const user = response.data?.user;
@@ -44,7 +49,9 @@ const Login = () => {
       if (accessToken) {
         Cookies.set("accessToken", accessToken, {
           expires: 7,
-          secure: typeof window !== "undefined" && window.location.protocol === "https:",
+          secure:
+            typeof window !== "undefined" &&
+            window.location.protocol === "https:",
           sameSite: "strict",
         });
         Cookies.set("role", userRole, {
@@ -54,14 +61,19 @@ const Login = () => {
         });
       }
 
-      if(response?.success){
+      if (response?.success) {
         dispatch(setUser({ user, token: response?.data?.accessToken }));
         toast.success(response?.message);
         dispatch(setIsModalOpen(false));
-        if(userRole === "admin"){
+        if (userRole === "admin") {
           navigate("/dashboard/admin");
-        } else if (userRole === "user"){
-          navigate("/dashboard");
+        } else if (userRole === "user") {
+          if (redirectPath) {
+            navigate(redirectPath);
+            dispatch(clearRedirectPath());
+          } else {
+            navigate("/dashboard");
+          }
         } else {
           navigate("/");
         }
@@ -102,10 +114,13 @@ const Login = () => {
         />
 
         <div className="flex justify-end">
-          <button onClick={() => {
-            dispatch(setModalType("forgotPassword"));
-            dispatch(setIsModalOpen(true));
-          }} className="text-primary-20 font-semibold hover:underline cursor-pointer">
+          <button
+            onClick={() => {
+              dispatch(setModalType("forgotPassword"));
+              dispatch(setIsModalOpen(true));
+            }}
+            className="text-primary-20 font-semibold hover:underline cursor-pointer"
+          >
             Forgot Password?
           </button>
         </div>
@@ -121,7 +136,7 @@ const Login = () => {
       <p className="text-neutral-140 leading-5 mt-2 text-center">
         New to HanjiFinance?{" "}
         <button
-        onClick={() => {
+          onClick={() => {
             dispatch(setModalType("signup"));
             dispatch(setIsModalOpen(true));
           }}

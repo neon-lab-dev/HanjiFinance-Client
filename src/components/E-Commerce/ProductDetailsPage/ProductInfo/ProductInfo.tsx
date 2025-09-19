@@ -13,7 +13,7 @@ const ProductInfo = ({productCode,madeIn,category} : {productCode: string,madeIn
         <p className="">:</p>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 capitalize">
         {/* Product code */}
         <p className="text-neutral-20 text-lg md:text-xl font-semibold leading-normal">
         {productCode.substring(0, 7)}

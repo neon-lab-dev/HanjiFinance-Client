@@ -17,6 +17,7 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
 
   const [counter, setCounter] = useState<number | null>(null);
+  const [navigatePath, setNavigatePath] = useState<string>("/");
 
   const [bookChatAndChill, { isLoading: isBooking }] =
     useBookChatAndChillMutation(); // for chat and chill booking
@@ -34,14 +35,14 @@ const PaymentSuccess = () => {
     }, 1000);
 
     const timeout = setTimeout(() => {
-      navigate("/");
+      navigate(navigatePath);
     }, counter * 1000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [counter, navigate]);
+  }, [counter, navigate, navigatePath]);
 
   const hasRun = useRef(false);
 
@@ -64,7 +65,7 @@ const PaymentSuccess = () => {
               if (response?.success) {
                 setCounter(10);
                 localStorage.removeItem("chatAndChillData");
-                navigate("/dashboard/consultations");
+                setNavigatePath("/dashboard/consultations");
               }
             }
             break;
@@ -72,7 +73,7 @@ const PaymentSuccess = () => {
 
           case "boardroomBanter": {
             setCounter(10);
-            navigate("/dashboard/my-subscriptions");
+            setNavigatePath("/dashboard/my-subscriptions");
             break;
           }
 
@@ -84,7 +85,7 @@ const PaymentSuccess = () => {
               if (response?.success) {
                 setCounter(10);
                 localStorage.removeItem("courseOrderData");
-                navigate("/dashboard/my-courses");
+                setNavigatePath("/dashboard/my-courses");
               }
             }
             break;
@@ -99,7 +100,7 @@ const PaymentSuccess = () => {
                 localStorage.removeItem("productOrderData");
                 dispatch(clearCart());
                 persistor.flush();
-                navigate("/dashboard/my-orders");
+                setNavigatePath("/dashboard/my-orders");
               }
             }
             break;
