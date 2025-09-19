@@ -4,6 +4,7 @@ export type TAvailability = {
   date: Date;
   slot?: string;
   isBooked: boolean;
+  isAvailable?: boolean;
   user?: string;
   createdAt?: Date;
   updatedAt?: Date;

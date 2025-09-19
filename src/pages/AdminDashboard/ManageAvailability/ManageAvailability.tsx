@@ -41,13 +41,26 @@ const ManageAvailability = () => {
       return {
         date: formatDate(availability.date),
         status: (
-          <p
-            className={`${
-              availability?.isBooked ? "text-red-600" : "text-green-600"
-            }`}
-          >
-            {availability?.isBooked ? "Booked" : "Available"}
-          </p>
+         <p
+  className={
+    !availability?.isAvailable && availability?.isBooked
+      ? "text-gray-500"
+      : availability?.isBooked
+      ? "text-red-600"
+      : availability?.isAvailable
+      ? "text-green-600"
+      : "text-gray-500"
+  }
+>
+  {!availability?.isAvailable && availability?.isBooked
+    ? "Unavailable"
+    : availability?.isBooked
+    ? "Booked"
+    : availability?.isAvailable
+    ? "Available"
+    : "Unavailable"}
+</p>
+
         ),
         action: (
           <button
