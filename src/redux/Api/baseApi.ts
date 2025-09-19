@@ -8,10 +8,10 @@ import type { RootState } from "../store";
 import { setUser } from "../Features/Auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api/v1",
-  // baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
-  credentials: "include",
-  prepareHeaders: (headers, { getState }) => {
+  // baseUrl: 'http://localhost:5000/api/v1',
+  baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
+  credentials : 'include',
+  prepareHeaders : (headers, {getState}) => {
     const token = (getState() as RootState).auth.token;
 
     if (token) {

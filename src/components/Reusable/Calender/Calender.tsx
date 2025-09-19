@@ -25,14 +25,8 @@ import { useGetAllAvailabilityQuery } from "../../../redux/Features/Availability
 type CalenderProps = {
   onBookingChange: (value: string) => void;
 };
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Returns a string of class names by filtering out any falsy values.
- *
- * @param {string|boolean} classes - A variable number of strings or booleans.
- * @returns {string} A string of class names joined by a space.
- */
-/*******  9eae5ed0-af6d-45d3-8552-8b6adc3aaaa3  *******/function classNames(...classes: (string | boolean)[]) {
+
+function classNames(...classes: (string | boolean)[]) {
 
   return classes.filter(Boolean).join(" ");
 }
@@ -40,7 +34,6 @@ type CalenderProps = {
 export default function Calender({ onBookingChange }: CalenderProps) {
   const { data } = useGetAllAvailabilityQuery({});
   const availabilities = data?.data?.availabilities || [];
-
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -81,6 +74,9 @@ export default function Calender({ onBookingChange }: CalenderProps) {
           (availability: any) =>
             isSameDay(parseISO(availability.date), selectedDay) &&
             availability.isBooked
+        ) || !availabilities.some(
+          (availability: any) =>
+            isSameDay(parseISO(availability.date), selectedDay) 
         ) ||
         !isSameMonth(selectedDay, firstDayCurrentMonth) ||
         isSunday(selectedDay);
@@ -110,6 +106,10 @@ export default function Calender({ onBookingChange }: CalenderProps) {
         (availabilities: any) =>
           isSameDay(parseISO(availabilities.date), day) &&
           availabilities.isBooked
+      ) &&
+        isSameMonth(day, firstDayCurrentMonth)) || (!availabilities.some(
+        (availabilities: any) =>
+          isSameDay(parseISO(availabilities.date), day)
       ) &&
         isSameMonth(day, firstDayCurrentMonth))
     ) {
@@ -249,8 +249,9 @@ export default function Calender({ onBookingChange }: CalenderProps) {
           className={`${
             (isPast(selectedDay) && !isToday(selectedDay)) ||
             availabilities.some((availabilities: any) =>
-              isSameDay(parseISO(availabilities.date), selectedDay)
-            ) ||
+              isSameDay(parseISO(availabilities.date), selectedDay) && availabilities.isBooked
+            ) || !availabilities.some((availabilities: any) =>
+              isSameDay(parseISO(availabilities.date), selectedDay) )||
             !isSameMonth(selectedDay, firstDayCurrentMonth) ||
             isSunday(selectedDay)
               ? "hidden"
@@ -263,7 +264,7 @@ export default function Calender({ onBookingChange }: CalenderProps) {
           <TimePicker
             selectedDay={selectedDay}
             onChange={handleTimeChange}
-            disabled={false}
+            disabled={true}
           />
           <div></div>
         </div>

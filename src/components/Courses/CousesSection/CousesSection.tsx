@@ -5,7 +5,13 @@ import SectionTitle from "../../Reusable/Heading/Heading";
 import Container from "../../Reusable/Container/Container";
 import CourseCard from "../../HomePage/Courses/CourseCard";
 import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
+import { useSelector } from "react-redux";
+import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../types/user.types";
+import { useGetMyCourseOrdersQuery } from "../../../redux/Features/CourseOrders/courseOrdersApi";
 const CousesSection = () => {
+  const user = useSelector(useCurrentUser) as TUser;
+  const { data: myCourses, isLoading: isMyCoursesLoading } = useGetMyCourseOrdersQuery({}, { skip: !user });
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -40,7 +46,9 @@ const CousesSection = () => {
       transition: { duration: 1, ease: "easeOut", delay: 0.5 },
     },
   };
-const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
+const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", });
+console.log(myCourses)
+
  
 if (isLoading) {
     return <div>Loading...</div>;
@@ -67,11 +75,16 @@ if (isLoading) {
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-           {courses?.data?.courses?.map((course, index) => (
-            <motion.div key={index} variants={cardVariants}>
-              <CourseCard {...course} />
-            </motion.div>
-          ))}
+           {courses?.data?.courses?.map((course, index) => {
+            const isEnrolled = myCourses?.data?.orders?.some(
+              (order: any) => order.courseId._id === course._id 
+            );
+            return (
+              <motion.div key={index} variants={cardVariants}>
+                <CourseCard {...course} isEnrolled={isEnrolled} />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </Container>
       <motion.div
