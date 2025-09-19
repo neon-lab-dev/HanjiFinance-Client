@@ -65,7 +65,7 @@ const SubscribeNewsletterForm = () => {
             <img src={ICONS.tickMark} alt="" className="size-11" />
           </div>
           <h1 className="text-neutral-10 text-[17px] font-semibold leading-8 mt-8 text-center">
-            Newsletter subscribed successfully! Optional
+            Newsletter subscribed successfully!
           </h1>
 
           <p className="text-neutral-10 text-[15px] font-medium leading-[18px] mt-6 max-w-[550px] mx-auto text-center">

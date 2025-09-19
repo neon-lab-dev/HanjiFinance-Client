@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FiList } from "react-icons/fi";
+import { FiList, FiMail } from "react-icons/fi";
 import StatusCard from "../../../components/Dashboard/SharedComponents/StatusCard/StatusCard";
 import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
@@ -99,12 +99,26 @@ const Newsletter = () => {
       onClick: (row: any) => handleCopyEmail(row?.email),
     },
     {
+      icon: <FiMail />,
+      label: "Send Email",
+      onClick: (row: any) => {
+        if (row?.email) {
+          window.open(
+            `https://mail.google.com/mail/?view=cm&fs=1&to=${row.email}`,
+            "_blank"
+          );
+        }
+      },
+      className: "text-blue-600",
+    },
+    {
       icon: <FiTrash2 />,
       label: "Delete",
       onClick: (row: any) => handleDeleteNewsletter(row?._id),
       className: "text-red-600",
     },
   ];
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
