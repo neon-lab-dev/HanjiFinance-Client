@@ -56,15 +56,14 @@ type TCourseCard = {
     total: number;
     progress: number; // in percentage
   };
-  createdAt: string;
+  enrolledDate: string;
 };
 
 const CourseCard: React.FC<TCourseCard> = ({
-  _id,
+  // _id,
   courseId,
   courseTitle,
-  progressData,
-  createdAt,
+  enrolledDate,
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg font-Montserrat">
@@ -84,7 +83,7 @@ const CourseCard: React.FC<TCourseCard> = ({
             <p className="text-neutral-60 text-sm leading-5">{courseId?.subtitle}</p>
           </div>
           <span className="text-neutral-160 text-xs font-medium leading-[14px] tracking-[-0.12px]">
-            Enrolled on {formatDate(createdAt)}
+            Enrolled on {formatDate(enrolledDate)}
           </span>
         </div>
 

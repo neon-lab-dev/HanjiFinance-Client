@@ -7,9 +7,10 @@ import { CgCalendarDates } from "react-icons/cg";
 interface MyOrdersCardProps {
   variant: "courseOrder" | "productOrder";
   order: any;
+  course?: any;
 }
 
-const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order }) => {
+const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) => {
   return (
     <div className="flex items-center justify-between rounded-lg border-[1px] w-full border-neutral-98 bg-surface-30 p-4 font-Montserrat">
       <div className="gap-4 flex items-center justify-center w-fit">
@@ -25,12 +26,17 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order }) => {
               </div>
             </>
           ) : (
-            <img src={order?.courseId?.imageUrl} alt="" className="size-[72px] rounded-lg object-cover" />
+            <img src={course?.courseId?.imageUrl} alt="" className="size-[72px] rounded-lg object-cover" />
           )}
         </div>
         <div className="text-neutral-20 w-[452px]">
           <h2 className="font-medium leading-[22px] text-base truncate">
-            Fashion and Apparels
+            {
+              variant === "productOrder"?
+              "Fashion and Apparels"
+              :
+              course?.courseTitle
+            }
           </h2>
 
           <p className="text-[13px] text-neutral-20">

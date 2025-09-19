@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Button from "../../../components/Reusable/Button/Button";
 import MyOrdersCard from "../../../components/Dashboard/MyOrders/MyOrdersCard/MyOrdersCard";
@@ -8,6 +9,7 @@ import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import Loader from "../../../components/Shared/Loader/Loader";
 import { useGetMyCourseOrdersQuery } from "../../../redux/Features/CourseOrders/courseOrdersApi";
+import type { TCourseOrder } from "../../../types/courseOrder.types";
 
 const MyOrders = () => {
   const [page, setPage] = useState<number>(1);
@@ -169,8 +171,10 @@ const MyOrders = () => {
                 <Loader />
               </div>
             ) : allCourseOrders?.length > 0 ? (
-              allCourseOrders?.map((order: TProductOrder, index: number) => (
-                <MyOrdersCard key={index} variant="courseOrder" order={order} />
+              allCourseOrders?.map((order: TCourseOrder,) => (
+                order?.courses?.map((course:any, index:number) => 
+                  <MyOrdersCard key={index} variant="courseOrder" order={order} course={course} />
+                )
               ))
             ) : (
               <div className="flex flex-col justify-center items-center py-20 text-center">
