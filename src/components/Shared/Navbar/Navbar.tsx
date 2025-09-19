@@ -8,7 +8,7 @@ import MegaMenu from "./MegaMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../redux/Features/Auth/authModalSlice";
 import { getCartProducts } from "../../../redux/Features/Cart/cartSlice";
-import { useAuthToken } from "../../../redux/Features/Auth/authSlice";
+import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Navbar = () => {
   const cartProducts = useSelector(getCartProducts);
   const cartCount = cartProducts.length;
 
-  const userToken = useSelector(useAuthToken);
+  const user = useSelector(useCurrentUser);
   // Type for each nav item
   type IconNavLink = {
     icons: string;
@@ -81,7 +81,7 @@ const Navbar = () => {
       icons: ICONS.user,
       path: "/",
       onClick: () => {
-        if (!userToken) {
+        if (!user) {
           dispatch(openModal("login"));
         } else {
           navigate("/dashboard");

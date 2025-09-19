@@ -5,7 +5,7 @@ import SubscriptionStatus from "../../../../components/Dashboard/SubscriptionSta
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import { useState } from "react";
 import AddLecture from "../../../../components/AdminDashboard/Courses/AddLecture";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   useDeleteLectureMutation,
   useGetAllLecturesByCourseIdQuery,
@@ -95,7 +95,10 @@ const ManageLectures = () => {
         )}
 
         {/* Add Lecture Button */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex items-center gap-3 justify-center">
+          <Link to={`/dashboard/admin/courses`}>
+            <Button variant="secondary" label="Go Back" type="button" />
+          </Link>
           <Button
             variant="primary"
             label="Add New Lecture"

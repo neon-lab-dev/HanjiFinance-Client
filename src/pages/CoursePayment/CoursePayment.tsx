@@ -10,7 +10,7 @@ import PaymentCard from "../../components/Payment/PaymentCard/PaymentCard";
 import { useGetRazorpayKeyQuery } from "../../redux/Features/User/userApi";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
+import { setRedirectPath, useCurrentUser } from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
 import toast from "react-hot-toast";
 import { openModal } from "../../redux/Features/Auth/authModalSlice";
@@ -39,6 +39,7 @@ const CoursePayment = () => {
     if (!user) {
       toast.error("Please login to proceed");
       dispatch(openModal("login"));
+      dispatch(setRedirectPath(`/course-payment/${id}`));
       return;
     }
 
@@ -79,9 +80,9 @@ const CoursePayment = () => {
       rzp.open();
 
       const courseOrderData = {
-        courses: [{courseId:course?.data?._id} ],
+        courses: [{ courseId: course?.data?._id }],
         totalAmount: totalToPay,
-        orderType : "single"
+        orderType: "single",
       };
 
       localStorage.setItem("courseOrderData", JSON.stringify(courseOrderData));

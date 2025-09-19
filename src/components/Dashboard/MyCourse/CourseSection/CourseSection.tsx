@@ -5,6 +5,7 @@ import Loader from "../../../Shared/Loader/Loader";
 
 const CourseSection = () => {
   const { data: courses, isLoading } = useGetMyCourseOrdersQuery({});
+  console.log(courses);
 
   return (
     <div className="mt-9">
@@ -14,8 +15,10 @@ const CourseSection = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-          {courses?.data?.orders?.map((course: any) => (
-            <CourseCard {...course} />
+          {courses?.data?.orders?.map((courseOrder: any) => (
+            courseOrder?.courses?.map((course: any) => 
+              <CourseCard {...course} />
+            )
           ))}
         </div>
       )}
