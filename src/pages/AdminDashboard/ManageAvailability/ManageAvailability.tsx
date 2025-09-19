@@ -41,26 +41,22 @@ const ManageAvailability = () => {
       return {
         date: formatDate(availability.date),
         status: (
-         <p
-  className={
-    !availability?.isAvailable && availability?.isBooked
-      ? "text-gray-500"
-      : availability?.isBooked
-      ? "text-red-600"
-      : availability?.isAvailable
-      ? "text-green-600"
-      : "text-gray-500"
-  }
->
-  {!availability?.isAvailable && availability?.isBooked
-    ? "Unavailable"
-    : availability?.isBooked
-    ? "Booked"
-    : availability?.isAvailable
-    ? "Available"
-    : "Unavailable"}
-</p>
-
+          <p
+            className={
+              availability?.isAvailable ? "text-green-600" : "text-red-600"
+            }
+          >
+            {availability?.isAvailable ? "Available" : "Unavailable"}
+          </p>
+        ),
+        bookingStatus: (
+          <p
+            className={
+              availability?.isBooked ? "text-green-600" : "text-gray-500"
+            }
+          >
+            {availability?.isBooked ? "Booked" : "Not Booked"}
+          </p>
         ),
         action: (
           <button
@@ -77,7 +73,8 @@ const ManageAvailability = () => {
 
   const categoryColumns = [
     { key: "date", label: "Date" },
-    { key: "status", label: "status" },
+    { key: "status", label: "Availability Status" },
+    { key: "bookingStatus", label: "Booking Status" },
     { key: "action", label: "Remove Availability" },
   ];
 

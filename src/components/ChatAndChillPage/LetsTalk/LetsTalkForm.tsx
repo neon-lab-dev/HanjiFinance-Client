@@ -8,11 +8,13 @@ import Calender from "../../Reusable/Calender/Calender";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../../redux/Features/Auth/authModalSlice";
-import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
+import {
+  setRedirectPath,
+  useCurrentUser,
+} from "../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../types/user.types";
 import { useNavigate } from "react-router-dom";
 
-// Add Razorpay type to window
 declare global {
   interface Window {
     Razorpay: any;
@@ -39,24 +41,49 @@ const LetsTalkForm = () => {
   // const bookingDate = watch("bookingDate");
   const [bookingDate, setBookingDate] = useState<null | string>(null);
 
-  const ISOFormatDate = bookingDate
-    ? new Date(bookingDate).toISOString().replace("Z", "+00:00")
-    : null;
-
-  console.log(ISOFormatDate);
   const [readableDate, setReadableDate] = useState<string>("");
+  useEffect(() => {
+  if (!bookingDate) return;
+
+  const dateObj = new Date(bookingDate);
+
+  const day = dateObj.getDate();
+  const month = dateObj.toLocaleString("default", { month: "long" }); // September
+  const year = dateObj.getFullYear();
+
+  // Function to get ordinal suffix
+  const getOrdinal = (n: number) => {
+    if (n > 3 && n < 21) return "th";
+    switch (n % 10) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  };
+
+  setReadableDate(`${day}${getOrdinal(day)} ${month}, ${year}`);
+}, [bookingDate]);
+  const [bookingDateISO, setBookingDateISO] = useState<string>("");
   const dispatch = useDispatch();
   const user = useSelector(useCurrentUser) as TUser;
 
   useEffect(() => {
     if (bookingDate) {
-      const readable = new Date(bookingDate).toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
-      setReadableDate(readable);
+      const date = new Date(bookingDate);
+
+      // Set time to UTC midnight
+      const utcDate = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+      );
+
+      // Convert to ISO and replace Z with +00:00
+      const isoDate = utcDate.toISOString().replace("Z", "+00:00");
+
+      setBookingDateISO(isoDate);
     }
   }, [bookingDate]);
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -64,13 +91,19 @@ const LetsTalkForm = () => {
     if (!user) {
       toast.error("Please login to proceed");
       dispatch(openModal("login"));
+      dispatch(setRedirectPath("/chat-and-chill-payment"));
       return;
     }
     setLoading(false);
-    // save form data
-    localStorage.setItem("chatAndChillData", JSON.stringify(data));
+    const chatAndChillData = {
+      bookingDate: bookingDateISO,
+      name: data?.name,
+      email: data?.email,
+      phoneNumber: data?.phoneNumber,
+      topicsToDiscuss: data?.topicsToDiscuss,
+    };
 
-    // go to payment page
+    localStorage.setItem("chatAndChillData", JSON.stringify(chatAndChillData));
     navigate("/chat-and-chill-payment");
   };
 
@@ -125,7 +158,7 @@ const LetsTalkForm = () => {
           {/* Show the selected time */}
           {readableDate && (
             <p className="text-success-20 text-sm font-medium text-start">
-              Slot you are booking: {readableDate}
+              Slot you are booking: {readableDate}, 7:00 PM
             </p>
           )}
 

@@ -24,7 +24,7 @@ const ChatAndChillPayment = () => {
   const [checkout] = useCheckoutMutation();
   const [loading, setLoading] = useState(false);
 
-  const handleSubscribe = async () => {
+  const handleBookChatAndChill = async () => {
     if (!user) {
       toast.error("Please login to proceed");
       return;
@@ -54,6 +54,8 @@ const ChatAndChillPayment = () => {
 
       const rzp = new window.Razorpay(options);
       rzp.open();
+
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -64,10 +66,10 @@ const ChatAndChillPayment = () => {
   return (
     <div className="bg-surface-30">
       <Container>
-        <div className="space-y-8">
+        <div className="space-y-8 pt-5">
           <div className="flex justify-between items-center pb-8 border-b border-b-neutral-97">
             <h2 className="text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
-              Course Payment
+              Book Consultation
             </h2>
           </div>
         </div>
@@ -79,7 +81,7 @@ const ChatAndChillPayment = () => {
             gstRate={18}
             isAutopayAvailable={false}
             showAutopayOption={false}
-            onProceed={handleSubscribe}
+            onProceed={handleBookChatAndChill}
             isLoading={loading}
           />
         </div>
