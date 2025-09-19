@@ -3,6 +3,7 @@ import { ICONS } from "../../../../assets";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logout,
+  setUser,
   useCurrentUser,
 } from "../../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../../types/user.types";
@@ -119,6 +120,7 @@ const Sidebar: React.FC = () => {
   const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;
 
   const handleLogout = async () => {
+    dispatch(setUser({ user:null, token: null }));
     Cookies.remove("accessToken");
     Cookies.remove("role");
     dispatch(logout());

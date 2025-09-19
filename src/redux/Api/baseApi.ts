@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createApi,
@@ -6,13 +7,15 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../store";
 import { setUser } from "../Features/Auth/authSlice";
+import Cookies from "js-cookie";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:5000/api/v1',
   // baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
   credentials : 'include',
   prepareHeaders : (headers, {getState}) => {
-    const token = (getState() as RootState).auth.token;
+     const token = Cookies.get("accessToken");
+    // const token = (getState() as RootState).auth.token;
 
     if (token) {
       headers.set("authorization", `${token}`);

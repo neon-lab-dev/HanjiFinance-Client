@@ -65,18 +65,21 @@ const Login = () => {
         dispatch(setUser({ user, token: response?.data?.accessToken }));
         toast.success(response?.message);
         dispatch(setIsModalOpen(false));
+
+        let targetPath = "/"; // default
+
         if (userRole === "admin") {
-          navigate("/dashboard/admin");
+          targetPath = "/dashboard/admin";
         } else if (userRole === "user") {
-          if (redirectPath) {
-            navigate(redirectPath);
-            dispatch(clearRedirectPath());
-          } else {
-            navigate("/dashboard");
-          }
-        } else {
-          navigate("/");
+          targetPath = redirectPath || "/dashboard";
+          if (redirectPath) dispatch(clearRedirectPath());
         }
+
+        navigate(targetPath);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");
