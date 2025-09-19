@@ -48,7 +48,7 @@ const ProductsDetails = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (sizes && sizes.length > 0) {
-   const availableSize = sizes.find((size) => size.quantity > 0);
+   const availableSize = sizes.find((size:Size) => size.quantity > 0);
 
 // If found, set it as selected
 if (availableSize) {
