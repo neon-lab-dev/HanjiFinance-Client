@@ -1,13 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useGetMyQueriesQuery } from "../../redux/Features/HelpDesk/helpDeskApi";
+import SearchInput from "../../components/Reusable/SearchInput/SearchInput";
+import Dropdown from "../../components/Reusable/Dropdown/Dropdown";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import QueryCard from "../../../components/AdminDashboard/QueriesPage/QueryCard/QueryCard";
-import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
-import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
-import { useGetAllQueriesQuery } from "../../../redux/Features/HelpDesk/helpDeskApi";
-import type { THelpDesk } from "../../../types/helpdesk.types";
-import Loader from "../../../components/Shared/Loader/Loader";
+import Loader from "../../components/Shared/Loader/Loader";
+import type { THelpDesk } from "../../types/helpdesk.types";
+import QueryCard from "../../components/AdminDashboard/QueriesPage/QueryCard/QueryCard";
+import Button from "../../components/Reusable/Button/Button";
+import RaiseQueryModal from "../../components/Dashboard/HelpDeskPage/RaiseQueryModal/RaiseQueryModal";
 
-const Queries = () => {
+const HelpDesk = () => {
+  const [isRaiseQueryModalOpen, setIsRaiseQueryModalOpen] =
+    useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [page, setPage] = useState<number>(1);
@@ -21,14 +25,14 @@ const Queries = () => {
     data: queries,
     isLoading,
     isFetching,
-  } = useGetAllQueriesQuery({
+  } = useGetMyQueriesQuery({
     keyword: searchValue,
     status,
     page,
     limit,
   });
 
-  const allQueries = queries?.data?.queries;
+  const myQueries = queries?.data?.queries;
   const pagination = queries?.data?.pagination;
 
   const handlePrevPage = () => {
@@ -42,21 +46,16 @@ const Queries = () => {
   return (
     <div>
       {/* Header */}
-      <div className="flex justify-between items-start flex-wrap">
-        <div>
-          <h1 className="text-xl font-bold text-neutral-40">Queries</h1>
-          <p className="text-neutral-65">Manage all user queries.</p>
-        </div>
+      <div className="flex justify-between items-center flex-wrap">
+        <SearchInput
+          value={searchValue}
+          onChange={setSearchValue}
+          placeholder="Search query..."
+        />
 
         <div className="flex items-center gap-4 flex-wrap">
           {/* Filters */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <SearchInput
-              value={searchValue}
-              onChange={setSearchValue}
-              placeholder="Search query..."
-            />
-
+          <div className="flex items-center gap-3 flex-wrap">
             <Dropdown
               className="py-1 w-60"
               value={status}
@@ -77,6 +76,12 @@ const Queries = () => {
                 { value: "25", label: "25 per page" },
                 { value: "50", label: "50 per page" },
               ]}
+            />
+            <Button
+              variant="primary"
+              label="Raise a Query"
+              classNames="w-fit py-[7px] px-3"
+              onClick={() => setIsRaiseQueryModalOpen(true)}
             />
           </div>
 
@@ -105,22 +110,27 @@ const Queries = () => {
         </div>
       </div>
 
-      {/* Query List */}
+      {/* My Query List */}
       <div className="flex flex-col justify-center gap-6 mt-6">
         {isLoading || isFetching ? (
           <div className="py-6">
             <Loader />
           </div>
-        ) : allQueries?.length < 1 ? (
+        ) : myQueries?.length < 1 ? (
           <p className="text-neutral-10 text-center py-6">No query raised!</p>
         ) : (
-          allQueries.map((query: THelpDesk) => (
-            <QueryCard key={query._id} query={query} variant="admin" />
+          myQueries.map((query: THelpDesk) => (
+            <QueryCard key={query._id} query={query} variant="user" />
           ))
         )}
       </div>
+
+      <RaiseQueryModal
+        isRaiseQueryModalOpen={isRaiseQueryModalOpen}
+        setIsRaiseQueryModalOpen={setIsRaiseQueryModalOpen}
+      />
     </div>
   );
 };
 
-export default Queries;
+export default HelpDesk;

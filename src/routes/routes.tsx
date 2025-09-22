@@ -51,6 +51,7 @@ import ChatAndChillPayment from "../pages/ChatAndChillPayment/ChatAndChillPaymen
 import Category from "../pages/AdminDashboard/Category/Category";
 import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/ManageAvailability";
 import Queries from "../pages/AdminDashboard/Queries/Queries";
+import HelpDesk from "../pages/HelpDesk/HelpDesk";
 
 export const router = createBrowserRouter([
   {
@@ -192,6 +193,10 @@ export const router = createBrowserRouter([
       {
         path: "update-subscription",
         element: <UpdateSubscription />,
+      },
+      {
+        path: "helpdesk",
+        element: <HelpDesk />,
       },
     ],
   },

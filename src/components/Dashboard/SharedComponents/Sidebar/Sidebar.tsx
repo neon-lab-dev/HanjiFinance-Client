@@ -54,6 +54,11 @@ const Sidebar: React.FC = () => {
     icon: FiUsers,
   },
   {
+    name: "Help Desk",
+    link: "/dashboard/helpdesk",
+    icon: FiHelpCircle,
+  },
+  {
     name: "My Profile",
     link: "/dashboard/certificates",
     icon: FiUser,

@@ -4,14 +4,14 @@ import { FiTrash2, FiMaximize2, FiMail, FiCopy } from "react-icons/fi";
 import { formatDate } from "../../../../utils/formatDate";
 import type { THelpDesk } from "../../../../types/helpdesk.types";
 import toast from "react-hot-toast";
-import { useUpdateQueryStatusMutation } from "../../../../redux/Features/HelpDesk/helpDeskApi";
+import { useDeleteQueryMutation, useUpdateQueryStatusMutation } from "../../../../redux/Features/HelpDesk/helpDeskApi";
 
 type QueryCardProps = {
   query: THelpDesk;
-  onDelete?: (id: string) => void;
+  variant: "admin" | "user";
 };
 
-const QueryCard: React.FC<QueryCardProps> = ({ query, onDelete }) => {
+const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
   const [showScreenshot, setShowScreenshot] = useState(false);
 
   const copyToClipboard = (text: string) => {
@@ -21,6 +21,7 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, onDelete }) => {
 
   const [updateQueryStatus, { isLoading: isUpdatingStatus }] =
     useUpdateQueryStatusMutation();
+  const [deleteQuery] = useDeleteQueryMutation();
 
   const handleChangeStatus = async (status: string) => {
     try {
@@ -39,6 +40,15 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, onDelete }) => {
       toast.error(err?.data?.message || "Something went wrong!");
     }
   };
+
+  const handleDeleteQuery = async () => {
+    const id = query._id;
+      toast.promise(deleteQuery(id).unwrap(), {
+        loading: "Deleting query...",
+        success: "Query deleted successfully.",
+        error: (err: any) => err?.data?.message || "Something went wrong!",
+      });
+    };
 
   const updateButtons = [
     {
@@ -110,14 +120,14 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, onDelete }) => {
           </div>
 
           <div className="flex gap-2">
-            <button
-              onClick={() => onDelete && onDelete(query._id)}
-              className="text-red-500 hover:text-red-700 p-1 rounded"
-              title="Delete"
-            >
-              <FiTrash2 size={20} />
-            </button>
-          </div>
+              <button
+                onClick={handleDeleteQuery}
+                className="text-red-500 hover:text-red-700 p-1 rounded cursor-pointer"
+                title="Delete"
+              >
+                <FiTrash2 size={20} />
+              </button>
+            </div>
         </div>
 
         <div className="bg-neutral-90/30 rounded-lg p-3">
@@ -148,31 +158,33 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, onDelete }) => {
             {query.status}
           </span>
 
-          <div className="flex gap-2">
-            {updateButtons?.map((statusOption) => (
-              <button
-                key={statusOption?.label}
-                onClick={statusOption?.action}
-                className={`px-3 py-1 rounded text-sm font-medium border transition cursor-pointer disabled:cursor-not-allowed ${
-                  query.status === statusOption?.key
-                    ? "bg-gray-100 text-gray-700 cursor-not-allowed border-gray-100"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                }`}
-                disabled={statusOption?.disabled || isUpdatingStatus}
-              >
-                {statusOption?.label}
-              </button>
-            ))}
+          {variant === "admin" && (
+            <div className="flex gap-2">
+              {updateButtons?.map((statusOption) => (
+                <button
+                  key={statusOption?.label}
+                  onClick={statusOption?.action}
+                  className={`px-3 py-1 rounded text-sm font-medium border transition cursor-pointer disabled:cursor-not-allowed ${
+                    query.status === statusOption?.key
+                      ? "bg-gray-100 text-gray-700 cursor-not-allowed border-gray-100"
+                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                  }`}
+                  disabled={statusOption?.disabled || isUpdatingStatus}
+                >
+                  {statusOption?.label}
+                </button>
+              ))}
 
-            <a
-              href={`mailto:${query.userId.email}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1 rounded text-sm font-medium bg-primary-10 text-white hover:bg-primary-9 flex items-center gap-1"
-            >
-              <FiMail /> Send Email
-            </a>
-          </div>
+              <a
+                href={`mailto:${query.userId.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 rounded text-sm font-medium bg-primary-10 text-white hover:bg-primary-9 flex items-center gap-1"
+              >
+                <FiMail /> Send Email
+              </a>
+            </div>
+          )}
         </div>
 
         <p className="text-xs text-neutral-10 mt-2">

@@ -19,6 +19,24 @@ const helpDeskApi = baseApi.injectEndpoints({
       },
       providesTags: ["helpdesk"],
     }),
+
+    getMyQueries: builder.query({
+      query: ({ keyword, status, page, limit }: { keyword?: string; status?: string; page?: number ; limit?: number }) => {
+        const params = new URLSearchParams();
+
+        if (keyword) params.append("keyword", keyword);
+        if (status) params.append("status", status);
+        if (page) params.append("page", page.toString());
+        if (limit) params.append("limit", limit.toString());
+
+        return {
+          url: `/helpdesk/my-queries${params.toString() ? `?${params.toString()}` : ""}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["helpdesk"],
+    }),
     
     raiseQuery: builder.mutation({
       query: (data) => ({
@@ -51,4 +69,4 @@ const helpDeskApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllQueriesQuery, useRaiseQueryMutation, useUpdateQueryStatusMutation, useDeleteQueryMutation } = helpDeskApi;
+export const { useGetAllQueriesQuery, useGetMyQueriesQuery, useRaiseQueryMutation, useUpdateQueryStatusMutation, useDeleteQueryMutation } = helpDeskApi;
