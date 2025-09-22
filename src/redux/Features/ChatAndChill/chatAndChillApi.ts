@@ -79,6 +79,16 @@ const chatAndChillApi = baseApi.injectEndpoints({
       invalidatesTags: ["chatAndChill"],
     }),
 
+    reScheduleMeeting: builder.mutation({
+      query: (data) => ({
+        url: `/chat-and-chill/re-schedule-meeting`,
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["chatAndChill"],
+    }),
+
     updateStatus: builder.mutation({
       query: ({ data, id }) => ({
         url: `/chat-and-chill/update-status/${id}`,
@@ -117,6 +127,7 @@ export const {
   useGetAllBookingsByUserIdQuery,
   useGetMyBookingsQuery,
   useScheduleMeetingMutation,
+  useReScheduleMeetingMutation,
   useUpdateStatusMutation,
   useCheckoutMutation,
   useBookChatAndChillMutation,

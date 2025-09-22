@@ -1,11 +1,17 @@
 import { FiCreditCard, FiClock, FiMail } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import Button from "../../components/Reusable/Button/Button";
 
 type TSubscriptionStatusProps = {
-  status: "no-subscription" | "waitlisted" | "coupon-sent";
+  status:
+    | "no-subscription"
+    | "waitlisted"
+    | "coupon-sent"
+    | "no-subscription-boardroom";
 };
 
 const SubscriptionStatus: React.FC<TSubscriptionStatusProps> = ({ status }) => {
-  let icon, title, description;
+  let icon, title, description, actionButton;
 
   switch (status) {
     case "no-subscription":
@@ -13,6 +19,22 @@ const SubscriptionStatus: React.FC<TSubscriptionStatusProps> = ({ status }) => {
       title = "No Subscription Purchased Yet";
       description =
         "You haven’t purchased any subscription plan yet. Choose a plan to unlock premium features.";
+      break;
+
+    case "no-subscription-boardroom":
+      icon = <FiCreditCard className="text-5xl text-red-500 mb-4" />;
+      title = "You Haven’t Subscribed to Boardroom Banter";
+      description =
+        "Subscribe now to get access to exclusive Boardroom Banter discussions and insights.";
+      actionButton = (
+        <Link to={"/services/boardroom-banter"} className="mt-5">
+          <Button
+            variant="primary"
+            label={"Subscribe Now"}
+            classNames="py-2 px-3"
+          />
+        </Link>
+      );
       break;
 
     case "waitlisted":
@@ -40,6 +62,7 @@ const SubscriptionStatus: React.FC<TSubscriptionStatusProps> = ({ status }) => {
       {icon}
       <h1 className="text-2xl font-bold text-gray-800 mb-2">{title}</h1>
       <p className="text-gray-600 max-w-md">{description}</p>
+      {actionButton}
     </div>
   );
 };

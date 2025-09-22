@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FiCheckCircle, FiXCircle, FiLink } from "react-icons/fi";
+import { FiCheckCircle, FiXCircle, FiLink, FiRefreshCw } from "react-icons/fi";
 import DashboardContainer from "../../../components/Dashboard/SharedComponents/DashboardContainer/DashboardContainer";
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Table from "../../../components/Reusable/Table/Table";
@@ -15,10 +15,13 @@ import Dropdown from "../../../components/Reusable/Dropdown/Dropdown";
 import toast from "react-hot-toast";
 import ConsultationsStats from "../../../components/AdminDashboard/ManageConsultationsPage/ConsultationsStats/ConsultationsStats";
 import ScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ScheduleMeetingModal/ScheduleMeetingModal";
+import ReScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ReScheduleMeetingModal/ReScheduleMeetingModal";
 
 const ManageConsultations = () => {
   const [bookingId, setBookingId] = useState<string>("");
   const [isScheduleMeetingModalOpen, setIsScheduleMeetingModalOpen] =
+    useState<boolean>(false);
+  const [isReScheduleMeetingModalOpen, setIsReScheduleMeetingModalOpen] =
     useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -151,6 +154,15 @@ const ManageConsultations = () => {
       },
     },
     {
+      icon: <FiRefreshCw />,
+      label: "Re-Schedule",
+
+      onClick: (row: any) => {
+        setBookingId(row._id);
+        setIsReScheduleMeetingModalOpen(true);
+      },
+    },
+    {
       icon: <FiCheckCircle />,
       label: "Mark Completed",
       onClick: (row: any) => {
@@ -160,7 +172,6 @@ const ManageConsultations = () => {
         row.status.props.children !== "completed" &&
         row.status.props.children !== "cancelled",
     },
-
     {
       icon: <FiXCircle />,
       label: "Cancel",
@@ -209,7 +220,6 @@ const ManageConsultations = () => {
                     { value: "completed", label: "Completed" },
                   ]}
                 />
-                
               </div>
             </div>
           </div>
@@ -232,6 +242,12 @@ const ManageConsultations = () => {
         bookingId={bookingId}
         isScheduleMeetingModalOpen={isScheduleMeetingModalOpen}
         setIsScheduleMeetingModalOpen={setIsScheduleMeetingModalOpen}
+      />
+
+      <ReScheduleMeetingModal
+        bookingId={bookingId}
+        isReScheduleMeetingModalOpen={isReScheduleMeetingModalOpen}
+        setIsReScheduleMeetingModalOpen={setIsReScheduleMeetingModalOpen}
       />
     </div>
   );
