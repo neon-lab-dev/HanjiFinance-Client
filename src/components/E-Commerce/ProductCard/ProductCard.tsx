@@ -7,11 +7,34 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  const dispatch = useDispatch();
-  const inStock = item.sizes.some((size) => size.quantity > 0);
-  const handleAddToWishList = async () => {
-    dispatch(addToCart({ product: item, size: item.sizes[0], quantity: 1 }));
-  };
+ const dispatch = useDispatch();
+
+const inStock = item.colors?.some((color) =>
+  color.sizes?.some((size) => size.quantity > 0)
+);
+
+const handleAddToWishList = async () => {
+  const firstColor = item.colors?.find((color) =>
+    color.sizes?.some((size) => size.quantity > 0)
+  );
+
+  if (!firstColor) return;
+
+  const firstSize = firstColor.sizes.find((size) => size.quantity > 0);
+
+  if (!firstSize) return;
+
+  dispatch(
+    addToCart({
+      product: item,
+      color: firstColor.colorName,
+      size: firstSize.size,
+      quantity: 1,
+    })
+  );
+};
+
+
 
   return (
     <div>
@@ -23,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         {/* Product header */}
         <div className="absolute top-0 w-full z-20">
           <div className="flex items-center justify-between p-5 w-full">
-            <a href={`/product-details/${item._id}`} 
+            <a href={`/product-details/${item._id}`}
               className="text-neutral-50 text-sm md:text-base font-medium leading-[22px] md:leading-6 capitalize hover:underline"
             >
               {item.name}
@@ -68,20 +91,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       </div>
 
       {/* Product price */}
-      <div className="mt-4">
-        <div className="flex gap-2 items-baseline">
-          <h1 className="text-neutral-10 text-2xl font-medium leading-6">
-            Rs. {item?.sizes[0]?.discountedPrice ?? "N/A"}
-          </h1>{" "}
-          <span className="line-through text-xs lg:text-base text-primary-10">
-            Rs. {item?.sizes[0]?.basePrice}
-          </span>
-        </div>
+     <div className="mt-4">
+  <div className="flex gap-2 items-baseline">
+    <h1 className="text-neutral-10 text-2xl font-medium leading-6">
+      Rs.{" "}
+      {item?.colors?.[0]?.sizes?.[0]?.discountedPrice !== undefined
+        ? item.colors[0].sizes[0].discountedPrice
+        : "N/A"}
+    </h1>
+    <span className="line-through text-xs lg:text-base text-primary-10">
+      Rs. {item?.colors?.[0]?.sizes?.[0]?.basePrice ?? "N/A"}
+    </span>
+  </div>
 
-        <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
-          inclusive of all taxes
-        </p>
-      </div>
+  <p className="text-neutral-85 text-xs lg:text-base font-normal leading-[22px] mt-2">
+    inclusive of all taxes
+  </p>
+</div>
+
     </div>
   );
 };
