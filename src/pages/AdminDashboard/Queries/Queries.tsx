@@ -114,7 +114,7 @@ const Queries = () => {
         ) : allQueries?.length < 1 ? (
           <p className="text-neutral-10 text-center py-6">No query raised!</p>
         ) : (
-          allQueries.map((query: THelpDesk) => (
+          allQueries?.map((query: THelpDesk) => (
             <QueryCard key={query._id} query={query} variant="admin" />
           ))
         )}

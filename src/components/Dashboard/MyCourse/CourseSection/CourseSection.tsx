@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CourseCard from "../CourseCard/CourseCard";
-import { useGetMyCourseOrdersQuery } from "../../../../redux/Features/CourseOrders/courseOrdersApi";
 import Loader from "../../../Shared/Loader/Loader";
+import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
 
 const CourseSection = () => {
-  const { data: courses, isLoading } = useGetMyCourseOrdersQuery({});
+  const { data: myProfile, isLoading } = useGetMeQuery({});
 
   return (
     <div className="mt-9">
@@ -14,10 +14,8 @@ const CourseSection = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-          {courses?.data?.orders?.map((courseOrder: any) => (
-            courseOrder?.courses?.map((course: any) => 
-              <CourseCard {...course} enrolledDate={courseOrder.createdAt} />
-            )
+          {myProfile?.data?.purchasedCourses?.map((course: any) => (
+            <CourseCard {...course?.courseId} isCourseCompleted={course.isCompletedCourse} completedPercentage={course.progress?.percentage} />
           ))}
         </div>
       )}
