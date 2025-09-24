@@ -8,6 +8,9 @@ import SubscriptionStatus from "../../../SubscriptionStatus/SubscriptionStatus";
 const MySubscription = () => {
   const { data } = useGetMySubscriptionQuery({});
   return (
+    !data?.data?
+     <SubscriptionStatus status="no-subscription-boardroom" />
+     :
     data?.data?.status === "waitlist" ?
     <SubscriptionStatus status="waitlisted" />
     :

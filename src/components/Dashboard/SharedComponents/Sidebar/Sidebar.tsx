@@ -18,7 +18,8 @@ import {
   FiUsers,
   FiKey,
   FiUser,
-  FiShoppingBag
+  FiShoppingBag,
+  FiHelpCircle
 } from "react-icons/fi";
 import { AiOutlineCheckCircle, AiOutlineTag } from "react-icons/ai";
 
@@ -51,6 +52,11 @@ const Sidebar: React.FC = () => {
     name: "My Subscriptions",
     link: "/dashboard/my-subscriptions",
     icon: FiUsers,
+  },
+  {
+    name: "Help Desk",
+    link: "/dashboard/helpdesk",
+    icon: FiHelpCircle,
   },
   {
     name: "My Profile",
@@ -109,6 +115,11 @@ const Sidebar: React.FC = () => {
     name: "Coupon Code",
     link: "/dashboard/admin/manage-coupon-codes",
     icon: FiKey,
+  },
+  {
+    name: "Queries",
+    link: "/dashboard/admin/queries",
+    icon: FiHelpCircle,
   },
   {
     name: "My Profile",

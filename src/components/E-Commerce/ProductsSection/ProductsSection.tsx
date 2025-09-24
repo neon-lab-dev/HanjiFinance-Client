@@ -25,7 +25,15 @@ export type TProduct = {
   name: string;
   description: string;
   category: string;
-  sizes: TProductSize[];
+ colors: {
+    colorName: string;
+    sizes: {
+      size: string;
+      quantity: number;
+      basePrice: number;
+      discountedPrice: number;
+    }[];
+  }[];
   createdAt: string;
   updatedAt: string;
   __v: number;

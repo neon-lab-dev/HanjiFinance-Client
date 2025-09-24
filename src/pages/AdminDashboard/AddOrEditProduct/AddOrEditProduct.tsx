@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import Loader from "../../../components/Shared/Loader/Loader";
 
 const AddOrEditProduct = () => {
+  
   const location = useLocation();
   const { id, action } = location.state || {};
   const { data: singleProduct, isLoading: productLoading } =
@@ -24,6 +25,9 @@ const AddOrEditProduct = () => {
 
   const [addProduct, { isLoading }] = useAddProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+  const navigate = useNavigate();
+  const [previews, setPreviews] = useState<string[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -32,10 +36,32 @@ const AddOrEditProduct = () => {
     formState: { errors },
   } = useForm<TProduct>({
     defaultValues: {
-      sizes: [{ size: "", quantity: 0, basePrice: 0, discountedPrice: 0 }],
+      colors: [
+        {
+          colorName: "",
+          sizes: [{ size: "", quantity: 0, basePrice: 0, discountedPrice: 0 }],
+        },
+      ],
       imageUrls: [{ file: undefined }],
     },
   });
+
+  const {
+    fields: colorFields,
+    append: appendColor,
+    remove: removeColor,
+  } = useFieldArray({
+    control,
+    name: "colors",
+  });
+
+  // For each color, we need a field array for sizes
+  const sizesFieldArrays = colorFields.map((_, index) =>
+    useFieldArray({
+      control,
+      name: `colors.${index}.sizes` as const,
+    })
+  );
 
   useEffect(() => {
     if (singleProduct?.data) {
@@ -45,8 +71,19 @@ const AddOrEditProduct = () => {
       setValue("madeIn", singleProduct.data.madeIn);
       setValue("description", singleProduct.data.description);
       setValue("productStory", singleProduct.data.productStory);
-      setValue("sizes", singleProduct.data.sizes);
-      // ✅ normalize imageUrls to match field array structure
+      setValue(
+        "colors",
+        singleProduct.data.colors?.length
+          ? singleProduct.data.colors
+          : [
+              {
+                colorName: "",
+                sizes: [
+                  { size: "", quantity: 0, basePrice: 0, discountedPrice: 0 },
+                ],
+              },
+            ]
+      );
       if (singleProduct.data.imageUrls?.length) {
         setValue(
           "imageUrls",
@@ -55,14 +92,6 @@ const AddOrEditProduct = () => {
       }
     }
   }, [setValue, singleProduct]);
-
-  const navigate = useNavigate();
-  const [previews, setPreviews] = useState<string[]>([]);
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "sizes",
-  });
 
   const {
     fields: imageFields,
@@ -85,19 +114,32 @@ const AddOrEditProduct = () => {
     formData.append("description", data.description);
     if (data.productStory) formData.append("productStory", data.productStory);
 
-    data.sizes?.forEach((size, index) => {
-      formData.append(`sizes[${index}][size]`, size.size);
-      formData.append(`sizes[${index}][quantity]`, size.quantity.toString());
-      formData.append(`sizes[${index}][basePrice]`, size.basePrice.toString());
-      formData.append(
-        `sizes[${index}][discountedPrice]`,
-        size.discountedPrice.toString()
-      );
+    data.colors?.forEach((color, colorIndex) => {
+      formData.append(`colors[${colorIndex}][colorName]`, color.colorName);
+      color.sizes.forEach((size, sizeIndex) => {
+        formData.append(
+          `colors[${colorIndex}][sizes][${sizeIndex}][size]`,
+          size.size
+        );
+        formData.append(
+          `colors[${colorIndex}][sizes][${sizeIndex}][quantity]`,
+          size.quantity.toString()
+        );
+        formData.append(
+          `colors[${colorIndex}][sizes][${sizeIndex}][basePrice]`,
+          size.basePrice.toString()
+        );
+        formData.append(
+          `colors[${colorIndex}][sizes][${sizeIndex}][discountedPrice]`,
+          size.discountedPrice.toString()
+        );
+      });
     });
 
     data.imageUrls?.forEach((imgObj) => {
       if (imgObj.file) formData.append("files", imgObj.file);
     });
+
     try {
       if (action === "update") {
         const response = await updateProduct({ data: formData, id }).unwrap();
@@ -249,71 +291,141 @@ const AddOrEditProduct = () => {
               )}
             </div>
 
-            {/* Sizes Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Sizes</h3>
-              {fields.map((field, index) => (
-                <div
-                  key={field.id}
-                  className="flex gap-4 items-center justify-center"
-                >
-                  <TextInput
-                    label="Size"
-                    placeholder="M, L, XL"
-                    error={errors.sizes?.[index]?.size}
-                    {...register(`sizes.${index}.size` as const, {
-                      required: "Size is required",
-                    })}
-                  />
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold">Colors & Sizes</h3>
 
-                  <TextInput
-                    label="Quantity"
-                    type="number"
-                    error={errors.sizes?.[index]?.quantity}
-                    {...register(`sizes.${index}.quantity` as const, {
-                      required: "Quantity is required",
-                      valueAsNumber: true,
-                    })}
-                  />
+              {colorFields.map((color, colorIndex) => {
+                const {
+                  fields: sizeFields,
+                  append: appendSize,
+                  remove: removeSize,
+                } = sizesFieldArrays[colorIndex];
 
-                  <TextInput
-                    label="Base Price"
-                    type="number"
-                    error={errors.sizes?.[index]?.basePrice}
-                    {...register(`sizes.${index}.basePrice` as const, {
-                      required: "Base price is required",
-                      valueAsNumber: true,
-                    })}
-                  />
+                return (
+                  <div
+                    key={color.id}
+                    className="border p-4 rounded-md space-y-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <TextInput
+                        label="Color Name"
+                        placeholder="Black, White"
+                        error={errors.colors?.[colorIndex]?.colorName}
+                        {...register(
+                          `colors.${colorIndex}.colorName` as const,
+                          {
+                            required: "Color name is required",
+                          }
+                        )}
+                      />
+                      <FiTrash2
+                        className="cursor-pointer text-primary-10 mt-5"
+                        onClick={() => removeColor(colorIndex)}
+                      />
+                    </div>
 
-                  <TextInput
-                    label="Discounted Price"
-                    type="number"
-                    error={errors.sizes?.[index]?.discountedPrice}
-                    {...register(`sizes.${index}.discountedPrice` as const, {
-                      required: "Discounted price is required",
-                      valueAsNumber: true,
-                    })}
-                  />
+                    <div className="space-y-2">
+                      {sizeFields.map((size, sizeIndex) => (
+                        <div key={size.id} className="flex gap-4 items-center">
+                          <TextInput
+                            label="Size"
+                            placeholder="M, L, XL"
+                            error={
+                              errors.colors?.[colorIndex]?.sizes?.[sizeIndex]
+                                ?.size
+                            }
+                            {...register(
+                              `colors.${colorIndex}.sizes.${sizeIndex}.size` as const,
+                              { required: "Size is required" }
+                            )}
+                          />
+                          <TextInput
+                            label="Quantity"
+                            type="number"
+                            error={
+                              errors.colors?.[colorIndex]?.sizes?.[sizeIndex]
+                                ?.quantity
+                            }
+                            {...register(
+                              `colors.${colorIndex}.sizes.${sizeIndex}.quantity` as const,
+                              {
+                                required: "Quantity is required",
+                                valueAsNumber: true,
+                              }
+                            )}
+                          />
+                          <TextInput
+                            label="Base Price"
+                            type="number"
+                            error={
+                              errors.colors?.[colorIndex]?.sizes?.[sizeIndex]
+                                ?.basePrice
+                            }
+                            {...register(
+                              `colors.${colorIndex}.sizes.${sizeIndex}.basePrice` as const,
+                              {
+                                required: "Base price is required",
+                                valueAsNumber: true,
+                              }
+                            )}
+                          />
+                          <TextInput
+                            label="Discounted Price"
+                            type="number"
+                            error={
+                              errors.colors?.[colorIndex]?.sizes?.[sizeIndex]
+                                ?.discountedPrice
+                            }
+                            {...register(
+                              `colors.${colorIndex}.sizes.${sizeIndex}.discountedPrice` as const,
+                              {
+                                required: "Discounted price is required",
+                                valueAsNumber: true,
+                              }
+                            )}
+                          />
+                          <FiTrash2
+                            className="cursor-pointer text-primary-10 mt-5"
+                            onClick={() => removeSize(sizeIndex)}
+                          />
+                        </div>
+                      ))}
 
-                  <FiTrash2
-                    className="cursor-pointer size-20 text-primary-10 mt-5 "
-                    onClick={() => remove(index)}
-                  />
-                </div>
-              ))}
+                      <Button
+                        variant="primary"
+                        type="button"
+                        label="Add Size"
+                        classNames="py-2 px-4"
+                        onClick={() =>
+                          appendSize({
+                            size: "",
+                            quantity: 0,
+                            basePrice: 0,
+                            discountedPrice: 0,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                );
+              })}
 
               <Button
                 variant="primary"
                 type="button"
-                label="Add Size"
+                label="Add Color"
                 classNames="py-2 px-4"
                 onClick={() =>
-                  append({
-                    size: "",
-                    quantity: 0,
-                    basePrice: 0,
-                    discountedPrice: 0,
+                  appendColor({
+                    colorName: "",
+                    sizes: [
+                      {
+                        size: "",
+                        quantity: 0,
+                        basePrice: 0,
+                        discountedPrice: 0,
+                      },
+                    ],
                   })
                 }
               />

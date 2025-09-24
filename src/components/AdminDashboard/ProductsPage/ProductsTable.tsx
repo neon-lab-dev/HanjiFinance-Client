@@ -39,115 +39,130 @@ const Products = () => {
   // Map data for table
 
   const allProductsData =
-    allProducts?.map((product: any) => {
-      const totalStock = product?.sizes?.reduce(
-        (sum: number, size: any) => sum + size?.quantity,
-        0
-      );
+  allProducts?.map((product: any) => {
+    // Total stock across all colors and sizes
+    const totalStock = product?.colors?.reduce(
+      (sum: number, color: any) =>
+        sum + color.sizes.reduce((sSum: number, s: any) => sSum + s.quantity, 0),
+      0
+    );
 
-      const statusColor =
-        totalStock > 0
-          ? "bg-green-100 text-green-800"
-          : "bg-red-100 text-red-800";
+    const statusColor =
+      totalStock > 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
 
-      // Price component for each product
-      const PriceWithSizes = () => {
-        const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+    // Price component for each color
+    const PriceWithColors = () => {
+      const [selectedColorIdx, setSelectedColorIdx] = useState(0);
+      const [selectedSize, setSelectedSize] = useState(product.colors[0].sizes[0]);
 
-        return (
-          <div className="flex items-center gap-2">
-            {/* Sizes clickable */}
-            <div className="flex gap-2">
-              {product.sizes.map((s: any) => (
-                <span
-                  key={s._id}
-                  className={`cursor-pointer underline ${
-                    selectedSize.size === s.size
-                      ? "font-semibold text-green-600"
-                      : ""
-                  } ${
-                    s.quantity === 0
-                      ? "text-red-600 line-through cursor-not-allowed"
-                      : ""
-                  }`}
-                  onClick={() => s.quantity > 0 && setSelectedSize(s)}
-                >
-                  {s.size}
-                </span>
-              ))}
-            </div>
+      const handleColorChange = (idx: number) => {
+        setSelectedColorIdx(idx);
+        setSelectedSize(product.colors[idx].sizes[0]);
+      };
 
-            {/* Price display */}
-            <div className="flex items-center gap-2">
-              {selectedSize.discountedPrice &&
-              selectedSize.discountedPrice < selectedSize.basePrice ? (
-                <>
-                  <span className="line-through text-gray-400">
-                    (₹{selectedSize.basePrice}
-                  </span>
-                  <span className="text-green-600 font-semibold">
-                    ₹{selectedSize.discountedPrice})
-                  </span>
-                </>
-              ) : (
-                <span>₹{selectedSize.basePrice}</span>
-              )}
-            </div>
+      return (
+        <div className="flex flex-col gap-2">
+          {/* Colors */}
+          <div className="flex gap-2">
+            {product.colors.map((color: any, idx: number) => (
+              <span
+                key={idx}
+                className={`cursor-pointer px-2 py-1 text-xs rounded border ${
+                  selectedColorIdx === idx
+                    ? "border-green-600 font-semibold"
+                    : "border-gray-300"
+                }`}
+                onClick={() => handleColorChange(idx)}
+              >
+                {color.colorName}
+              </span>
+            ))}
           </div>
-        );
-      };
 
-      // Available stock display with commas and 0 in red
-      const stockDisplay = product.sizes.map((s: any, idx: number) => (
-        <span key={s._id}>
-          {s.size}(
-          {s.quantity === 0 ? (
-            <span className="text-red-600">{s.quantity}</span>
-          ) : (
-            s.quantity
-          )}
-          ){idx < product.sizes.length - 1 ? ", " : ""}
-        </span>
-      ));
+          {/* Sizes */}
+          <div className="flex gap-2">
+            {product.colors[selectedColorIdx].sizes.map((s: any) => (
+              <span
+                key={s.size}
+                className={`cursor-pointer underline ${
+                  selectedSize.size === s.size ? "font-semibold text-green-600" : ""
+                } ${s.quantity === 0 ? "text-red-600 line-through cursor-not-allowed" : ""}`}
+                onClick={() => s.quantity > 0 && setSelectedSize(s)}
+              >
+                {s.size}
+              </span>
+            ))}
+          </div>
 
-      return {
-        image: (
-          <img
-            src={product.imageUrls?.[0]}
-            alt={product.name}
-            className="w-16 h-16 object-cover rounded"
-          />
-        ),
-        _id: product._id,
-        productId: product.productId,
-        name: product.name,
-        category: product.category,
-        createdAt: formatDate(product.createdAt),
-        availableStock: <span>{stockDisplay}</span>,
-        status: (
-          <span
-            className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${statusColor}`}
-          >
-            {totalStock > 0 ? "Available" : "Out of Stock"}
+          {/* Price display */}
+          <div className="flex items-center gap-2">
+            {selectedSize.discountedPrice && selectedSize.discountedPrice < selectedSize.basePrice ? (
+              <>
+                <span className="line-through text-gray-400">₹{selectedSize.basePrice}</span>
+                <span className="text-green-600 font-semibold">₹{selectedSize.discountedPrice}</span>
+              </>
+            ) : (
+              <span>₹{selectedSize.basePrice}</span>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    // Available stock display
+    const stockDisplay = product.colors.map((color: any, cIdx: number) => (
+      <div key={cIdx}>
+        <strong>{color.colorName}:</strong>{" "}
+        {color.sizes.map((s: any, idx: number) => (
+          <span key={s.size}>
+            {s.size}(
+            {s.quantity === 0 ? <span className="text-red-600">{s.quantity}</span> : s.quantity})
+            {idx < color.sizes.length - 1 ? ", " : ""}
           </span>
-        ),
-        price: <PriceWithSizes />,
-        sizes: product.sizes.map((s: any) => s.size).join(", "),
-      };
-    }) || [];
+        ))}
+      </div>
+    ));
 
-  const productColumns = [
-    { key: "image", label: "Image" },
-    // { key: "_id", label: "ID" },
-    { key: "productId", label: "Product ID" },
-    { key: "name", label: "Name" },
-    { key: "category", label: "Category" },
-    { key: "availableStock", label: "Available Stock" },
-    { key: "status", label: "Status" },
-    { key: "price", label: "Price" },
-    { key: "sizes", label: "Sizes" },
-    { key: "createdAt", label: "Added At" },
-  ];
+    return {
+      image: (
+        <img
+          src={product.imageUrls?.[0]}
+          alt={product.name}
+          className="w-16 h-16 object-cover rounded"
+        />
+      ),
+      _id: product._id,
+      productId: product.productId,
+      name: product.name,
+      category: product.category,
+      createdAt: formatDate(product.createdAt),
+      availableStock: <span>{stockDisplay}</span>,
+      status: (
+        <span
+          className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${statusColor}`}
+        >
+          {totalStock > 0 ? "Available" : "Out of Stock"}
+        </span>
+      ),
+      price: <PriceWithColors />,
+      colors: product.colors.map((c: any) => c.colorName).join(", "),
+      // sizes: product.colors.flatMap((c: any) => c.sizes.map((s: any) => s.size)).join(", "),
+    };
+  }) || [];
+
+const productColumns = [
+  { key: "image", label: "Image" },
+  { key: "productId", label: "Product ID" },
+  { key: "name", label: "Name" },
+  { key: "category", label: "Category" },
+  { key: "availableStock", label: "Available Stock" },
+  { key: "status", label: "Status" },
+  { key: "price", label: "Price" },
+  { key: "colors", label: "Colors" },
+  // { key: "sizes", label: "Sizes" },
+  { key: "createdAt", label: "Added At" },
+];
+
 
 
 

@@ -50,6 +50,8 @@ import CourseLectures from "../pages/Dashboard/MyCourses/CourseLectures/CourseLe
 import ChatAndChillPayment from "../pages/ChatAndChillPayment/ChatAndChillPayment";
 import Category from "../pages/AdminDashboard/Category/Category";
 import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/ManageAvailability";
+import Queries from "../pages/AdminDashboard/Queries/Queries";
+import HelpDesk from "../pages/HelpDesk/HelpDesk";
 import CourseDetails from "../pages/CourseDetails/CourseDetails";
 
 export const router = createBrowserRouter([
@@ -197,6 +199,10 @@ export const router = createBrowserRouter([
         path: "update-subscription",
         element: <UpdateSubscription />,
       },
+      {
+        path: "helpdesk",
+        element: <HelpDesk />,
+      },
     ],
   },
   {
@@ -260,6 +266,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-subscriptions",
         element: <ManageSubscriptions />,
+      },
+      {
+        path: "queries",
+        element: <Queries />,
       },
     ],
   },

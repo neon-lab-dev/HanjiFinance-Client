@@ -30,7 +30,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<any> = async (
   extraOptions
 ): Promise<any> => {
   const result = await baseQuery(args, api, extraOptions);
-  console.log(result);
 
   if (result.error?.status === 401) {
     const res = await fetch(
@@ -71,6 +70,7 @@ export const baseApi = createApi({
     "productOrder",
     "courseOrder",
     "couponCode",
+    "helpdesk",
   ],
   endpoints: () => ({}),
 });

@@ -103,6 +103,24 @@ const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["course"],
     }),
+
+    completeLecture: builder.mutation({
+      query: ({courseId, lectureId}) => ({
+        url: `/course/${courseId}/lectures/${lectureId}/complete`,
+        method: "PUT",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    completeCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `/course/${courseId}/complete`,
+        method: "PUT",
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -117,4 +135,6 @@ export const {
   useDeleteLectureMutation,
   useCourseCheckoutMutation,
   useCreateCourseOrderMutation,
+  useCompleteLectureMutation,
+  useCompleteCourseMutation
 } = courseApi;
