@@ -50,6 +50,7 @@ import CourseLectures from "../pages/Dashboard/MyCourses/CourseLectures/CourseLe
 import ChatAndChillPayment from "../pages/ChatAndChillPayment/ChatAndChillPayment";
 import Category from "../pages/AdminDashboard/Category/Category";
 import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/ManageAvailability";
+import CourseDetails from "../pages/CourseDetails/CourseDetails";
 
 export const router = createBrowserRouter([
   {
@@ -136,6 +137,10 @@ export const router = createBrowserRouter([
       {
         path: "/chat-and-chill-payment",
         element: <ChatAndChillPayment />,
+      },
+      {
+        path: "/course-details/:id",
+        element: <CourseDetails />,
       }
     ],
   },

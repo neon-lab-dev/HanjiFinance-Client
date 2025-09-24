@@ -51,7 +51,7 @@ const CourseCard: React.FC<TCourse> = ({
         isOpen ? "h-full " : ""
       } `}
     >
-      <div> <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px]" /></div>
+      <div onClick={()=>   navigate(`/course-details/${_id}`)}> <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px] cursor-pointer" /></div>
       {/* Course Image */}
      
 
@@ -59,7 +59,7 @@ const CourseCard: React.FC<TCourse> = ({
         {/* Course Details */}
         <div className="bg-secondary-20 w-full p-4 space-y-3">
           <div>
-            <h1 className="text-neutral-130 text-xl  tracking-[-0.2px] font-bold leading-6">
+            <h1 onClick={()=>   navigate(`/course-details/${_id}`)} className="text-neutral-130 text-xl cursor-pointer hover:underline tracking-[-0.2px] font-bold leading-6">
               {title}
             </h1>
             <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
