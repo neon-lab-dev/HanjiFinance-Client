@@ -188,8 +188,6 @@ const AddOrEditProduct = () => {
     setPreviews(newPreviews);
   };
 
-  console.log(allCategories);
-
   return (
     <div className="font-Montserrat min-h-screen">
       {productLoading ? (
@@ -276,7 +274,7 @@ const AddOrEditProduct = () => {
                       <input
                         type="file"
                         accept="image/*"
-                        className="border rounded-lg p-2"
+                        className="border border-neutral-95 rounded-lg p-2"
                         onChange={(e) => handleFileChange(e, index)}
                       />
 

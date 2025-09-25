@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useFieldArray, useFormContext } from "react-hook-form";
 import TextInput from "../../../components/Reusable/TextInput/TextInput";
-import Button from "../../../components/Reusable/Button/Button";
 import { FiTrash2 } from "react-icons/fi";
-import type { TProduct } from "../../../types/product.types"; // Ensure this path is correct
+import type { TProduct } from "../../../types/product.types";
 
 type ColorAndSizesFieldProps = {
   colorIndex: number;
@@ -30,7 +29,7 @@ const ColorAndSizesField = ({
   });
 
   return (
-    <div className="border p-4 rounded-md space-y-4">
+    <div className="border border-neutral-95 p-4 rounded-md space-y-4">
       <div className="flex items-center gap-4">
         <TextInput
           label="Color Name"
@@ -110,20 +109,16 @@ const ColorAndSizesField = ({
           </div>
         ))}
 
-        <Button
-          variant="primary"
-          type="button"
-          label="Add Size"
-          classNames="py-2 px-4"
-          onClick={() =>
+        <button onClick={() =>
             appendSize({
               size: "",
               quantity: 0,
               basePrice: 0,
               discountedPrice: 0,
             })
-          }
-        />
+          } className="text-sm text-primary-10 font-semibold italic underline cursor-pointer">
+            Add Size
+        </button>
       </div>
     </div>
   );

@@ -19,11 +19,13 @@ import {
 import type { TProduct } from "../../../types/product.types";
 import { formatDate } from "../../../utils/formatDate";
 import ProductPreview from "./ProductPreview";
+import { useGetAllCategoriesQuery } from "../../../redux/Features/Category/categoryApi";
+import type { TCategory } from "../../../types/category.types";
 
 const Products = () => {
     const [deleteProduct] = useDeleteProductMutation();
   const [searchValue, setSearchValue] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [category, setCategory] = useState("");
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState("");
   const navigate = useNavigate();
@@ -31,12 +33,22 @@ const Products = () => {
 
   const { data, isLoading, isFetching } = useGetAllProductsQuery({
     keyword: searchValue,
+    category,
     page,
   });
 
   const allProducts = data?.data?.products as TProduct[];
 
-  // Map data for table
+   const { data: categories } = useGetAllCategoriesQuery({});
+   const allCategories =
+  [
+    { label: "All", value: "" },
+    ...(categories?.data?.categories?.map((category: TCategory) => ({
+      label: category?.name,
+      value: category?.name,
+    })) ?? []),
+  ];
+
 
   const allProductsData =
   allProducts?.map((product: any) => {
@@ -134,7 +146,7 @@ const Products = () => {
       _id: product._id,
       productId: product.productId,
       name: product.name,
-      category: product.category,
+      category: (<p className="capitalize">{product.category}</p>),
       createdAt: formatDate(product.createdAt),
       availableStock: <span>{stockDisplay}</span>,
       status: (
@@ -199,30 +211,6 @@ const productColumns = [
     },
   ];
 
-  // Export to Excel
-  // const handleExportProducts = () => {
-  //   if (!allProducts || allProducts?.length === 0) return;
-
-  //   const exportData = allProducts?.map((product: any) => {
-  //     const row: Record<string, any> = {};
-  //     productColumns.forEach((col) => {
-  //       row[col.label] = product[col.key] ?? "";
-  //     });
-  //     return row;
-  //   });
-
-  //   const worksheet = XLSX.utils.json_to_sheet(exportData);
-  //   const workbook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
-
-  //   const excelBuffer = XLSX.write(workbook, {
-  //     bookType: "xlsx",
-  //     type: "array",
-  //   });
-  //   const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  //   saveAs(blob, "products.xlsx");
-  // };
-
   return (
     <div className="mt-6 font-Montserrat">
       <DashboardContainer>
@@ -243,13 +231,9 @@ const productColumns = [
                 />
                 <Dropdown
                   className="py-1"
-                  value={statusFilter}
-                  onChange={setStatusFilter}
-                  options={[
-                    { value: "", label: "Select Status" },
-                    { value: "available", label: "Available" },
-                    { value: "unavailable", label: "Unavailable" },
-                  ]}
+                  value={category}
+                  onChange={setCategory}
+                  options={allCategories || []}
                 />
 
                 <Button

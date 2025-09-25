@@ -52,7 +52,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   setOpen(false);
                 }
               }}
-              className={`px-3 py-2 cursor-pointer hover:bg-primary-30 ${
+              className={`px-3 py-2 cursor-pointer hover:bg-primary-30 capitalize ${
                 value === opt.value ? "bg-primary-30 font-semibold" : ""
               } ${
                 opt.disabled
