@@ -20,14 +20,21 @@ const HeaderDashboard = () => {
     "/dashboard/recent-activities": "Dashboard",
     "/dashboard/book-new-session": "Consultations",
     "/dashboard/my-subscriptions": "My Subscriptions",
-    "/dashboard/pause-subscription": "My Subscriptions",
-    "/dashboard/reactivate-subscription": "My Subscriptions",
     "/dashboard/cancel-subscription": "My Subscriptions",
-    "/dashboard/update-subscription": "My Subscriptions",
+    "/dashboard/helpdesk": "Helpdesk",
     "/dashboard/admin": "Dashboard",
     "/dashboard/admin/products": "Products",
     "/dashboard/admin/add-or-edit-product": "Add Products",
     "/dashboard/admin/newsletter": "Newsletters",
+    "/dashboard/admin/category": "Categories",
+    "/dashboard/admin/product-orders": "Product Orders",
+    "/dashboard/admin/course-orders": "Course Orders",
+    "/dashboard/admin/courses": "Courses",
+    "/dashboard/admin/manage-availability": "Manage Availability",
+    "/dashboard/admin/manage-consultations": "Manage Consultations",
+    "/dashboard/admin/manage-subscriptions": "Manage Subscriptions",
+    "/dashboard/admin/manage-coupon-codes": "Manage Coupon Codes",
+    "/dashboard/admin/queries": "Queries",
   };
 
   let currentTitle = pageTitles[location.pathname] || "";
@@ -55,7 +62,7 @@ const HeaderDashboard = () => {
           year: "numeric",
         })
       );
-    }, 1000 * 60); // update every minute
+    }, 1000 * 60);
 
     return () => clearInterval(interval);
   }, []);
