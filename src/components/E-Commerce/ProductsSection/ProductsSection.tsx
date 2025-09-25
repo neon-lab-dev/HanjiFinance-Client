@@ -18,6 +18,12 @@ export type TProductSize = {
   discountedPrice: number;
 };
 
+export type TProductColor = {
+  _id: string;
+  colorName: string;
+  sizes: TProductSize[];
+};
+
 export type TProduct = {
   _id: string;
   productId: string;
@@ -25,19 +31,12 @@ export type TProduct = {
   name: string;
   description: string;
   category: string;
- colors: {
-    colorName: string;
-    sizes: {
-      size: string;
-      quantity: number;
-      basePrice: number;
-      discountedPrice: number;
-    }[];
-  }[];
+  colors: TProductColor[];
   createdAt: string;
   updatedAt: string;
   __v: number;
 };
+
 
 const getPriceQuery = (range: string) => {
   switch (range) {

@@ -1,7 +1,7 @@
 // src/redux/features/cart/cartSlice.ts
 import { createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
-import type { TProduct } from "../../../components/E-Commerce/ProductsSection/ProductsSection";
+import type { TProduct, TProductSize } from "../../../components/E-Commerce/ProductsSection/ProductsSection";
 
 // Product coming from API
 export type ProductSize = {
@@ -10,12 +10,14 @@ export type ProductSize = {
   quantity: number;
   basePrice: number;
   discountedPrice: number;
+  color:string;
 };
 
 
 export type CartItem = {
   productId: string;
   sizeId: string;
+  color:string;
   size: string;
   name: string;
   price: number;
@@ -36,29 +38,31 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (
-      state,
-      action: PayloadAction<{ product: TProduct; size: ProductSize; quantity: number }>
-    ) => {
-      const { product, size, quantity } = action.payload;
+  state,
+  action: PayloadAction<{ product: TProduct; size: TProductSize; quantity: number; color: string }>
+) => {
+  const { product, size, quantity, color } = action.payload;
 
-      const existingItem = state.items.find(
-        (i) => i.productId === product._id && i.sizeId === size._id
-      );
+  const existingItem = state.items.find(
+    (i) => i.productId === product._id && i.sizeId === size._id && i.color === color
+  );
 
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        state.items.push({
-          productId: product._id,
-          sizeId: size._id,
-          size: size.size,
-          name: product.name,
-          price: size.discountedPrice,
-          quantity,
-          image: product.imageUrls[0] || "",
-        });
-      }
-    },
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    state.items.push({
+      productId: product._id,
+      sizeId: size._id,
+      size: size.size,
+      name: product.name,
+      price: size.discountedPrice,
+      quantity,
+      image: product.imageUrls[0] || "",
+      color,
+    });
+  }
+},
+
 
     removeFromCart: (state, action: PayloadAction<{ productId: string; sizeId: string }>) => {
       state.items = state.items.filter(
@@ -94,6 +98,7 @@ export const getCartProducts = (state: RootState) => {
     quantity: item.quantity,
     image: item.image,
     totalPrice: item.price * item.quantity,
+    color:item.color
   }));
 };
 export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
