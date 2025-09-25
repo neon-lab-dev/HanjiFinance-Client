@@ -14,25 +14,26 @@ const inStock = item.colors?.some((color) =>
 );
 
 const handleAddToWishList = async () => {
-  const firstColor = item.colors?.find((color) =>
+  const availableColor = item.colors?.find((color) =>
     color.sizes?.some((size) => size.quantity > 0)
   );
 
-  if (!firstColor) return;
+  if (!availableColor) return;
 
-  const firstSize = firstColor.sizes.find((size) => size.quantity > 0);
+  const availableSize = availableColor.sizes.find((size) => size.quantity > 0);
 
-  if (!firstSize) return;
+  if (!availableSize) return;
 
   dispatch(
     addToCart({
       product: item,
-      color: firstColor.colorName,
-      size: firstSize.size,
+      color: availableColor.colorName,
+      size: availableSize.size,
       quantity: 1,
     })
   );
 };
+
 
 
 

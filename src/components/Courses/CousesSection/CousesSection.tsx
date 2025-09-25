@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { IMAGES } from "../../../assets";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import Container from "../../Reusable/Container/Container";
 import CourseCard from "../../HomePage/Courses/CourseCard";
@@ -47,7 +46,6 @@ const CousesSection = () => {
     },
   };
 const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", });
-console.log(myCourses)
 
  
 if (isLoading) {
@@ -77,7 +75,7 @@ if (isLoading) {
         >
            {courses?.data?.courses?.map((course, index) => {
             const isEnrolled = myCourses?.data?.orders?.some(
-              (order: any) => order.courseId._id === course._id 
+              (order: any) => order.courseId?._id === course?._id 
             );
             return (
               <motion.div key={index} variants={cardVariants}>

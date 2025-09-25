@@ -5,7 +5,6 @@ import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
 
 const CourseSection = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
-  console.log(myProfile)
 
   return (
     <div className="mt-9">
