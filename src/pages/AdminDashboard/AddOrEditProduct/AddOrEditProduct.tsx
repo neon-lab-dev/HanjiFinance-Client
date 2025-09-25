@@ -18,12 +18,20 @@ import {
 import toast from "react-hot-toast";
 import Loader from "../../../components/Shared/Loader/Loader";
 import ColorAndSizesField from "./ColorAndSizesField";
+import { useGetAllCategoriesQuery } from "../../../redux/Features/Category/categoryApi";
+import SelectDropdown from "../../../components/Reusable/SelectDropdown/SelectDropdown";
 
 const AddOrEditProduct = () => {
   const location = useLocation();
   const { id, action } = location.state || {};
   const { data: singleProduct, isLoading: productLoading } =
     useGetSingleProductByIdQuery(id);
+  const { data: categories } = useGetAllCategoriesQuery({});
+
+  const allCategories =
+    categories?.data?.categories?.map(
+      (category: TCategory) => category?.name
+    ) ?? [];
 
   const [addProduct, { isLoading }] = useAddProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
@@ -180,6 +188,8 @@ const AddOrEditProduct = () => {
     setPreviews(newPreviews);
   };
 
+  console.log(allCategories);
+
   return (
     <div className="font-Montserrat min-h-screen">
       {productLoading ? (
@@ -203,13 +213,13 @@ const AddOrEditProduct = () => {
                 />
 
                 {/* Category */}
-                <TextInput
+                <SelectDropdown
                   label="Category"
-                  placeholder="E.g., Shirts, Jeans"
-                  error={errors.category}
-                  {...register("category", {
+                  {...register(`category`, {
                     required: "Category is required",
                   })}
+                  error={errors?.category}
+                  options={allCategories || []}
                 />
 
                 {/* Cloth Details */}
