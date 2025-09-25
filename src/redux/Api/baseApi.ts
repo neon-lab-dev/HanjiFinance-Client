@@ -10,8 +10,8 @@ import { setUser } from "../Features/Auth/authSlice";
 import Cookies from "js-cookie";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api/v1',
-  // baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
+  // baseUrl: 'http://localhost:5000/api/v1',
+  baseUrl: 'https://hanjifinance-api.vercel.app/api/v1',
   credentials : 'include',
   prepareHeaders : (headers, {getState}) => {
      const token = Cookies.get("accessToken");
@@ -33,7 +33,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<any> = async (
 
   if (result.error?.status === 401) {
     const res = await fetch(
-      "http://localhost:5000/api/v1/auth/refresh-token",
+      "https://hanjifinance-api.vercel.app/api/v1/auth/refresh-token",
       {
         credentials: "include",
         method: "POST",

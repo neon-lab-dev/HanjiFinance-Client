@@ -52,6 +52,9 @@ import Category from "../pages/AdminDashboard/Category/Category";
 import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/ManageAvailability";
 import Queries from "../pages/AdminDashboard/Queries/Queries";
 import HelpDesk from "../pages/HelpDesk/HelpDesk";
+import CourseDetails from "../pages/CourseDetails/CourseDetails";
+import CourseExam from "../pages/Dashboard/MyCourses/CourseExam/CourseExam";
+import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
 
 export const router = createBrowserRouter([
   {
@@ -138,6 +141,10 @@ export const router = createBrowserRouter([
       {
         path: "/chat-and-chill-payment",
         element: <ChatAndChillPayment />,
+      },
+      {
+        path: "/course-details/:id",
+        element: <CourseDetails />,
       }
     ],
   },
@@ -197,6 +204,14 @@ export const router = createBrowserRouter([
       {
         path: "helpdesk",
         element: <HelpDesk />,
+      },
+      {
+        path: "attend-exam/:id",
+        element: <CourseExam />,
+      },
+      {
+        path: "exam-result/:id",
+        element: <ResultPage />,
       },
     ],
   },

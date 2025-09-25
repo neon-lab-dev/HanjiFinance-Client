@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Button from "../../../Reusable/Button/Button";
 import { Link } from "react-router-dom";
+import { useGetSingleCourseByIdQuery } from "../../../../redux/Features/Course/courseApi";
 
 // Progress Section Component
 type TProgressSection = {
@@ -31,6 +32,7 @@ const ProgressSection: React.FC<TProgressSection> = ({ progress }) => {
 };
 
 type TCourseCard = {
+  courseId:string,
   _id: string;
   title: string;
   subtitle: string;
@@ -46,22 +48,21 @@ type TCourseCard = {
   isCourseCompleted?: boolean;
 };
 
-const CourseCard: React.FC<TCourseCard> = ({
-  _id,
-  imageUrl,
-  title,
-  subtitle,
+const CourseCard = ({
+  courseId,
   completedPercentage,
   isCourseCompleted,
+  
 }) => {
-  console.log(isCourseCompleted);
+  const {data:course, isLoading}=useGetSingleCourseByIdQuery(courseId)
+
   return (
     <div className="bg-white rounded-xl shadow-lg font-Montserrat relative">
       {/* Course Image */}
       <div>
         <img
-          src={imageUrl}
-          alt={title}
+          src={course?.data?.imageUrl}
+          alt={course?.data?.title}
           className="rounded-t-xl w-full h-[250px]"
         />
       </div>
@@ -78,10 +79,10 @@ const CourseCard: React.FC<TCourseCard> = ({
         <div className="w-full bg-surface-30 p-4 space-y-2">
           <div>
             <h1 className="text-neutral-130 text-xl tracking-[-0.2px] font-bold leading-6">
-              {title}
+              {course?.data?.title}
             </h1>
             <p className="text-neutral-60 text-sm leading-5 capitalize">
-              {subtitle}
+              {course?.data?.subtitle}
             </p>
           </div>
           {/* <span className="text-neutral-160 text-xs font-medium leading-[14px] tracking-[-0.12px]">
@@ -91,17 +92,17 @@ const CourseCard: React.FC<TCourseCard> = ({
 
         {/* Progress Section (reusable) */}
         <div className="px-4 pt-2 space-y-5 mt-auto">
-          {/* {progressData && ( */}
-          {/* <ProgressSection
+          {/* {progressData && (
+          <ProgressSection
               completed={progressData.completed}
               total={progressData.total}
-              progress={progressData.progress} */}
-          {/* /> */}
-          {/* )} */}
+              progress={progressData.progress}
+          />
+          )} */}
           <ProgressSection progress={completedPercentage} />
 
           {/* CTA Button */}
-          <Link to={`${_id}`}>
+          <Link to={`${courseId}`}>
             <Button
               label="Continue Learning"
               variant="primary"

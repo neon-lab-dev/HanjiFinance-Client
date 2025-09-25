@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 interface DashboardContainerProps {
@@ -6,11 +6,13 @@ interface DashboardContainerProps {
   headerText?: string;
   btn?: string;
   btnLink?: string;
+  className?:string;
+  div?: JSX.Element
 }
 
-const DashboardContainer = ({ children, headerText, btn, btnLink }: DashboardContainerProps) => {
+const DashboardContainer = ({ children, headerText, btn, btnLink, className ,div}: DashboardContainerProps) => {
   return (
-    <div className="bg-white rounded-2xl py-4 px-4 font-Montserrat">
+    <div className={`bg-white rounded-2xl py-4 px-4 font-Montserrat ${className}`}>
       {(headerText || btn) && (
         <div className="flex justify-between items-center mb-4">
           {headerText && <h2 className="text-xl leading-[22px] font-semibold mt-2 accent-5">{headerText}</h2>}
@@ -22,6 +24,7 @@ const DashboardContainer = ({ children, headerText, btn, btnLink }: DashboardCon
               {btn}
             </Link>
           )}
+          {<div>{div}</div>}
         </div>
       )}
       {children}
