@@ -53,6 +53,8 @@ import ManageAvailability from "../pages/AdminDashboard/ManageAvailability/Manag
 import Queries from "../pages/AdminDashboard/Queries/Queries";
 import HelpDesk from "../pages/HelpDesk/HelpDesk";
 import CourseDetails from "../pages/CourseDetails/CourseDetails";
+import CourseExam from "../pages/Dashboard/MyCourses/CourseExam/CourseExam";
+import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
 
 export const router = createBrowserRouter([
   {
@@ -202,6 +204,14 @@ export const router = createBrowserRouter([
       {
         path: "helpdesk",
         element: <HelpDesk />,
+      },
+      {
+        path: "attend-exam/:id",
+        element: <CourseExam />,
+      },
+      {
+        path: "exam-result/:id",
+        element: <ResultPage />,
       },
     ],
   },

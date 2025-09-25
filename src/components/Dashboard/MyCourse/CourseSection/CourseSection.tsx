@@ -5,6 +5,7 @@ import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
 
 const CourseSection = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
+  console.log(myProfile)
 
   return (
     <div className="mt-9">
@@ -15,12 +16,12 @@ const CourseSection = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
           {myProfile?.data?.purchasedCourses?.map((course: any) => (
-            <CourseCard {...course?.courseId} isCourseCompleted={course.isCompletedCourse} completedPercentage={course.progress?.percentage} />
+            <CourseCard courseId={course?.courseId} isCourseCompleted={course.isCompletedCourse} completedPercentage={course.progress?.percentage} />
           ))}
         </div>
       )}
     </div>
   );
 };
-
+ 
 export default CourseSection;

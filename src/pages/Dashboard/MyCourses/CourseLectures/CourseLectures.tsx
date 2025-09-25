@@ -85,6 +85,17 @@ const CoursePlayer: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
+    <div className="space-y-3">
+      <div className="w-full flex item-center justify-end">
+        <Button
+          onClick={() => {
+            navigate("/dashboard/attend-exam/:id");
+          }}
+          variant="custom"
+          label="Attempt Exam"
+          classNames="bg-white shadow-none p-0 text-neutral-20 border-surface-90 bg-surface-30 px-4 py-2" 
+        />
+      </div>
     <div className="grid grid-cols-1 md:grid-cols-3 bg-gray-50">
       <div className="col-span-2 sticky h-full top-20 flex flex-col p-6 ">
         {selectedLecture ? (
@@ -172,6 +183,7 @@ const CoursePlayer: React.FC = () => {
           );
         })}
       </div>
+    </div>
     </div>
   );
 };
