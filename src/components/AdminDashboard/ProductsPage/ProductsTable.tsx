@@ -67,7 +67,7 @@ const Products = () => {
             {product.colors.map((color: any, idx: number) => (
               <span
                 key={idx}
-                className={`cursor-pointer px-2 py-1 text-xs rounded border ${
+                className={`cursor-pointer px-2 py-1 text-[11px] rounded border ${
                   selectedColorIdx === idx
                     ? "border-green-600 font-semibold"
                     : "border-gray-300"
@@ -128,7 +128,7 @@ const Products = () => {
         <img
           src={product.imageUrls?.[0]}
           alt={product.name}
-          className="w-16 h-16 object-cover rounded"
+          className="size-20 object-cover rounded"
         />
       ),
       _id: product._id,
@@ -242,7 +242,7 @@ const productColumns = [
                   placeholder="Search products..."
                 />
                 <Dropdown
-                  className="py-1 px-3"
+                  className="py-1"
                   value={statusFilter}
                   onChange={setStatusFilter}
                   options={[
@@ -258,7 +258,7 @@ const productColumns = [
                     navigate("/dashboard/admin/add-or-edit-product")
                   }
                   label="Add Product"
-                  classNames="w-fit py-2 px-3 "
+                  classNames="w-fit py-2 "
                 />
               </div>
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type TProduct = {
   _id: string;
   productId: string;
@@ -8,12 +9,16 @@ export type TProduct = {
   productStory?: string;
   category: string;
   madeIn?: string;
-  sizes: {
-    size: string;
-    quantity: number;
-    basePrice: number;
-    discountedPrice: number;
+  colors: {
+    colorName: string;
+    sizes: {
+      size: string;
+      quantity: number;
+      basePrice: number;
+      discountedPrice: number;
+    }[];
   }[];
+  file?:any;
   createdAt?: Date;
   updatedAt?: Date;
 };
