@@ -3,6 +3,8 @@ import React from "react";
 import { ICONS } from "../../../../assets";
 import { formatDate } from "../../../../utils/formatDate";
 import { CgCalendarDates } from "react-icons/cg";
+import { pdf } from "@react-pdf/renderer";
+import Invoice from "../../Invoice/Invoice";
 
 interface MyOrdersCardProps {
   variant: "courseOrder" | "productOrder";
@@ -11,6 +13,29 @@ interface MyOrdersCardProps {
 }
 
 const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) => {
+  console.log(order);
+
+  const invoicedData = {
+    invoiceId : order?.orderId,
+    date : order?.createdAt,
+    customerName : order?.userId?.name,
+    customerAddress : `${order?.userId?.addressLine1}, ${order?.userId?.city}, ${order?.userId?.pinCode}`,
+    orderedItems: order?.courses?.map((course:any) => ({
+    name: course.courseTitle,
+    quantity: 1,
+    price: course.coursePrice,
+    total: course.coursePrice * 1,
+  })) || [],
+  }
+  const handleDownload = async () => {
+    const blob = await pdf(<Invoice data={invoicedData} />).toBlob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "invoice.pdf";
+    link.click();
+    URL.revokeObjectURL(url);
+  };
   return (
     <div className="flex items-center justify-between rounded-lg border-[1px] w-full border-neutral-98 bg-surface-30 p-4 font-Montserrat">
       <div className="gap-4 flex items-center justify-center w-fit">
@@ -69,6 +94,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) =
         {/* Action Icons */}
         {/* <img src={ICONS.eye} alt="view" className="size-6 cursor-pointer" /> */}
         <img
+        onClick={handleDownload}
           src={ICONS.download}
           alt="download"
           className="size-6 cursor-pointer"
