@@ -109,7 +109,7 @@ const OrdersPreview: React.FC<TOrdersPreviewProps> = ({ orderId }) => {
                     className="w-20 h-20 object-cover rounded"
                   />
                   <div className="flex-1 capitalize">
-                    <h4 className="font-medium">{product?.productId?.name}</h4>
+                    <h4 className="font-medium">{product?.productId?.name} ({product?.color})</h4>
                     <div className="flex justify-between gap-[6px] items-center w-fit">
                       {" "}
                       <p className="text-sm text-gray-500">
