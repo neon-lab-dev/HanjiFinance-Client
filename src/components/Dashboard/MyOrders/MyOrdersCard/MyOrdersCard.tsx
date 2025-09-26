@@ -12,23 +12,46 @@ interface MyOrdersCardProps {
   course?: any;
 }
 
-const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) => {
-  console.log(order);
+const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
+  variant,
+  order,
+  course,
+}) => {
+  const courseInvoicedData = {
+    invoiceId: order?.orderId,
+    date: order?.createdAt,
+    customerName: order?.userId?.name,
+    customerAddress: `${order?.userId?.addressLine1}, ${order?.userId?.city}, ${order?.userId?.pinCode}`,
+    orderedItems:
+      order?.courses?.map((course: any) => ({
+        name: course.courseTitle,
+        quantity: 1,
+        price: course.coursePrice,
+        total: course.coursePrice * 1,
+      })) || [],
+  };
 
-  const invoicedData = {
-    invoiceId : order?.orderId,
-    date : order?.createdAt,
-    customerName : order?.userId?.name,
-    customerAddress : `${order?.userId?.addressLine1}, ${order?.userId?.city}, ${order?.userId?.pinCode}`,
-    orderedItems: order?.courses?.map((course:any) => ({
-    name: course.courseTitle,
-    quantity: 1,
-    price: course.coursePrice,
-    total: course.coursePrice * 1,
-  })) || [],
-  }
+  const productInvoicedData = {
+    invoiceId: order?.orderId,
+    date: order?.createdAt,
+    customerName: order?.userId?.name,
+    customerAddress: `${order?.userId?.addressLine1}, ${order?.userId?.city}, ${order?.userId?.pinCode}`,
+    orderedItems:
+      order?.orderedItems?.map((item: any) => ({
+        name: `${item.productId.name}, ${item.size}, ${item.color}`,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity,
+      })) || [],
+  };
   const handleDownload = async () => {
-    const blob = await pdf(<Invoice data={invoicedData} />).toBlob();
+    const blob = await pdf(
+      <Invoice
+        data={
+          variant === "productOrder" ? productInvoicedData : courseInvoicedData
+        }
+      />
+    ).toBlob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -51,17 +74,18 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) =
               </div>
             </>
           ) : (
-            <img src={course?.courseId?.imageUrl} alt="" className="size-[72px] rounded-lg object-cover" />
+            <img
+              src={course?.courseId?.imageUrl}
+              alt=""
+              className="size-[72px] rounded-lg object-cover"
+            />
           )}
         </div>
         <div className="text-neutral-20 w-[452px]">
           <h2 className="font-medium leading-[22px] text-base truncate">
-            {
-              variant === "productOrder"?
-              "Fashion and Apparels"
-              :
-              course?.courseTitle
-            }
+            {variant === "productOrder"
+              ? "Fashion and Apparels"
+              : course?.courseTitle}
           </h2>
 
           <p className="text-[13px] text-neutral-20">
@@ -94,7 +118,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({ variant, order, course }) =
         {/* Action Icons */}
         {/* <img src={ICONS.eye} alt="view" className="size-6 cursor-pointer" /> */}
         <img
-        onClick={handleDownload}
+          onClick={handleDownload}
           src={ICONS.download}
           alt="download"
           className="size-6 cursor-pointer"
