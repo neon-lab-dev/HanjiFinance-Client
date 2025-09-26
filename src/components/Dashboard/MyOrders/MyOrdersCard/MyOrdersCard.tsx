@@ -38,7 +38,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
     customerAddress: `${order?.userId?.addressLine1}, ${order?.userId?.city}, ${order?.userId?.pinCode}`,
     orderedItems:
       order?.orderedItems?.map((item: any) => ({
-        name: `${item.productId.name}, ${item.size}, ${item.color}`,
+        name: `${item.productId.name} (Size:${item.size}, Color:${item.color})`,
         quantity: item.quantity,
         price: item.price,
         total: item.price * item.quantity,
@@ -98,7 +98,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
           </p>
         </div>
         <span
-          className={`text-xs px-2 py-1 rounded-md ml-[300px] h-fit
+          className={`text-xs px-2 py-1 rounded-md ml-[300px] h-fit capitalize
     ${
       order.status === "shipped"
         ? "bg-green-50 text-green-600"

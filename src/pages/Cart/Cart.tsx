@@ -96,6 +96,7 @@ const Cart = () => {
 
       const orderedItems = cartProducts.map((item) => ({
         productId: item.productId,
+        name : item.name,
         quantity: item.quantity,
         size: item.size,
         color:item.color,
