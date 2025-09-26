@@ -5,6 +5,11 @@ import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
 
 const CourseSection = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
+  console.log(myProfile)
+if (myProfile?.data?.purchasedCourses?.length < 1) {
+  return <p>No courses found</p>;
+}
+
 
   return (
     <div className="mt-9">
