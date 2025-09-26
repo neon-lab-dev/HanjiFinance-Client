@@ -19,7 +19,6 @@ const CoursePlayer: React.FC = () => {
   const { data: exam } = useGetExamByCourseIdQuery(id);
   const [completeCourse] = useCompleteCourseMutation();
   const [completeLecture] = useCompleteLectureMutation();
-  console.log(myProfile);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const allLectures = lectures?.data?.lectures || [];
@@ -86,7 +85,7 @@ const CoursePlayer: React.FC = () => {
   return (
     <div className="space-y-3">
       <div className="w-full flex item-center justify-end">
-        {exam && purchasedCourse?.isPassed == false && (
+        {exam && purchasedCourse?.isPassed === false && (
           <Button
             onClick={() => {
               navigate(`/dashboard/attend-exam/${id}`);

@@ -146,7 +146,7 @@ const PaymentSuccess = () => {
 
           {counter !== null && (
             <p className="text-neutral-10 text-[15px] leading-[18px] mt-4 text-center">
-              You will be redirected to the home page in {counter} second
+              You will be redirected to the dashboard in {counter} second
               {counter !== 1 && "s"}...
             </p>
           )}

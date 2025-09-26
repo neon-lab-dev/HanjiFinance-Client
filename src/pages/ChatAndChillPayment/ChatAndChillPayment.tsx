@@ -11,6 +11,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const ChatAndChillPayment = () => {
+  const taxValue = 179.82;
   const data = {
     price: 999,
     title: "Chat & Chill",
@@ -32,8 +33,10 @@ const ChatAndChillPayment = () => {
 
     setLoading(true);
 
+    const total = data.price + taxValue;
+
     try {
-      const response = await checkout({ amount: data.price }).unwrap();
+      const response = await checkout({ amount: total }).unwrap();
 
       const options = {
         key: apiKey?.key,

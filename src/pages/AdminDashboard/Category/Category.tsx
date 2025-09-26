@@ -24,6 +24,7 @@ const Category = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TFormData>();
   const [isCategoryModalOpen, setIsCategoryModalOpen] =
@@ -81,6 +82,7 @@ const Category = () => {
       if (response?.success) {
         toast.success(response?.message);
         setIsCategoryModalOpen(false);
+        reset();
       }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");

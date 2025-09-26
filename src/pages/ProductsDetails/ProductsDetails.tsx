@@ -119,21 +119,21 @@ const ProductsDetails = () => {
     discountedPrice: number;
     image: string;
     size: Size;
-    selectedColor:string;
+    selectedColor: string;
   }
 
-const handleAddToWishList = async () => {
-  if (!selectedColor || !selectedSize) return;
- 
-  dispatch(
-    addToCart({
-      product: data.data,
-      color: selectedColor.colorName, // ✅ only string
-      size: selectedSize,             // ✅ full size object with _id
-      quantity: 1,
-    })
-  );
-};
+  const handleAddToWishList = async () => {
+    if (!selectedColor || !selectedSize) return;
+
+    dispatch(
+      addToCart({
+        product: data.data,
+        color: selectedColor.colorName, // ✅ only string
+        size: selectedSize, // ✅ full size object with _id
+        quantity: 1,
+      })
+    );
+  };
   // const user = useSelector(useCurrentUser);
 
   if (isLoading) return <div>Loading...</div>;
@@ -158,22 +158,12 @@ const handleAddToWishList = async () => {
             {/* Product Details */}
             <div className="w-full lg:w-[40%]">
               {/* Product name */}
-              <div className="flex items-center justify-between">
                 <h1 className="text-2xl md:text-[32px] font-bold leading-medium md:leading-12 text-neutral-20 capitalize">
                   {data?.data?.name}
                 </h1>
 
-                <img
-                  onClick={handleAddToWishList}
-                  // src={isInCart ? ICONS.redHeart : IMAGES.heart}
-                  src={ICONS.cartPlus}
-                  className="cursor-pointer size-5"
-                  alt="Heart Icon"
-                />
-              </div>
-
               {/* MRP tagline */}
-              <p className="text-sm md:text-lg font-medium leading-normal md:leading-[32px] text-neutral-85 mt-5 md:mt-5">
+              <p className="text-sm md:text-lg font-medium leading-normal md:leading-[32px] text-neutral-85 mt-1">
                 MRP Inclusive of all taxes
               </p>
 
@@ -202,7 +192,7 @@ const handleAddToWishList = async () => {
                     <button
                       key={index}
                       onClick={() => handleColorClick(color)}
-                      className={`px-4 py-2 rounded-lg border text-lg font-medium transition duration-300
+                      className={`px-4 py-2 rounded-lg border text-lg font-medium transition duration-300 cursor-pointer
           ${
             selectedColor?.colorName === color.colorName
               ? "bg-primary-30 border-primary-20 text-primary-20"
@@ -231,7 +221,7 @@ const handleAddToWishList = async () => {
                         onClick={() => handleSizeClick(size)}
                         disabled={size.quantity < 1}
                         className={`
-            px-4 py-2 rounded-lg border text-lg font-medium transition duration-300
+            px-4 py-2 rounded-lg border text-lg font-medium transition duration-300 cursor-pointer
             ${
               selectedSize?.size === size.size
                 ? "bg-primary-30 border-primary-20 text-primary-20"
@@ -281,19 +271,25 @@ const handleAddToWishList = async () => {
 
               {/* Details cards */}
               <div className="flex flex-col gap-6 mt-6 border-b border-neutral-185 border-dashed pb-6">
-                <DetailCard
+                {
+                  clothDetails &&
+                  <DetailCard
                   variant="clothDetails"
                   icon={ICONS.fabric}
                   title={"Cloth Details"}
                   description={clothDetails}
                 ></DetailCard>
+                }
 
-                <DetailCard
+                {
+                  productStory &&
+                  <DetailCard
                   variant="productStory"
                   icon={ICONS.tshirt}
                   title={"Product Story"}
                   description={productStory}
                 ></DetailCard>
+                }
 
                 <DetailCard
                   variant="shippingDetails"

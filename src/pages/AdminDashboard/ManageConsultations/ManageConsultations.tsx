@@ -91,11 +91,12 @@ const ManageConsultations = () => {
             )}
           </a>
         ),
-        topicsToDiscuss:
-          consultation?.topicsToDiscuss!.length > 15
+        topicsToDiscuss: consultation?.topicsToDiscuss
+          ? consultation?.topicsToDiscuss!.length > 15
             ? consultation?.topicsToDiscuss!.slice(0, 15) + "..."
-            : consultation.topicsToDiscuss,
-        bookingDateObj, // keep this for sorting
+            : consultation.topicsToDiscuss
+          : "N/A",
+        bookingDateObj,
       };
     })
     // Sort: today's first, then latest booking first

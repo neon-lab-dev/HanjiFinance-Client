@@ -27,6 +27,7 @@ const JoinWaitlistForm = () => {
     formState: { errors },
     setValue,
     trigger,
+    reset,
   } = useForm<TFormValues>();
 
   const [actionButtonActive, setActionButtonActive] = useState(false);
@@ -83,8 +84,9 @@ const JoinWaitlistForm = () => {
       const response = await joinWaitlist(payload).unwrap();
       if (response?.success) {
         toast.success(
-          response?.message || "Application submitted successfully!"
+          response?.message || "Application submitted successfully!",
         );
+        reset();
       }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");

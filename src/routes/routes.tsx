@@ -55,6 +55,7 @@ import HelpDesk from "../pages/HelpDesk/HelpDesk";
 import CourseDetails from "../pages/CourseDetails/CourseDetails";
 import CourseExam from "../pages/Dashboard/MyCourses/CourseExam/CourseExam";
 import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
+import ComingSoon from "../pages/ComingSoon/ComingSoon";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/coming-soon",
+        element: <ComingSoon />,
       },
       {
         path: "/terms-and-conditions",

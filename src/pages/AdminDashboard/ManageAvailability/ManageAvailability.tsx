@@ -25,6 +25,7 @@ const ManageAvailability = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<TFormData>();
   const [isCategoryModalOpen, setIsCategoryModalOpen] =
     useState<boolean>(false);
@@ -95,6 +96,7 @@ const ManageAvailability = () => {
       if (response?.success) {
         toast.success(response?.message);
         setIsCategoryModalOpen(false);
+        reset();
       }
     } catch (err: any) {
       toast.error(err?.data?.message || "Something went wrong!");

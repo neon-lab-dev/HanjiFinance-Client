@@ -29,7 +29,10 @@ const FiltrationDropdown: React.FC<FiltrationDropdownProps> = ({
         onChange={(e) => onChange(e.target.value)}
       >
         <option value="">{label}</option>
-        {options.map((option) => (
+        {
+        options?.length < 1 ?
+        <option value="" disabled>No option available</option> :
+        options.map((option) => (
           <option
             key={option.value}
             value={option.value}

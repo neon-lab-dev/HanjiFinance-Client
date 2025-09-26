@@ -16,5 +16,7 @@ export interface TCourseOrder {
   totalAmount: number;
   razorpayOrderId?: string;
   orderType? : "single" | "bundle";
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 

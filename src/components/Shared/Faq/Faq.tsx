@@ -13,7 +13,7 @@ const Faq = () => {
     },
   };
   return (
-    <div className="bg-gradient-course font-Montserrat">
+    <div className="bg-gradient-course font-Montserrat pt-7">
       <Container>
         <motion.div
           initial="hidden"

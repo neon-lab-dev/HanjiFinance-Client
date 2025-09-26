@@ -248,7 +248,7 @@ const Invoice = ({ data }: { data: InvoiceData }) => {
     0
   );
 
-  const tax = subtotal ? subtotal * 0.18 : 0;
+  const tax = (subtotal ? subtotal * 0.18 : 0).toFixed(2);
   const grandTotal = subtotal ? subtotal + tax : 0;
   return (
     <Document>

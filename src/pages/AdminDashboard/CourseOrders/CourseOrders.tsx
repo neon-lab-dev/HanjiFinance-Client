@@ -25,7 +25,7 @@ const CourseOrders = () => {
       return {
         _id: courseOrder?._id,
         orderId: courseOrder?.orderId,
-        title: courseOrder?.courseTitle,
+        title: courseOrder?.name,
         customerName: courseOrder?.name,
         email: courseOrder?.email,
         phoneNumber: courseOrder?.phoneNumber,
@@ -51,7 +51,7 @@ const CourseOrders = () => {
 
     const exportData = allCourseOrders?.map((order: TCourseOrder) => ({
       "Order ID": order._id,
-      Title: order?.courseTitle,
+      Title: order?.name,
       "Customer Name": order?.name,
       Email: order?.email,
       phoneNumber: order?.phoneNumber,

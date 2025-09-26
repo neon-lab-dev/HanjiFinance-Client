@@ -74,7 +74,7 @@ const GotNews = () => {
                     disabled={isValidating}
                     className="absolute right-2 top-1/2 -translate-y-1/2 text-sm bg-primary-10 hover:bg-primary-20 text-white px-2 py-1 rounded cursor-pointer"
                   >
-                    {isValidating ? "..." : "Validate"}
+                    {isValidating ? "Validating..." : "Validate"}
                   </button>
                 )}
               </div>

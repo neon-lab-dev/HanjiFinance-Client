@@ -5,22 +5,24 @@ import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
 
 const CourseSection = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
-  console.log(myProfile)
-if (myProfile?.data?.purchasedCourses?.length < 1) {
-  return <p>No courses found</p>;
-}
-
+  if (myProfile?.data?.purchasedCourses?.length < 1) {
+    return <p>No courses found</p>;
+  }
 
   return (
     <div className="mt-9">
       {isLoading ? (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="min-h-[60vh] flex items-center justify-center">
           <Loader />
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
           {myProfile?.data?.purchasedCourses?.map((course: any) => (
-            <CourseCard {...course?.courseId} isCourseCompleted={course.isCompletedCourse} completedPercentage={course.progress?.percentage} />
+            <CourseCard
+              {...course?.courseId}
+              isCourseCompleted={course.isCompletedCourse}
+              completedPercentage={course.progress?.percentage}
+            />
           ))}
         </div>
       )}

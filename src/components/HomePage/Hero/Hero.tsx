@@ -35,7 +35,7 @@ const Hero = () => {
       icon: ICONS.fundManagement,
       title: "Fund Management",
       description: "View our Advisor services",
-      path: "/advisor-services",
+      path: "/coming-soon",
     },
     {
       icon: ICONS.chatChill,
