@@ -191,7 +191,9 @@ const AddOrEditProduct = () => {
   return (
     <div className="font-Montserrat min-h-screen">
       {productLoading ? (
-        <Loader />
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <Loader />
+        </div>
       ) : (
         <SubscriptionStatus>
           <FormProvider {...methods}>
@@ -283,7 +285,7 @@ const AddOrEditProduct = () => {
                         <img
                           src={previewSource}
                           alt="Preview"
-                          className="w-16 h-16 object-cover rounded-md border"
+                          className="w-16 h-16 object-cover rounded-md border border-neutral-90"
                         />
                       )}
 

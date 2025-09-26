@@ -103,7 +103,7 @@ const ColorAndSizesField = ({
               )}
             />
             <FiTrash2
-              className="cursor-pointer text-primary-10 mt-5"
+              className="cursor-pointer text-primary-10 mt-5 text-[65px]"
               onClick={() => removeSize(sizeIndex)}
             />
           </div>

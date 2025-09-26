@@ -57,6 +57,7 @@ import CourseExam from "../pages/Dashboard/MyCourses/CourseExam/CourseExam";
 import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
 import ComingSoon from "../pages/ComingSoon/ComingSoon";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import ManageExam from "../pages/AdminDashboard/ManageExam/ManageExam";
 
 export const router = createBrowserRouter([
   {
@@ -270,6 +271,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-lectures/:id",
         element: <ManageLectures />,
+      },
+      {
+        path: "manage-exam/:courseId",
+        element: <ManageExam />,
       },
       {
         path: "manage-availability",

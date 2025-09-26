@@ -23,6 +23,7 @@ import {
 } from "../../../redux/Features/CourseBundle/courseBundleApi";
 import type { TCourseBundle } from "../../../types/courseBundle.types";
 import CreateOrEditBundleForm from "./CreateOrEditBundleForm";
+import {  MdOutlineAssignment } from "react-icons/md";
 
 const Courses = () => {
   const [selectedBundleId, setSelectedBundleId] = useState<string>("");
@@ -152,6 +153,15 @@ const Courses = () => {
       label: "Manage Lectures",
       onClick: (row: any) => {
         navigate(`/dashboard/admin/manage-lectures/${row?._id}`, {
+          state: { id: row?._id },
+        });
+      },
+    },
+    {
+      icon: <MdOutlineAssignment />,
+      label: "Manage Exam",
+      onClick: (row: any) => {
+        navigate(`/dashboard/admin/manage-exam/${row?._id}`, {
           state: { id: row?._id },
         });
       },

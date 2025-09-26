@@ -49,7 +49,7 @@ const ProductOrders = () => {
       totalAmount: `₹${order?.totalAmount}`,
       status: (
         <span
-          className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+          className={`inline-block px-2 py-1 text-xs font-semibold rounded-full capitalize ${
             statusColors[order?.status]
           }`}
         >
@@ -114,12 +114,6 @@ const ProductOrders = () => {
       },
       className: "text-orange-600",
     },
-    // {
-    //   icon: <FiTrash2 />,
-    //   label: "Delete",
-    //   onClick: (row: any) => handleDeleteOrder(row?._id),
-    //   className: "text-red-600",
-    // },
   ];
 
   // Export
