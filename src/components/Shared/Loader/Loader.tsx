@@ -1,5 +1,3 @@
-// src/components/Shared/Loader/Loader.tsx
-import React from "react";
 
 const Loader: React.FC = () => {
   return (
