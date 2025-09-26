@@ -30,8 +30,6 @@ const ManageExam = () => {
   const [updateExam, { isLoading: isQuestionUpdating }] =
     useUpdateExamMutation();
 
-    console.log(data);
-
   const {
     register,
     control,
@@ -255,7 +253,7 @@ useEffect(() => {
 
             <div className="flex items-center justify-end gap-[10px] mt-4">
               <Link to={"/dashboard/admin/courses"}><Button type="submit" label="Cancel" /></Link>
-              <Button type="submit" variant="primary" label={isQuestionAdding || isQuestionUpdating  ? "Submitting" : "Submit"} />
+              <Button type="submit" variant="primary" label={isQuestionAdding || isQuestionUpdating  ? "Submitting" : "Submit"} isLoading={isQuestionAdding || isQuestionUpdating} />
             </div>
           </form>
         )}
