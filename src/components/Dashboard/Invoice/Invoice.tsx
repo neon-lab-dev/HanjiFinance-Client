@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     color: "#b91c1c",
     marginBottom: 5,
   },
+  logoName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#A7711A",
+  },
   invoiceText: {
     fontSize: 32,
     fontWeight: "bold",
@@ -61,6 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 20,
+    marginTop: 10,
   },
   invoiceDetails: {
     flexDirection: "column",
@@ -251,6 +257,7 @@ const Invoice = ({ data }: { data: InvoiceData }) => {
           <View style={styles.header}>
             <View style={styles.headerRight}>
               <Image src={logo} style={{ width: 150, height: 60 }} />
+              <Text style={styles.logoName}>Hanjifinance</Text>
             </View>
 
             <View style={styles.headerLeft}>
