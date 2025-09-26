@@ -28,11 +28,13 @@ const handleAddToWishList = async () => {
     addToCart({
       product: item,
       color: availableColor.colorName,
-      size: availableSize.size,
+      size: availableSize, // ✅ full object (with _id)
       quantity: 1,
     })
   );
 };
+
+
 
 
 

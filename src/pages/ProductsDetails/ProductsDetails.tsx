@@ -17,89 +17,92 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/Features/Cart/cartSlice";
 
 const ProductsDetails = () => {
- const { id } = useParams();
-const { data, isLoading } = useGetSingleProductByIdQuery(id);
+  const { id } = useParams();
+  const { data, isLoading } = useGetSingleProductByIdQuery(id);
 
-const breadcrumbItems = [
-  { label: "Home", link: "/" },
-  { label: data?.data?.category },
-  { label: data?.data?.name },
-];
+  const breadcrumbItems = [
+    { label: "Home", link: "/" },
+    { label: data?.data?.category },
+    { label: data?.data?.name },
+  ];
 
-const {
-  _id,
-  name,
-  description,
-  imageUrls: images,
-  colors = [], // 👈 now comes from API
-  clothDetails,
-  productStory,
-  madeIn,
-  productId,
-  category,
-} = data?.data || {};
-
-// State for color + size
-const [selectedColor, setSelectedColor] = useState<any>(null);
-const [selectedSize, setSelectedSize] = useState<any>(null);
-
-const [selectedProducts, setSelectedProducts] = useState<Partial<SelectedProduct>>({});
-const dispatch = useDispatch();
-const navigate = useNavigate();
-
-useEffect(() => {
-  if (colors && colors.length > 0) {
-    const defaultColor = colors[0];
-    setSelectedColor(defaultColor);
-
-    // Pick first available size from default color
-    const availableSize = defaultColor.sizes.find((size: Size) => size.quantity > 0);
-    if (availableSize) {
-      setSelectedSize(availableSize);
-      setSelectedProducts({
-        productId: _id,
-        name,
-        selectedColor: defaultColor.colorName,
-        selectedSize: availableSize.size,
-        basePrice: availableSize.basePrice,
-        discountedPrice: availableSize.discountedPrice,
-        image: images?.[0] || ICONS.logo,
-      });
-    }
-  }
-}, [colors, _id, name, images]);
-
-// Handle Color Selection
-const handleColorClick = (color: any) => {
-  setSelectedColor(color);
-
-  const availableSize = color.sizes.find((s: Size) => s.quantity > 0);
-  setSelectedSize(availableSize || null);
-
-  setSelectedProducts({
-    productId: _id,
+  const {
+    _id,
     name,
-    selectedColor: color.colorName,
-    selectedSize: availableSize?.size,
-    basePrice: availableSize?.basePrice,
-    discountedPrice: availableSize?.discountedPrice,
-    image: images?.[0] || ICONS.logo,
-  });
-};
+    description,
+    imageUrls: images,
+    colors = [], // 👈 now comes from API
+    clothDetails,
+    productStory,
+    madeIn,
+    productId,
+    category,
+  } = data?.data || {};
 
-// Handle Size Selection
-const handleSizeClick = (size: any) => {
-  if (size.quantity < 1) return; // Prevent selecting out of stock
-  setSelectedSize(size);
+  // State for color + size
+  const [selectedColor, setSelectedColor] = useState<any>(null);
+  const [selectedSize, setSelectedSize] = useState<any>(null);
 
-  setSelectedProducts((prev) => ({
-    ...prev,
-    selectedSize: size.size,
-    basePrice: size.basePrice,
-    discountedPrice: size.discountedPrice,
-  }));
-};
+  const [selectedProducts, setSelectedProducts] = useState<
+    Partial<SelectedProduct>
+  >({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (colors && colors.length > 0) {
+      const defaultColor = colors[0];
+      setSelectedColor(defaultColor);
+
+      // Pick first available size from default color
+      const availableSize = defaultColor.sizes.find(
+        (size: Size) => size.quantity > 0
+      );
+      if (availableSize) {
+        setSelectedSize(availableSize);
+        setSelectedProducts({
+          productId: _id,
+          name,
+          selectedColor: defaultColor.colorName,
+          selectedSize: availableSize.size,
+          basePrice: availableSize.basePrice,
+          discountedPrice: availableSize.discountedPrice,
+          image: images?.[0] || ICONS.logo,
+        });
+      }
+    }
+  }, [colors, _id, name, images]);
+
+  // Handle Color Selection
+  const handleColorClick = (color: any) => {
+    setSelectedColor(color);
+
+    const availableSize = color.sizes.find((s: Size) => s.quantity > 0);
+    setSelectedSize(availableSize || null);
+
+    setSelectedProducts({
+      productId: _id,
+      name,
+      selectedColor: color.colorName,
+      selectedSize: availableSize?.size,
+      basePrice: availableSize?.basePrice,
+      discountedPrice: availableSize?.discountedPrice,
+      image: images?.[0] || ICONS.logo,
+    });
+  };
+
+  // Handle Size Selection
+  const handleSizeClick = (size: any) => {
+    if (size.quantity < 1) return; // Prevent selecting out of stock
+    setSelectedSize(size);
+
+    setSelectedProducts((prev) => ({
+      ...prev,
+      selectedSize: size.size,
+      basePrice: size.basePrice,
+      discountedPrice: size.discountedPrice,
+    }));
+  };
 
   interface Size {
     size: string;
@@ -116,14 +119,21 @@ const handleSizeClick = (size: any) => {
     discountedPrice: number;
     image: string;
     size: Size;
+    selectedColor:string;
   }
 
-  const handleAddToWishList = async () => {
-    dispatch(
-      addToCart({ product: data.data, size: selectedSize, quantity: 1 })
-    );
-  };
-
+const handleAddToWishList = async () => {
+  if (!selectedColor || !selectedSize) return;
+ 
+  dispatch(
+    addToCart({
+      product: data.data,
+      color: selectedColor.colorName, // ✅ only string
+      size: selectedSize,             // ✅ full size object with _id
+      quantity: 1,
+    })
+  );
+};
   // const user = useSelector(useCurrentUser);
 
   if (isLoading) return <div>Loading...</div>;
@@ -168,60 +178,60 @@ const handleSizeClick = (size: any) => {
               </p>
 
               {/* Price & Rating */}
-<div className="flex items-center gap-4 mt-[6px]">
-  <h1 className="text-[28px] md:text-[32px] font-semibold md:font-medium text-neutral-10 leading-normal">
-    Rs. {selectedProducts?.discountedPrice}{" "}
-    <span className="line-through text-sm lg:text-base text-primary-10">
-      Rs. {selectedProducts?.basePrice}
-    </span>
-  </h1>
-</div>
+              <div className="flex items-center gap-4 mt-[6px]">
+                <h1 className="text-[28px] md:text-[32px] font-semibold md:font-medium text-neutral-10 leading-normal">
+                  Rs. {selectedProducts?.discountedPrice}{" "}
+                  <span className="line-through text-sm lg:text-base text-primary-10">
+                    Rs. {selectedProducts?.basePrice}
+                  </span>
+                </h1>
+              </div>
 
-{/* Product description */}
-<div className="mt-5 md:mt-6">
-  <ExpandableDescription description={description} />
-</div>
+              {/* Product description */}
+              <div className="mt-5 md:mt-6">
+                <ExpandableDescription description={description} />
+              </div>
 
-{/* Colors */}
-<div className="mt-8">
-  <h1 className="text-xl font-medium text-neutral-10 leading-normal">Colors</h1>
-  <div className="flex items-center gap-3 mt-4">
-    {colors?.map((color: any, index: number) => (
-      <button
-        key={index}
-        onClick={() => handleColorClick(color)}
-        className={`px-4 py-2 rounded-lg border text-lg font-medium transition duration-300
+              {/* Colors */}
+              <div className="mt-8">
+                <h1 className="text-xl font-medium text-neutral-10 leading-normal">
+                  Colors
+                </h1>
+                <div className="flex items-center gap-3 mt-4">
+                  {colors?.map((color: any, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => handleColorClick(color)}
+                      className={`px-4 py-2 rounded-lg border text-lg font-medium transition duration-300
           ${
             selectedColor?.colorName === color.colorName
               ? "bg-primary-30 border-primary-20 text-primary-20"
               : "border-surface-90 text-neutral-20 hover:bg-primary-30"
           }`}
-      >
-        {color.colorName}
-      </button>
-    ))}
-  </div>
-</div>
+                    >
+                      {color.colorName}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-{/* Sizes */}
-{selectedColor && (
-  <div className="mt-11 border-b md:border-none border-neutral-185 border-dashed pb-6">
-    <div className="flex items-center justify-between">
-      <h1 className="text-xl font-medium text-neutral-10 leading-normal">
-        Sizes
-      </h1>
-    </div>
+              {/* Sizes */}
+              {selectedColor && (
+                <div className="mt-11 border-b md:border-none border-neutral-185 border-dashed pb-6">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-xl font-medium text-neutral-10 leading-normal">
+                      Sizes
+                    </h1>
+                  </div>
 
-    <div className="flex items-center gap-2 mt-6">
-      {selectedColor?.sizes?.map((size: any, index: number) => (
-        <button
-          key={index}
-          onClick={() => handleSizeClick(size)}
-          disabled={size.quantity < 1}
-          className={`
-            flex h-[56px] px-3 py-2 justify-center items-center gap-3 
-            rounded-lg border text-lg font-medium leading-8 w-full max-w-[103px]
-            transition duration-300
+                  <div className="flex items-center gap-2 mt-6">
+                    {selectedColor?.sizes?.map((size: any, index: number) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSizeClick(size)}
+                        disabled={size.quantity < 1}
+                        className={`
+            px-4 py-2 rounded-lg border text-lg font-medium transition duration-300
             ${
               selectedSize?.size === size.size
                 ? "bg-primary-30 border-primary-20 text-primary-20"
@@ -230,14 +240,13 @@ const handleSizeClick = (size: any) => {
                 : "border-surface-90 text-neutral-20 hover:bg-primary-30"
             }
           `}
-        >
-          {size?.size}
-        </button>
-      ))}
-    </div>
-  </div>
-)}
-
+                      >
+                        {size?.size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* buttons */}
               <div className="hidden md:flex items-center gap-[10px] mt-6 pb-6 w-full">
