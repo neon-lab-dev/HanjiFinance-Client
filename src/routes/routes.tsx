@@ -56,6 +56,7 @@ import CourseDetails from "../pages/CourseDetails/CourseDetails";
 import CourseExam from "../pages/Dashboard/MyCourses/CourseExam/CourseExam";
 import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
 import ComingSoon from "../pages/ComingSoon/ComingSoon";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -150,7 +151,11 @@ export const router = createBrowserRouter([
       {
         path: "/course-details/:id",
         element: <CourseDetails />,
-      }
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
+      },
     ],
   },
   {

@@ -65,8 +65,8 @@ const JoinWaitlistForm = () => {
   const handleActionButtonClick = (item: string) => {
     setActionButtonText(item);
     setSelectedOccupation(item);
-    setValue("occupation", item); // ✅ update RHF field
-    trigger("occupation"); // ✅ revalidate field
+    setValue("occupation", item);
+    trigger("occupation");
     setActionButtonActive(false);
   };
 

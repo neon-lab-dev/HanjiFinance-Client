@@ -62,7 +62,7 @@ const Navbar = () => {
     },
     {
       label: "Contact Us",
-      path: "/",
+      path: "/contact-us",
       isDropDown: false,
       dropdownLinks: [],
     },
