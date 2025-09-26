@@ -121,6 +121,23 @@ const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["course"],
     }),
+    getExamByCourseId: builder.query({
+      query: (id) => ({
+        url: `/exam/${id}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["course"],
+    }),
+     submitExam: builder.mutation({
+      query: ({data}) => ({
+        url: `/exam-answer/attend`,
+        method: "POST",
+        body:data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["course"],
+    }),
   }),
 });
 
@@ -136,5 +153,7 @@ export const {
   useCourseCheckoutMutation,
   useCreateCourseOrderMutation,
   useCompleteLectureMutation,
-  useCompleteCourseMutation
+  useCompleteCourseMutation,
+  useGetExamByCourseIdQuery,
+  useSubmitExamMutation,
 } = courseApi;
