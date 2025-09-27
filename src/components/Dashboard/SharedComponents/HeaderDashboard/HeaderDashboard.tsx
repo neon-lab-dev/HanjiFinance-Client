@@ -12,24 +12,26 @@ const HeaderDashboard = () => {
   const pageTitles: Record<string, string> = {
     "/dashboard": "Dashboard",
     "/dashboard/my-courses": "My Courses",
+    "/dashboard/attend-exam/:id": "Attend Exam",
     "/dashboard/my-orders": "My Orders",
     "/dashboard/consultations": "Consultations",
     "/dashboard/my-profile": "Private Group Access",
     "/dashboard/certificates": "My Profile",
     "/dashboard/fashion": "Fashion & Apparel",
-    "/dashboard/recent-activities": "Dashboard",
+    "/dashboard/recent-activities": "All Activities",
     "/dashboard/book-new-session": "Consultations",
     "/dashboard/my-subscriptions": "My Subscriptions",
     "/dashboard/cancel-subscription": "My Subscriptions",
     "/dashboard/helpdesk": "Helpdesk",
     "/dashboard/admin": "Dashboard",
     "/dashboard/admin/products": "Products",
-    "/dashboard/admin/add-or-edit-product": "Add Products",
+    "/dashboard/admin/add-or-edit-product": "Manage Product",
     "/dashboard/admin/newsletter": "Newsletters",
     "/dashboard/admin/category": "Categories",
     "/dashboard/admin/product-orders": "Product Orders",
     "/dashboard/admin/course-orders": "Course Orders",
     "/dashboard/admin/courses": "Courses",
+    "/dashboard/admin/manage-course": "Manage Course",
     "/dashboard/admin/manage-availability": "Manage Availability",
     "/dashboard/admin/manage-consultations": "Manage Consultations",
     "/dashboard/admin/manage-subscriptions": "Manage Subscriptions",
@@ -40,6 +42,9 @@ const HeaderDashboard = () => {
   let currentTitle = pageTitles[location.pathname] || "";
   if (location.pathname.startsWith("/dashboard/my-courses/")) {
     currentTitle = "My Courses";
+  }
+  else if (location.pathname.startsWith("/dashboard/attend-exam/")) {
+    currentTitle = "Attend Exam";
   }
 
   // Real-time date state

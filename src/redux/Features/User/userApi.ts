@@ -2,7 +2,6 @@ import { baseApi } from "../../Api/baseApi";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-
     getMe: builder.query({
       query: () => ({
         url: "/user/me",
@@ -23,10 +22,11 @@ const userApi = baseApi.injectEndpoints({
     }),
 
     getMyActivity: builder.query({
-      query: () => ({
-        url: "/activity/my-activities",
+      query: ({ page = 1, limit = 10 }) => ({
+        url: `/activity/my-activities`,
         method: "GET",
         credentials: "include",
+        params: { page, limit },
       }),
       providesTags: ["user"],
     }),
@@ -39,7 +39,6 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
-    
   }),
 });
 
@@ -47,5 +46,5 @@ export const {
   useGetMeQuery,
   useUpdateProfileMutation,
   useGetMyActivityQuery,
-  useGetRazorpayKeyQuery
+  useGetRazorpayKeyQuery,
 } = userApi;

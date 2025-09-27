@@ -61,9 +61,9 @@ const ProductPreview = ({ productId }: { productId: string }) => {
           </div>
 
           {/* Thumbnail Images */}
-          {product.imageUrls.length > 1 && (
+          {product?.imageUrls?.length > 1 && (
             <div className="grid grid-cols-4 gap-3">
-              {product.imageUrls.map((url: string, index: number) => (
+              {product?.imageUrls?.map((url: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(url)}
@@ -75,7 +75,7 @@ const ProductPreview = ({ productId }: { productId: string }) => {
                 >
                   <img
                     src={url}
-                    alt={`${product.name} view ${index + 1}`}
+                    alt={`${product?.name} view ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -88,15 +88,15 @@ const ProductPreview = ({ productId }: { productId: string }) => {
         <div className="space-y-6">
           {/* Basic Info */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{product?.name}</h1>
             <div className="flex items-center justify-between mt-1">
               <p className="text-sm text-gray-500 capitalize">
-                <strong>Category:</strong> {product.category} |{" "}
+                <strong>Category:</strong> {product?.category} |{" "}
                 <strong>Product ID:</strong> {product?.productId}
               </p>
               {product?.madeIn && (
                 <p className="text-sm text-gray-500">
-                  <strong>Made in</strong> {product.madeIn}
+                  <strong>Made in</strong> {product?.madeIn}
                 </p>
               )}
             </div>
@@ -106,16 +106,16 @@ const ProductPreview = ({ productId }: { productId: string }) => {
           <div>
             <h3 className="font-semibold text-gray-700 mb-2">Description</h3>
             <p className="text-gray-600 leading-relaxed">
-              {product.description}
+              {product?.description}
             </p>
           </div>
 
           {/* Color Selection */}
-          {product.colors.length > 0 && (
+          {product?.colors?.length > 0 && (
             <div>
               <h3 className="font-semibold text-gray-700 mb-3">Color</h3>
               <div className="flex flex-wrap gap-2">
-                {product.colors.map((color) => (
+                {product?.colors?.map((color) => (
                   <button
                     key={color.colorName}
                     onClick={() => setSelectedColor(color.colorName)}
@@ -139,33 +139,33 @@ const ProductPreview = ({ productId }: { productId: string }) => {
                 Available Sizes & Prices
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {availableSizes.map((size, index) => (
+                {availableSizes?.map((size, index) => (
                   <div
                     key={`${size.size}-${index}`}
                     className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-semibold text-gray-900">
-                        {size.size}
+                        {size?.size}
                       </span>
                       <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                        {size.quantity} in stock
+                        {size?.quantity} in stock
                       </span>
                     </div>
 
                     <div className="flex items-center gap-3">
                       <span className="text-lg font-bold text-green-600">
-                        ₹{size.discountedPrice}
+                        ₹{size?.discountedPrice}
                       </span>
-                      {size.discountedPrice < size.basePrice && (
+                      {size?.discountedPrice < size?.basePrice && (
                         <span className="text-sm text-gray-500 line-through">
-                          ₹{size.basePrice}
+                          ₹{size?.basePrice}
                         </span>
                       )}
-                      {size.discountedPrice < size.basePrice && (
+                      {size?.discountedPrice < size?.basePrice && (
                         <span className="text-xs bg-red-100 text-red-800 px-1.5 py-0.5 rounded">
                           Save ₹
-                          {(size.basePrice - size.discountedPrice).toFixed(2)}
+                          {(size?.basePrice - size?.discountedPrice).toFixed(2)}
                         </span>
                       )}
                     </div>
@@ -181,21 +181,21 @@ const ProductPreview = ({ productId }: { productId: string }) => {
 
           {/* Additional Details */}
           <div className="space-y-3 pt-4 border-t border-gray-200">
-            {product.clothDetails && (
+            {product?.clothDetails && (
               <div>
                 <h4 className="font-semibold text-gray-700 text-sm mb-1">
                   Fabric Details
                 </h4>
-                <p className="text-gray-600 text-sm">{product.clothDetails}</p>
+                <p className="text-gray-600 text-sm">{product?.clothDetails}</p>
               </div>
             )}
 
-            {product.productStory && (
+            {product?.productStory && (
               <div>
                 <h4 className="font-semibold text-gray-700 text-sm mb-1">
                   Product Story
                 </h4>
-                <p className="text-gray-600 text-sm">{product.productStory}</p>
+                <p className="text-gray-600 text-sm">{product?.productStory}</p>
               </div>
             )}
           </div>

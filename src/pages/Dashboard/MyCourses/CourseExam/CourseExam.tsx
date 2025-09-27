@@ -31,6 +31,23 @@ const CourseExam = () => {
   const totalTime = (data?.data?.duration ?? 0) * 60;
   const [timeLeft, setTimeLeft] = useState(totalTime);
 
+
+    const handleSubmitExam = async () => {
+    try {
+      const payload = {
+        examId:data?.data?._id,
+        courseId: id,
+        answers: selectedAnswers,
+      };
+      const res = await submitExam({data:payload}).unwrap();
+      console.log("Exam submitted:", res);
+      navigate(`/dashboard/exam-result/${id}`,{state:{score:res?.data?.score,passed:res?.data?.isPassed}});
+    } catch (err) {
+      console.error("Submit exam failed:", err);
+    }
+  };
+
+  
   useEffect(() => {
     if (data?.data?.duration) {
       setTimeLeft(data.data.duration * 60);
@@ -91,20 +108,7 @@ const CourseExam = () => {
     );
   };
 
-  const handleSubmitExam = async () => {
-    try {
-      const payload = {
-        examId:data?.data?._id,
-        courseId: id,
-        answers: selectedAnswers,
-      };
-      const res = await submitExam({data:payload}).unwrap();
-      console.log("Exam submitted:", res);
-      navigate(`/dashboard/exam-result/${id}`,{state:{score:res?.data?.score,passed:res?.data?.isPassed}});
-    } catch (err) {
-      console.error("Submit exam failed:", err);
-    }
-  };
+
   return (
     <div className="flex items-center justify-center">
       <DashboardContainer
