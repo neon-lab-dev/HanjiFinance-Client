@@ -1,107 +1,206 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGetSingleProductByIdQuery } from "../../../redux/Features/Product/productApi";
 import Loader from "../../Shared/Loader/Loader";
-import { useEffect } from 'react';
+import type { TProduct } from "../../../types/product.types";
 
 const ProductPreview = ({ productId }: { productId: string }) => {
   const { data, isLoading } = useGetSingleProductByIdQuery(productId);
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>("");
+
+  const product: TProduct | undefined = data?.data;
 
   useEffect(() => {
-    if(data?.data?.imageUrls?.length > 0){
-      setSelectedImage(data?.data?.imageUrls[0])
+    if (product?.imageUrls && product?.imageUrls?.length > 0) {
+      setSelectedImage(product.imageUrls[0]);
     }
-  }, [data?.data])
+    if (product?.colors && product?.colors?.length > 0) {
+      setSelectedColor(product.colors[0].colorName);
+    }
+  }, [product]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-64">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center min-h-64 text-red-500">
+        Product not found
+      </div>
+    );
+  }
+
+  const currentColor =
+    product?.colors &&
+    product?.colors.find((color) => color?.colorName === selectedColor);
+  const availableSizes = currentColor?.sizes || [];
 
   return (
-    <div className="p-4 rounded-lg shadow-md w-full font-Montserrat">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
+    <div className="max-w-4xl mx-auto p-6 font-Montserrat">
+      <div className="flex flex-col gap-8">
+        {/* Image Gallery Section */}
+        <div className="space-y-4">
           {/* Main Image */}
-          <div className="w-full h-full  flex gap-4 items-center justify-center overflow-hidden rounded-md">
-            {
-            data?.data?.imageUrls?.length > 0 &&
-            data?.data?.imageUrls[0] ? (
+          <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden">
+            {selectedImage ? (
               <img
-                src={data?.data?.imageUrls[0]}
-                alt={data?.data?.name}
-                className="w-full h-full rounded-xl"
+                src={selectedImage}
+                alt={product.name}
+                className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-neutral-70">No Image</span>
+              <div className="w-full h-full flex items-center justify-center text-neutral-400">
+                No Image Available
+              </div>
             )}
-            <div>
-              {data?.data?.imageUrls?.length > 1 && (
-                <div className="flex flex-col gap-2 mt-4">
-                  {data?.data?.imageUrls
-                    ?.slice(0, 4)
-                    .map((url: string, index: number) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedImage(url)}
-                        className={`w-16 h-16 border rounded overflow-hidden ${
-                          selectedImage === url ? "ring-2 ring-blue-500" : ""
-                        }`}
-                      >
-                        <img
-                          src={url}
-                          alt={`preview-${index}`}
-                          className="object-cover w-full h-full"
-                        />
-                      </button>
-                    ))}
-                </div>
+          </div>
+
+          {/* Thumbnail Images */}
+          {product.imageUrls.length > 1 && (
+            <div className="grid grid-cols-4 gap-3">
+              {product.imageUrls.map((url: string, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(url)}
+                  className={`aspect-square bg-gray-100 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                    selectedImage === url
+                      ? "border-blue-500 ring-2 ring-blue-200"
+                      : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <img
+                    src={url}
+                    alt={`${product.name} view ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Product Details Section */}
+        <div className="space-y-6">
+          {/* Basic Info */}
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
+            <div className="flex items-center justify-between mt-1">
+              <p className="text-sm text-gray-500 capitalize">
+                <strong>Category:</strong> {product.category} |{" "}
+                <strong>Product ID:</strong> {product?.productId}
+              </p>
+              {product?.madeIn && (
+                <p className="text-sm text-gray-500">
+                  <strong>Made in</strong> {product.madeIn}
+                </p>
               )}
             </div>
           </div>
 
-          {/* Product Info */}
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold">{data?.data?.name}</h2>
-            <p className="text-sm text-gray-600">{data?.data?.category}</p>
-            <p className="mt-2 text-gray-700 line-clamp-2">
-              {data?.data?.description}
+          {/* Description */}
+          <div>
+            <h3 className="font-semibold text-gray-700 mb-2">Description</h3>
+            <p className="text-gray-600 leading-relaxed">
+              {product.description}
             </p>
           </div>
 
-          {/* Price & Sizes */}
-          <div className="mt-3">
-            {data?.data?.sizes?.length > 0 ? (
+          {/* Color Selection */}
+          {product.colors.length > 0 && (
+            <div>
+              <h3 className="font-semibold text-gray-700 mb-3">Color</h3>
               <div className="flex flex-wrap gap-2">
-                {data?.data?.sizes?.map((size: any) => (
-                  <div
-                    key={size.size}
-                    className="border px-2 py-1 gap-4 rounded flex items-center"
+                {product.colors.map((color) => (
+                  <button
+                    key={color.colorName}
+                    onClick={() => setSelectedColor(color.colorName)}
+                    className={`px-4 py-2 rounded-full border transition-all cursor-pointer ${
+                      selectedColor === color.colorName
+                        ? "bg-blue-50 border-blue-500 text-blue-700"
+                        : "border-gray-300 text-gray-700 hover:border-gray-400"
+                    }`}
                   >
-                    <span className="font-medium">{size.size}</span>
-                    <div className="">
-                      {" "}
-                      <div className="line-through text-neutral-65 text-xs">
-                        ${size.basePrice}
-                      </div>
-                      <span className="text-success-15 font-semibold">
-                        ${size.discountedPrice}
+                    {color.colorName}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Size and Price Grid */}
+          {availableSizes.length > 0 ? (
+            <div>
+              <h3 className="font-semibold text-gray-700 mb-3">
+                Available Sizes & Prices
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {availableSizes.map((size, index) => (
+                  <div
+                    key={`${size.size}-${index}`}
+                    className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-semibold text-gray-900">
+                        {size.size}
                       </span>
+                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                        {size.quantity} in stock
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg font-bold text-green-600">
+                        ₹{size.discountedPrice}
+                      </span>
+                      {size.discountedPrice < size.basePrice && (
+                        <span className="text-sm text-gray-500 line-through">
+                          ₹{size.basePrice}
+                        </span>
+                      )}
+                      {size.discountedPrice < size.basePrice && (
+                        <span className="text-xs bg-red-100 text-red-800 px-1.5 py-0.5 rounded">
+                          Save ₹
+                          {(size.basePrice - size.discountedPrice).toFixed(2)}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
-            ) : (
-              <p className="text-gray-500 text-sm">No sizes available</p>
-            )}
-          </div>
-
-          {/* Optional Details */}
-          {data?.data?.madeIn && (
-            <p className="mt-3 text-xs text-gray-500">
-              Made in: {data?.data?.madeIn}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm">
+              No sizes available for selected color
             </p>
           )}
-        </>
-      )}
+
+          {/* Additional Details */}
+          <div className="space-y-3 pt-4 border-t border-gray-200">
+            {product.clothDetails && (
+              <div>
+                <h4 className="font-semibold text-gray-700 text-sm mb-1">
+                  Fabric Details
+                </h4>
+                <p className="text-gray-600 text-sm">{product.clothDetails}</p>
+              </div>
+            )}
+
+            {product.productStory && (
+              <div>
+                <h4 className="font-semibold text-gray-700 text-sm mb-1">
+                  Product Story
+                </h4>
+                <p className="text-gray-600 text-sm">{product.productStory}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

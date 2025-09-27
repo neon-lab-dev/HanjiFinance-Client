@@ -271,6 +271,7 @@ const productColumns = [
         isConfirmationModalOpen={isProductPreviewOpen}
         setIsConfirmationModalOpen={setIsProductPreviewOpen}
         isCrossVisible={true}
+        heading="Product Details"
       >
         <ProductPreview productId={selectedProductId} />
       </ConfirmationModal>
