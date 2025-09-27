@@ -17,7 +17,6 @@ const RecentActivities = () => {
     : [];
 
   const pagination = data?.data?.pagination;
-  console.log(data);
 
   return (
     <div>

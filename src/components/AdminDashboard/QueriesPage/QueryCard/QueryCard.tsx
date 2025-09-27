@@ -4,7 +4,10 @@ import { FiTrash2, FiMaximize2, FiMail, FiCopy } from "react-icons/fi";
 import { formatDate } from "../../../../utils/formatDate";
 import type { THelpDesk } from "../../../../types/helpdesk.types";
 import toast from "react-hot-toast";
-import { useDeleteQueryMutation, useUpdateQueryStatusMutation } from "../../../../redux/Features/HelpDesk/helpDeskApi";
+import {
+  useDeleteQueryMutation,
+  useUpdateQueryStatusMutation,
+} from "../../../../redux/Features/HelpDesk/helpDeskApi";
 
 type QueryCardProps = {
   query: THelpDesk;
@@ -43,12 +46,12 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
 
   const handleDeleteQuery = async () => {
     const id = query._id;
-      toast.promise(deleteQuery(id).unwrap(), {
-        loading: "Deleting query...",
-        success: "Query deleted successfully.",
-        error: (err: any) => err?.data?.message || "Something went wrong!",
-      });
-    };
+    toast.promise(deleteQuery(id).unwrap(), {
+      loading: "Deleting query...",
+      success: "Query deleted successfully.",
+      error: (err: any) => err?.data?.message || "Something went wrong!",
+    });
+  };
 
   const updateButtons = [
     {
@@ -120,14 +123,14 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
           </div>
 
           <div className="flex gap-2">
-              <button
-                onClick={handleDeleteQuery}
-                className="text-red-500 hover:text-red-700 p-1 rounded cursor-pointer"
-                title="Delete"
-              >
-                <FiTrash2 size={20} />
-              </button>
-            </div>
+            <button
+              onClick={handleDeleteQuery}
+              className="text-red-500 hover:text-red-700 p-1 rounded cursor-pointer"
+              title="Delete"
+            >
+              <FiTrash2 size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="bg-neutral-90/30 rounded-lg p-3">
@@ -145,7 +148,7 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
           </div>
         )}
 
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex flex-col xl:flex-row justify-between items-center mt-4">
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${
               query.status === "resolved"

@@ -24,7 +24,7 @@ const DashboardContainer = ({ children, headerText, btn, btnLink, className ,div
               {btn}
             </Link>
           )}
-          {<div>{div}</div>}
+          {div && <div>{div}</div>}
         </div>
       )}
       {children}

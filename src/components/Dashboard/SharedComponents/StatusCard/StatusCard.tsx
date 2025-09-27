@@ -1,13 +1,13 @@
 import React from "react";
 
 interface StatusCardProps {
-  icon: string | React.ReactNode; // Icon can be an image URL or a React component
+  icon: string | React.ReactNode;
   value: number | string;
   label: string;
   badgeText: string;
-  badgeBg: string;        // Tailwind class for badge background
-  badgeBorder: string;    // Tailwind class for badge border
-  badgeTextColor: string; // Tailwind class for badge text
+  badgeBg: string;
+  badgeBorder: string;
+  badgeTextColor: string;
 }
 
 const StatusCard: React.FC<StatusCardProps> = ({
