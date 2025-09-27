@@ -1,11 +1,9 @@
-import React from "react";
 import Container from "../../Reusable/Container/Container";
 import { ICONS } from "../../../assets";
 import Button from "../../Reusable/Button/Button";
 import { useNavigate } from "react-router-dom";
 
 const CourseDetailsHero = ({ course }) => {
-  console.log(course?.data);
   const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-b form-[#ffffff] to-primary-30 font-Montserrat py-10">

@@ -58,6 +58,7 @@ import ResultPage from "../pages/Dashboard/MyCourses/ResultPage/ResultPage";
 import ComingSoon from "../pages/ComingSoon/ComingSoon";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import ManageExam from "../pages/AdminDashboard/ManageExam/ManageExam";
+import CourseBundlePayment from "../pages/CourseBundlePayment/CourseBundlePayment";
 
 export const router = createBrowserRouter([
   {
@@ -144,6 +145,10 @@ export const router = createBrowserRouter([
       {
         path: "/course-payment/:id",
         element: <CoursePayment />,
+      },
+      {
+        path: "/course-bundle-payment/:id",
+        element: <CourseBundlePayment />,
       },
       {
         path: "/chat-and-chill-payment",

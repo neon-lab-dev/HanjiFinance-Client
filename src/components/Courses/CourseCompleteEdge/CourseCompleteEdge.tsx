@@ -1,6 +1,8 @@
 'use client';
 
+import { Link } from "react-router-dom";
 import { ICONS } from "../../../assets";
+import { useGetAllCourseBundlesQuery } from "../../../redux/Features/CourseBundle/courseBundleApi";
 import Button from "../../Reusable/Button/Button";
 import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
@@ -30,6 +32,11 @@ const containerStagger: Variants = {
 };
 
 const CourseCompleteEdge = () => {
+  const {
+      data: courseBundle,
+      // isLoading: isCourseBundleLoading,
+      // isFetching: isCourseBundleFetching,
+    } = useGetAllCourseBundlesQuery({});
   const whyUs = [
     {
       icon: ICONS.assetBreakdown,
@@ -64,6 +71,12 @@ const CourseCompleteEdge = () => {
       title: "Priority Q&A with finance mentors",
     },
   ];
+
+  const bundleDetails = {
+    _id : courseBundle?.data?.bundles[0]?._id,
+    title : courseBundle?.data?.bundles[0]?.name,
+    price : courseBundle?.data?.bundles[0]?.price
+  }
   return (
     
     <div className="relative h-full bg-gradient-good-news font-Montserrat overflow-hidden">
@@ -184,23 +197,25 @@ const CourseCompleteEdge = () => {
                 </div>
                 <div className="bg-primary-30 flex flex-col rounded-b-3xl p-4 gap-6">
                   <p className="text-neutral-10 text-xl font-medium leading-6">
-                    Unlock the bundle at a special Price
+                    {bundleDetails?.title}
                   </p>
                   <div className="flex items-center w-full justify-between gap-6 text-nowrap">
                     <div className="space-y-4">
                       <h2 className="text-4xl font-bold leading-9 tracking-tighter">
-                        ₹ 49,900
+                        ₹{bundleDetails?.price}
                       </h2>
                       <p className="text-[13px] text-neutral-175 leading-4 text-nowrap">
                         Price excluding GST
                       </p>{" "}
                     </div>
                     
+                    <Link to={`/course-bundle-payment/${bundleDetails?._id}`}>
                     <Button
                       variant="primary"
                       label="Unlock The Bundle!"
                       classNames="w-full px-8 py-4"
                     />
+                    </Link>
                   </div>
                 </div>
               </div>

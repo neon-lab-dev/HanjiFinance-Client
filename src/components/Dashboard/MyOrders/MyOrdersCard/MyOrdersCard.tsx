@@ -26,8 +26,8 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
       order?.courses?.map((course: any) => ({
         name: course.courseTitle,
         quantity: 1,
-        price: course.coursePrice,
-        total: course.coursePrice * 1,
+        price: Number(course.coursePrice),
+        total: Number(course.coursePrice * 1),
       })) || [],
   };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import CourseDetailsHero from "../../components/CourseDetails/CourseDetailsHero/CourseDetailsHero";
 import CourseDescription from "../../components/CourseDetails/CourseDescription/CourseDescription";
 import Container from "../../components/Reusable/Container/Container";
@@ -14,7 +13,6 @@ const CourseDetails = () => {
   
   // ✅ Fetch course data using RTK Query
   const { data, isLoading, error } = useGetSingleCourseByIdQuery(id);
-  console.log(data?.data)
   if (isLoading) return <p>Loading course...</p>;
   if (error) return <p>Failed to load course.</p>;
 

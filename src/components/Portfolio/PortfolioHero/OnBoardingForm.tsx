@@ -20,7 +20,6 @@ const OnBoardingForm = ({ onSubmitSuccess }: OnBoardingFormProps) => {
   } = useForm<TFormData>();
 
   const handleSignup = (data: TFormData) => {
-    console.log("Form Data:", data);
     onSubmitSuccess(); // callback to PortfolioHero
   };
   return (

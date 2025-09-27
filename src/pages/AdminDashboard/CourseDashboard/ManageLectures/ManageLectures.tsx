@@ -24,8 +24,7 @@ const ManageLectures = () => {
   const handledDeleteLecture = async (lectureId: string) => {
     try {
       setDeletingVideoId(lectureId);
-      const response = await deleteLecture(lectureId).unwrap();
-      console.log(response);
+      await deleteLecture(lectureId).unwrap();
     } catch (error) {
       console.log(error);
     } finally {

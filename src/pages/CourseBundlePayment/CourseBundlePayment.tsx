@@ -1,40 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
-import {
-  useCourseCheckoutMutation,
-  useGetSingleCourseByIdQuery,
-} from "../../redux/Features/Course/courseApi";
+import { useCourseCheckoutMutation } from "../../redux/Features/Course/courseApi";
 import Container from "../../components/Reusable/Container/Container";
 import PaymentProductsCard from "../../components/Payment/PaymentProductsCard/PaymentProductsCard";
 import PaymentCard from "../../components/Payment/PaymentCard/PaymentCard";
 import { useGetRazorpayKeyQuery } from "../../redux/Features/User/userApi";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRedirectPath, useCurrentUser } from "../../redux/Features/Auth/authSlice";
+import {
+  setRedirectPath,
+  useCurrentUser,
+} from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
 import toast from "react-hot-toast";
 import { openModal } from "../../redux/Features/Auth/authModalSlice";
 import { config } from "../../config/config";
+import { useGetSingleCourseBundleByIdQuery } from "../../redux/Features/CourseBundle/courseBundleApi";
 
-const CoursePayment = () => {
+const CourseBundlePayment = () => {
   const dispatch = useDispatch();
   const user = useSelector(useCurrentUser) as TUser;
   const { id } = useParams<{ id: string }>();
-  const { data: course, isLoading, isError } = useGetSingleCourseByIdQuery(id);
+  const {
+    data: singleBundleData,
+    isLoading,
+    isError,
+  } = useGetSingleCourseBundleByIdQuery(id);
 
   const courseData = {
-    price: course?.data?.discountedPrice,
+    price: singleBundleData?.data?.price,
     quantity: 1,
   };
+
+  const bundleCourses = singleBundleData?.data?.courseId?.map(
+    (course: any) => ({
+      title: course?.title,
+      subtitle: course?.subtitle,
+      discountedPrice: course?.discountedPrice,
+    })
+  );
 
   const { data: apiKey } = useGetRazorpayKeyQuery({});
   const [checkout] = useCourseCheckoutMutation();
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const itemTotal = course?.data?.discountedPrice;
+  const itemTotal = singleBundleData?.data?.price;
   const gstAmount = +(itemTotal * (18 / 100)).toFixed(2);
   const totalToPay = +(itemTotal + gstAmount).toFixed(2);
+
   const handlePurchaseCourse = async () => {
     if (!user) {
       toast.error("Please login to proceed");
@@ -79,15 +93,18 @@ const CoursePayment = () => {
       const rzp = new window.Razorpay(options);
       rzp.open();
 
-      const courseOrderData = {
-        courses: [{ courseId: course?.data?._id }],
-        totalAmount: totalToPay,
-        orderType: "single",
-      };
+     const courseOrderData = {
+  courses: singleBundleData?.data?.courseId?.map((course: any) => ({
+    courseId: course._id,
+  })),
+  totalAmount: totalToPay,
+  orderType: "single",
+};
+
 
       localStorage.setItem("courseOrderData", JSON.stringify(courseOrderData));
     } catch (err: any) {
-      console.error(err);
+      toast.error(err?.data?.message || "Something went wrong!");
       setLoading(false);
     } finally {
       setLoading(false);
@@ -95,7 +112,7 @@ const CoursePayment = () => {
   };
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError || !course?.data) return <p>Something went wrong!</p>;
+  if (isError || !singleBundleData?.data) return <p>Something went wrong!</p>;
 
   return (
     <div className="font-Montserrat py-5 md:py-10 bg-surface-30">
@@ -109,7 +126,11 @@ const CoursePayment = () => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-8 md:pag-10 lg:gap-31 my-10">
-          <PaymentProductsCard item={course?.data} />
+          <div className="w-full">
+            {bundleCourses?.map((course: any, index: number) => (
+              <PaymentProductsCard key={index} item={course} />
+            ))}
+          </div>
           <PaymentCard
             items={[courseData]}
             gstRate={18}
@@ -122,4 +143,4 @@ const CoursePayment = () => {
   );
 };
 
-export default CoursePayment;
+export default CourseBundlePayment;

@@ -40,7 +40,6 @@ const CourseExam = () => {
         answers: selectedAnswers,
       };
       const res = await submitExam({data:payload}).unwrap();
-      console.log("Exam submitted:", res);
       navigate(`/dashboard/exam-result/${id}`,{state:{score:res?.data?.score,passed:res?.data?.isPassed}});
     } catch (err) {
       console.error("Submit exam failed:", err);

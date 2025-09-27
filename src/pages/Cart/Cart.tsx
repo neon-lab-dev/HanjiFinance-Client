@@ -24,7 +24,6 @@ const Cart = () => {
   const { data: myProfile, isLoading } = useGetMeQuery({});
   const user = useSelector(useCurrentUser) as TUser;
   const cartProducts = useSelector(getCartProducts);
-  console.log(cartProducts);
   const dispatch = useDispatch();
   const { data: apiKey } = useGetRazorpayKeyQuery({});
   const [productCheckout] = useProductCheckoutMutation();

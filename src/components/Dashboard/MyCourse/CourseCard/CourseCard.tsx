@@ -54,7 +54,6 @@ const CourseCard: React.FC<TCourseCard> = ({
   completedPercentage,
   isCourseCompleted,
 }) => {
-  console.log(isCourseCompleted);
   return (
     <div className="bg-white rounded-xl shadow-lg font-Montserrat relative">
       {/* Course Image */}

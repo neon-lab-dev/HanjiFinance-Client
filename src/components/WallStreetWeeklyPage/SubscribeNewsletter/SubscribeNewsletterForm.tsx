@@ -25,8 +25,7 @@ const SubscribeNewsletterForm = () => {
 
   const handleSubscribeNewsletter = async (data: TFormValues) => {
     try {
-      const res = await subscribeNewsLetter(data).unwrap();
-      console.log("Subscription successful:", res);
+      await subscribeNewsLetter(data).unwrap();
       setIsSubscribed(true);
     } catch (err: any) {
       toast.error(

@@ -121,11 +121,6 @@ const Sidebar: React.FC = () => {
     link: "/dashboard/admin/queries",
     icon: FiHelpCircle,
   },
-  {
-    name: "My Profile",
-    link: "/dashboard/certificates",
-    icon: FiUser,
-  },
 ];
 
   const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;

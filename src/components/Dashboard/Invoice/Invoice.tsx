@@ -244,12 +244,13 @@ type InvoiceData = {
 
 const Invoice = ({ data }: { data: InvoiceData }) => {
   const subtotal = data?.orderedItems?.reduce(
-    (acc, item) => acc + item.total,
-    0
-  );
+  (acc, item) => acc + Number(item.total),
+  0
+);
 
-  const tax = (subtotal ? subtotal * 0.18 : 0).toFixed(2);
-  const grandTotal = subtotal ? subtotal + tax : 0;
+const tax = +(subtotal ? subtotal * 0.18 : 0).toFixed(2);
+const grandTotal = subtotal ? subtotal + tax : 0;
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>

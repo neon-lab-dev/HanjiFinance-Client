@@ -7,7 +7,6 @@ import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi"
 
 const Courses = () => {
  const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
- console.log(courses)
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
