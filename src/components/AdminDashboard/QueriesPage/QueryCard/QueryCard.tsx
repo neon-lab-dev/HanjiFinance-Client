@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { FiTrash2, FiMaximize2, FiMail, FiCopy } from "react-icons/fi";
+import { FiTrash2, FiMaximize2, FiCopy } from "react-icons/fi";
 import { formatDate } from "../../../../utils/formatDate";
 import type { THelpDesk } from "../../../../types/helpdesk.types";
 import toast from "react-hot-toast";
@@ -178,14 +178,14 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
                 </button>
               ))}
 
-              <a
+              {/* <a
                 href={`mailto:${query.userId.email}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1 rounded text-sm font-medium bg-primary-10 text-white hover:bg-primary-9 flex items-center gap-1"
               >
                 <FiMail /> Send Email
-              </a>
+              </a> */}
             </div>
           )}
         </div>

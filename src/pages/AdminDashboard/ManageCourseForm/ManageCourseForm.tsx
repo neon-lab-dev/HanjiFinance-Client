@@ -118,7 +118,7 @@ const ManageCourseForm = () => {
         if (response?.success) {
           toast.success(response?.message || "Course added successfully!");
           navigate(
-            `/dashboard/admin/course/manage-lectures/${response?.data?.id}`
+            `/dashboard/admin/course/manage-lectures/${response?.data?._id}`
           );
         }
       }
