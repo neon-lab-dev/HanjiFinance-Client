@@ -23,7 +23,7 @@ import {
 } from "../../../redux/Features/CourseBundle/courseBundleApi";
 import type { TCourseBundle } from "../../../types/courseBundle.types";
 import CreateOrEditBundleForm from "./CreateOrEditBundleForm";
-import {  MdOutlineAssignment } from "react-icons/md";
+import { MdOutlineAssignment } from "react-icons/md";
 
 const Courses = () => {
   const [selectedBundleId, setSelectedBundleId] = useState<string>("");
@@ -45,8 +45,11 @@ const Courses = () => {
     keyword: searchValue,
   });
 
-  const { data: singleBundleData } =
-    useGetSingleCourseBundleByIdQuery(selectedBundleId);
+  const {
+    data: singleBundleData,
+    isLoading: isSingleBundleLoading,
+    isFetching: isSingleBundleFetching,
+  } = useGetSingleCourseBundleByIdQuery(selectedBundleId);
 
   const [page, setPage] = useState(1);
 
@@ -313,6 +316,7 @@ const Courses = () => {
               onClick={handleExportCourses}
               label="Export"
               classNames="w-fit self-end py-2 px-4"
+              disabled={type !== "Single Courses"}
             />
           </div>
         </div>
@@ -325,6 +329,7 @@ const Courses = () => {
         allCoursesData={allCoursesData}
         setType={setType}
         defaultValues={modalType === "edit" ? singleBundleData?.data : {}}
+        isLoading={isSingleBundleLoading || isSingleBundleFetching}
       />
     </div>
   );
