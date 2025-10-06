@@ -8,21 +8,7 @@ import {
 } from "../../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../../types/user.types";
 import Cookies from "js-cookie";
-import {
-  FiHome,
-  FiMail,
-  FiBox,
-  FiShoppingCart,
-  FiBookOpen,
-  FiUserCheck,
-  FiUsers,
-  FiKey,
-  FiUser,
-  FiShoppingBag,
-  FiHelpCircle
-} from "react-icons/fi";
-import { AiOutlineCheckCircle, AiOutlineTag } from "react-icons/ai";
-
+import { adminMenus, userMenus } from "./sidebarMenus";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -31,102 +17,10 @@ const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
   const isActive = (path: string): boolean => location.pathname === path;
 
-  const userMenus = [
-  { name: "Dashboard", link: "/dashboard", icon: FiHome },
-  {
-    name: "My Courses",
-    link: "/dashboard/my-courses",
-    icon: FiBookOpen,
-  },
-  {
-    name: "My Orders",
-    link: "/dashboard/my-orders",
-    icon: FiShoppingBag,
-  },
-  {
-    name: "Consultations",
-    link: "/dashboard/consultations",
-    icon: FiUserCheck,
-  },
-  {
-    name: "My Subscriptions",
-    link: "/dashboard/my-subscriptions",
-    icon: FiUsers,
-  },
-  {
-    name: "Help Desk",
-    link: "/dashboard/helpdesk",
-    icon: FiHelpCircle,
-  },
-  {
-    name: "My Profile",
-    link: "/dashboard/certificates",
-    icon: FiUser,
-  },
-];
-   const adminMenus = [
-  { name: "Dashboard", link: "/dashboard/admin", icon: FiHome },
-  {
-    name: "Newsletters",
-    link: "/dashboard/admin/newsletter",
-    icon: FiMail,
-  },
-  {
-    name: "Category",
-    link: "/dashboard/admin/category",
-    icon: AiOutlineTag,
-  },
-  {
-    name: "Products",
-    link: "/dashboard/admin/products",
-    icon: FiBox,
-  },
-  {
-    name: "Product Orders",
-    link: "/dashboard/admin/product-orders",
-    icon: FiShoppingCart,
-  },
-  {
-    name: "Course Orders",
-    link: "/dashboard/admin/course-orders",
-    icon: FiBookOpen,
-  },
-  {
-    name: "Courses",
-    link: "/dashboard/admin/courses",
-    icon: FiBookOpen,
-  },
-  {
-    name: "Availability",
-    link: "/dashboard/admin/manage-availability",
-    icon: AiOutlineCheckCircle,
-  },
-  {
-    name: "Consultations",
-    link: "/dashboard/admin/manage-consultations",
-    icon: FiUserCheck,
-  },
-  {
-    name: "Subscriptions",
-    link: "/dashboard/admin/manage-subscriptions",
-    icon: FiUsers,
-  },
-  {
-    name: "Coupon Code",
-    link: "/dashboard/admin/manage-coupon-codes",
-    icon: FiKey,
-  },
-  {
-    name: "Queries",
-    link: "/dashboard/admin/queries",
-    icon: FiHelpCircle,
-  },
-];
-
   const sidebarLinks = user?.role === "admin" ? adminMenus : userMenus;
 
   const handleLogout = async () => {
-    dispatch(setUser({ user:null, token: null }));
+    dispatch(setUser({ user: null, token: null }));
     Cookies.remove("accessToken");
     Cookies.remove("role");
     dispatch(logout());
@@ -135,7 +29,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-60 min-w-60 h-screen font-Inter flex flex-col justify-between sticky left-0 top-0 font-Montserrat overflow-auto">
+    <div className="w-60 min-w-60 h-screen font-Inter hidden xl:flex flex-col justify-between sticky left-0 top-0 font-Montserrat overflow-auto">
       <div className="space-y-7">
         <Link
           to="/"
@@ -159,7 +53,7 @@ const Sidebar: React.FC = () => {
                 } hover:bg-neutral-155 rounded-lg text-neutral-20 font-medium cursor-pointer transition duration-300 ease-in-out`}
               >
                 <Link to={menu.link} className="flex items-center gap-3">
-                 <menu.icon className="text-lg" /> {menu.name}
+                  <menu.icon className="text-lg" /> {menu.name}
                 </Link>
               </li>
             ))}
