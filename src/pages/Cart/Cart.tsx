@@ -123,8 +123,8 @@ const Cart = () => {
     <div className="font-Montserrat py-5 md:py-10 bg-surface-30 ">
       <Container>
         <div className="space-y-8">
-          <div className="flex justify-between items-center  pb-8 border-b border-b-neutral-97 ">
-            <h2 className="md:w-[60%] text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0 pb-8 border-b border-b-neutral-97">
+            <h2 className="md:w-[60%] text-2xl md:text-[32px] text-neutral-20 md:text-neutral-35 font-bold leading-9 tracking-[-0.6px]">
               Cart Page{" "}
               <span>{`(${cartProducts.length} ${
                 cartProducts.length == 1 ? "item" : "items"

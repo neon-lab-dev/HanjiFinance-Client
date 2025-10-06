@@ -45,7 +45,7 @@ const PaymentProductsCards = ({ items }: any) => {
       {items.map((item: any, index: number) => (
         <div
           key={index}
-          className="p-6 flex justify-between h-fit border-b border-neutral-98"
+          className="p-0 md:p-6 flex flex-col md:flex-row gap-6 md:gap-0 pb-3 justify-between h-fit border-b border-neutral-98"
         >
           <div className="flex gap-8">
             <div className="bg-primary-30 rounded-lg flex justify-center items-center w-20">
@@ -56,7 +56,7 @@ const PaymentProductsCards = ({ items }: any) => {
                 {item.name}
               </h3>
               <p className="text-[17px] font-semibold leading-5 text-neutral-20">
-                ₹{item.price} x {item.quantity}  |  color : {item.color}
+                ₹{item.price} x {item.quantity} | color : {item.color}
               </p>
             </div>
           </div>
