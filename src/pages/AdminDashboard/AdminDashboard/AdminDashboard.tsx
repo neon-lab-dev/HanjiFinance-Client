@@ -1,5 +1,5 @@
 // import UpcomingConsultationCard from "../../../components/AdminDashboard/AdmindashboardPage/UpcomingConsultationCard/UpcomingConsultationCard";
-import WelcomeSection from "../../../components/Dashboard/DashboardPage/WelcomeSectoin/WelcomeSection";
+import WelcomeSection from "../../../components/Dashboard/DashboardPage/WelcomeSection/WelcomeSection";
 import StatusCard from "../../../components/Dashboard/SharedComponents/StatusCard/StatusCard";
 import {
   FiBook,

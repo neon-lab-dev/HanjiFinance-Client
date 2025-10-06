@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useLocation } from "react-router-dom";
 import { ICONS } from "../../../assets";
 import { useEffect, useState } from "react";
@@ -55,7 +56,7 @@ const DashboardHamburgerMenu = () => {
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            {userMenus?.map((link) => (
+            {userMenus?.map((link:any) => (
               <Link
                 key={link?.name}
                 to={link?.link}

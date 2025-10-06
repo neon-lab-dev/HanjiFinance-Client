@@ -5,7 +5,7 @@ import { useGetMyCourseOrdersQuery } from "../../../../redux/Features/CourseOrde
 import type { TChatAndChill } from "../../../../types/chatAndChill.types";
 import StatusCard from "../StatusCard/StatusCard";
 
-const StatusSectoin = () => {
+const StatusSection = () => {
   const { data: courses } = useGetMyCourseOrdersQuery({});
   const { data: myBookings } = useGetMyBookingsQuery({});
    const { data:mySubscription } = useGetMySubscriptionQuery({});
@@ -59,7 +59,7 @@ const StatusSectoin = () => {
     },
   ];
   return (
-    <div className="flex gap-4 w-full">
+    <div className="flex flex-col md:flex-row gap-4 w-full">
       {cardsData.map((card, index) => (
         <StatusCard key={index} {...card} />
       ))}
@@ -67,4 +67,4 @@ const StatusSectoin = () => {
   );
 };
 
-export default StatusSectoin;
+export default StatusSection;

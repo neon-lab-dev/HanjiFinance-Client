@@ -1,19 +1,19 @@
-import WelcomeSection from "../../components/Dashboard/DashboardPage/WelcomeSectoin/WelcomeSection";
-import StatusSectoin from "../../components/Dashboard/SharedComponents/StatusSectoin/StatusSectoin";
+import WelcomeSection from "../../components/Dashboard/DashboardPage/WelcomeSection/WelcomeSection";
 import QuickAction from "../../components/Dashboard/DashboardPage/QuickAction/QuickActionList";
 import RecentActivitiesList from "../../components/Dashboard/DashboardPage/RecentActivities/RecentActivitiesList";
+import StatusSection from "../../components/Dashboard/SharedComponents/StatusSection/StatusSection";
 
 const Dashboard = () => {
   return (
     <div className="space-y-6">
       <WelcomeSection />
-      <StatusSectoin />
-      <div className="flex justify-center w-full flex-row gap-[18px]">
-        <div className="w-[40%]">
+      <StatusSection />
+      <div className="flex flex-col lg:flex-row justify-center w-full gap-[18px]">
+        <div className="w-full lg:w-[40%]">
           <QuickAction />
         </div>
-        <div className="w-[60%]">
-          <RecentActivitiesList/>
+        <div className="w-full lg:w-[60%]">
+          <RecentActivitiesList />
         </div>
       </div>
     </div>
