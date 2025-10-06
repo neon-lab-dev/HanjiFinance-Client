@@ -84,8 +84,22 @@ const CoursePlayer: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="space-y-3">
-      <div className="w-full flex item-center justify-end">
+    <div className="space-y-7 md:space-y-3">
+      <div className="w-full flex item-center gap-5 justify-end">
+        <div className="block md:hidden">
+                <Button
+                variant="secondary"
+                label={
+                  isCourseCompleting ? "Please wait..." : "Complete Course"
+                }
+                classNames="w-fit py-2 px-3"
+                onClick={handleCompleteCourse}
+                disabled={
+                  completedLectures.length !== allLectures.length ||
+                  purchasedCourse?.isCompletedCourse
+                }
+              />
+              </div>
         {exam && purchasedCourse?.isPassed === false && (
           <Button
             onClick={() => {
@@ -108,8 +122,9 @@ const CoursePlayer: React.FC = () => {
           />
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 bg-gray-50">
-        <div className="col-span-2 sticky h-full top-20 flex flex-col p-6 ">
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 bg-transparent lg:bg-gray-50">
+        <div className="col-span-2 sticky h-full top-20 flex flex-col p-0 lg:p-6 ">
           {selectedLecture ? (
             <div className="relative w-full">
               <div className="absolute px-5 top-0 left-0 right-0 w-full bg-gradient-to-b from-neutral-20 to-white/50 rounded-t-lg">
@@ -122,7 +137,7 @@ const CoursePlayer: React.FC = () => {
                 key={selectedLecture._id}
                 src={selectedLecture.videoUrl}
                 controls
-                className="w-full h-[70vh] rounded-lg shadow-md bg-black"
+                className="w-full h-fit 2xl:h-[70vh] rounded-lg shadow-md bg-black"
               />
             </div>
           ) : (
@@ -140,7 +155,8 @@ const CoursePlayer: React.FC = () => {
               disabled={selectedIndex === 0}
             />
             <div className="flex gap-3">
-              <Button
+              <div className="hidden md:block">
+                <Button
                 variant="secondary"
                 label={
                   isCourseCompleting ? "Please wait..." : "Complete Course"
@@ -152,6 +168,7 @@ const CoursePlayer: React.FC = () => {
                   purchasedCourse?.isCompletedCourse
                 }
               />
+              </div>
               <Button
                 variant="primary"
                 label="Next Lecture"
@@ -164,7 +181,7 @@ const CoursePlayer: React.FC = () => {
         </div>
 
         {/* Right: Playlist */}
-        <div className="col-span-1 bg-white p-6 overflow-y-auto">
+        <div className="col-span-1 bg-transparent lg:bg-white p-0 lg:p-6 overflow-y-auto">
           <h3 className="text-lg font-semibold mb-4">Course Playlist</h3>
 
           {allLectures?.map((lecture: any, index: number) => {
