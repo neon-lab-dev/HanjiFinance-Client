@@ -20,11 +20,11 @@ const Consultations = () => {
           icon={ICONS.noteBook}
         />
       </div>
-      <div className="flex justify-between gap-6 w-full">
-        <div className="w-[65%]">
+      <div className="flex flex-col lg:flex-row justify-between gap-6 w-full">
+        <div className="w-full lg:w-[65%]">
           <ConsultationsSection />
         </div>
-        <div className="w-[35%] sticky top-0">
+        <div className="w-full lg:w-[35%] sticky top-0">
           <AvailableSlotsList />
         </div>
       </div>
