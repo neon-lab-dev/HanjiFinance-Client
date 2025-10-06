@@ -4,15 +4,14 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Button from "../../Reusable/Button/Button";
 import { useNavigate } from "react-router-dom";
 
-
 export type TCourse = {
-  _id:string,
+  _id: string;
   imageUrl?: string;
   title: string;
   subtitle: string;
   tagline: string;
-  benefits : string[];
-  accessType : "lifetime" | "limited";
+  benefits: string[];
+  accessType: "lifetime" | "limited";
   accessValidity: Date;
   category: string;
   basePrice: number;
@@ -32,11 +31,10 @@ const CourseCard: React.FC<TCourse> = ({
   discountedPrice,
   accessType,
   benefits,
-  isEnrolled
-,
+  isEnrolled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const handleClick = () => setIsOpen((prev) => !prev);
   const blurVariants: Variants = {
     hidden: { opacity: 0 },
@@ -51,15 +49,24 @@ const CourseCard: React.FC<TCourse> = ({
         isOpen ? "h-full " : ""
       } `}
     >
-      <div onClick={()=>   navigate(`/course-details/${_id}`)}> <img src={imageUrl} alt={title} className="rounded-t-xl w-full h-[250px] cursor-pointer" /></div>
+      <div onClick={() => navigate(`/course-details/${_id}`)}>
+        {" "}
+        <img
+          src={imageUrl}
+          alt={title}
+          className="rounded-t-xl w-full h-[250px] cursor-pointer"
+        />
+      </div>
       {/* Course Image */}
-     
 
       <div className="flex flex-col gap-4  pb-4 ">
         {/* Course Details */}
         <div className="bg-secondary-20 w-full p-4 space-y-3">
           <div>
-            <h1 onClick={()=>   navigate(`/course-details/${_id}`)} className="text-neutral-130 text-xl cursor-pointer hover:underline tracking-[-0.2px] font-bold leading-6">
+            <h1
+              onClick={() => navigate(`/course-details/${_id}`)}
+              className="text-neutral-130 text-xl cursor-pointer hover:underline tracking-[-0.2px] font-bold leading-6"
+            >
               {title}
             </h1>
             <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
@@ -70,14 +77,14 @@ const CourseCard: React.FC<TCourse> = ({
         </div>
 
         {/* Accordion */}
-       <div className="px-4">
+        <div className="px-4">
           <article className="">
             <div
               className="flex gap-2 cursor-pointer items-center justify-start w-full"
               onClick={handleClick}
             >
               <h2 className="text-neutral-20 font-semibold leading-[20px] text-sm">
-               This course will help you
+                This course will help you
               </h2>
               <motion.div
                 animate={{ rotate: isOpen ? 180 : 0 }}
@@ -129,24 +136,32 @@ const CourseCard: React.FC<TCourse> = ({
               )}
             </AnimatePresence>
           </article>
-        </div> 
-        <div className="px-4  pt-2 space-y-5  z-100 mt-auto ">
+        </div>
+        <div className="px-4 pt-2 space-y-5 z-10 mt-auto ">
           <div className="space-y-1">
             <p className="text-neutral-130 text-[17px] leading-5 font-bold tracking-[-0.18px]">
-              <span className="font-normal text-sm line-through text-primary-10">₹{basePrice}</span> ₹{discountedPrice}
+              <span className="font-normal text-sm line-through text-primary-10">
+                ₹{basePrice}
+              </span>{" "}
+              ₹{discountedPrice}
             </p>
             <p className="text-neutral-60 text-sx capitalize leading-[14px] tracking-[-0.12]">
-             {accessType}
+              {accessType}
             </p>
           </div>
 
-          <Button label={isEnrolled ? "Continue with Course" : "Enroll Now"} variant="primary" classNames="w-full" onClick={() => {
-            if (isEnrolled) {
-              navigate(`/dashboard/my-courses`);
-            } else {
-              navigate(`/course-payment/${_id}`);
-            }
-          }} />
+          <Button
+            label={isEnrolled ? "Continue with Course" : "Enroll Now"}
+            variant="primary"
+            classNames="w-full"
+            onClick={() => {
+              if (isEnrolled) {
+                navigate(`/dashboard/my-courses`);
+              } else {
+                navigate(`/course-payment/${_id}`);
+              }
+            }}
+          />
         </div>
       </div>
     </div>
