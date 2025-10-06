@@ -17,7 +17,7 @@ const SubscriptionCardsList = ({status, nextBilling} : {status: string, nextBill
   ]
 
   return (
-    <div className="flex gap-6 mt-4">
+    <div className="flex flex-col md:flex-row gap-6 mt-4">
       {cards.map((card) => {
         // compute conditional class for the value
         const classNames =

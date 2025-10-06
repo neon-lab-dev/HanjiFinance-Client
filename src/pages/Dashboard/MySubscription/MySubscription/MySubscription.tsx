@@ -8,30 +8,33 @@ import SubscriptionStatus from "../../../SubscriptionStatus/SubscriptionStatus";
 
 const MySubscription = () => {
   const { data, isLoading } = useGetMySubscriptionQuery({});
-  return (
-    isLoading?
-    <div className="h-[80vh] flex items-center justify-center"><Loader/></div>:
-    !data?.data?
-     <SubscriptionStatus status="no-subscription-boardroom" />
-     :
-    data?.data?.status === "waitlist" ?
+  return isLoading ? (
+    <div className="h-[80vh] flex items-center justify-center">
+      <Loader />
+    </div>
+  ) : !data?.data ? (
+    <SubscriptionStatus status="no-subscription-boardroom" />
+  ) : data?.data?.status === "waitlist" ? (
     <SubscriptionStatus status="waitlisted" />
-    :
-    data?.data?.status === "code sent" ?
+  ) : data?.data?.status === "code sent" ? (
     <SubscriptionStatus status="coupon-sent" />
-    :
+  ) : (
     <div>
       <SubscriptionHero subscription={data?.data} />
-      <SubscriptionCardsList status={data?.data?.status} nextBilling={data?.data?.endDate} />
-      <div className="flex mt-8 gap-[18px]">
-        <div className="w-[40%]">
+      <SubscriptionCardsList
+        status={data?.data?.status}
+        nextBilling={data?.data?.endDate}
+      />
+      <div className="flex flex-col lg:flex-row mt-8 gap-[18px]">
+        <div className="w-full lg:w-[40%]">
           <SubscriptionDetails
-           data={{
-            status: data?.data?.status,
-            nextBilling: data?.data?.endDate
-          }} />
+            data={{
+              status: data?.data?.status,
+              nextBilling: data?.data?.endDate,
+            }}
+          />
         </div>
-        <div className="w-[60%]">
+        <div className="w-full lg:w-[60%]">
           <SubscriptionQuickList />
         </div>
       </div>
