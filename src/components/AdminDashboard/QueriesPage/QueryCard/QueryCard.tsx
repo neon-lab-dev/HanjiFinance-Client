@@ -148,7 +148,7 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
           </div>
         )}
 
-        <div className="flex flex-col xl:flex-row justify-between items-center mt-4">
+        <div className="flex flex-col xl:flex-row justify-between items-start md:items-center mt-4">
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${
               query.status === "resolved"
