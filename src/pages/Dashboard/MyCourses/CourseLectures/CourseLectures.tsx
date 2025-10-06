@@ -6,18 +6,19 @@ import {
   useCompleteLectureMutation,
   useGetAllLecturesByCourseIdQuery,
   useGetExamByCourseIdQuery,
+  useGetMyCoursesQuery,
 } from "../../../../redux/Features/Course/courseApi";
 import Button from "../../../../components/Reusable/Button/Button";
 import toast from "react-hot-toast";
-import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
-import { FaCheck, FaLock } from "react-icons/fa";
+import { FaCheck, FaClock, FaLock, FaPlay } from "react-icons/fa";
 const CoursePlayer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: myProfile } = useGetMeQuery({});
+  const { data: myProfile } = useGetMyCoursesQuery({});
   const { data: lectures, isLoading } = useGetAllLecturesByCourseIdQuery(id);
   const { data: exam } = useGetExamByCourseIdQuery(id);
-  const [completeCourse] = useCompleteCourseMutation();
+  const [completeCourse, { isLoading: isCourseCompleting }] =
+    useCompleteCourseMutation();
   const [completeLecture] = useCompleteLectureMutation();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -141,7 +142,9 @@ const CoursePlayer: React.FC = () => {
             <div className="flex gap-3">
               <Button
                 variant="secondary"
-                label={"Complete Course"}
+                label={
+                  isCourseCompleting ? "Please wait..." : "Complete Course"
+                }
                 classNames="w-fit py-2 px-3"
                 onClick={handleCompleteCourse}
                 disabled={
@@ -174,24 +177,78 @@ const CoursePlayer: React.FC = () => {
               <div
                 key={lecture._id}
                 onClick={() => !isLocked && setSelectedIndex(index)}
-                className={`cursor-pointer border rounded-lg mb-3 flex justify-between items-center overflow-hidden shadow-sm px-3 py-2 transition 
-                ${
-                  selectedIndex === index
-                    ? "bg-neutral-85/30 border-neutral-85/60 font-semibold"
-                    : "font-medium hover:bg-gray-100 border-neutral-85/60"
-                }
-                ${isLocked ? "opacity-50 cursor-not-allowed" : ""}
-              `}
+                className={`cursor-pointer border rounded-xl mb-3 flex justify-between items-center overflow-hidden shadow-sm px-4 py-3 transition-all duration-300 group
+    ${
+      selectedIndex === index
+        ? "bg-blue-50 border-blue-200 shadow-md transform scale-[1.02]"
+        : "bg-white border-gray-200 hover:bg-gray-50 hover:shadow-md hover:border-gray-300"
+    }
+    ${isLocked ? "opacity-60 cursor-not-allowed" : "hover:-translate-y-0.5"}
+  `}
               >
-                <p className="text-gray-800 font-medium">{lecture.title}</p>
+                <div className="flex items-center gap-3">
+                  {/* Play Icon Container */}
+                  <div
+                    className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300
+      ${
+        selectedIndex === index
+          ? "bg-primary-10 text-white"
+          : isLocked
+          ? "bg-gray-300 text-gray-500"
+          : "bg-gray-100 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-500"
+      }
+    `}
+                  >
+                    {isLocked ? (
+                      <FaLock className="text-xs" />
+                    ) : (
+                      <FaPlay className="text-xs ml-0.5" />
+                    )}
+                  </div>
+
+                  {/* Lecture Title */}
+                  <div className="flex flex-col">
+                    <p
+                      className={`font-medium transition-colors
+        ${
+          selectedIndex === index
+            ? "text-primary-10"
+            : isLocked
+            ? "text-gray-500"
+            : "text-gray-800 group-hover:text-gray-900"
+        }
+      `}
+                    >
+                      {lecture.title}
+                    </p>
+                    {lecture.duration && (
+                      <span className="text-xs text-gray-500 mt-0.5">
+                        {lecture.duration}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Status Indicator */}
                 <span className="flex items-center justify-center gap-2">
-                  {/* <img src={ICONS.duration} alt="" /> */}
-                  {/* <span className="text-sm text-neutral-85">{lecture.duration}</span> */}
                   {isCompleted ? (
-                    <FaCheck className="text-green-500 ml-1" />
+                    <div className="flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full">
+                      <FaCheck className="text-green-500" />
+                      <span className="text-xs font-medium">Completed</span>
+                    </div>
                   ) : isLocked ? (
-                    <FaLock className="text-gray-400 ml-1" />
-                  ) : null}
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <FaLock />
+                      <span className="text-xs">Locked</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1 text-gray-400 group-hover:text-gray-600 transition-colors">
+                      <FaClock className="text-xs" />
+                      {lecture.duration && (
+                        <span className="text-xs">{lecture.duration}</span>
+                      )}
+                    </div>
+                  )}
                 </span>
               </div>
             );

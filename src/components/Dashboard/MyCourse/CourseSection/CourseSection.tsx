@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CourseCard from "../CourseCard/CourseCard";
 import Loader from "../../../Shared/Loader/Loader";
-import { useGetMeQuery } from "../../../../redux/Features/User/userApi";
+import { useGetMyCoursesQuery } from "../../../../redux/Features/Course/courseApi";
 
 const CourseSection = () => {
-  const { data: myProfile, isLoading } = useGetMeQuery({});
-  if (myProfile?.data?.purchasedCourses?.length < 1) {
+  const { data: mtCourses, isLoading } = useGetMyCoursesQuery({});  // it's gte my profile api.
+  if (mtCourses?.data?.purchasedCourses?.length < 1) {
     return <p>No courses found</p>;
   }
 
@@ -17,7 +17,7 @@ const CourseSection = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-          {myProfile?.data?.purchasedCourses?.map((course: any) => (
+          {mtCourses?.data?.purchasedCourses?.map((course: any) => (
             <CourseCard
               {...course?.courseId}
               isCourseCompleted={course.isCompletedCourse}
