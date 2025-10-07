@@ -138,7 +138,7 @@ const Newsletter = () => {
         <DashboardContainer>
           <div className="font-Montserrat flex flex-col gap-6">
             {/* Header */}
-            <div className="flex justify-between items-start">
+            <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-between items-start">
               <div>
                 <h1 className="text-xl font-bold text-neutral-40">
                   Newsletter Subscribers
@@ -149,7 +149,7 @@ const Newsletter = () => {
               </div>
               <div className="flex justify-between items-center gap-4 flex-wrap">
                 {/* Filter */}
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-3 md:gap-2 flex-wrap">
                   <SearchInput
                     value={searchValue}
                     onChange={setSearchValue}
