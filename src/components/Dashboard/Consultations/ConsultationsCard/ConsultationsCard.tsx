@@ -50,13 +50,13 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
   return (
     <div className="flex justify-between items-start bg-surface-30 p-4 border-[1px] rounded-lg border-neutral-98 font-Montserrat">
       <div className="flex items-start justify-start gap-4">
-        <div className="size-[30px] w-[30px] p-[6px] bg-success-30 flex justify-center items-center rounded-full">
+        <div className="size-[30px] p-[6px] bg-success-30 hidden md:flex justify-center items-center rounded-full">
           <img src={ICONS.greenTick} className="size-6" />
         </div>
         <div className="text-neutral-20">
-          <h2 className="font-medium leading-[22px]">{title}</h2>
-          <p className="mt-1 tet-[13px] leading-4">{subtitle}</p>
-          <div className="flex items-center justify-start gap-4 mt-4 text-neutral-85">
+          <h2 className="font-medium leading-[22px]">{title} <span className={`${statusColors[status]} text-xs capitalize inline md:hidden`}>({status === "booked" ? "Not scheduled yet" : status})</span></h2>
+          <p className="mt-2 md:mt-1 tet-[13px] leading-4">{subtitle}</p>
+          <div className="flex flex-wrap items-center justify-start gap-4 mt-4 text-neutral-85">
             <div className="flex gap-1 items-center justify-center">
               <img src={ICONS.calendarMinimalistic} className="size-4" />
               <p className="text-[13px] leading-4">{date}</p>
@@ -95,10 +95,11 @@ const ConsultationsCard: React.FC<ConsultationsCardProps> = ({
           </div>
         </div>
       </div>
+
       <div
-        className={`border-[1px] rounded-sm p-1 text-[13px] leading-4 font-medium capitalize ${statusColors[status]}`}
+        className={`hidden md:flex border-[1px] rounded-sm p-1 text-[13px] leading-4 font-medium capitalize ${statusColors[status]}`}
       >
-        {status === "booked" ? "Not scheduled yet" : status} 
+        {status === "booked" ? "Not scheduled yet" : status}
       </div>
     </div>
   );

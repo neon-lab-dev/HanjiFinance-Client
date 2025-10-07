@@ -36,8 +36,10 @@ const JoinWaitlistForm = () => {
 
   const [actionButtonActive, setActionButtonActive] = useState(false);
   const [actionButtonText, setActionButtonText] = useState("What do you do?");
+
   const [selectedOccupation, setSelectedOccupation] = useState("");
   const dispatch=useDispatch();
+
   const instructions = [
     {
       icon: ICONS.fillForm,
@@ -68,7 +70,6 @@ const JoinWaitlistForm = () => {
 
   const handleActionButtonClick = (item: string) => {
     setActionButtonText(item);
-    setSelectedOccupation(item);
     setValue("occupation", item);
     trigger("occupation");
     setActionButtonActive(false);

@@ -53,7 +53,7 @@ const ReScheduleMeetingModal: React.FC<TReScheduleMeetingModalProps> = ({
       setIsConfirmationModalOpen={setIsReScheduleMeetingModalOpen}
       isCrossVisible={true}
     >
-      <div className="flex flex-col items-center py-5 px-8">
+      <div className="flex flex-col items-center py-5  px-3 md:px-8">
         <form
           onSubmit={handleSubmit(handleScheduleMeeting)}
           className="w-full mt-4 flex flex-col gap-4 items-end"

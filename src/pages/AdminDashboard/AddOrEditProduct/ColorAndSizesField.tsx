@@ -47,13 +47,14 @@ const ColorAndSizesField = ({
 
       <div className="space-y-2">
         {sizeFields.map((size, sizeIndex) => (
-          <div key={size.id} className="flex gap-4 items-center">
+          <div
+            key={size.id}
+            className="flex flex-col md:flex-row gap-4 items-center"
+          >
             <TextInput
               label="Size"
               placeholder="M, L, XL"
-              error={
-                errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.size
-              }
+              error={errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.size}
               {...register(
                 `colors.${colorIndex}.sizes.${sizeIndex}.size` as const,
                 { required: "Size is required" }
@@ -62,9 +63,7 @@ const ColorAndSizesField = ({
             <TextInput
               label="Quantity"
               type="number"
-              error={
-                errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.quantity
-              }
+              error={errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.quantity}
               {...register(
                 `colors.${colorIndex}.sizes.${sizeIndex}.quantity` as const,
                 {
@@ -76,9 +75,7 @@ const ColorAndSizesField = ({
             <TextInput
               label="Base Price"
               type="number"
-              error={
-                errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.basePrice
-              }
+              error={errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.basePrice}
               {...register(
                 `colors.${colorIndex}.sizes.${sizeIndex}.basePrice` as const,
                 {
@@ -91,8 +88,7 @@ const ColorAndSizesField = ({
               label="Discounted Price"
               type="number"
               error={
-                errors.colors?.[colorIndex]?.sizes?.[sizeIndex]
-                  ?.discountedPrice
+                errors.colors?.[colorIndex]?.sizes?.[sizeIndex]?.discountedPrice
               }
               {...register(
                 `colors.${colorIndex}.sizes.${sizeIndex}.discountedPrice` as const,
@@ -103,21 +99,24 @@ const ColorAndSizesField = ({
               )}
             />
             <FiTrash2
-              className="cursor-pointer text-primary-10 mt-5 text-[65px]"
+              className="cursor-pointer text-primary-10 mt-5 text-lg md:text-[65px]"
               onClick={() => removeSize(sizeIndex)}
             />
           </div>
         ))}
 
-        <button onClick={() =>
+        <button
+          onClick={() =>
             appendSize({
               size: "",
               quantity: 0,
               basePrice: 0,
               discountedPrice: 0,
             })
-          } className="text-sm text-primary-10 font-semibold italic underline cursor-pointer">
-            Add Size
+          }
+          className="text-sm text-primary-10 font-semibold italic underline cursor-pointer"
+        >
+          Add Size
         </button>
       </div>
     </div>

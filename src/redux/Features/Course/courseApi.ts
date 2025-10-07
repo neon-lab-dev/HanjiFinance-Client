@@ -2,6 +2,14 @@ import { baseApi } from "../../Api/baseApi";
 
 const courseApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getMyCourses: builder.query({
+      query: () => ({
+        url: "/user/me",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["course"],
+    }),
     getAllCourses: builder.query({
       query: ({ keyword, page }: { keyword?: string; page?: number }) => {
         const params = new URLSearchParams();
@@ -171,6 +179,7 @@ const courseApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetMyCoursesQuery,
   useGetAllCoursesQuery,
   useGetSingleCourseByIdQuery,
   useGetAllLecturesByCourseIdQuery,

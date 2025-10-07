@@ -95,11 +95,11 @@ const CourseCompleteEdge = () => {
           </motion.div>
 
           <motion.div
-            className="flex h-full justify-between items-center mt-12 p-6 gap-[60px]"
+            className="flex flex-col xl:flex-row h-full justify-between items-center mt-12 gap-[60px]"
             variants={containerStagger} 
           >
             
-            <motion.div className="w-[60%] space-y-8 h-full" variants={containerStagger}>
+            <motion.div className="w-full xl:w-[60%] space-y-8 h-full" variants={containerStagger}>
              
               <motion.div className="space-y-2" variants={itemFadeInUp}>
                 <h5 className="text-neutral-10 text-xl font-medium leading-6">
@@ -117,7 +117,7 @@ const CourseCompleteEdge = () => {
                 </motion.h5>
                
                 <div className="flex gap-4"> 
-                  <motion.div className="grid grid-cols-3 gap-4" variants={containerStagger}>
+                  <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-4" variants={containerStagger}>
                     {whyUs.map((item, index) => (
                       <motion.div 
                         key={index}
@@ -171,7 +171,7 @@ const CourseCompleteEdge = () => {
             </motion.div>
 
           
-            <motion.div className="w-[40%] h-full" variants={itemFadeInUp}>
+            <motion.div className="w-full xl:w-[40%] h-full" variants={itemFadeInUp}>
               <div className="border border-neutral-98 w-full h-full rounded-3xl">
                 <div className="bg-secondary-10 rounded-t-3xl flex items-center justify-center py-2 gap-2">
                   <img src={ICONS.star} alt="" className=" h-full" />
@@ -199,7 +199,7 @@ const CourseCompleteEdge = () => {
                   <p className="text-neutral-10 text-xl font-medium leading-6">
                     {bundleDetails?.title}
                   </p>
-                  <div className="flex items-center w-full justify-between gap-6 text-nowrap">
+                  <div className="flex flex-col md:flex-row items-start md:items-center w-full justify-between gap-6 text-nowrap">
                     <div className="space-y-4">
                       <h2 className="text-4xl font-bold leading-9 tracking-tighter">
                         ₹{bundleDetails?.price}

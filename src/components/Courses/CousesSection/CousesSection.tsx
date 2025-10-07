@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import SectionTitle from "../../Reusable/Heading/Heading";
@@ -8,9 +9,10 @@ import { useSelector } from "react-redux";
 import { useCurrentUser } from "../../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../../types/user.types";
 import { useGetMyCourseOrdersQuery } from "../../../redux/Features/CourseOrders/courseOrdersApi";
+import type { TCourse } from "../../../types/course.types";
 const CousesSection = () => {
   const user = useSelector(useCurrentUser) as TUser;
-  const { data: myCourses, isLoading: isMyCoursesLoading } = useGetMyCourseOrdersQuery({}, { skip: !user });
+  const { data: myCourses } = useGetMyCourseOrdersQuery({}, { skip: !user });
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -45,14 +47,16 @@ const CousesSection = () => {
       transition: { duration: 1, ease: "easeOut", delay: 0.5 },
     },
   };
-const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", });
+  const { data: courses, isLoading } = useGetAllCoursesQuery({ keyword: "" });
 
- 
-if (isLoading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   return (
-    <div id="explore-courses" className="relative  bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden">
+    <div
+      id="explore-courses"
+      className="relative  bg-gradient-courses-section-bg pt-[60px] font-Montserrat overflow-hidden"
+    >
       <Container>
         <motion.div
           initial="hidden"
@@ -67,15 +71,15 @@ if (isLoading) {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-           {courses?.data?.courses?.map((course, index) => {
+          {courses?.data?.courses?.map((course: TCourse, index: number) => {
             const isEnrolled = myCourses?.data?.orders?.some(
-              (order: any) => order.courseId?._id === course?._id 
+              (order: any) => order.courseId?._id === course?._id
             );
             return (
               <motion.div key={index} variants={cardVariants}>

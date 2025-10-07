@@ -42,7 +42,7 @@ const Queries = () => {
   return (
     <div>
       {/* Header */}
-      <div className="flex justify-between items-start flex-wrap">
+      <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-between items-start flex-wrap">
         <div>
           <h1 className="text-xl font-bold text-neutral-40">Queries</h1>
           <p className="text-neutral-65">Manage all user queries.</p>
@@ -50,7 +50,7 @@ const Queries = () => {
 
         <div className="flex items-center gap-4 flex-wrap">
           {/* Filters */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-0 md:gap-2 flex-wrap">
             <SearchInput
               value={searchValue}
               onChange={setSearchValue}
@@ -58,7 +58,7 @@ const Queries = () => {
             />
 
             <Dropdown
-              className="py-1 w-60"
+              className="py-1 w-full md:w-60"
               value={status}
               onChange={setStatus}
               options={[
@@ -68,7 +68,7 @@ const Queries = () => {
             />
 
             <Dropdown
-              className="py-1 w-40"
+              className="py-1 w-full md:w-40"
               value={limit.toString()}
               onChange={(val) => setLimit(Number(val))}
               options={[

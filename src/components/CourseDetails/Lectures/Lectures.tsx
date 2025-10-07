@@ -1,12 +1,14 @@
 import { FaVideo } from "react-icons/fa";
 import { useGetAllLecturesByCourseIdQuery } from "../../../redux/Features/Course/courseApi";
-import type { TLecture } from "../../../types/course.types";
+import type { TCourse, TLecture } from "../../../types/course.types";
 import { ICONS } from "../../../assets";
 import { BiLock } from "react-icons/bi";
 
-const Lectures = ({ course }) => {
+const Lectures = ({ course } : { course: TCourse }) => {
   const { data, isLoading } = useGetAllLecturesByCourseIdQuery(course._id);
   const lectures = data?.data?.lectures || [];
+
+  if(isLoading) return <div>Loading...</div>
   return (
     <div className=" py-10 font-Montserrat space-y-4">
       <h5 className="text-primary-20 font-bold">Course contents</h5>

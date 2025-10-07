@@ -51,10 +51,10 @@ const RaiseQueryModal: React.FC<TRaiseQueryModalProps> = ({
       setIsConfirmationModalOpen={setIsRaiseQueryModalOpen}
       isCrossVisible={true}
     >
-      <div className="flex flex-col items-center py-5 px-8">
+      <div className="flex flex-col items-center py-5 px-4 md:px-8">
         <form
           onSubmit={handleSubmit(handleRaiseQuery)}
-          className="w-full mt-4 flex flex-col gap-4"
+          className="w-full mt-2 md:mt-4 flex flex-col gap-4"
         >
           <Textarea
             label="Please describe your issue"

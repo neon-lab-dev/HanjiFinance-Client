@@ -148,7 +148,7 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
           </div>
         )}
 
-        <div className="flex flex-col xl:flex-row justify-between items-center mt-4">
+        <div className="flex flex-col xl:flex-row justify-between items-start md:items-center mt-4">
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${
               query.status === "resolved"
@@ -162,12 +162,12 @@ const QueryCard: React.FC<QueryCardProps> = ({ query, variant }) => {
           </span>
 
           {variant === "admin" && (
-            <div className="flex gap-2">
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-fit mt-3 md:mt-0">
               {updateButtons?.map((statusOption) => (
                 <button
                   key={statusOption?.label}
                   onClick={statusOption?.action}
-                  className={`px-3 py-1 rounded text-sm font-medium border transition cursor-pointer disabled:cursor-not-allowed ${
+                  className={`px-3 py-1 rounded text-sm font-medium border transition cursor-pointer disabled:cursor-not-allowed w-full md:w-fit ${
                     query.status === statusOption?.key
                       ? "bg-gray-100 text-gray-700 cursor-not-allowed border-gray-100"
                       : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"

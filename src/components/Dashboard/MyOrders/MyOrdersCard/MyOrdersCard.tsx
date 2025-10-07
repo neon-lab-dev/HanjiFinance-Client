@@ -60,9 +60,9 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
     URL.revokeObjectURL(url);
   };
   return (
-    <div className="flex items-center justify-between rounded-lg border-[1px] w-full border-neutral-98 bg-surface-30 p-4 font-Montserrat">
-      <div className="gap-4 flex items-center justify-center w-fit">
-        <div className=" bg-secondary-25 rounded-lg size-[72px] text-sm font-semibold">
+    <div className="flex flex-col md:flex-row items-start md:items-center justify-between rounded-lg border-[1px] w-full border-neutral-98 bg-surface-30 p-4 font-Montserrat">
+      <div className="gap-4 flex flex-col md:flex-row items-start md:items-center justify-center w-fit relative">
+        <div className="bg-secondary-25 rounded-lg size-[72px] text-sm font-semibold">
           {variant === "productOrder" ? (
             <>
               <div className="h-[54px] flex items-center justify-center text-secondary-10 text-4xl font-medium">
@@ -81,7 +81,17 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
             />
           )}
         </div>
-        <div className="text-neutral-20 w-[452px]">
+
+        <div className="flex md:hidden items-center gap-4 absolute top-4 -right-28">
+          <img
+            onClick={handleDownload}
+            src={ICONS.download}
+            alt="download"
+            className="size-6 cursor-pointer"
+          />
+        </div>
+
+        <div className="text-neutral-20 w-fit 2xl:w-[452px]">
           <h2 className="font-medium leading-[22px] text-base truncate">
             {variant === "productOrder"
               ? "Fashion and Apparels"
@@ -98,7 +108,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
           </p>
         </div>
         <span
-          className={`text-xs px-2 py-1 rounded-md ml-[300px] h-fit capitalize
+          className={`block text-xs px-2 py-1 rounded-md ml-0 md:ml-[200px] lg:ml-[300px] h-fit capitalize
     ${
       order.status === "shipped"
         ? "bg-green-50 text-green-600"
@@ -114,9 +124,7 @@ const MyOrdersCard: React.FC<MyOrdersCardProps> = ({
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-4">
-        {/* Action Icons */}
-        {/* <img src={ICONS.eye} alt="view" className="size-6 cursor-pointer" /> */}
+      <div className="items-center justify-center hidden md:flex">
         <img
           onClick={handleDownload}
           src={ICONS.download}

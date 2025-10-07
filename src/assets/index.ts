@@ -77,6 +77,7 @@ import addLocation from "./icons/MapPointAdd.svg";
 import graduationCap from "./icons/Square-academic-cap.svg";
 import pen from "./icons/pen.svg";
 import noteBook from "./icons/notebook-minimalistic.png";
+import menu from "./icons/menu.svg";
 
 // Images
 import heroBgImg from "./images/hero-bg-img.png";
@@ -199,5 +200,6 @@ export const ICONS = {
   addLocation,
   graduationCap,
   pen,
-  noteBook
+  noteBook,
+  menu,
 };

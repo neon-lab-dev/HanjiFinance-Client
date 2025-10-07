@@ -201,7 +201,7 @@ const AddOrEditProduct = () => {
               onSubmit={handleSubmit(handleSubmitProduct)}
               className="flex flex-col gap-4 mt-6 w-full"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Product Name */}
                 <TextInput
                   label="Product Name"
@@ -272,11 +272,11 @@ const AddOrEditProduct = () => {
                     : previews[index];
 
                   return (
-                    <div key={field.id} className="flex items-center gap-3">
+                    <div key={field.id} className="flex flex-col md:flex-row items-center gap-3">
                       <input
                         type="file"
                         accept="image/*"
-                        className="border border-neutral-95 rounded-lg p-2"
+                        className="border border-neutral-95 rounded-lg p-2 w-[300px]"
                         onChange={(e) => handleFileChange(e, index)}
                       />
 

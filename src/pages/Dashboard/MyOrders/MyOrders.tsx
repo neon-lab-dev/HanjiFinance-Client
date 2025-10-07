@@ -50,11 +50,11 @@ const MyOrders = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-2xl space-y-4 mt-6 pb-6">
-        <div className="py-6 flex justify-between items-center border-b-[1px] border-neutral-98 px-4">
+      <div className="bg-transparent lg:bg-white rounded-2xl space-y-4 mt-6 pb-6">
+        <div className="py-0 lg:py-6 px-0 lg:px-4 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 lg:gap-0 border-b-[1px] border-neutral-98">
           <div
-            className={`flex items-center gap-3 ${
-              activeTab !== "All" ? "ml-2" : ""
+            className={`flex items-center gap-3 w-full ${
+              activeTab !== "All" ? "ml-0 lg:ml-2" : ""
             }`}
           >
             {tabButtons?.map((tab) => (
@@ -62,46 +62,49 @@ const MyOrders = () => {
                 variant={activeTab === tab ? "primary" : "secondary"}
                 onClick={() => setActiveTab(tab)}
                 label={tab}
-                classNames="py-2 px-3"
+                classNames="py-2 px-3 text-[13px] md:text-sm"
               />
             ))}
           </div>
-          <div className="flex w-fit items-center gap-1 ">
+          <div className="flex flex-col md:flex-row gap-5 lg:gap-1 w-full lg:w-fit items-center">
             {/* Filters */}
             <SearchInput
               value={searchValue}
               onChange={setSearchValue}
               placeholder="Search by order id..."
             />
-            {activeTab !== "Course Orders" && (
-              <Dropdown
-                className="py-1 px-3 w-60"
-                value={status}
-                onChange={setStatus}
-                options={[
-                  { value: "", label: "All Status" },
-                  { value: "pending", label: "Pending" },
-                  { value: "shipped", label: "Shipped" },
-                  { value: "cancelled", label: "Cancelled" },
-                ]}
-              />
-            )}
+            <div className="flex items-center gap-3 w-full">
+              {activeTab !== "Course Orders" && (
+                <Dropdown
+                  className="py-1 px-3 w-60"
+                  value={status}
+                  onChange={setStatus}
+                  options={[
+                    { value: "", label: "All Status" },
+                    { value: "pending", label: "Pending" },
+                    { value: "shipped", label: "Shipped" },
+                    { value: "cancelled", label: "Cancelled" },
+                  ]}
+                />
+              )}
 
-            {/* Pagination */}
-            {pagination && (
-              <div className="flex items-center justify-center gap-2">
-                {/* Prev button */}
-                <button
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-                >
-                  &laquo;
-                </button>
+              {/* Pagination */}
+              {pagination && (
+                <div className="flex items-center justify-center gap-2">
+                  {/* Prev button */}
+                  <button
+                    disabled={page === 1}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  >
+                    &laquo;
+                  </button>
 
-                {/* Page numbers */}
-                {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(
-                  (pageNum) => (
+                  {/* Page numbers */}
+                  {Array.from(
+                    { length: pagination.pages },
+                    (_, i) => i + 1
+                  ).map((pageNum) => (
                     <button
                       key={pageNum}
                       onClick={() => setPage(pageNum)}
@@ -111,35 +114,27 @@ const MyOrders = () => {
                     >
                       {pageNum}
                     </button>
-                  )
-                )}
+                  ))}
 
-                {/* Next button */}
-                <button
-                  disabled={page === pagination.pages}
-                  onClick={() =>
-                    setPage((p) => Math.min(pagination.pages, p + 1))
-                  }
-                  className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-                >
-                  &raquo;
-                </button>
-              </div>
-            )}
-
-            {/*Sort / Filter */}
-            {/* <div className="rounded-lg p-2 border-[1px] border-surface-90 text-neutral-10 bg-surface-30">
-              <img src={ICONS.sortArrow} className="size-5 " />
+                  {/* Next button */}
+                  <button
+                    disabled={page === pagination.pages}
+                    onClick={() =>
+                      setPage((p) => Math.min(pagination.pages, p + 1))
+                    }
+                    className="px-2 py-2 size-[38px] flex items-center justify-center rounded hover:bg-primary-10 transition duration-300 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  >
+                    &raquo;
+                  </button>
+                </div>
+              )}
             </div>
-            <div className="rounded-lg p-2 border-[1px] border-surface-90 text-neutral-10 bg-surface-30">
-              <img src={ICONS.filter} className="size-5 " />
-            </div> */}
           </div>
         </div>
 
         {/* Orders List / Empty State */}
         {activeTab === "Fashion & Apparel Orders" ? (
-          <div className="flex flex-col gap-4 px-4">
+          <div className="flex flex-col gap-4 px-0 lg:px-4">
             {isLoading || isFetching ? (
               <div className="py-5">
                 <Loader />
@@ -165,17 +160,22 @@ const MyOrders = () => {
             )}
           </div>
         ) : (
-          <div className="flex flex-col gap-4 px-4">
+          <div className="flex flex-col gap-4 px-0 lg:px-4">
             {isCourseOrdersLoading || isCourseOrdersFetching ? (
               <div className="py-5">
                 <Loader />
               </div>
             ) : allCourseOrders?.length > 0 ? (
-              allCourseOrders?.map((order: TCourseOrder,) => (
-                order?.courses?.map((course:any, index:number) => 
-                  <MyOrdersCard key={index} variant="courseOrder" order={order} course={course} />
-                )
-              ))
+              allCourseOrders?.map((order: TCourseOrder) =>
+                order?.courses?.map((course: any, index: number) => (
+                  <MyOrdersCard
+                    key={index}
+                    variant="courseOrder"
+                    order={order}
+                    course={course}
+                  />
+                ))
+              )
             ) : (
               <div className="flex flex-col justify-center items-center py-20 text-center">
                 <MdOutlineShoppingBag className="text-neutral-80 text-8xl" />
