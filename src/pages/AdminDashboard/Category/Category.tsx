@@ -93,7 +93,7 @@ const Category = () => {
       <DashboardContainer>
         <div className="font-Montserrat flex flex-col gap-6">
           {/* Header */}
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-between items-start">
             <div>
               <h1 className="text-xl font-bold text-neutral-40">
                 All Categories
