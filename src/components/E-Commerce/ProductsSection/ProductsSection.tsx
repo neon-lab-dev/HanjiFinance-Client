@@ -89,7 +89,7 @@ const ProductsSection: React.FC = () => {
         />
 
         {/* Filters + Search */}
-        <div className="mt-12 hidden lg:flex items-center justify-between">
+        <div className="mt-12 flex flex-col lg:flex-row items-center justify-between  gap-3">
           <div className="flex items-center gap-3">
             <FiltrationDropdown
               label="Select Category"
@@ -106,7 +106,7 @@ const ProductsSection: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-between w-[600px] h-fit px-6 py-4 border border-surface-90 rounded-lg text-[15px] font-medium font-Montserrat text-neutral-50">
+            <div className="flex items-center justify-between w-[300px] md:w-[600px] h-fit  border border-surface-90 rounded-lg md:px-6 py-2 px-3 md:py-4 md:pr-10 text-xs md:text-[15px] font-medium font-Montserrat text-neutral-50">
               <input
                 type="text"
                 placeholder="Search for any product"
@@ -120,7 +120,7 @@ const ProductsSection: React.FC = () => {
         </div>
 
         {/* Products */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 mt-8">
           {isLoading || isFetching ? (
             <p>Loading products...</p>
           ) : data?.data?.products?.length > 0 ? (

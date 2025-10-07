@@ -8,6 +8,10 @@ import { useValidateCouponCodeMutation } from "../../../redux/Features/CouponCod
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setRedirectPath, useCurrentUser } from "../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../types/user.types";
+import { openModal } from "../../../redux/Features/Auth/authModalSlice";
 
 type FormData = {
   couponCode: string;
@@ -17,7 +21,8 @@ const GotNews = () => {
   const [validateCouponCode, { isLoading: isValidating }] =
     useValidateCouponCodeMutation();
   const [isCouponValid, setIsCouponValid] = useState<boolean>(false);
-
+  const user = useSelector(useCurrentUser) as TUser;
+  const dispatch = useDispatch()
   const {
     register,
     watch,
@@ -27,6 +32,12 @@ const GotNews = () => {
   const couponCode = watch("couponCode");
 
   const handleValidate = async () => {
+    if (!user) {
+      toast.error("Please login to proceed");
+      dispatch(openModal("login"));
+      dispatch(setRedirectPath("/services/boardroom-banter#goodnews"));
+      return;
+    }
     if (!couponCode) {
       toast.error("Please enter a coupon code first");
       return;
@@ -46,7 +57,7 @@ const GotNews = () => {
   };
 
   return (
-    <div className="bg-gradient-good-news pt-[60px] font-Montserrat">
+    <div id="goodnews" className="bg-gradient-good-news pt-[60px] font-Montserrat">
       <Container>
         <SectionTitle
           heading="You got the good news?"
@@ -92,7 +103,7 @@ const GotNews = () => {
                 label="Proceed to Pay"
                 variant={isCouponValid ? "primary" : "disabled"}
                 classNames="px-4 py-[14px] h-fit"
-                disabled={!isCouponValid}
+                disabled={!isCouponValid || !user}
               />
             </Link>
           </div>
