@@ -117,7 +117,7 @@ const CreateOrEditBundleForm: React.FC<TCreateOrEditBundleFormProps> = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-col items-center pb-6 px-8 mt-3">
+        <div className="flex flex-col items-center pb-6 px-4 md:px-8 mt-3">
           <form
             onSubmit={handleSubmit(handleCreateCourseBundle)}
             className="w-full mt-4 flex flex-col gap-4"

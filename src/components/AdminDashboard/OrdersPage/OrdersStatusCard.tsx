@@ -17,7 +17,7 @@ const OrderStatusCards = ({allProductOrders} : {allProductOrders:TProductOrder[]
   return (
     <div className="w-full ">
       {/* Status Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Total Orders */}
         <StatusCard
           icon={<FiPackage size={28} />}
