@@ -107,7 +107,7 @@ const ManageAvailability = () => {
       <DashboardContainer>
         <div className="font-Montserrat flex flex-col gap-6">
           {/* Header */}
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-between items-start">
             <div>
               <h1 className="text-xl font-bold text-neutral-40">
                 Availabilities
@@ -139,12 +139,12 @@ const ManageAvailability = () => {
       </DashboardContainer>
 
       <ConfirmationModal
-        heading="Add a New Available Date"
+        heading="Add Available Date"
         isConfirmationModalOpen={isCategoryModalOpen}
         setIsConfirmationModalOpen={setIsCategoryModalOpen}
         isCrossVisible={true}
       >
-        <div className="flex flex-col items-center pb-6 px-8">
+        <div className="flex flex-col items-center pb-6 px-4 md:px-8">
           <form
             onSubmit={handleSubmit(handleAddAvailability)}
             className="w-full mt-4 flex flex-col items-end"
