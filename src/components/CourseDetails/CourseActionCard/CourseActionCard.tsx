@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../Reusable/Button/Button";
+import type { TCourse } from "../../../types/course.types";
 
-const CourseActionCard = ({ course }) => {
+const CourseActionCard = ({ course }: { course: TCourse }) => {
   const navigate = useNavigate();
   return (
     <div className="border border-primary-20 bg-gradient-to-b form-[#ffffff] to-primary-30 rounded-lg p-4 my-10 font-Montserrat">
@@ -13,12 +14,11 @@ const CourseActionCard = ({ course }) => {
           </span>
         </h3>
         <div className="bg-primary-15/10 border rounded-lg border-primary-15 px-3 py-1">
-      {course?.accessType
-  }
+          {course?.accessType}
         </div>
       </div>
       <div className="w-full my-3 space-y-3">
-               <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
+        <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
           {course.tagline}
         </span>
       </div>

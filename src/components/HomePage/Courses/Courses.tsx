@@ -4,9 +4,12 @@ import Container from "../../Reusable/Container/Container";
 import SectionTitle from "../../Reusable/Heading/Heading";
 import CourseCard from "./CourseCard";
 import { useGetAllCoursesQuery } from "../../../redux/Features/Course/courseApi";
+import type { TCourse } from "../../../types/course.types";
 
 const Courses = () => {
- const { data:courses, isLoading } = useGetAllCoursesQuery({ keyword: "", category: "" });
+  const { data: courses, isLoading } = useGetAllCoursesQuery({
+    keyword: "",
+  });
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -122,12 +125,11 @@ const Courses = () => {
           viewport={{ once: true, amount: 0.2 }}
           variants={cardContainerVariants}
         >
-            {courses?.data?.courses?.map((course, index: number) => (
-  <motion.div key={index} variants={cardVariants}>
-    <CourseCard {...course} />
-  </motion.div>
-))}
-
+          {courses?.data?.courses?.map((course: TCourse, index: number) => (
+            <motion.div key={index} variants={cardVariants}>
+              <CourseCard {...course} />
+            </motion.div>
+          ))}
         </motion.div>
       </Container>
       <motion.div

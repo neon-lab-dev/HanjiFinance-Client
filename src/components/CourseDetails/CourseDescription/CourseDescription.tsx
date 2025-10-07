@@ -1,6 +1,6 @@
-import React from "react";
+import type { TCourse } from "../../../types/course.types";
 
-const CourseDescription = ({course}) => {
+const CourseDescription = ({course} : {course: TCourse}) => {
   return (
     <div className=" py-10 font-Montserrat space-y-4">
         <h5 className="text-primary-20 font-bold">Description</h5>
