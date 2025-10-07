@@ -137,7 +137,7 @@ const ManageCourseForm = () => {
             onSubmit={handleSubmit(handleSubmitCourse)}
             className="flex flex-col gap-4 mt-6 w-full"
           >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Title */}
               <TextInput
                 label="Course Title"
@@ -199,7 +199,7 @@ const ManageCourseForm = () => {
                 onClick={() => append({ value: "" })}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Duration */}
               <TextInput
                 label="Duration"
@@ -219,7 +219,7 @@ const ManageCourseForm = () => {
               />
             </div>
             {/* Pricing */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <TextInput
                 label="Base Price"
                 placeholder="Enter base price"

@@ -277,7 +277,7 @@ const ManageSubscriptions = () => {
       <DashboardContainer>
         <div className="font-Montserrat flex flex-col gap-6">
           {/* Header */}
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 justify-between items-start">
             <div>
               <h1 className="text-xl font-bold text-neutral-40">
                 All Subscriptions
@@ -286,7 +286,7 @@ const ManageSubscriptions = () => {
             </div>
             <div className="flex justify-between items-center gap-4 flex-wrap">
               {/* Filters */}
-              <div className="flex items-center flex-wrap">
+              <div className="flex items-start md:items-center flex-wrap gap-3 md:gap-0">
                 <SearchInput
                   value={searchValue}
                   onChange={setSearchValue}
@@ -294,7 +294,7 @@ const ManageSubscriptions = () => {
                 />
                 {activeTab === "All" && (
                   <Dropdown
-                    className="py-1 px-3 w-60"
+                    className="py-1 px-3 w-full md:w-fit"
                     value={status}
                     onChange={setStatus}
                     options={[
