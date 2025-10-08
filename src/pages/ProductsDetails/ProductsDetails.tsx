@@ -48,52 +48,60 @@ const ProductsDetails = () => {
   >({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(data)
+ useEffect(() => {
+  if (colors && colors.length > 0) {
+    // ✅ Find the first color that has at least one available size
+    const firstAvailableColor = colors.find((color: any) =>
+      color.sizes.some((size: any) => size.quantity > 0)
+    );
 
-  useEffect(() => {
-    if (colors && colors.length > 0) {
-      const defaultColor = colors[0];
-      setSelectedColor(defaultColor);
+    if (firstAvailableColor) {
+      setSelectedColor(firstAvailableColor);
 
-      // Pick first available size from default color
-      const availableSize = defaultColor.sizes.find(
-        (size: Size) => size.quantity > 0
+      // ✅ Within that color, find the first size that has quantity > 0
+      const availableSize = firstAvailableColor.sizes.find(
+        (size: any) => size.quantity > 0
       );
+
       if (availableSize) {
         setSelectedSize(availableSize);
         setSelectedProducts({
           productId: _id,
           name,
-          selectedColor: defaultColor.colorName,
+          selectedColor: firstAvailableColor.colorName,
           selectedSize: availableSize.size,
           basePrice: availableSize.basePrice,
           discountedPrice: availableSize.discountedPrice,
+          quantity: availableSize.quantity,
           image: images?.[0] || ICONS.logo,
         });
       }
     }
-  }, [colors, _id, name, images]);
+  }
+}, [colors, _id, name, images]);
+
 
   // Handle Color Selection
   const handleColorClick = (color: any) => {
     setSelectedColor(color);
 
-    const availableSize = color.sizes.find((s: Size) => s.quantity > 0);
-    setSelectedSize(availableSize || null);
+    // const availableSize = color.sizes.find((s: Size) => s.quantity > 0);
+    setSelectedSize(color.sizes[0] || null);
 
     setSelectedProducts({
       productId: _id,
       name,
       selectedColor: color.colorName,
-      selectedSize: availableSize?.size,
-      basePrice: availableSize?.basePrice,
-      discountedPrice: availableSize?.discountedPrice,
+      selectedSize: color.sizes[0]?.size,
+      basePrice: color.sizes[0]?.basePrice,
+      discountedPrice: color.sizes[0]?.discountedPrice,
       image: images?.[0] || ICONS.logo,
     });
   };
 
   // Handle Size Selection
   const handleSizeClick = (size: any) => {
-    if (size.quantity < 1) return; // Prevent selecting out of stock
     setSelectedSize(size);
 
     setSelectedProducts((prev) => ({
@@ -101,6 +109,7 @@ const ProductsDetails = () => {
       selectedSize: size.size,
       basePrice: size.basePrice,
       discountedPrice: size.discountedPrice,
+      quantity:size.quantity,
     }));
   };
 
@@ -120,6 +129,7 @@ const ProductsDetails = () => {
     image: string;
     size: Size;
     selectedColor: string;
+    quantity:number;
   }
 
   const handleAddToWishList = async () => {
@@ -158,9 +168,9 @@ const ProductsDetails = () => {
             {/* Product Details */}
             <div className="w-full lg:w-[40%]">
               {/* Product name */}
-                <h1 className="text-2xl md:text-[32px] font-bold leading-medium md:leading-12 text-neutral-20 capitalize">
-                  {data?.data?.name}
-                </h1>
+              <h1 className="text-2xl md:text-[32px] font-bold leading-medium md:leading-12 text-neutral-20 capitalize">
+                {data?.data?.name}
+              </h1>
 
               {/* MRP tagline */}
               <p className="text-sm md:text-lg font-medium leading-normal md:leading-[32px] text-neutral-85 mt-1">
@@ -219,11 +229,11 @@ const ProductsDetails = () => {
                       <button
                         key={index}
                         onClick={() => handleSizeClick(size)}
-                        disabled={size.quantity < 1}
+                        // disabled={size.quantity < 1}
                         className={`
             px-4 py-2 rounded-lg border text-lg font-medium transition duration-300 cursor-pointer
             ${
-              selectedSize?.size === size.size
+              selectedSize?.size === size.size && selectedSize?.quantity>0
                 ? "bg-primary-30 border-primary-20 text-primary-20"
                 : size?.quantity < 1
                 ? "bg-neutral-85/20 border-neutral-20/50 text-neutral-20/50 cursor-not-allowed"
@@ -244,6 +254,7 @@ const ProductsDetails = () => {
                   onClick={handleAddToWishList}
                   variant="custom"
                   label="Add to bag"
+                  disabled={selectedSize?.quantity<1}
                   classNames="border-surface-90 bg-surface-30 w-full text-neutral-10 py-4"
                   icon={ICONS.cartPlus}
                 />
@@ -271,25 +282,23 @@ const ProductsDetails = () => {
 
               {/* Details cards */}
               <div className="flex flex-col gap-6 mt-6 border-b border-neutral-185 border-dashed pb-6">
-                {
-                  clothDetails &&
+                {clothDetails && (
                   <DetailCard
-                  variant="clothDetails"
-                  icon={ICONS.fabric}
-                  title={"Cloth Details"}
-                  description={clothDetails}
-                ></DetailCard>
-                }
+                    variant="clothDetails"
+                    icon={ICONS.fabric}
+                    title={"Cloth Details"}
+                    description={clothDetails}
+                  ></DetailCard>
+                )}
 
-                {
-                  productStory &&
+                {productStory && (
                   <DetailCard
-                  variant="productStory"
-                  icon={ICONS.tshirt}
-                  title={"Product Story"}
-                  description={productStory}
-                ></DetailCard>
-                }
+                    variant="productStory"
+                    icon={ICONS.tshirt}
+                    title={"Product Story"}
+                    description={productStory}
+                  ></DetailCard>
+                )}
 
                 <DetailCard
                   variant="shippingDetails"

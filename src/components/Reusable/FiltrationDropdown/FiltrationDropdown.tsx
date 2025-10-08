@@ -24,7 +24,7 @@ const FiltrationDropdown: React.FC<FiltrationDropdownProps> = ({
       <label className="sr-only">{label}</label>
 
       <select
-        className="w-fit appearance-none rounded-lg border border-surface-90 bg-white px-6 py-4 pr-10 text-[15px] font-medium font-Montserrat text-neutral-50 focus:ring-none focus:outline-none cursor-pointer"
+        className="w-fit appearance-none rounded-lg border border-surface-90 bg-white md:px-6 py-2 px-3 md:py-4 pr-10 text-xs md:text-[15px] font-medium font-Montserrat text-neutral-50 focus:ring-none focus:outline-none cursor-pointer"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >

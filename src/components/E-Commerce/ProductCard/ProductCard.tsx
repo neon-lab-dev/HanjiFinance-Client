@@ -14,25 +14,39 @@ const inStock = item.colors?.some((color) =>
 );
 
 const handleAddToWishList = async () => {
-  const availableColor = item.colors?.find((color) =>
+  if (!item?.colors || item.colors.length === 0) return;
+
+  // ✅ Find the first color with at least one available size
+  const availableColor = item.colors.find((color) =>
     color.sizes?.some((size) => size.quantity > 0)
   );
 
-  if (!availableColor) return;
+  if (!availableColor) {
+    console.warn("No available color found for this product");
+    return;
+  }
 
-  const availableSize = availableColor.sizes.find((size) => size.quantity > 0);
+  // ✅ Find the first size within that color that is in stock
+  const availableSize = availableColor.sizes.find(
+    (size) => size.quantity > 0
+  );
 
-  if (!availableSize) return;
+  if (!availableSize) {
+    console.warn("No available size found for this color");
+    return;
+  }
 
+  // ✅ Dispatch or API call
   dispatch(
     addToCart({
       product: item,
       color: availableColor.colorName,
-      size: availableSize, // ✅ full object (with _id)
+      size: availableSize, // full object with _id, basePrice, etc.
       quantity: 1,
     })
   );
 };
+
 
 
 
@@ -48,9 +62,9 @@ const handleAddToWishList = async () => {
       >
         {/* Product header */}
         <div className="absolute top-0 w-full z-20">
-          <div className="flex items-center justify-between p-5 w-full">
+          <div className="flex items-center justify-between p-2 md:p-5 w-full">
             <a href={`/product-details/${item._id}`}
-              className="text-neutral-50 text-sm md:text-base font-medium leading-[22px] md:leading-6 capitalize hover:underline"
+              className="text-neutral-20 text-sm md:text-base font-semibold leading-[22px] md:leading-6 capitalize hover:underline"
             >
               {item.name}
             </a>

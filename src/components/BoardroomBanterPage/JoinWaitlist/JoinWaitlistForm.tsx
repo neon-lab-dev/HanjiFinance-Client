@@ -9,9 +9,13 @@ import Button from "../../Reusable/Button/Button";
 import FormInstruction from "../../Reusable/FormInstruction/FormInstruction";
 import { useJoinWaitlistMutation } from "../../../redux/Features/BoardroomBanter/boardroomBanterApi";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../../../redux/Features/Auth/authModalSlice";
+import { setRedirectPath, useCurrentUser } from "../../../redux/Features/Auth/authSlice";
+import type { TUser } from "../../../types/user.types";
 
 type TFormValues = {
-  name: string;
+  name: string; 
   email: string;
   qualification: string;
   occupation: string;
@@ -32,6 +36,9 @@ const JoinWaitlistForm = () => {
 
   const [actionButtonActive, setActionButtonActive] = useState(false);
   const [actionButtonText, setActionButtonText] = useState("What do you do?");
+
+  const [selectedOccupation, setSelectedOccupation] = useState("");
+  const dispatch=useDispatch();
 
   const instructions = [
     {
@@ -73,8 +80,15 @@ const JoinWaitlistForm = () => {
       required: "Occupation is required",
     });
   }, [register]);
-
+  const user = useSelector(useCurrentUser) as TUser;
+  
   const handleJoinWaitlist = async (data: TFormValues) => {
+    if (!user) {
+      toast.error("Please login to proceed");
+      dispatch(openModal("login"));
+      dispatch(setRedirectPath("/services/boardroom-banter#join-waitlist"));
+      return;
+    }
     try {
       const payload = {
         ...data,
