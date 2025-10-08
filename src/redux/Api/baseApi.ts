@@ -63,6 +63,7 @@ export const baseApi = createApi({
     "courseBundle",
     "category",
     "product",
+    "offerNotice",
     "newsletter",
     "availability",
     "chatAndChill",

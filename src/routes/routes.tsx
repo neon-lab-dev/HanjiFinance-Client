@@ -59,6 +59,7 @@ import ComingSoon from "../pages/ComingSoon/ComingSoon";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import ManageExam from "../pages/AdminDashboard/ManageExam/ManageExam";
 import CourseBundlePayment from "../pages/CourseBundlePayment/CourseBundlePayment";
+import OfferNotice from "../pages/AdminDashboard/OfferNotice/OfferNotice";
 
 export const router = createBrowserRouter([
   {
@@ -259,6 +260,10 @@ export const router = createBrowserRouter([
       {
         path: "product-orders",
         element: <ProductOrders />,
+      },
+      {
+        path: "offer-notice",
+        element: <OfferNotice />,
       },
       {
         path: "course-orders",

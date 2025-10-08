@@ -12,6 +12,7 @@ import {
   FiHelpCircle,
 } from "react-icons/fi";
 import { AiOutlineCheckCircle, AiOutlineTag } from "react-icons/ai";
+import { HiOutlineMegaphone } from "react-icons/hi2";
 
 export const userMenus = [
   { name: "Dashboard", link: "/dashboard", icon: FiHome },
@@ -68,6 +69,11 @@ export const adminMenus = [
     name: "Product Orders",
     link: "/dashboard/admin/product-orders",
     icon: FiShoppingCart,
+  },
+  {
+    name: "Offer Notice",
+    link: "/dashboard/admin/offer-notice",
+    icon: HiOutlineMegaphone,
   },
   {
     name: "Course Orders",

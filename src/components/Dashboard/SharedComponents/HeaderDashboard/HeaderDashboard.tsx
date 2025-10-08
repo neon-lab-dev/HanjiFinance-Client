@@ -30,6 +30,7 @@ const HeaderDashboard = () => {
     "/dashboard/admin/newsletter": "Newsletters",
     "/dashboard/admin/category": "Categories",
     "/dashboard/admin/product-orders": "Product Orders",
+    "/dashboard/admin/offer-notice": "Offer Notice",
     "/dashboard/admin/course-orders": "Course Orders",
     "/dashboard/admin/courses": "Courses",
     "/dashboard/admin/manage-course": "Manage Course",

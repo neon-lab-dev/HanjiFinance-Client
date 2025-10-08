@@ -217,6 +217,7 @@
   background: var(--bg-gradient-cart);
 }
 
+
 /* Custom scrollbar for a specific section */
 .custom-scrollbar {
   overflow-y: auto;
@@ -296,3 +297,4 @@ html.lenis {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
