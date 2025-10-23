@@ -66,6 +66,7 @@ export const baseApi = createApi({
     "newsletter",
     "availability",
     "chatAndChill",
+    "chatAndChill",
     "boardroomBanter",
     "productOrder",
     "courseOrder",
