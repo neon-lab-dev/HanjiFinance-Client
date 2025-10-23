@@ -74,7 +74,7 @@ import returnsPackage from "./icons/returns-package.svg";
 import tshirt from "./icons/tshirt.svg";
 import ruler from "./icons/ruler.svg";
 import addLocation from "./icons/MapPointAdd.svg";
-import graduationCap from "./icons/Square-academic-cap.svg";
+import graduationCap from "./icons/square-academic-cap.svg";
 import pen from "./icons/pen.svg";
 import noteBook from "./icons/notebook-minimalistic.png";
 import menu from "./icons/menu.svg";
