@@ -1,5 +1,4 @@
 import { useGetRazorpayKeyQuery } from "../../redux/Features/User/userApi";
-import { useCheckoutMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
 import { config } from "../../config/config";
 import Container from "../../components/Reusable/Container/Container";
 import PaymentProductsCard from "../../components/Payment/PaymentProductsCard/PaymentProductsCard";
@@ -9,6 +8,7 @@ import { useCurrentUser } from "../../redux/Features/Auth/authSlice";
 import type { TUser } from "../../types/user.types";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useCheckoutMutation } from "../../redux/Features/ChatAndChill/chatAndChill";
 
 const ChatAndChillPayment = () => {
   const taxValue = 179.82;

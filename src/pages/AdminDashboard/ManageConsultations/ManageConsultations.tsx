@@ -4,10 +4,6 @@ import DashboardContainer from "../../../components/Dashboard/SharedComponents/D
 import SearchInput from "../../../components/Reusable/SearchInput/SearchInput";
 import Table from "../../../components/Reusable/Table/Table";
 import { useState } from "react";
-import {
-  useGetAllConsultationsQuery,
-  useUpdateStatusMutation,
-} from "../../../redux/Features/ChatAndChill/chatAndChillApi";
 import type { TConsultation } from "../../../types/consultations.types";
 import { formatDate } from "../../../utils/formatDate";
 import {} from "react-icons/fi";
@@ -16,6 +12,7 @@ import toast from "react-hot-toast";
 import ConsultationsStats from "../../../components/AdminDashboard/ManageConsultationsPage/ConsultationsStats/ConsultationsStats";
 import ScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ScheduleMeetingModal/ScheduleMeetingModal";
 import ReScheduleMeetingModal from "../../../components/AdminDashboard/ManageConsultationsPage/ReScheduleMeetingModal/ReScheduleMeetingModal";
+import { useGetAllConsultationsQuery, useUpdateStatusMutation } from "../../../redux/Features/ChatAndChill/chatAndChill";
 
 const ManageConsultations = () => {
   const [bookingId, setBookingId] = useState<string>("");

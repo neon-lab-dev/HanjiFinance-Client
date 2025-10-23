@@ -4,7 +4,7 @@ import ConfirmationModal from "../../../ConfirmationModal/ConfirmationModal";
 import Button from "../../../Reusable/Button/Button";
 import TextInput from "../../../Reusable/TextInput/TextInput";
 import toast from "react-hot-toast";
-import { useReScheduleMeetingMutation } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
+import { useReScheduleMeetingMutation } from "../../../../redux/Features/ChatAndChill/chatAndChill";
 
 type TFormData = {
   bookingId: string;

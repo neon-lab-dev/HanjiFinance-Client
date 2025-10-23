@@ -1,6 +1,6 @@
 import { ICONS } from "../../../../assets";
 import { useGetMySubscriptionQuery } from "../../../../redux/Features/BoardroomBanter/boardroomBanterApi";
-import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
+import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChill";
 import { useGetMyCourseOrdersQuery } from "../../../../redux/Features/CourseOrders/courseOrdersApi";
 import type { TChatAndChill } from "../../../../types/chatAndChill.types";
 import StatusCard from "../StatusCard/StatusCard";

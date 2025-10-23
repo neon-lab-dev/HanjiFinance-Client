@@ -1,11 +1,11 @@
 import { useState } from "react";
 import DashboardContainer from "../../SharedComponents/DashboardContainer/DashboardContainer";
 import ConsultationsCard from "../ConsultationsCard/ConsultationsCard";
-import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
 import type { TChatAndChill } from "../../../../types/chatAndChill.types";
 import { formatDate } from "../../../../utils/formatDate";
 import { MdEventBusy } from "react-icons/md";
 import Loader from "../../../Shared/Loader/Loader";
+import { useGetMyBookingsQuery } from "../../../../redux/Features/ChatAndChill/chatAndChill";
 
 const ConsultationsSection = () => {
   const [page, setPage] = useState<number>(1);

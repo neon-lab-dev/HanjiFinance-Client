@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ICONS } from "../../assets";
-import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChillApi";
 import Loader from "../../components/Shared/Loader/Loader";
 import { useCreateCourseOrderMutation } from "../../redux/Features/Course/courseApi";
 import { useCreateProductOrderMutation } from "../../redux/Features/ProductOrders/productOrdersApi";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../redux/Features/Cart/cartSlice";
 import { persistor } from "../../redux/store";
+import { useBookChatAndChillMutation } from "../../redux/Features/ChatAndChill/chatAndChill";
 
 const PaymentSuccess = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from "react-hot-toast";
 import { ICONS } from "../../../../assets";
-import { useUpdateStatusMutation } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
 import Button from "../../../Reusable/Button/Button";
+import { useUpdateStatusMutation } from "../../../../redux/Features/ChatAndChill/chatAndChill";
 
 interface ConsultationsCardProps {
   id: string;

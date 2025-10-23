@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import ConfirmationModal from "../../../ConfirmationModal/ConfirmationModal";
 import Button from "../../../Reusable/Button/Button";
 import TextInput from "../../../Reusable/TextInput/TextInput";
-import { useScheduleMeetingMutation } from "../../../../redux/Features/ChatAndChill/chatAndChillApi";
 import toast from "react-hot-toast";
+import { useScheduleMeetingMutation } from "../../../../redux/Features/ChatAndChill/chatAndChill";
 
 type TFormData = {
   bookingId: string;
