@@ -122,6 +122,7 @@ export const IMAGES = {
   product
 };
 
+// Icons
 export const ICONS = {
   logo,
   logoWithName,
