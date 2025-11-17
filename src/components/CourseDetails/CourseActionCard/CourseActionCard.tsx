@@ -5,7 +5,7 @@ import type { TCourse } from "../../../types/course.types";
 const CourseActionCard = ({ course }: { course: TCourse }) => {
   const navigate = useNavigate();
   return (
-    <div className="border border-primary-20 bg-gradient-to-b form-[#ffffff] to-primary-30 rounded-lg p-4 my-10 font-Montserrat">
+    <div className="border border-primary-20 bg-linear-to-b form-[#ffffff] to-primary-30 rounded-lg p-4 mt-10 font-Montserrat">
       <div className="flex flex-row items-center justify-between gap-2">
         <h3 className="text-2xl text-neutral-20 font-bold">
           Rs. {course?.discountedPrice}{" "}
@@ -18,7 +18,7 @@ const CourseActionCard = ({ course }: { course: TCourse }) => {
         </div>
       </div>
       <div className="w-full my-3 space-y-3">
-        <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
+        <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-3.5 tracking-[-0.12px]">
           {course.tagline}
         </span>
       </div>
