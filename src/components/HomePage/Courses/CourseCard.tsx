@@ -10,8 +10,14 @@ export type TCourse = {
   title: string;
   subtitle: string;
   tagline: string;
-  benefits: string[];
-  accessType: "lifetime" | "limited";
+  duration: string;
+  benefits : string[];
+  overview : string;
+  courseCoverage : {
+    title : string;
+    description : string;
+  }[];
+  accessType : "Lifetime" | "Limited";
   accessValidity: Date;
   category: string;
   basePrice: number;
@@ -71,7 +77,7 @@ const CourseCard: React.FC<TCourse> = ({
             </h1>
             <p className="text-neutral-60 text-sm leading-5">{subtitle}</p>
           </div>
-          <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-[14px] tracking-[-0.12px]">
+          <span className=" bg-success-20 p-[5px] rounded-sm text-surface-5 text-xs font-semibold leading-3.5 tracking-[-0.12px]">
             {tagline}
           </span>
         </div>
@@ -83,7 +89,7 @@ const CourseCard: React.FC<TCourse> = ({
               className="flex gap-2 cursor-pointer items-center justify-start w-full"
               onClick={handleClick}
             >
-              <h2 className="text-neutral-20 font-semibold leading-[20px] text-sm">
+              <h2 className="text-neutral-20 font-semibold leading-5 text-sm">
                 This course will help you
               </h2>
               <motion.div
@@ -145,7 +151,7 @@ const CourseCard: React.FC<TCourse> = ({
               </span>{" "}
               ₹{discountedPrice}
             </p>
-            <p className="text-neutral-60 text-sx capitalize leading-[14px] tracking-[-0.12]">
+            <p className="text-neutral-60 text-sx capitalize leading-3.5 tracking-[-0.12]">
               {accessType}
             </p>
           </div>
