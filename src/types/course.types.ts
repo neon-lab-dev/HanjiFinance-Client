@@ -5,8 +5,13 @@ export type TCourse = {
   subtitle: string;
   tagline: string;
   duration: string;
-  benefits: string[];
-  accessType: "lifetime" | "limited";
+  benefits : string[];
+  overview : string;
+  courseCoverage : {
+    title : string;
+    description : string;
+  }[];
+  accessType : "Lifetime" | "Limited";
   accessValidity: Date;
   category: string;
   basePrice: number;

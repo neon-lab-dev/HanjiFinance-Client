@@ -279,7 +279,7 @@ export const router = createBrowserRouter([
         element: <ManageCourseForm />,
       },
       {
-        path: "manage-lectures/:id",
+        path: "course/manage-lectures/:id",
         element: <ManageLectures />,
       },
       {

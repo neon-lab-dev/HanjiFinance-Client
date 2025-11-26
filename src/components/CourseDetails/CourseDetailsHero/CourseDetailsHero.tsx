@@ -6,30 +6,24 @@ import type { TCourse } from "../../../types/course.types";
 
 const CourseDetailsHero = ({ course }: { course: TCourse }) => {
   const navigate = useNavigate();
-  const detsils = [
-    "Grasp the meaning and context behind financial terms and events.",
-    "Decode what any news update might imply for a company’s fundamentals.",
-    "See how different segments: equity, commodities, currency, etc move together and influence one another.",
-  ];
   return (
     <div className="bg-linear-to-b form-[#ffffff] to-primary-30 font-Montserrat py-10 2xl:py-16">
       <Container>
         <div className="flex flex-col md:flex-row items-center justify-center gap-10">
           <div className="md:w-[65%] space-y-4">
             <h2 className="text-neutral-15 text-4xl font-bold">
-              Finance - Crash Course
+              {course?.title}
             </h2>
             <div>
               <p className="text-neutral-85">
-                New to the markets and lost in the jargon? This course is
-                designed to fix exactly that.
+                {course?.subtitle}
               </p>
               <p className="text-neutral-40 mt-8 font-semibold">
                 By the end of this course, you’ll be able to:
               </p>
             </div>
             <div className="grid grid-cols-1 gap-4 w-[70%]">
-              {detsils?.map((text, index) => (
+              {course?.benefits?.map((text, index) => (
                 <div
                   key={index}
                   className="flex gap-2 items-start justify-start w-full"

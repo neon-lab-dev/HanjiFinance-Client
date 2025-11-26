@@ -13,12 +13,18 @@ import {
 import SelectDropdown from "../../../components/Reusable/SelectDropdown/SelectDropdown";
 import toast from "react-hot-toast";
 import Loader from "../../../components/Shared/Loader/Loader";
+import Textarea from "../../../components/Reusable/TextArea/TextArea";
 
 export type TFormDate = {
   title: string;
   subtitle: string;
   tagline: string;
+  overview: string;
   benefits: { value: string }[];
+  courseCoverage?: {
+    title: string;
+    description?: string;
+  }[];
   accessType: "lifetime" | "subscription";
   category: string;
   duration: string;
@@ -49,12 +55,27 @@ const ManageCourseForm = () => {
   } = useForm<TFormDate>({
     defaultValues: {
       benefits: [{ value: "" }],
+      courseCoverage: [
+        {
+          title: "",
+          description: "",
+        },
+      ],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "benefits",
+  });
+
+  const {
+    fields: courseCoverageFields,
+    append: appendCoverageField,
+    remove: removeCoverageField,
+  } = useFieldArray({
+    control,
+    name: "courseCoverage",
   });
 
   const watchFile = watch("file");
@@ -66,20 +87,30 @@ const ManageCourseForm = () => {
       setValue("title", course.title);
       setValue("subtitle", course.subtitle);
       setValue("tagline", course.tagline);
-      setValue(
-        "benefits",
-        course.benefits?.length > 0
-          ? course.benefits.map((b: string) => ({ value: b }))
-          : [{ value: "" }]
-      );
+      setValue("duration", course.duration);
+      setValue("overview", course.overview);
       setValue("accessType", course.accessType);
       setValue("category", course.category);
-      setValue("duration", course.duration);
       setValue("basePrice", course.basePrice);
       setValue("discountedPrice", course.discountedPrice);
 
-      // Show existing image
-      if (course.imageUrl) setPreviewImage(course.imageUrl);
+      setValue(
+        "benefits",
+        course.benefits?.length
+          ? course.benefits.map((b: string) => ({ value: b }))
+          : [{ value: "" }]
+      );
+
+      setValue(
+        "courseCoverage",
+        course.courseCoverage?.length
+          ? course.courseCoverage
+          : [{ title: "", description: "" }]
+      );
+
+      if (course.imageUrl) {
+        setPreviewImage(course.imageUrl);
+      }
     }
   }, [action, singleData, setValue]);
 
@@ -98,7 +129,15 @@ const ManageCourseForm = () => {
     formData.append("subtitle", data.subtitle);
     formData.append("tagline", data.tagline);
     formData.append("duration", data.duration);
+    formData.append("overview", data.overview);
     data.benefits.forEach((b) => formData.append("benefits[]", b.value));
+    data?.courseCoverage?.forEach((item, index) => {
+      formData.append(`courseCoverage[${index}][title]`, item.title);
+      formData.append(
+        `courseCoverage[${index}][description]`,
+        item?.description ?? ""
+      );
+    });
     formData.append("accessType", data.accessType);
     formData.append("category", data.category);
     formData.append("basePrice", String(data.basePrice));
@@ -114,6 +153,7 @@ const ManageCourseForm = () => {
         }
       } else {
         const response = await addCourse(formData).unwrap();
+        console.log(response);
 
         if (response?.success) {
           toast.success(response?.message || "Course added successfully!");
@@ -171,6 +211,13 @@ const ManageCourseForm = () => {
               />
             </div>
 
+            <Textarea
+              label="Course Overview"
+              placeholder="Enter course overview"
+              {...register("overview", {
+                required: "Course overview is required",
+              })}
+            />
             {/* Benefits */}
             <div className="space-y-3">
               <h3 className="font-semibold">Benefits</h3>
@@ -199,6 +246,53 @@ const ManageCourseForm = () => {
                 onClick={() => append({ value: "" })}
               />
             </div>
+
+            <div className="border border-neutral-95 p-4 rounded-md space-y-4">
+              <h3 className="text-lg font-semibold">Course Coverage</h3>
+
+              {courseCoverageFields.map((field, index) => (
+                <div key={field.id} className="relative space-y-4">
+                  {courseCoverageFields.length > 1 && (
+                    <FiTrash2
+                      className="absolute -right-2 -top-3 text-primary-10 cursor-pointer text-lg"
+                      onClick={() => removeCoverageField(index)}
+                    />
+                  )}
+
+                  <TextInput
+                    label="Course Coverage Title"
+                    placeholder="Enter course coverage title"
+                    error={errors.courseCoverage?.[index]?.title}
+                    {...register(`courseCoverage.${index}.title`, {
+                      required: "Title is required",
+                    })}
+                  />
+
+                  <Textarea
+                    label="Course Coverage Details"
+                    placeholder="Enter details"
+                    error={errors.courseCoverage?.[index]?.description}
+                    {...register(`courseCoverage.${index}.description`, {
+                      required: "Details are required",
+                    })}
+                  />
+                </div>
+              ))}
+
+              <Button
+                variant="primary"
+                type="button"
+                label="Add Coverage"
+                classNames="py-2 px-4"
+                onClick={() =>
+                  appendCoverageField({
+                    title: "",
+                    description: "",
+                  })
+                }
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Duration */}
               <TextInput
