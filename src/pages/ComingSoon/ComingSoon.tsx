@@ -129,7 +129,7 @@ const ComingSoon = () => {
             title: "Launching Soon",
             description: "We're putting the final touches on everything",
           },
-        ].map((feature, index) => (
+        ].map((_, index) => (
           <motion.div
             key={index}
             className="bg-white rounded-xl shadow-md p-6 text-center"
@@ -141,17 +141,17 @@ const ComingSoon = () => {
             }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
+            {/* <motion.div
               className="bg-red-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
             >
               <feature.icon className="text-2xl text-secondary-10" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {feature.title}
+            </motion.div> */}
+            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+              Coming Soon
             </h3>
-            <p className="text-gray-600 text-sm">{feature.description}</p>
+            {/* <p className="text-gray-600 text-sm">{feature.description}</p> */}
           </motion.div>
         ))}
       </motion.div>
