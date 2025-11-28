@@ -9,9 +9,9 @@ import { setUser } from "../Features/Auth/authSlice";
 import Cookies from "js-cookie";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "http://localhost:5000/api/v1",
+  baseUrl: "http://localhost:5000/api/v1",
   // baseUrl: "https://hanjifinance-api.vercel.app/api/v1",
-  baseUrl: "https://api.hanjifinance.com/api/v1",
+  // baseUrl: "https://api.hanjifinance.com/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     console.log(getState);
